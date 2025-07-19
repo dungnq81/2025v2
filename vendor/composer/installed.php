@@ -1,20 +1,20 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
-        'type' => 'project',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => 'a74bed1417a0a586938366f29f839fab1b37cf33',
+        'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
-            'type' => 'project',
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'a74bed1417a0a586938366f29f839fab1b37cf33',
+            'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
@@ -223,7 +223,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => 'd9e8845908f658ef04aebe52283cfc63b192d421',
+            'reference' => '5e472fed1bcf8d3a967247576053a20ef3cfefc0',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(

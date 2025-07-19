@@ -14,16 +14,18 @@ const directoriesToCopy = [
 // SASS
 const sassFiles = [
     'login',
+    'admin',
     'addon',
 ];
 
 // JS
 const jsFiles = [
+    'addon',
+    'admin',
+    'lazyload',
     'login',
     'login-otp',
-    'lazyload',
     'sorting',
-    'addon',
 ];
 
 export default {

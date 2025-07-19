@@ -1,7 +1,7 @@
 {
     "autoload": {
         "psr-4": {
-            "HDMU\\": "src"
+            "HDMU\\": "src/"
         }
     },
     "config": {
