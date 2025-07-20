@@ -272,13 +272,16 @@
 #_settings_form #_content .section .controls :where(input:not([type=checkbox]):not([type=radio]), textarea, select)::placeholder {
   color: #adb5bd;
 }
+#_settings_form #_content .section .controls input[type=number] {
+  width: 100%;
+  max-width: 250px;
+}
 #_settings_form #_content .section .controls select {
   padding: 12px 25px 12px 12px;
   width: auto;
   min-width: 200px;
 }
 #_settings_form #_content .section .controls textarea {
-  max-width: 100%;
   padding: 10px 12px;
 }
 #_settings_form #_content .section .controls .inline-group {

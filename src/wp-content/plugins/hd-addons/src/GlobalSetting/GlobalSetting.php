@@ -11,7 +11,6 @@ use Addons\Security\Readme;
 \defined( 'ABSPATH' ) || exit;
 
 final class GlobalSetting {
-
 	// --------------------------------------------------
 
 	public function __construct() {

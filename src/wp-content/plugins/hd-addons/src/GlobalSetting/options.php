@@ -5,8 +5,7 @@
 
 $menu_options           = \Addons\Helper::loadYaml( ADDONS_PATH . 'config.yaml' );
 $global_setting_options = \Addons\Helper::getOption( 'global_setting__options' );
-
-$current_slug =	$current_slug ?? 'global_setting';
+$current_slug           = $current_slug ?? 'global_setting';
 
 ?>
 <div class="container flex flex-x gap sm-up-2 md-up-3 lg-up-4">

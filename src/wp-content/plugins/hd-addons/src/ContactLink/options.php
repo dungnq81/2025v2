@@ -11,7 +11,7 @@ $contact_links        = \Addons\Helper::filterSettingOptions( 'contact_links', [
     <input type="hidden" name="contact-link-hidden" value="1">
 	<?php
 	if ( empty( $contact_links ) ) {
-		echo '<h3 class="cell">' . __( 'No data available or configuration for this feature has not initialized yet', ADDONS_TEXTDOMAIN ) . '</h3>';
+		echo '<h3>' . __( 'No data available or configuration for this feature has not initialized yet', ADDONS_TEXTDOMAIN ) . '</h3>';
 		echo '</div>';
 		return;
 	}

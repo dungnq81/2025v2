@@ -9,6 +9,7 @@ Options -Indexes
     Header set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
+# Redirect HTTP to HTTPS
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteCond %{HTTPS} off
@@ -24,6 +25,7 @@ Options -Indexes
     RewriteCond %{REQUEST_URI} !^/wp-json/ [NC]
     RewriteCond %{REQUEST_URI} !\.php [NC]
     RewriteCond %{REQUEST_URI} !\.[a-zA-Z0-9]{2,4}$ [NC]
+    RewriteCond %{REQUEST_URI} !^/$
     RewriteRule ^(.+[^/])$ https://%{HTTP_HOST}/$1/ [L,R=301]
 </IfModule>
 

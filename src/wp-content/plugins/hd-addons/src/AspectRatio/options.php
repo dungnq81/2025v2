@@ -11,7 +11,7 @@ $no_data_message       = __( 'No data available or configuration for this featur
     <input type="hidden" name="aspect-ratio-hidden" value="1">
 	<?php
     if ( empty( $aspect_ratio_settings['post_type_term'] ) ) {
-        echo '<h3 class="cell">' . $no_data_message . '</h3>';
+        echo '<h3>' . $no_data_message . '</h3>';
         echo '</div>';
         return;
     }
