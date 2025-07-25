@@ -40,7 +40,7 @@ final class LoginSecurity {
 	public function loginEnqueueAssets(): void {
 		$version = Helper::version();
 
-		Asset::enqueueStyle( 'login-css', ADDONS_URL . 'assets/css/login.css', [], $version );
+		Asset::enqueueStyle( 'login-css', ADDONS_URL . 'assets/css/login-css.css', [], $version );
 		Asset::enqueueScript( 'login-js', ADDONS_URL . 'assets/js/login.js', [ 'jquery' ], $version, true, [ 'module', 'defer' ] );
 
 		$default_logo = '';

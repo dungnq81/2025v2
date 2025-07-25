@@ -50,6 +50,7 @@ return array(
     'Addons\\ThirdParty\\CF7' => $baseDir . '/src/ThirdParty/CF7.php',
     'Addons\\ThirdParty\\Faker' => $baseDir . '/src/ThirdParty/Faker.php',
     'Addons\\ThirdParty\\RankMath' => $baseDir . '/src/ThirdParty/RankMath.php',
+    'Addons\\Woocommerce\\Woocommerce' => $baseDir . '/src/Woocommerce/Woocommerce.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'MatthiasMullie\\Minify\\CSS' => $vendorDir . '/matthiasmullie/minify/src/CSS.php',
     'MatthiasMullie\\Minify\\Exception' => $vendorDir . '/matthiasmullie/minify/src/Exception.php',

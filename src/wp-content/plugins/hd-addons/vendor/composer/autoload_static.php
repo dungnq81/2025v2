@@ -104,6 +104,7 @@ class ComposerStaticInitb49ab90ad911d30e16e43fa33f15a12a
         'Addons\\ThirdParty\\CF7' => __DIR__ . '/../..' . '/src/ThirdParty/CF7.php',
         'Addons\\ThirdParty\\Faker' => __DIR__ . '/../..' . '/src/ThirdParty/Faker.php',
         'Addons\\ThirdParty\\RankMath' => __DIR__ . '/../..' . '/src/ThirdParty/RankMath.php',
+        'Addons\\Woocommerce\\Woocommerce' => __DIR__ . '/../..' . '/src/Woocommerce/Woocommerce.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'MatthiasMullie\\Minify\\CSS' => __DIR__ . '/..' . '/matthiasmullie/minify/src/CSS.php',
         'MatthiasMullie\\Minify\\Exception' => __DIR__ . '/..' . '/matthiasmullie/minify/src/Exception.php',

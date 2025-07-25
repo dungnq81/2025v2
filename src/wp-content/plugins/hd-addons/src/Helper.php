@@ -277,18 +277,20 @@ final class Helper {
 	 * @param bool $display
 	 * @param string $type
 	 *
-	 * @return string|void
+	 * @return string|null
 	 */
-	public static function inArrayChecked( array $checked_arr, $current, bool $display = true, string $type = 'checked' ) {
+	public static function inArrayChecked( array $checked_arr, $current, bool $display = true, string $type = 'checked' ): ?string {
 		$type   = preg_match( '/^[a-zA-Z0-9\-]+$/', $type ) ? $type : 'checked';
 		$result = in_array( $current, $checked_arr, false ) ? " $type='$type'" : '';
 
 		// Echo or return the result
 		if ( $display ) {
 			echo $result;
-		} else {
-			return $result;
+
+			return null;
 		}
+
+		return $result;
 	}
 
 	// --------------------------------------------------
@@ -723,8 +725,8 @@ final class Helper {
 				'lazy_load_term_meta'    => false,
 			];
 
-			$post = ( new \WP_Query( $custom_query_vars ) )?->post;
-			self::setThemeMod( $post_type . '_option_id', $post?->ID ?? - 1 );
+			$post = ( new \WP_Query( $custom_query_vars ) )->post ?? null;
+			self::setThemeMod( $post_type . '_option_id', $post->ID ?? - 1 );
 		}
 
 		if ( $post ) {
@@ -802,10 +804,10 @@ final class Helper {
 		$cache_key    = "hd_custom_post_{$post_type}";
 
 		$cached_data = [
-			'ID'           => $updated_post->ID,
-			'post_title'   => $updated_post->post_title,
-			'post_content' => $updated_post->post_content,
-			'post_excerpt' => $updated_post->post_excerpt,
+			'ID'           => $updated_post->ID ?? 0,
+			'post_title'   => $updated_post->post_title ?? '',
+			'post_content' => $updated_post->post_content ?? '',
+			'post_excerpt' => $updated_post->post_excerpt ?? '',
 		];
 		set_transient( $cache_key, $cached_data, $cache_in_hours * HOUR_IN_SECONDS );
 
@@ -831,24 +833,6 @@ final class Helper {
 		}
 
 		return '';
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @param $name
-	 * @param mixed $default
-	 *
-	 * @return array|mixed
-	 */
-	public static function filterSettingOptions( $name, mixed $default = [] ): mixed {
-		$filters = apply_filters( 'hd_theme_settings_filter', [] );
-
-		if ( isset( $filters[ $name ] ) ) {
-			return $filters[ $name ] ?: $default;
-		}
-
-		return [];
 	}
 
 	// --------------------------------------------------
@@ -1085,7 +1069,8 @@ final class Helper {
 	 * @return bool
 	 */
 	public static function isAcfProActive(): bool {
-		return self::checkPluginActive( 'advanced-custom-fields-pro/acf.php' );
+		return self::checkPluginActive( 'advanced-custom-fields-pro/acf.php' ) ||
+		       self::checkPluginActive( 'secure-custom-fields/secure-custom-fields.php' );
 	}
 
 	// -------------------------------------------------------------
@@ -1105,6 +1090,95 @@ final class Helper {
 	 */
 	public static function isCf7Active(): bool {
 		return self::checkPluginActive( 'contact-form-7/wp-contact-form-7.php' );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param $name
+	 * @param mixed $default
+	 *
+	 * @return array|mixed
+	 */
+	public static function filterSettingOptions( $name, mixed $default = [] ): mixed {
+		$filters = apply_filters( 'hd_settings_filter', self::themeSettingDefault() );
+
+		if ( isset( $filters[ $name ] ) ) {
+			return $filters[ $name ] ?: $default;
+		}
+
+		return $default;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @return array
+	 */
+	public static function themeSettingDefault(): array {
+		return apply_filters( 'hd_settings_defaults', [
+			//
+			// Aspect Ratio.
+			//
+			'aspect_ratio'     => [
+				'post_type_term'       => [
+					'post',
+				],
+				'aspect_ratio_default' => [
+					'1-1',
+					'2-1',
+					'3-2',
+					'4-3',
+					'16-9',
+					'21-9',
+				],
+			],
+
+			//
+			// Admin menu sidebar
+			//
+			'admin_menu'       => [
+				// ignore user
+				'admin_hide_menu_ignore_user' => [ 1 ],
+			],
+
+			//
+			// lazyLoad
+			//
+			'lazyload_exclude' => [
+				'no-lazy',
+				'skip-lazy',
+				'custom-logo',
+			],
+
+			//
+			// security
+			//
+			'security'         => [
+				// Allowlist IPs Login Access
+				'allowlist_ips_login_access'          => [],
+
+				// Blocked IPs Access
+				'blocked_ips_login_access'            => [],
+
+				// IDs of users allowed changing custom-login, OTP settings v.v...
+				'privileged_user_ids'                 => [ 1 ],
+
+				// List of admin IDs allowed to show 'hd-addons' plugins.
+				'allowed_users_ids_show_plugins'      => [ 1 ],
+
+				// List of admin IDs allowed installing plugins.
+				'allowed_users_ids_install_plugins'   => [ 1 ],
+
+				// List of user IDs that are not allowed to be deleted.
+				'disallowed_users_ids_delete_account' => [ 1 ],
+			],
+
+			//
+			// Add more default settings here as needed.
+			//
+
+		] );
 	}
 
 	// -------------------------------------------------------------

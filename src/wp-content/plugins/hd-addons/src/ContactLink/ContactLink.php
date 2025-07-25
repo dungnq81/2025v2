@@ -101,7 +101,7 @@ final class ContactLink {
 
 				$target  = $data['target'] ? ' target="' . $data['target'] . '"' : '';
 				$title   = $data['placeholder'] ? Helper::escAttr( $data['placeholder'] ) : Helper::escAttr( $data['name'] );
-				$classes = $data['class'] ? $key . ' ' . $data['class'] : $key;
+				$classes = $data['class'] ?: $key;
 				$thumb   = '';
 
 				if ( Helper::isUrl( $data['icon'] ) || str_starts_with( $data['icon'], 'data:' ) ) :

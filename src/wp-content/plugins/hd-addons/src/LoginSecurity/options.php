@@ -26,11 +26,11 @@ if ( in_array( $user_id, $privileged_user_ids, true  ) ) {
 
     <?php if ( $privileged ) : ?>
     <div class="cell section section-text">
-        <label class="heading" for="custom_login_uri"><?php _e( 'Custom Login URL', ADDONS_TEXTDOMAIN ); ?></label>
+        <label class="heading" for="custom_login_uri"><?php _e( 'Custom Admin Login URL', ADDONS_TEXTDOMAIN ); ?></label>
         <div class="option">
             <div class="controls control-prefix" style="height: unset;">
                 <div class="prefix">
-                    <span class="input-txt" title="<?= esc_attr( site_url( '/' ) ) ?>"><?= site_url( '/' ) ?></span>
+                    <span class="input-txt" title="<?= esc_attr( home_url( '/' ) ) ?>"><?= home_url( '/' ) ?></span>
                 </div>
 				<?php $custom_login_uri = $custom_login_uri ?: 'wp-login.php'; ?>
                 <input value="<?php echo esc_attr( $custom_login_uri ); ?>" class="input" type="text" id="custom_login_uri" name="custom_login_uri" placeholder="<?= esc_attr( $custom_login_uri ) ?>">
@@ -42,7 +42,7 @@ if ( in_array( $user_id, $privileged_user_ids, true  ) ) {
 
 	<?php if ( $privileged ) : ?>
     <div class="cell section section-checkbox">
-        <label class="heading" for="login_otp_verification"><?php _e( 'Email OTP Login Verification', ADDONS_TEXTDOMAIN ); ?></label>
+        <label class="heading" for="login_otp_verification"><?php _e( 'Admin Login with Email OTP', ADDONS_TEXTDOMAIN ); ?></label>
         <div class="option">
             <div class="controls">
                 <input type="checkbox" class="checkbox" name="login_otp_verification" id="login_otp_verification" <?php checked( $login_otp_verification, 1 ); ?> value="1">

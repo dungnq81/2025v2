@@ -16,7 +16,7 @@
     ],
     "devDependencies": {
         "@vheemstra/vite-plugin-imagemin": "^2.2.0",
-        "@wordpress/browserslist-config": "^6.26.0",
+        "@wordpress/browserslist-config": "^6.27.0",
         "autoprefixer": "^10.4.21",
         "concurrently": "^9.2.0",
         "cross-env": "^7.0.3",
@@ -31,6 +31,7 @@
         "vite-plugin-static-copy": "^2.3.1"
     },
     "dependencies": {
+        "@fancyapps/ui": "^6.0.16",
         "aos": "^2.3.4",
         "current-device": "^0.10.2",
         "ensemble": "github:loltgt/ensemble",

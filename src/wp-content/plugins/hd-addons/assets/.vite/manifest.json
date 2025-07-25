@@ -52,19 +52,19 @@
     "src": "src/wp-content/plugins/hd-addons/resources/scripts/sorting.js",
     "isEntry": true
   },
-  "src/wp-content/plugins/hd-addons/resources/styles/addon.scss": {
-    "file": "css/addon.css",
-    "src": "src/wp-content/plugins/hd-addons/resources/styles/addon.scss",
+  "src/wp-content/plugins/hd-addons/resources/styles/addon-css.scss": {
+    "file": "css/addon-css.css",
+    "src": "src/wp-content/plugins/hd-addons/resources/styles/addon-css.scss",
     "isEntry": true
   },
-  "src/wp-content/plugins/hd-addons/resources/styles/admin.scss": {
-    "file": "css/admin.css",
-    "src": "src/wp-content/plugins/hd-addons/resources/styles/admin.scss",
+  "src/wp-content/plugins/hd-addons/resources/styles/admin-css.scss": {
+    "file": "css/admin-css.css",
+    "src": "src/wp-content/plugins/hd-addons/resources/styles/admin-css.scss",
     "isEntry": true
   },
-  "src/wp-content/plugins/hd-addons/resources/styles/login.scss": {
-    "file": "css/login.css",
-    "src": "src/wp-content/plugins/hd-addons/resources/styles/login.scss",
+  "src/wp-content/plugins/hd-addons/resources/styles/login-css.scss": {
+    "file": "css/login-css.css",
+    "src": "src/wp-content/plugins/hd-addons/resources/styles/login-css.scss",
     "isEntry": true
   }
 }

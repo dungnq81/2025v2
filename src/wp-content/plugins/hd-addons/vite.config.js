@@ -13,9 +13,9 @@ const directoriesToCopy = [
 
 // SASS
 const sassFiles = [
-    'login',
-    'admin',
-    'addon',
+    'login-css',
+    'admin-css',
+    'addon-css',
 ];
 
 // JS
@@ -41,10 +41,10 @@ export default {
         outDir: `${assets}`,
         assetsDir: '',
         rollupOptions: {
-            input: Object.fromEntries([
-                ...sassFiles.map((file) => [`css/${file}`, `${resources}/styles/${file}.scss`]),
-                ...jsFiles.map((file) => [`${file}`, `${resources}/scripts/${file}.js`]),
-            ]),
+            input: [
+                ...sassFiles.map((file) => `${resources}/styles/${file}.scss`),
+                ...jsFiles.map((file) => `${resources}/scripts/${file}.js`),
+            ],
             output: {
                 entryFileNames: `js/[name].js`,
                 chunkFileNames: `js/[name].js`,
@@ -55,23 +55,12 @@ export default {
                 },
                 assetFileNames: (assetInfo) => {
                     const name = assetInfo.name || '';
-
                     if (name.endsWith('.css')) {
-                        const cssMap = {
-                            _vendor: 'css/_vendor.css',
-                            index: 'css/index.css',
-                        };
-
-                        const matched = Object.keys(cssMap).find(key => name.includes(key));
-                        if (matched) return cssMap[matched];
-
-                        return `[name].css`;
+                        return `css/[name].css`;
                     }
-
                     if (/\.(woff2?|ttf|otf|eot)$/i.test(name)) {
                         return `fonts/[name].[ext]`;
                     }
-
                     return `img/[name].[ext]`;
                 },
             },

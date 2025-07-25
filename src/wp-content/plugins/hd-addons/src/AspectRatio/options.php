@@ -25,8 +25,8 @@ $no_data_message       = __( 'No data available or configuration for this featur
 		$width                = $aspect_ratio_options[ 'ar-' . $ar . '-width' ] ?? '';
 		$height               = $aspect_ratio_options[ 'ar-' . $ar . '-height' ] ?? '';
 
-		$title = get_post_type_object( $ar )?->labels?->singular_name;
-		$title = ! empty( $title ) ? $title : get_taxonomy( $ar )?->labels?->singular_name;
+		$title = get_post_type_object( $ar )->labels->singular_name ?? '';
+		$title = ! empty( $title ) ? $title : ( get_taxonomy( $ar )->labels->singular_name ?? '' );
 	?>
     <div class="section section-text cell">
         <span class="heading"><?php echo $title . ' ( ' . $ar . ' )' ?></span>

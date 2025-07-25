@@ -136,7 +136,7 @@ class LoginUrl {
 			return;
 		}
 
-		// Die if there is not 404 page.
+		// Die if there is `redirect` page.
 		if ( empty( $this->options['redirect'] ) ) {
 			\Addons\Helper::wpDie(
 				esc_html__( 'This feature has been disabled.', ADDONS_TEXTDOMAIN ),
@@ -148,8 +148,8 @@ class LoginUrl {
 			);
 		}
 
-		// Redirect to 404 page.
-		wp_redirect( $this->_homeUrl() . $this->options['redirect'], 302 );
+		// Redirect.
+		wp_redirect( $this->options['redirect'], 302 );
 		exit;
 	}
 
@@ -396,7 +396,7 @@ class LoginUrl {
 		// Set the required options.
 		$this->options = [
 			'new_slug' => $custom_login_uri,
-			'redirect' => apply_filters( 'clu_login_redirect', wp_make_link_relative( home_url( '/' ) ) ),
+			'redirect' => apply_filters( 'clu_login_redirect', $this->_homeUrl() . '404/' ), // 404 page.
 			'register' => apply_filters( 'clu_login_register', 'register' ),
 		];
 

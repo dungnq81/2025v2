@@ -115,7 +115,7 @@ final class Addons {
 	public function adminEnqueueAssets( $hook ): void {
 		$version = Helper::version();
 
-		Asset::enqueueStyle( 'admin-addon-css', ADDONS_URL . 'assets/css/admin.css', [], $version );
+		Asset::enqueueStyle( 'admin-addon-css', ADDONS_URL . 'assets/css/admin-css.css', [], $version );
 		Asset::enqueueScript( 'admin-addon-js', ADDONS_URL . 'assets/js/admin.js', [ 'jquery-core' ], $version, true, [ 'module', 'defer' ] );
 
 		// addon-page settings
@@ -132,7 +132,7 @@ final class Addons {
 		wp_enqueue_script( 'wp-color-picker' );
 
 		Asset::enqueueStyle( '_vendor-css', ADDONS_URL . 'assets/css/_vendor.css', [], $version );
-		Asset::enqueueStyle( 'addon-css', ADDONS_URL . 'assets/css/addon.css', [ '_vendor-css' ], $version );
+		Asset::enqueueStyle( 'addon-css', ADDONS_URL . 'assets/css/addon-css.css', [ '_vendor-css' ], $version );
 		Asset::enqueueScript( 'addon-js', ADDONS_URL . 'assets/js/addon.js', [ 'wp-color-picker' ], $version, true, [ 'module', 'defer' ] );
 
 		wp_enqueue_style( 'wp-codemirror' );
