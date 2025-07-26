@@ -99,9 +99,6 @@ Config::define( 'SECURE_AUTH_SALT', env( 'SECURE_AUTH_SALT' ) );
 Config::define( 'LOGGED_IN_SALT', env( 'LOGGED_IN_SALT' ) );
 Config::define( 'NONCE_SALT', env( 'NONCE_SALT' ) );
 
-/** Object cache settings */
-Config::define( 'WP_CACHE_KEY_SALT', env( 'WP_CACHE_KEY_SALT' ) );
-
 /**
  * Custom Settings
  */
@@ -145,6 +142,15 @@ if ( env( 'FLUENTMAIL_SMTP_USERNAME' ) && env( 'FLUENTMAIL_SMTP_PASSWORD' ) ) {
 	Config::define( 'FLUENTMAIL_SMTP_PASSWORD', env( 'FLUENTMAIL_SMTP_PASSWORD' ) );
 }
 
+/** Redis Cache */
+if ( env( 'WP_REDIS_PATH' ) && env( 'WP_CACHE_KEY_SALT' ) ) {
+	Config::define( 'WP_REDIS_SCHEME', env( 'WP_REDIS_SCHEME' ) ?? 'unix' );
+	Config::define( 'WP_REDIS_PATH', env( 'WP_REDIS_PATH' ) );
+	Config::define( 'WP_REDIS_CLIENT', env( 'WP_REDIS_CLIENT' ) ?? 'pecl' );
+	Config::define( 'WP_CACHE_KEY_SALT', env( 'WP_CACHE_KEY_SALT' ) );
+	Config::define( 'WP_REDIS_MAXTTL', env( 'WP_REDIS_MAXTTL' ) ?? 900 );
+}
+
 /**
  * Allow WordPress to detect HTTPS when used behind a reverse proxy or a load balancer
  * See https://codex.wordpress.org/Function_Reference/is_ssl#Notes
@@ -157,11 +163,6 @@ if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && $_SERVER['HTTP_X_FORWARDED_P
 if ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ) {
 	@ini_set( 'session.cookie_secure', '1' );
 }
-
-/** FS_METHOD */
-//if ( ! defined( 'FS_METHOD' ) ) {
-//	define( 'FS_METHOD', 'direct' );
-//}
 
 $env_config = __DIR__ . '/environments/' . WP_ENV . '.php';
 if ( file_exists( $env_config ) ) {
