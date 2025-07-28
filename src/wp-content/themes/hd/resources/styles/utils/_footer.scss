@@ -1,0 +1,292 @@
+@use '../variables' as vars;
+@use '../functions' as func;
+@use '../mixins' as mixin;
+
+.menu.policy-nav {
+    margin: 4px -8px;
+
+    li {
+        a {
+            color: currentColor;
+            cursor: pointer;
+            padding: 4px 8px;
+            display: block;
+        }
+
+        &.menu-thumb {
+            a {
+                display: flex;
+                align-items: center;
+
+                img {
+                    order: 1;
+                    margin-left: 0.25em;
+                    width: 30px;
+                    height: 14px;
+                    display: inline-block;
+                    max-width: 100%;
+                    vertical-align: text-bottom;
+                }
+            }
+        }
+    }
+}
+
+.menu.social-menu {
+    flex-flow: row wrap;
+    @include mixin.media-gap(15, false, 20);
+
+    li {
+        svg {
+            height: 20px;
+            width: auto;
+        }
+
+        a {
+            padding: 0;
+            border-radius: 50%;
+            color: vars.$Primary-01;
+            @include mixin.flex-center;
+
+            &:hover {
+                opacity: 0.6;
+                text-decoration: none !important;
+            }
+
+            &.zalo {
+                svg {
+                    height: 18px;
+                }
+            }
+        }
+    }
+}
+
+.site-footer {
+    @include mixin.media-css(margin-top, 40, false, 60);
+
+    .menu.social-menu {
+        li {
+            svg {
+                height: 20px;
+            }
+
+            a {
+                color: #fff;
+
+                &.zalo {
+                    svg {
+                        height: 18px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.footer-columns {
+    background-color: #231F20;
+    color: #fff;
+    overflow: hidden;
+    @include mixin.media-padding-top(30, 50, 70);
+    @include mixin.media-padding-bottom(30, 50, 70);
+
+    a {
+        color: currentColor;
+    }
+
+    .footer-title {
+        font-weight: 700;
+        font-family: vars.$header-font;
+        @include mixin.clamp-font-size(20px, 32px, 1.2);
+        @include mixin.not-highlight;
+        @include mixin.media-margin-bottom(15, 20, 30);
+
+        @include mixin.mq-max(md) {
+            br {
+                display: none;
+            }
+        }
+    }
+
+    .cell.cell-1 {
+        flex: 0 0 auto;
+        width: 40%;
+
+        @include mixin.mq-max(md) {
+            width: 100%;
+        }
+    }
+
+    .cell.cell-2 {
+        flex: 1 1 0;
+        min-width: 0;
+
+        @include mixin.mq-max(md) {
+            width: 100%;
+        }
+    }
+
+    .cell-contact-list {
+        @include mixin.mq-min(md) {
+            padding-left: 20px;
+        }
+
+        @include mixin.mq-min(lg) {
+            padding-left: 100px;
+        }
+
+        ul {
+            display: flex;
+            align-items: stretch;
+            flex-wrap: wrap;
+            list-style: none;
+            padding: 0;
+            margin: 0 0 0 -20px;
+
+            li {
+                margin-bottom: 10px;
+                margin-left: 20px;
+
+                .title {
+                    font-size: 14px;
+                    color: #797979;
+                    font-weight: 700;
+                    margin-bottom: 0;
+                }
+
+                & > a {
+                    color: #fff;
+                    font-size: 15px;
+                    font-weight: 400;
+                    display: block;
+                }
+            }
+        }
+    }
+
+    .cell-newsletter {
+        width: 100%;
+
+        @include mixin.mq-max(md) {
+            margin-bottom: 20px;
+        }
+
+        .desc {
+            color: #797979;
+            font-weight: 400;
+            font-size: 14px;
+            overflow-wrap: break-word;
+            @include mixin.media-margin-bottom(10, 20, false);
+        }
+
+        .newsletter {
+            @include mixin.mq-max(md) {
+                width: 100%;
+                max-width: 480px;
+            }
+
+            .newsletter-row {
+                position: relative;
+                overflow: hidden;
+                border-radius: 100px;
+                background-color: #000;
+                border: 1px solid rgba(0, 0, 0, 0.15);
+                display: flex;
+                flex-flow: row nowrap;
+                height: 48px;
+                padding: 4px;
+            }
+
+            label {
+                display: none;
+            }
+
+            .wpcf7-form-control-wrap {
+                position: relative;
+                flex: 1 1 0;
+                min-width: 0;
+                display: block;
+
+                input {
+                    background: none;
+                    height: 100%;
+                    padding: 0 20px;
+                    width: 100%;
+                    outline: none;
+                    border: none;
+                    font-size: 16px;
+                    color: rgba(255, 255, 255, 0.5);
+                }
+            }
+
+            button[type="submit"] {
+                position: relative;
+                background-color: #404040;
+                color: #fff;
+                font-size: 0;
+                border-radius: 50%;
+                height: 100%;
+                aspect-ratio: 1 / 1;
+                flex: 0 0 auto;
+
+                &::before {
+                    font-family: vars.$awesome-sharp-font;
+                    font-size: 14px;
+                    font-weight: 400;
+                    content: '\f054';
+                }
+
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+
+            .wpcf7-spinner {
+                margin: 0;
+                @include mixin.absolute-center;
+            }
+        }
+
+        .wpcf7-response-output {
+            border: 0;
+            border-radius: 6px;
+            font-size: 12px;
+            padding: 0;
+            margin: 10px 0 0 10px;
+            color: #fff;
+        }
+    }
+}
+
+.footer-credit {
+    background-color: #231F20;
+    color: #fff;
+    font-size: 15px;
+    line-height: 1.4;
+    @include mixin.media-css(padding-top, 20, false, 30);
+    @include mixin.media-css(padding-bottom, 20, false, 70);
+
+    & > .container {
+        position: relative;
+
+        &::before {
+            content: '';
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            @include mixin.content-width;
+            @include mixin.media-css(top, -20, false, -30);
+        }
+
+        .cell.right {
+            @include mixin.mq-max(md) {
+                flex: 0 0 auto;
+                width: 100%;
+            }
+        }
+
+        .copyright {
+            margin-bottom: 0;
+        }
+    }
+}

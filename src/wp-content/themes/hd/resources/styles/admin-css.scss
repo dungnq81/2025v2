@@ -1,0 +1,33 @@
+@use 'variables' as vars;
+@use 'functions' as func;
+@use 'mixins' as mixin;
+
+$body-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Ubuntu', Arial, sans-serif;
+
+/** myCRED */
+:is(
+    #myCRED-wrap,
+    .mycred-ui-wrap,
+    .mycred-admin-page .wrap
+) {
+    font-family: $body-font;
+}
+
+.mycred-rank-logo {
+    img {
+        height: 70px;
+        width: auto;
+        display: block;
+    }
+}
+
+:is(
+    #myCRED-wrap .form-control,
+    .mycred-ui-wrap .form-control,
+    .mycred-admin-page .wrap .form-control,
+    .mycred-admin-page #addtag input[type="text"],
+    .mycred-admin-page #addtag select,
+    .mycred-admin-page #addtag textarea
+) {
+    font-weight: 400;
+}
