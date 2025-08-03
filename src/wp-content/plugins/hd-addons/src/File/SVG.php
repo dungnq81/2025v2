@@ -1,5 +1,4 @@
 <?php
-declare( strict_types=1 );
 
 namespace Addons\File;
 
@@ -248,21 +247,21 @@ final class SVG {
 	 * @return object
 	 */
 	public function svg_dimensions( $svg ): object {
-		$svg    = \simplexml_load_string( file_get_contents( $svg ) );
+		$svg    = simplexml_load_string( file_get_contents( $svg ) );
 		$width  = 0;
 		$height = 0;
 		if ( $svg ) {
 			$attributes = $svg->attributes();
-			if ( isset( $attributes->width, $attributes->height ) ) {
-				if ( ! str_ends_with( trim( $attributes->width ), '%' ) ) {
+			if ( isset( $attributes, $attributes->width, $attributes->height ) ) {
+				if ( ! str_ends_with( trim( (string) $attributes->width ), '%' ) ) {
 					$width = (float) $attributes->width;
 				}
-				if ( ! str_ends_with( trim( $attributes->height ), '%' ) ) {
+				if ( ! str_ends_with( trim( (string) $attributes->height ), '%' ) ) {
 					$height = (float) $attributes->height;
 				}
 			}
 			if ( ( ! $width || ! $height ) && isset( $attributes->viewBox ) ) {
-				$sizes = explode( ' ', $attributes->viewBox );
+				$sizes = explode( ' ', (string) $attributes->viewBox );
 				if ( isset( $sizes[2], $sizes[3] ) ) {
 					$width  = (float) $sizes[2];
 					$height = (float) $sizes[3];
@@ -302,7 +301,7 @@ final class SVG {
 	public function sanitize( $file ): bool {
 		$svg_code = file_get_contents( $file );
 		if ( $is_zipped = $this->is_gzipped( $svg_code ) ) {
-			$svg_code = \gzdecode( $svg_code );
+			$svg_code = gzdecode( $svg_code );
 
 			if ( ! $svg_code ) {
 				return false;
@@ -319,7 +318,7 @@ final class SVG {
 		}
 
 		if ( $is_zipped ) {
-			$clean_svg_code = \gzencode( $clean_svg_code );
+			$clean_svg_code = gzencode( $clean_svg_code );
 		}
 
 		file_put_contents( $file, $clean_svg_code );
@@ -335,10 +334,6 @@ final class SVG {
 	 * @return bool
 	 */
 	public function is_gzipped( $svg_code ): bool {
-		if ( function_exists( 'mb_strpos' ) ) {
-			return mb_strpos( $svg_code, "\x1f" . "\x8b" . "\x08" ) === 0;
-		}
-
 		return str_starts_with( $svg_code, "\x1f" . "\x8b" . "\x08" );
 	}
 }

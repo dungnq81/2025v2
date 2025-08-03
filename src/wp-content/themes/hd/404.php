@@ -15,18 +15,18 @@ get_header( '404' );
 \HD_Helper::blockTemplate( 'parts/blocks/breadcrumbs' );
 
 ?>
-    <section class="section section-page section-404 singular">
-        <div class="container">
-            <h1 class="title"><?= __( 'Lỗi 404 - Trang không tồn tại', TEXT_DOMAIN ) ?></h1>
-            <p class="excerpt"><?= __( 'Xin lỗi, trang bạn tìm kiếm không tồn tại hoặc đã bị gỡ bỏ.', TEXT_DOMAIN ) ?></p>
-            <div class="search-box">
-				<?php echo get_search_form( [ 'echo' => false ] ); ?>
-            </div>
-
-            <!-- Featured News -->
-            <!-- //... -->
+<section class="section section-page section-404 singular">
+    <div class="container">
+        <h1 class="title"><?= __( 'Lỗi 404 - Trang không tồn tại', TEXT_DOMAIN ) ?></h1>
+        <p class="excerpt"><?= __( 'Xin lỗi, trang bạn tìm kiếm không tồn tại hoặc đã bị gỡ bỏ.', TEXT_DOMAIN ) ?></p>
+        <div class="search-box">
+            <?php echo get_search_form( [ 'echo' => false ] ); ?>
         </div>
-    </section>
+
+        <!-- Featured News -->
+        <!-- //... -->
+    </div>
+</section>
 <?php
 
 // footer

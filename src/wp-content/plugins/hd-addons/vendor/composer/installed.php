@@ -3,7 +3,7 @@
         'name' => 'plugins/hd-addons',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'a8e99c528b59c1c6491b315daccced2b96f525ba',
+        'reference' => '7072f84aa362ffbdf50773105dde764b2a37685e',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -40,7 +40,7 @@
         'plugins/hd-addons' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'a8e99c528b59c1c6491b315daccced2b96f525ba',
+            'reference' => '7072f84aa362ffbdf50773105dde764b2a37685e',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -49,7 +49,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => '81355a1946c1cb0d4dd1966161015b8522f30173',
+            'reference' => '3aaa2be71bcc17b49137b9e8ecd6619a5997b358',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(
@@ -76,9 +76,9 @@
             'dev_requirement' => false,
         ),
         'symfony/yaml' => array(
-            'pretty_version' => 'v7.3.1',
-            'version' => '7.3.1.0',
-            'reference' => '0c3555045a46ab3cd4cc5a69d161225195230edb',
+            'pretty_version' => 'v7.3.2',
+            'version' => '7.3.2.0',
+            'reference' => 'b8d7d868da9eb0919e99c8830431ea087d6aae30',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/yaml',
             'aliases' => array(),

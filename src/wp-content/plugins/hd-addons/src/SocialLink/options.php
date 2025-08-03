@@ -21,9 +21,10 @@ $social_follows_links = \Addons\Helper::filterSettingOptions( 'social_follows_li
             continue;
         }
 
-        $name  = $social['name'];
-        $icon  = $social['icon'];
-        $url   = $social_options[ $key ]['url'] ?? $social['url'];
+	    $name        = $social['name'];
+	    $icon        = $social['icon'];
+	    $url         = $social_options[ $key ]['url'] ?? $social['url'];
+	    $placeholder = $social['placeholder'] ?? '';
     ?>
     <div class="cell section section-text">
         <span class="heading"><?php _e( $name, ADDONS_TEXTDOMAIN ); ?></span>
@@ -42,7 +43,7 @@ $social_follows_links = \Addons\Helper::filterSettingOptions( 'social_follows_li
 
 	                ?>
                 </label>
-                <input class="input" type="url" id="<?= esc_attr( $key ) ?>" name="<?= esc_attr( $key ) ?>-url" value="<?= esc_attr( $url ) ?>" title="URL">
+                <input class="input" type="url" id="<?= esc_attr( $key ) ?>" name="<?= esc_attr( $key ) ?>-url" value="<?= esc_attr( $url ) ?>" title="URL" placeholder="<?= $placeholder ?>">
             </div>
         </div>
     </div>

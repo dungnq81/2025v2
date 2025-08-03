@@ -28,9 +28,7 @@ if ( file_exists( $root_dir . '/.env' ) ) {
 		? [ '.env', '.env.local' ]
 		: [ '.env' ];
 
-	$repository = \Dotenv\Repository\RepositoryBuilder::createWithNoAdapters()
-	                                                  ->addAdapter( \Dotenv\Repository\Adapter\EnvConstAdapter::class )
-	                                                  ->addAdapter( \Dotenv\Repository\Adapter\PutenvAdapter::class )
+	$repository = \Dotenv\Repository\RepositoryBuilder::createWithDefaultAdapters()
 	                                                  ->immutable()
 	                                                  ->make();
 
@@ -107,7 +105,10 @@ Config::define( 'DISALLOW_FILE_EDIT', true ); // Disable the plugin and theme fi
 Config::define( 'DISALLOW_FILE_MODS', true ); // disable plugin and theme updates and installation from the admin
 
 /** Force SSL for admin */
-Config::define( 'FORCE_SSL_ADMIN', env( 'FORCE_SSL_ADMIN' ) ?? false );
+Config::define( 'FORCE_SSL_ADMIN', env( 'FORCE_SSL_ADMIN' ) ?? true );
+
+/** Force INDEX */
+Config::define( 'DISALLOW_INDEXING', env( 'DISALLOW_INDEXING' ) ?? false );
 
 /** Debugging Settings */
 Config::define( 'WP_DEBUG', false );

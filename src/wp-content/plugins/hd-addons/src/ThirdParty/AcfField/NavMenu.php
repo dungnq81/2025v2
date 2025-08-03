@@ -1,7 +1,5 @@
 <?php
 
-declare( strict_types=1 );
-
 namespace Addons\ThirdParty\AcfField;
 
 \defined( 'ABSPATH' ) || exit;
@@ -96,7 +94,7 @@ class NavMenu extends \acf_field {
 	 * @return void
 	 */
 	public function render_field( $field ): void {
-		$allow_null = $field['allow_null'];
+		$allow_null = (bool) $field['allow_null'];
 		$nav_menus  = $this->_get_nav_menus( $allow_null );
 
 		if ( empty( $nav_menus ) ) {
@@ -119,11 +117,11 @@ class NavMenu extends \acf_field {
 	// ----------------------------------------------
 
 	/**
-	 * @param bool $allow_null
+	 * @param mixed $allow_null
 	 *
 	 * @return array
 	 */
-	private function _get_nav_menus( bool $allow_null = false ): array {
+	private function _get_nav_menus( mixed $allow_null = false ): array {
 		$navs      = get_terms( 'nav_menu', [ 'hide_empty' => false ] );
 		$nav_menus = [];
 

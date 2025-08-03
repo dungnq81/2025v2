@@ -1,5 +1,4 @@
 <?php
-declare( strict_types=1 );
 
 namespace Addons\ContactLink;
 
@@ -34,7 +33,7 @@ final class ContactLink {
 	 * @return mixed|string
 	 */
 	public function modify_footer_class( $default_class ): mixed {
-		$contact_link_option = Helper::getOption( 'contact_link__options' );
+		$contact_link_option = Helper::getOption( 'contact_link__options', [] );
 		$flag                = false;
 
 		foreach ( $contact_link_option as $option ) {
