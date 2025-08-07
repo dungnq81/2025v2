@@ -2,7 +2,7 @@
 /**
  * Plugin Name: HD Addons
  * Plugin URI: https://webhd.vn
- * Version: 1.7.0
+ * Version: 1.8.0
  * Requires PHP: 8.2
  * Author: Gaudev
  * Author URI: https://webhd.vn
@@ -14,7 +14,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-const ADDONS_VERSION    = '1.7.0';
+const ADDONS_VERSION    = '1.8.0';
 const ADDONS_TEXTDOMAIN = 'hd-addon';
 
 define( 'ADDONS_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) . DIRECTORY_SEPARATOR );
