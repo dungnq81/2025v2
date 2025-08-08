@@ -1,0 +1,5 @@
+@use 'utils/variables' as vars;
+@use 'utils/functions' as func;
+@use 'utils/mixins' as mixin;
+
+$body-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Ubuntu', Arial, sans-serif;

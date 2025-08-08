@@ -1,3 +1,4 @@
+import tailwindcss from '@tailwindcss/vite'
 import autoprefixer from 'autoprefixer';
 import viteImagemin from '@vheemstra/vite-plugin-imagemin';
 
@@ -11,13 +12,14 @@ const isProduction = process.env.NODE_ENV === 'production';
 export const sharedConfig = {
     base: './',
     plugins: [
+        tailwindcss(),
         ...(isProduction ? [
             viteImagemin({
                 plugins: {
-                    jpg: imageminMozjpeg({ quality: 80 }),
-                    png: imageminPngquant({ strip: true, quality: [0.8, 0.9], dithering: 0.1 }),
+                    jpg: imageminMozjpeg({quality: 80}),
+                    png: imageminPngquant({strip: true, quality: [0.8, 0.9], dithering: 0.1}),
                     svg: imageminSVGO(),
-                    gif: imageminGifsicle({ optimizationLevel: 3, interlaced: true }),
+                    gif: imageminGifsicle({optimizationLevel: 3, interlaced: true}),
                 },
             })
         ] : [])
@@ -41,10 +43,10 @@ export const sharedConfig = {
     build: {
         sourcemap: !isProduction,
         target: 'modules',
-        modulePreload: { polyfill: false },
+        modulePreload: {polyfill: false},
         manifest: true,
         minify: isProduction ? 'terser' : false,
-        watch: isProduction ? false : { exclude: 'node_modules/**' },
+        watch: isProduction ? false : {exclude: 'node_modules/**'},
         cssCodeSplit: true,
         emptyOutDir: true,
         terserOptions: {
@@ -54,7 +56,7 @@ export const sharedConfig = {
                 toplevel: true,
                 passes: 2,
             },
-            format: { comments: false },
+            format: {comments: false},
         },
     },
 };
