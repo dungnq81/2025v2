@@ -60,8 +60,8 @@ trait Base {
 	/**
 	 * Throttled error logging with a 1‑minute throttle per unique message.
 	 *
-	 * @param string      $message
-	 * @param int         $type
+	 * @param string $message
+	 * @param int $type
 	 * @param string|null $dest
 	 * @param string|null $headers
 	 *
@@ -248,35 +248,76 @@ trait Base {
 	/**
 	 * Check if a plugin is installed by getting all plugins from the plugins dir
 	 *
-	 * @param string $plugin_slug
+	 * @param string $plugin_file
 	 *
 	 * @return bool
 	 */
-	public static function checkPluginInstalled( string $plugin_slug ): bool {
-
-		// Ensure required functions are available
-		if ( ! function_exists( 'get_plugins' ) || ! function_exists( 'is_plugin_active' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+	public static function checkPluginInstalled( string $plugin_file ): bool {
+		// Ex: 'woocommerce/woocommerce.php'
+		$path = WP_PLUGIN_DIR . '/' . ltrim( $plugin_file, '/' );
+		if ( file_exists( $path ) ) {
+			return true;
 		}
 
-		// Get the list of installed plugins
-		$installed_plugins = get_plugins();
+		// check mu-plugins
+		if ( defined( 'WPMU_PLUGIN_DIR' ) ) {
+			$mu_candidate = WPMU_PLUGIN_DIR . '/' . basename( $plugin_file );
+			if ( file_exists( $mu_candidate ) ) {
+				return true;
+			}
+		}
 
-		// Check if the plugin slug exists in the installed plugins array
-		return array_key_exists( $plugin_slug, $installed_plugins );
+		return false;
+	}
+
+	// -------------------------------------------------------------
+
+	private static function _ensurePlugin(): void {
+		// Ensure required functions are available
+		if ( ! \function_exists( 'is_plugin_active' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
 	}
 
 	// -------------------------------------------------------------
 
 	/**
-	 * Check if the plugin is installed
+	 * Check if the plugin is activated
 	 *
-	 * @param string $plugin_slug
+	 * @param string $plugin_file
 	 *
 	 * @return bool
 	 */
-	public static function checkPluginActive( string $plugin_slug ): bool {
-		return self::checkPluginInstalled( $plugin_slug ) && is_plugin_active( $plugin_slug );
+	public static function checkPluginActive( string $plugin_file ): bool {
+		self::_ensurePlugin();
+
+		if (
+			\function_exists( 'is_plugin_active_for_network' ) &&
+			is_multisite() && is_plugin_active_for_network( $plugin_file )
+		) {
+			return true;
+		}
+
+		return is_plugin_active( $plugin_file );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @return bool
+	 */
+	public static function isWoocommerceActive(): bool {
+		if (
+			\function_exists( 'WC' ) ||
+			\function_exists( 'wc_get_container' ) ||
+			\defined( 'WC_VERSION' ) ||
+			\defined( 'WC_ABSPATH' ) ||
+			\class_exists( 'WooCommerce', false )
+		) {
+			return true;
+		}
+
+		return self::checkPluginActive( 'woocommerce/woocommerce.php' );
 	}
 
 	// -------------------------------------------------------------
@@ -285,9 +326,13 @@ trait Base {
 	 * @return bool
 	 */
 	public static function isAcfActive(): bool {
+		if ( \function_exists( 'acf' ) || \class_exists( 'ACF', false ) ) {
+			return true;
+		}
+
 		return self::checkPluginActive( 'secure-custom-fields/secure-custom-fields.php' ) ||
-		       self::checkPluginActive( 'advanced-custom-fields/acf.php' ) ||
-		       self::checkPluginActive( 'advanced-custom-fields-pro/acf.php' );
+		       self::checkPluginActive( 'advanced-custom-fields-pro/acf.php' ) ||
+		       self::checkPluginActive( 'advanced-custom-fields/acf.php' );
 	}
 
 	// -------------------------------------------------------------
@@ -296,6 +341,10 @@ trait Base {
 	 * @return bool
 	 */
 	public static function isAcfProActive(): bool {
+		if ( \defined( 'ACF_PRO' ) || \class_exists( 'acf_pro', false ) ) {
+			return true;
+		}
+
 		return self::checkPluginActive( 'advanced-custom-fields-pro/acf.php' );
 	}
 
@@ -305,6 +354,14 @@ trait Base {
 	 * @return bool
 	 */
 	public static function isPolylangActive(): bool {
+		if (
+			\defined( 'POLYLANG_BASENAME' ) ||
+			\defined( 'POLYLANG' ) ||
+			\defined( 'POLYLANG_PRO' )
+		) {
+			return true;
+		}
+
 		return self::checkPluginActive( 'polylang/polylang.php' ) ||
 		       self::checkPluginActive( 'polylang-pro/polylang.php' );
 	}
@@ -314,16 +371,11 @@ trait Base {
 	/**
 	 * @return bool
 	 */
-	public static function isWoocommerceActive(): bool {
-		return self::checkPluginActive( 'woocommerce/woocommerce.php' );
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @return bool
-	 */
 	public static function isCf7Active(): bool {
+		if ( \defined( 'WPCF7_PLUGIN_BASENAME' ) || \class_exists( 'WPCF7', false ) ) {
+			return true;
+		}
+
 		return self::checkPluginActive( 'contact-form-7/wp-contact-form-7.php' );
 	}
 }

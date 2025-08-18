@@ -113,18 +113,6 @@
     @return false;
 }
 
-/** get breakpoint */
-@function get-breakpoint($breakpoint, $mq-breakpoints, $fallback: null) {
-    @if map.has-key($mq-breakpoints, $breakpoint) {
-        @return map.get($mq-breakpoints, $breakpoint);
-    } @else if $fallback != null {
-        @warn "Fallback used: `#{$fallback}` for `#{$breakpoint}` not found in `#{$mq-breakpoints}`";
-        @return $fallback;
-    } @else {
-        @error "Given `#{$breakpoint}` is not available in `#{$mq-breakpoints}` and no fallback provided.";
-    }
-}
-
 // Colors
 @function to-rgb($value) {
     @return color.red($value), color.green($value), color.blue($value);
@@ -389,4 +377,43 @@ $unit-warnings: true !default;
     }
 
     @return $value;
+}
+
+// get breakpoint
+// $mq-breakpoints: (
+//        sm: $sm,
+//        md: $md,
+//        lg: $lg,
+//        xl: $xl,
+//        xxl: $xxl,
+//) !default;
+@function get-breakpoint($breakpoint, $mq-breakpoints, $fallback: null) {
+    @if map.has-key($mq-breakpoints, $breakpoint) {
+        @return map.get($mq-breakpoints, $breakpoint);
+    } @else if $fallback != null {
+        @warn "Fallback used: `#{$fallback}` for `#{$breakpoint}` not found in `#{$mq-breakpoints}`";
+        @return $fallback;
+    } @else {
+        @error "Given `#{$breakpoint}` is not available in `#{$mq-breakpoints}` and no fallback provided.";
+    }
+}
+
+// Calculates a column width with optional gap adjustment in a flexbox.
+@function calculate-flex-width($columns: 12, $span: 1, $gap: 0) {
+    @if meta.type-of($columns) == "number" and meta.type-of($span) == "number" and $columns > 0 and $span > 0 {
+        @if $columns == $span {
+            @return math.percentage(1);
+        } @else if $columns > $span {
+            @if meta.type-of($gap) == bool or $gap < 0 {
+                $gap: 0;
+            }
+
+            $width: math.percentage(divide($span, $columns));
+            $gap_adjust: fs(($columns - $span) * divide($gap, $columns));
+
+            @return subtract($width, $gap_adjust);
+        }
+    }
+
+    @return 0;
 }

@@ -43,19 +43,14 @@ export const sharedConfig = {
     build: {
         sourcemap: !isProduction,
         target: 'modules',
-        modulePreload: {polyfill: false},
+        //modulePreload: {polyfill: false},
         manifest: true,
         minify: isProduction ? 'terser' : false,
         watch: isProduction ? false : {exclude: 'node_modules/**'},
         cssCodeSplit: true,
         emptyOutDir: true,
         terserOptions: {
-            compress: {
-                drop_console: true,
-                drop_debugger: true,
-                toplevel: true,
-                passes: 2,
-            },
+            compress: {drop_console: true, drop_debugger: true, toplevel: true, passes: 2},
             format: {comments: false},
         },
     },

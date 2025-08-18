@@ -23,7 +23,7 @@ img {
     border-style: none;
 }
 
-code, kbd, pre, samp {
+:is(code, kbd, pre, samp) {
     font-family: $monospace-font;
     font-size: 1rem;
 }
@@ -48,7 +48,7 @@ body#tinymce {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             font-size: 15px;
-            width: 1000px;
+            width: 1100px;
             line-height: 1.5;
             margin: 15px auto;
             max-width: 90%;
@@ -61,12 +61,18 @@ body#tinymce {
 
             :where(p, ul, ol, blockquote) {
                 margin-bottom: 20px;
-                line-height: 1.7;
+                line-height: vars.$base-line-height-global;
+                margin-top: 0;
+            }
+
+            p:last-child {
+                margin-bottom: 0;
             }
 
             :where(h1, h2, h3, h4, h5, h6) {
                 font-weight: 700;
                 text-transform: inherit;
+                line-height: vars.$base-line-height-header;
             }
 
             h1 {
@@ -144,7 +150,7 @@ body#tinymce {
     }
 
     p {
-        line-height: 1.7;
+        line-height: vars.$base-line-height-global;
     }
 
     .edit-post-visual-editor__post-title-wrapper {

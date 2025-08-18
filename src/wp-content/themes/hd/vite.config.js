@@ -14,14 +14,13 @@ const directoriesToCopy = [
 
 // SASS
 const sassFiles = [
-    // (components)
-    'components/home-css',
-    'components/swiper-css',
-    'components/woocommerce-css',
+    // (partials)
+    'partials/home-css',
+    'partials/woocommerce-css',
 
     // (entries)
-    'editor-style-css',
     'admin-css',
+    'editor-style-css',
     'index-css',
 ];
 
@@ -30,7 +29,6 @@ const jsFiles = [
     // (components)
     'components/home',
     'components/preload-polyfill',
-    'components/social-share',
     'components/swiper',
     'components/woocommerce',
 
@@ -60,7 +58,12 @@ export default {
                 entryFileNames: `js/[name].js`,
                 chunkFileNames: `js/[name].js`,
                 manualChunks(id) {
-                    if (id.includes('node_modules') || id.includes('scripts/3rd') || id.includes('styles/3rd')) {
+                    if (
+                        id.includes('styles/tailwind') ||
+                        id.includes('node_modules') ||
+                        id.includes('scripts/3rd') ||
+                        id.includes('styles/3rd')
+                    ) {
                         return '_vendor';
                     }
                 },

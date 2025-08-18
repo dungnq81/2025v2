@@ -1,1 +1,77 @@
-$monospace-font: Consolas, 'Liberation Mono', Courier, monospace;
+// Layout breakpoints
+//
+// Define the minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+
+$sm: 640px !default;
+$md: 768px !default;
+$lg: 1024px !default;
+$xl: 1280px !default;
+$xxl: 1536px !default;
+
+$mq-breakpoints: (
+        sm: $sm,
+        md: $md,
+        lg: $lg,
+        xl: $xl,
+        xxl: $xxl,
+) !default;
+
+$container-gutter: 10px !default;
+$container-gutter-md: 20px !default;
+$container-gutter-lg: 40px !default;
+
+$mq-containers: (
+        sm: $sm + $container-gutter * 2,
+        md: $md + $container-gutter-md * 2,
+        lg: $lg + $container-gutter-lg * 2,
+        xl: $xl + $container-gutter-lg * 2,
+        xxl: $xxl + $container-gutter-lg * 2,
+) !default;
+
+// line-height
+$base-line-height-header: 1.3 !default;
+$base-line-height-global: 1.618 !default;
+
+$xxl-container: false !default;
+
+// Typography
+//
+// font-size, line-height, gutter, spacers and more.
+
+// font-size
+$font-sizes: (
+        h1: (24px, 48px),
+        h2: (20px, 40px),
+        h3: (19px, 31px),
+        h4: (18px, 24px),
+        h5: (17px, 20px),
+        h6: (16px, 18px),
+        body: (15px, 16px),
+) !default;
+
+// gap
+$gap: 10px !default;
+$gap-sm: 10px !default;
+$gap-md: 20px !default;
+$gap-lg: 20px !default;
+$gap-xl: 20px !default;
+$gap-xxl: 20px !default;
+
+$gutters: (
+        gap: $gap,
+        gap-sm: $gap-sm,
+        gap-md: $gap-md,
+        gap-lg: $gap-lg,
+        gap-xl: $gap-xl,
+        gap-xxl: $gap-xxl,
+) !default;
+
+//
+// Fonts
+
+$header-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Ubuntu', Arial, cursive, sans-serif !default;
+$body-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Ubuntu', Arial, cursive, sans-serif !default;
+$awesome-font: 'Font Awesome 6 Pro', 'Font Awesome 6 Brands', sans-serif !default;
+$awesome-sharp-font: 'Font Awesome 6 Sharp', 'Font Awesome 6 Brands', sans-serif !default;
+$monospace-font: Consolas, 'Liberation Mono', Courier, monospace !default;

@@ -16,14 +16,7 @@
     initial-value: 0%;
 }
 
-@property --gradient-color {
-    syntax: '<color>';
-    inherits: false;
-    initial-value: #dd1940;
-}
-
 :root {
-    --gradient-color: #dd1940;
     --black: #000000;
     --angle: 0deg;
     --color: #ffffff;

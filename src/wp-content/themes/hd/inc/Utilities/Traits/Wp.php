@@ -857,99 +857,161 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
+	 * Query posts/products by a single term.
+	 *
 	 * @param mixed $term
 	 * @param string $post_type
-	 * @param bool $include_children
-	 * @param int $posts_per_page
-	 * @param array|null $orderby
-	 * @param array|null $meta_query
-	 * @param bool|string $strtotime_recent
+	 * @param int|null $limit
+	 * @param bool $return_query
+	 * @param bool|null $include_children
+	 * @param string $orderby
+	 * @param string $order
 	 *
-	 * @return \WP_Query|bool
+	 * @return array|false|int[]|mixed|\stdClass|\WP_Post[]|\WP_Query
 	 */
 	public static function queryByTerm(
 		mixed $term,
 		string $post_type = 'post',
-		bool $include_children = false,
-		int $posts_per_page = - 1,
-		?array $orderby = null,
-		?array $meta_query = null,
-		bool|string $strtotime_recent = false
-	): \WP_Query|bool {
+		?int $limit = 12,
+		bool $return_query = false,
+		?bool $include_children = true,
+		string $orderby = 'date',
+		string $order = 'DESC',
+	): mixed {
 		if ( ! $term ) {
 			return false;
 		}
 
-		$posts_per_page = max( $posts_per_page, - 1 );
-		$_args          = [
-			'post_type'              => $post_type,
-			'post_status'            => 'publish',
-			'posts_per_page'         => $posts_per_page,
-			'ignore_sticky_posts'    => true,
-			'no_found_rows'          => true,
-			'update_post_meta_cache' => false,
-			'update_post_term_cache' => false,
-			'tax_query'              => [ 'relation' => 'AND' ],
-		];
-
 		// Convert a term to object if it is not already
-		if ( ! is_object( $term ) ) {
-			$term = self::toObject( $term );
+		$term = is_object( $term ) ? $term : self::toObject( $term );
+		if ( ! $term || empty( $term->taxonomy ) || empty( $term->term_id ) || empty( $term->slug ) ) {
+			return false;
 		}
 
-		if ( isset( $term->taxonomy, $term->term_id ) ) {
-			$_args['tax_query'][] = [
-				'taxonomy'         => $term->taxonomy,
-				'terms'            => [ $term->term_id ],
-				'include_children' => $include_children,
-				'operator'         => 'IN',
-			];
+		$include_children = (bool) $include_children;
+		$taxonomy         = (string) $term->taxonomy;
+		$term_ids[]       = (int) $term->term_id;
+		$term_slugs[]     = (string) $term->slug;
+
+		$field = ! empty( $term_ids ) ? 'term_id' : 'slug';
+		$terms = ! empty( $term_ids ) ? $term_ids : $term_slugs;
+
+		// Normalize limit
+		$limit = (int) $limit;
+		if ( $limit <= 0 ) {
+			$limit = - 1;
 		}
 
-		// Set orderly if provided
-		if ( ! empty( $orderby ) ) {
-			$_args['orderby'] = $orderby;
+		// Normalize orderby & order
+		$is_product = ( $post_type === 'product' && \function_exists( 'wc_get_products' ) );
+		$allowed_wp = [ 'date', 'title', 'menu_order', 'rand', 'modified', 'id' ];
+		$allowed_wc = [ 'date', 'price', 'rating', 'popularity', 'title', 'menu_order', 'rand', 'id', 'modified' ];
+		$allowed    = $is_product ? $allowed_wc : $allowed_wp;
+		$ob         = in_array( strtolower( $orderby ), $allowed, true ) ? strtolower( $orderby ) : 'date';
+		$od         = ( strtoupper( $order ) === 'ASC' ) ? 'ASC' : 'DESC';
+		$is_rand    = ( $ob === 'rand' );
+
+		// Woo: hide out of stock
+		$hide_oos = ( $is_product && self::getOption( 'woocommerce_hide_out_of_stock_items' ) === 'yes' );
+
+		// Cache key
+		$ckey_parts = [ $post_type, $taxonomy, $field, $terms, $limit, $ob, $od, $hide_oos, $include_children ];
+		$ckey       = 'qbt:byterm:' . md5( wp_json_encode( $ckey_parts ) );
+
+		$ids = false;
+
+		// If rand
+		if ( ! $is_rand ) {
+			$ids = wp_cache_get( $ckey, 'qbt' );
 		}
 
-		// Merge meta_query if provided
-		if ( ! empty( $meta_query ) ) {
-			$_args = array_merge( $_args, $meta_query );
-		}
-
-		// Handle date_query for recent posts
-		if ( $strtotime_recent ) {
-			$recent = strtotime( $strtotime_recent );
-			if ( $recent ) {
-				$_args['date_query'] = [
-					'after' => [
-						'year'  => date( 'Y', $recent ),
-						'month' => date( 'n', $recent ),
-						'day'   => date( 'j', $recent ),
-					],
+		if ( $ids === false ) {
+			// Products
+			if ( $is_product ) {
+				$wc_args = [
+					'status'  => 'publish',
+					'limit'   => $limit,
+					'return'  => 'ids',
+					'orderby' => $ob,
+					'order'   => $od,
 				];
+
+				// product_cat/product_tag
+				if ( in_array( $taxonomy, [ 'product_cat', 'product_tag' ], true ) ) {
+					if ( $include_children === true ) {
+						$taxonomy === 'product_cat' && $wc_args['category'] = $term_slugs;
+						$taxonomy === 'product_tag' && $wc_args['tag'] = $term_slugs;
+					} else {
+						$wc_args['tax_query'] = [
+							[
+								'taxonomy'         => $taxonomy,
+								'field'            => $field,
+								'terms'            => $terms,
+								'operator'         => 'IN',
+								'include_children' => false,
+							],
+						];
+					}
+
+					if ( $hide_oos ) {
+						$wc_args['stock_status'] = 'instock';
+					}
+
+					$ids = \wc_get_products( $wc_args );
+				}
+			} else { /* not product */
+
+				$args = [
+					'post_type'           => $post_type,
+					'post_status'         => 'publish',
+					'posts_per_page'      => $limit,
+					'fields'              => 'ids',
+					'no_found_rows'       => true,
+					'ignore_sticky_posts' => true,
+					'tax_query'           => [
+						[
+							'taxonomy'         => $taxonomy,
+							'field'            => $field,
+							'terms'            => $terms,
+							'operator'         => 'IN',
+							'include_children' => $include_children,
+						],
+					],
+					'orderby'             => $ob,
+					'order'               => $od,
+				];
+
+				$q   = new \WP_Query( $args );
+				$ids = $q->posts ?: [];
+			}
+
+			if ( ! $is_rand ) {
+				wp_cache_set( $ckey, $ids, 'qbt', 600 );
 			}
 		}
 
-		// Handle WooCommerce specific visibility settings
-		if ( 'product' === $post_type &&
-		     'yes' === self::getOption( 'woocommerce_hide_out_of_stock_items' ) &&
-		     self::checkPluginActive( 'woocommerce/woocommerce.php' )
-		) {
-			$product_visibility_term_ids = \wc_get_product_visibility_term_ids();
-			$_args['tax_query'][]        = [
-				[
-					'taxonomy' => 'product_visibility',
-					'field'    => 'term_taxonomy_id',
-					'terms'    => $product_visibility_term_ids['outofstock'],
-					'operator' => 'NOT IN',
-				],
-			];
+		if ( empty( $ids ) ) {
+			return false;
 		}
 
-		self::setPostsPerPage( $posts_per_page );
-		$_query = new \WP_Query( $_args );
+		// return ids
+		if ( ! $return_query ) {
+			return $ids;
+		}
 
-		return $_query->have_posts() ? $_query : false;
+		// return \WP_Query
+		return new \WP_Query( [
+			'post_type'              => $post_type,
+			'post_status'            => 'publish',
+			'posts_per_page'         => count( $ids ),
+			'post__in'               => $ids,
+			'orderby'                => 'post__in',
+			'no_found_rows'          => true,
+			'ignore_sticky_posts'    => true,
+			'update_post_meta_cache' => false,
+			'update_post_term_cache' => false,
+			'lazy_load_term_meta'    => false,
+		] );
 	}
 
 	// -------------------------------------------------------------
@@ -960,97 +1022,151 @@ trait Wp {
 	 * @param array $term_ids The term IDs to query.
 	 * @param string $post_type The post-type to query. The default is 'post'.
 	 * @param string $taxonomy The taxonomy to query. Default is 'category'.
-	 * @param bool $include_children Whether to include children of the terms. Default is false.
-	 * @param int $posts_per_page Number of posts to return. Default is -1.
-	 * @param array|null $orderby Array of orderby parameters.
-	 * @param array|null $meta_query Array of meta query parameters.
-	 * @param bool|string $strtotime_str Timestamp string for recent posts. Default is false.
+	 * @param int|null $limit
+	 * @param bool $return_query
+	 * @param bool|null $include_children
+	 * @param string $orderby Array of orderby parameters.
+	 * @param string $order
 	 *
-	 * @return \WP_Query|false False on failure or if no posts found, WP_Query object on success.
+	 * @return \WP_Query|false|array False on failure or if no posts found, WP_Query object on success.
 	 */
 	public static function queryByTerms(
 		array $term_ids,
 		string $post_type = 'post',
 		string $taxonomy = 'category',
-		bool $include_children = false,
-		int $posts_per_page = - 1,
-		?array $orderby = null,
-		?array $meta_query = null,
-		bool|string $strtotime_str = false,
-	): \WP_Query|false {
-		$posts_per_page = max( $posts_per_page, - 1 );
+		?int $limit = 12,
+		bool $return_query = true,
+		?bool $include_children = false,
+		string $orderby = 'date',
+		string $order = 'DESC',
+	): \WP_Query|false|array {
+		$term_ids = array_values( array_unique( array_map( 'intval', $term_ids ) ) );
+		if ( empty( $term_ids ) ) {
+			return false;
+		}
 
-		$_args = [
+		if ( ! $taxonomy ) {
+			$taxonomy = ( $post_type === 'product' ) ? 'product_cat' : 'category';
+		}
+
+		// Normalize limit
+		$limit = (int) $limit;
+		if ( $limit <= 0 ) {
+			$limit = - 1;
+		}
+
+		// Normalize orderby & order
+		$is_product       = ( $post_type === 'product' && \function_exists( 'wc_get_products' ) );
+		$allowed_wp       = [ 'date', 'title', 'menu_order', 'rand', 'modified', 'id' ];
+		$allowed_wc       = [
+			'date',
+			'price',
+			'rating',
+			'popularity',
+			'title',
+			'menu_order',
+			'rand',
+			'id',
+			'modified'
+		];
+		$allowed          = $is_product ? $allowed_wc : $allowed_wp;
+		$ob               = in_array( strtolower( $orderby ), $allowed, true ) ? strtolower( $orderby ) : 'date';
+		$od               = ( strtoupper( $order ) === 'ASC' ) ? 'ASC' : 'DESC';
+		$is_rand          = ( $ob === 'rand' );
+		$include_children = (bool) $include_children;
+
+		// Woo: hide out of stock
+		$hide_oos = ( $is_product && self::getOption( 'woocommerce_hide_out_of_stock_items' ) === 'yes' );
+
+		// Cache key
+		$ckey_parts = [ $post_type, $taxonomy, $term_ids, $limit, $ob, $od, $hide_oos, $include_children ];
+		$ckey       = 'qbt:byterms:' . md5( wp_json_encode( $ckey_parts ) );
+
+		$ids = false;
+
+		// If rand
+		if ( ! $is_rand ) {
+			$ids = wp_cache_get( $ckey, 'qbt' );
+		}
+
+		if ( $ids === false ) {
+			// Products
+			if ( $is_product ) {
+				$wc_args = [
+					'status'    => 'publish',
+					'limit'     => $limit,
+					'return'    => 'ids',
+					'orderby'   => $ob,
+					'order'     => $od,
+					'tax_query' => [
+						[
+							'taxonomy'         => $taxonomy,
+							'field'            => 'term_id',
+							'terms'            => $term_ids,
+							'operator'         => 'IN',
+							'include_children' => $include_children,
+						]
+					],
+				];
+
+				if ( $hide_oos ) {
+					$wc_args['stock_status'] = 'instock';
+				}
+
+				$ids = \wc_get_products( $wc_args );
+			} else { /* not product */
+
+				$args = [
+					'post_type'           => $post_type,
+					'post_status'         => 'publish',
+					'posts_per_page'      => $limit,
+					'fields'              => 'ids',
+					'no_found_rows'       => true,
+					'ignore_sticky_posts' => true,
+					'tax_query'           => [
+						[
+							'taxonomy'         => $taxonomy,
+							'field'            => 'term_id',
+							'terms'            => $term_ids,
+							'operator'         => 'IN',
+							'include_children' => $include_children,
+						]
+					],
+					'orderby'             => $ob,
+					'order'               => $od,
+				];
+
+				$q   = new \WP_Query( $args );
+				$ids = $q->posts ?: [];
+			}
+
+			if ( ! $is_rand ) {
+				wp_cache_set( $ckey, $ids, 'qbt', 600 );
+			}
+		}
+
+		if ( empty( $ids ) ) {
+			return false;
+		}
+
+		// return ids
+		if ( ! $return_query ) {
+			return $ids;
+		}
+
+		// \WP_Query
+		return new \WP_Query( [
 			'post_type'              => $post_type,
 			'post_status'            => 'publish',
-			'posts_per_page'         => $posts_per_page,
+			'posts_per_page'         => count( $ids ),
+			'post__in'               => $ids,
+			'orderby'                => 'post__in',
 			'no_found_rows'          => true,
 			'ignore_sticky_posts'    => true,
 			'update_post_meta_cache' => false,
 			'update_post_term_cache' => false,
-			'tax_query'              => [ 'relation' => 'AND' ],
-		];
-
-		// Set taxonomy to default if not provided
-		if ( ! $taxonomy ) {
-			$taxonomy = 'category';
-		}
-
-		// Add terms to the tax query
-		if ( count( $term_ids ) > 0 ) {
-			$_args['tax_query'][] = [
-				'taxonomy'         => $taxonomy,
-				'terms'            => $term_ids,
-				'field'            => 'term_id',
-				'include_children' => $include_children,
-				'operator'         => 'IN',
-			];
-		}
-
-		// Set orderby if provided
-		if ( ! empty( $orderby ) ) {
-			$_args['orderby'] = $orderby;
-		}
-
-		// Merge meta_query if provided
-		if ( ! empty( $meta_query ) ) {
-			$_args = array_merge( $_args, $meta_query );
-		}
-
-		// Handle date_query for recent posts
-		if ( $strtotime_str ) {
-			$recent = strtotime( $strtotime_str );
-			if ( $recent ) {
-				$_args['date_query'] = [
-					'after' => [
-						'year'  => date( 'Y', $recent ),
-						'month' => date( 'n', $recent ),
-						'day'   => date( 'j', $recent ),
-					],
-				];
-			}
-		}
-
-		// Handle WooCommerce specific visibility settings
-		if ( 'product' === $post_type &&
-		     'yes' === self::getOption( 'woocommerce_hide_out_of_stock_items' ) &&
-		     self::checkPluginActive( 'woocommerce/woocommerce.php' )
-		) {
-			$product_visibility_term_ids = \wc_get_product_visibility_term_ids();
-			$_args['tax_query'][]        = [
-				[
-					'taxonomy' => 'product_visibility',
-					'field'    => 'term_taxonomy_id',
-					'terms'    => $product_visibility_term_ids['outofstock'],
-					'operator' => 'NOT IN',
-				],
-			];
-		}
-
-		self::setPostsPerPage( $posts_per_page );
-		$query_result = new \WP_Query( $_args );
-
-		return $query_result->have_posts() ? $query_result : false;
+			'lazy_load_term_meta'    => false,
+		] );
 	}
 
 	// -------------------------------------------------------------
@@ -2029,7 +2145,8 @@ trait Wp {
 				}
 			}
 
-			//$breadcrumbs[] = $before . get_the_title() . $after;
+			$before        = '<li class="current current-title">';
+			$breadcrumbs[] = $before . get_the_title() . $after;
 
 		} // Search page
 		elseif ( is_search() ) {
@@ -2059,12 +2176,15 @@ trait Wp {
 			$cat_obj = get_queried_object();
 
 			if ( $cat_obj && $cat_obj->parent ) {
-				$cat_code      = get_term_parents_list( $cat_obj?->term_id, $cat_obj->taxonomy, [ 'separator' => '' ] );
+				$cat_code      = get_term_parents_list( $cat_obj?->term_id, $cat_obj?->taxonomy, [
+					'separator' => '',
+					'inclusive' => false
+				] );
 				$cat_code      = str_replace( '<a', '<li><a', $cat_code );
 				$breadcrumbs[] = str_replace( '</a>', '</a></li>', $cat_code );
 			}
 
-			$breadcrumbs[] = $before . single_cat_title( '', false ) . $after;
+			$breadcrumbs[] = $before . '<a href="' . get_term_link( $cat_obj, $cat_obj?->taxonomy ) . '">' . single_cat_title( '', false ) . '</a>' . $after;
 
 		} // 404 Page
 		elseif ( is_404() ) {
