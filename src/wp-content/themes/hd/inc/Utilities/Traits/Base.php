@@ -293,12 +293,12 @@ trait Base {
 
 		if (
 			\function_exists( 'is_plugin_active_for_network' ) &&
-			is_multisite() && is_plugin_active_for_network( $plugin_file )
+			\is_multisite() && \is_plugin_active_for_network( $plugin_file )
 		) {
 			return true;
 		}
 
-		return is_plugin_active( $plugin_file );
+		return \is_plugin_active( $plugin_file );
 	}
 
 	// -------------------------------------------------------------
@@ -326,7 +326,10 @@ trait Base {
 	 * @return bool
 	 */
 	public static function isAcfActive(): bool {
-		if ( \function_exists( 'acf' ) || \class_exists( 'ACF', false ) ) {
+		if (
+			\function_exists( 'acf' ) ||
+			\class_exists( 'ACF', false )
+		) {
 			return true;
 		}
 
@@ -341,7 +344,10 @@ trait Base {
 	 * @return bool
 	 */
 	public static function isAcfProActive(): bool {
-		if ( \defined( 'ACF_PRO' ) || \class_exists( 'acf_pro', false ) ) {
+		if (
+			\defined( 'ACF_PRO' ) ||
+			\class_exists( 'acf_pro', false )
+		) {
 			return true;
 		}
 
@@ -371,8 +377,28 @@ trait Base {
 	/**
 	 * @return bool
 	 */
+	public static function isRankMathActive(): bool {
+		if (
+			\class_exists( 'RankMath', false ) ||
+			\class_exists( 'RankMathPro', false )
+		) {
+			return true;
+		}
+
+		return self::checkPluginActive( 'seo-by-rank-math/rank-math.php' ) ||
+		       self::checkPluginActive( 'seo-by-rank-math-pro/rank-math-pro.php' );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @return bool
+	 */
 	public static function isCf7Active(): bool {
-		if ( \defined( 'WPCF7_PLUGIN_BASENAME' ) || \class_exists( 'WPCF7', false ) ) {
+		if (
+			\defined( 'WPCF7_PLUGIN_BASENAME' ) ||
+			\class_exists( 'WPCF7', false )
+		) {
 			return true;
 		}
 

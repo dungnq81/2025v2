@@ -1103,7 +1103,10 @@ final class Helper {
 	 * @return bool
 	 */
 	public static function isAcfActive(): bool {
-		if ( \function_exists( 'acf' ) || \class_exists( 'ACF', false ) ) {
+		if (
+			\function_exists( 'acf' ) ||
+			\class_exists( 'ACF', false )
+		) {
 			return true;
 		}
 
@@ -1118,7 +1121,10 @@ final class Helper {
 	 * @return bool
 	 */
 	public static function isAcfProActive(): bool {
-		if ( \defined( 'ACF_PRO' ) || \class_exists( 'acf_pro', false ) ) {
+		if (
+			\defined( 'ACF_PRO' ) ||
+			\class_exists( 'acf_pro', false )
+		) {
 			return true;
 		}
 
@@ -1149,7 +1155,10 @@ final class Helper {
 	 * @return bool
 	 */
 	public static function isRankMathActive(): bool {
-		if ( \class_exists( 'RankMath', false ) || \class_exists( 'RankMathPro', false ) ) {
+		if (
+			\class_exists( 'RankMath', false ) ||
+			\class_exists( 'RankMathPro', false )
+		) {
 			return true;
 		}
 

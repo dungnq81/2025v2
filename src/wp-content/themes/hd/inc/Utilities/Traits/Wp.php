@@ -860,24 +860,28 @@ trait Wp {
 	 * Query posts/products by a single term.
 	 *
 	 * @param mixed $term
-	 * @param string $post_type
+	 * @param string|bool $post_type
 	 * @param int|null $limit
 	 * @param bool $return_query
 	 * @param bool|null $include_children
+	 * @param array $exclude_ids
 	 * @param string $orderby
 	 * @param string $order
+	 * @param int $cache_expire
 	 *
-	 * @return array|false|int[]|mixed|\stdClass|\WP_Post[]|\WP_Query
+	 * @return array|false|\WP_Query
 	 */
 	public static function queryByTerm(
 		mixed $term,
-		string $post_type = 'post',
+		string|bool $post_type = 'post',
 		?int $limit = 12,
 		bool $return_query = false,
 		?bool $include_children = true,
+		array $exclude_ids = [],
 		string $orderby = 'date',
 		string $order = 'DESC',
-	): mixed {
+		int $cache_expire = 600,
+	): \WP_Query|false|array {
 		if ( ! $term ) {
 			return false;
 		}
@@ -888,6 +892,7 @@ trait Wp {
 			return false;
 		}
 
+		$exclude_ids      = array_values( array_unique( array_map( 'intval', $exclude_ids ) ) );
 		$include_children = (bool) $include_children;
 		$taxonomy         = (string) $term->taxonomy;
 		$term_ids[]       = (int) $term->term_id;
@@ -898,7 +903,7 @@ trait Wp {
 
 		// Normalize limit
 		$limit = (int) $limit;
-		if ( $limit <= 0 ) {
+		if ( $limit < 0 ) {
 			$limit = - 1;
 		}
 
@@ -926,6 +931,7 @@ trait Wp {
 		}
 
 		if ( $ids === false ) {
+
 			// Products
 			if ( $is_product ) {
 				$wc_args = [
@@ -934,6 +940,7 @@ trait Wp {
 					'return'  => 'ids',
 					'orderby' => $ob,
 					'order'   => $od,
+					'exclude' => $exclude_ids,
 				];
 
 				// product_cat/product_tag
@@ -979,6 +986,7 @@ trait Wp {
 					],
 					'orderby'             => $ob,
 					'order'               => $od,
+					'post__not_in'        => $exclude_ids,
 				];
 
 				$q   = new \WP_Query( $args );
@@ -986,7 +994,7 @@ trait Wp {
 			}
 
 			if ( ! $is_rand ) {
-				wp_cache_set( $ckey, $ids, 'qbt', 600 );
+				wp_cache_set( $ckey, $ids, 'qbt', $cache_expire );
 			}
 		}
 
@@ -1019,28 +1027,34 @@ trait Wp {
 	/**
 	 * Query posts by multiple terms.
 	 *
-	 * @param array $term_ids The term IDs to query.
-	 * @param string $post_type The post-type to query. The default is 'post'.
-	 * @param string $taxonomy The taxonomy to query. Default is 'category'.
+	 * @param array|null $term_ids
+	 * @param string|bool $post_type
+	 * @param string $taxonomy
 	 * @param int|null $limit
 	 * @param bool $return_query
 	 * @param bool|null $include_children
-	 * @param string $orderby Array of orderby parameters.
+	 * @param array $exclude_ids
+	 * @param string $orderby
 	 * @param string $order
+	 * @param int $cache_expire
 	 *
-	 * @return \WP_Query|false|array False on failure or if no posts found, WP_Query object on success.
+	 * @return \WP_Query|false|array
 	 */
 	public static function queryByTerms(
-		array $term_ids,
-		string $post_type = 'post',
-		string $taxonomy = 'category',
+		?array $term_ids,
+		string|bool $post_type = 'post',
+		string $taxonomy = '',
 		?int $limit = 12,
 		bool $return_query = true,
 		?bool $include_children = false,
+		array $exclude_ids = [],
 		string $orderby = 'date',
 		string $order = 'DESC',
+		int $cache_expire = 600,
 	): \WP_Query|false|array {
-		$term_ids = array_values( array_unique( array_map( 'intval', $term_ids ) ) );
+		$term_ids    = array_values( array_unique( array_map( 'intval', $term_ids ) ) );
+		$exclude_ids = array_values( array_unique( array_map( 'intval', $exclude_ids ) ) );
+
 		if ( empty( $term_ids ) ) {
 			return false;
 		}
@@ -1051,7 +1065,7 @@ trait Wp {
 
 		// Normalize limit
 		$limit = (int) $limit;
-		if ( $limit <= 0 ) {
+		if ( $limit < 0 ) {
 			$limit = - 1;
 		}
 
@@ -1090,6 +1104,7 @@ trait Wp {
 		}
 
 		if ( $ids === false ) {
+
 			// Products
 			if ( $is_product ) {
 				$wc_args = [
@@ -1107,6 +1122,7 @@ trait Wp {
 							'include_children' => $include_children,
 						]
 					],
+					'exclude'   => $exclude_ids,
 				];
 
 				if ( $hide_oos ) {
@@ -1134,6 +1150,7 @@ trait Wp {
 					],
 					'orderby'             => $ob,
 					'order'               => $od,
+					'post__not_in'        => $exclude_ids,
 				];
 
 				$q   = new \WP_Query( $args );
@@ -1141,7 +1158,7 @@ trait Wp {
 			}
 
 			if ( ! $is_rand ) {
-				wp_cache_set( $ckey, $ids, 'qbt', 600 );
+				wp_cache_set( $ckey, $ids, 'qbt', $cache_expire );
 			}
 		}
 
@@ -1172,81 +1189,159 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param string $post_type
-	 * @param int $posts_per_page
-	 * @param bool|string $strtotime_str
+	 * @param string|bool $post_type
+	 * @param int|null $posts_per_page
+	 * @param bool $return_query
+	 * @param array $exclude_ids
+	 * @param string|bool $strtotime_str
+	 * @param int $cache_expire
 	 *
-	 * @return false|\WP_Query
+	 * @return array|false|\WP_Query
 	 */
-	public static function queryByLatestPosts( string $post_type = 'post', int $posts_per_page = - 1, bool|string $strtotime_str = false ): \WP_Query|false {
-		$posts_per_page = max( $posts_per_page, - 1 );
-		$_args          = [
-			'update_post_meta_cache' => false,
-			'update_post_term_cache' => false,
-			'post_type'              => $post_type,
-			'post_status'            => 'publish',
-			'posts_per_page'         => $posts_per_page,
-			'no_found_rows'          => true,
-			'ignore_sticky_posts'    => true,
-		];
+	public static function queryByLatestPosts(
+		string|bool $post_type = 'post',
+		?int $posts_per_page = 10,
+		bool $return_query = true,
+		array $exclude_ids = [],
+		string|bool $strtotime_str = false,
+		int $cache_expire = 600,
+	): \WP_Query|false|array {
+		$exclude_ids    = array_values( array_unique( array_map( 'intval', $exclude_ids ) ) );
+		$posts_per_page = (int) $posts_per_page;
+		if ( $posts_per_page < 0 ) {
+			$posts_per_page = - 1;
+		}
 
 		// Handle date_query for recent posts
+		$since_ts = false;
 		if ( $strtotime_str ) {
-			$recent = strtotime( $strtotime_str );
-			if ( $recent ) {
-				$_args['date_query'] = [
-					'after' => [
-						'year'  => date( 'Y', $recent ),
-						'month' => date( 'n', $recent ),
-						'day'   => date( 'j', $recent ),
-					],
-				];
+			$tmp = strtotime( (string) $strtotime_str );
+			if ( $tmp && $tmp > 0 ) {
+				$since_ts = ( $tmp <= time() ) ? $tmp : false;
 			}
 		}
 
-		self::setPostsPerPage( $posts_per_page );
-		$query_result = new \WP_Query( $_args );
+		$is_product = ( $post_type === 'product' && \function_exists( 'wc_get_products' ) );
+		$ckey_parts = [ 'latest', $post_type, $posts_per_page, (int) $since_ts ];
+		$ckey       = 'qbt:latest:' . md5( wp_json_encode( $ckey_parts ) );
 
-		return $query_result->have_posts() ? $query_result : false;
+		$ids = wp_cache_get( $ckey, 'qbt' );
+		if ( $ids === false ) {
+
+			if ( $is_product && $since_ts === false ) {
+				$wc_args = [
+					'status'  => 'publish',
+					'limit'   => $posts_per_page,
+					'return'  => 'ids',
+					'orderby' => 'date',
+					'order'   => 'DESC',
+					'exclude' => $exclude_ids,
+				];
+
+				// Woo: hide out of stock
+				$hide_oos = ( self::getOption( 'woocommerce_hide_out_of_stock_items' ) === 'yes' );
+				if ( $hide_oos ) {
+					$wc_args['stock_status'] = 'instock';
+				}
+
+				$ids = \wc_get_products( $wc_args );
+				$ids = is_array( $ids ) ? $ids : [];
+			} else {
+
+				$_args = [
+					'post_type'           => $post_type,
+					'post_status'         => 'publish',
+					'fields'              => 'ids',
+					'posts_per_page'      => $posts_per_page,
+					'no_found_rows'       => true,
+					'ignore_sticky_posts' => true,
+					'orderby'             => 'date',
+					'order'               => 'DESC',
+					'post__not_in'        => $exclude_ids,
+				];
+
+				if ( $since_ts ) {
+					$_args['date_query'] = [
+						[
+							'after'     => [
+								'year'  => (int) date( 'Y', $since_ts ),
+								'month' => (int) date( 'n', $since_ts ),
+								'day'   => (int) date( 'j', $since_ts ),
+							],
+							'inclusive' => true,
+						],
+					];
+				}
+
+				$q   = new \WP_Query( $_args );
+				$ids = $q->posts ?: [];
+			}
+
+			wp_cache_set( $ckey, $ids, 'qbt', $cache_expire );
+		}
+
+		if ( empty( $ids ) ) {
+			return false;
+		}
+
+		// return ids
+		if ( ! $return_query ) {
+			return $ids;
+		}
+
+		// \WP_Query
+		return new \WP_Query( [
+			'post_type'              => $post_type,
+			'post_status'            => 'publish',
+			'posts_per_page'         => count( $ids ),
+			'post__in'               => $ids,
+			'orderby'                => 'post__in',
+			'no_found_rows'          => true,
+			'ignore_sticky_posts'    => true,
+			'update_post_meta_cache' => false,
+			'update_post_term_cache' => false,
+			'lazy_load_term_meta'    => false,
+		] );
 	}
 
 	// -------------------------------------------------------------
 
 	/**
 	 * @param $post_id
-	 * @param $taxonomy
+	 * @param string $taxonomy
 	 * @param int $post_count
+	 * @param bool $return_query
+	 * @param int $cache_expire
 	 *
-	 * @return \WP_Query|null
+	 * @return array|false|\WP_Query
 	 */
-	public static function queryByRelated( $post_id, $taxonomy, int $post_count = 6 ): ?\WP_Query {
+	public static function queryByRelated(
+		$post_id,
+		string $taxonomy = '',
+		int $post_count = 6,
+		bool $return_query = true,
+		int $cache_expire = 600,
+	): \WP_Query|false|array {
 		$post_terms = get_the_terms( $post_id, $taxonomy );
 		if ( ! is_array( $post_terms ) || empty( $post_terms ) ) {
-			return null;
+			return false;
 		}
 
-		// Extract term IDs for further processing
-		$term_ids = wp_list_pluck( $post_terms, 'term_id' );
+		$term_ids  = wp_list_pluck( $post_terms, 'term_id' );
+		$post_type = get_post_type( $post_id );
 
-		$args = [
-			'post_type'      => get_post_type( $post_id ),
-			'posts_per_page' => $post_count,
-			'post__not_in'   => [ $post_id ],
-			'orderby'        => 'date',
-			'order'          => 'DESC',
-			'tax_query'      => [
-				[
-					'taxonomy' => $taxonomy,
-					'field'    => 'term_id',
-					'terms'    => $term_ids,
-				],
-			],
-		];
-
-		self::setPostsPerPage( $post_count );
-		$query = new \WP_Query( $args );
-
-		return $query->have_posts() ? $query : null;
+		return self::queryByTerms(
+			$term_ids,
+			$post_type,
+			$taxonomy,
+			$post_count,
+			$return_query,
+			false,
+			[ $post_id ],
+			'date',
+			'DESC',
+			$cache_expire
+		);
 	}
 
 	// -------------------------------------------------------------

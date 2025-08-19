@@ -1,12 +1,12 @@
 // script-loader.js
 
 const scriptLoader = (timeout = 3000, scriptSelector = 'script[data-type="lazy"]') => {
-    const userInteractionEvents = [ 'mouseover', 'keydown', 'touchstart', 'touchmove', 'wheel' ];
+    const userInteractionEvents = ['mouseover', 'keydown', 'touchstart', 'touchmove', 'wheel'];
     const loadScriptsTimer = setTimeout(loadScripts, timeout);
 
     // Attach event listeners to trigger script loading on user interaction
     userInteractionEvents.forEach((event) => {
-        window.addEventListener(event, triggerScriptLoader, { once: true, passive: true });
+        window.addEventListener(event, triggerScriptLoader, {once: true, passive: true});
     });
 
     function triggerScriptLoader() {

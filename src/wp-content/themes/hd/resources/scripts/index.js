@@ -39,6 +39,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         ]
     });
 
+    //
+    // Fancybox
+    //
     //Fancybox.bind('.fcy-popup, .fcy-video, .banner-video a', {});
 
     // let $_array = ['[id^="gallery-"] a', '[data-rel="lightbox"]'];
@@ -48,6 +51,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     //     });
     // });
 
+    //
+    // Cookie
+    //
     //const token = await CookieService.get('auth_token');
     // console.log('Cookie token:', token);
 });
