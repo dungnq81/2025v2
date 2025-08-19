@@ -8,13 +8,13 @@
     ],
     "require": {
         "php": ">=8.2",
-        "vlucas/phpdotenv": "^v5.6.2",
-        "oscarotero/env": "^v2.1.1",
-        "roots/wp-config": "^1.0.0"
+        "vlucas/phpdotenv": "v5.6.2",
+        "oscarotero/env": "v2.1.1",
+        "roots/wp-config": "1.0.0"
     },
     "require-dev": {
-        "wp-cli/wp-cli-bundle": "^v2.12.0",
-        "symfony/var-dumper": "^v7.3.1",
+        "wp-cli/wp-cli-bundle": "v2.12.0",
+        "symfony/var-dumper": "v7.3.2",
         "roave/security-advisories": "dev-latest"
     },
     "minimum-stability": "dev",

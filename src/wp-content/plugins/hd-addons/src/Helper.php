@@ -1172,7 +1172,10 @@ final class Helper {
 	 * @return bool
 	 */
 	public static function isCf7Active(): bool {
-		if ( \defined( 'WPCF7_PLUGIN_BASENAME' ) || \class_exists( 'WPCF7', false ) ) {
+		if (
+			\defined( 'WPCF7_PLUGIN_BASENAME' ) ||
+			\class_exists( 'WPCF7', false )
+		) {
 			return true;
 		}
 

@@ -46,17 +46,17 @@ export default {
                 ...jsFiles.map((file) => `${resources}/scripts/${file}.js`),
             ],
             output: {
-                entryFileNames: `js/[name].[hash].js`,
-                chunkFileNames: `js/[name][hash].js`,
+                entryFileNames: `js/[name].js`,
+                chunkFileNames: `js/[name].js`,
                 manualChunks(id) {
                     if (id.includes('node_modules') || id.includes('scripts/3rd') || id.includes('styles/3rd')) {
-                        return 'vendor.[hash]';
+                        return '_vendor';
                     }
                 },
                 assetFileNames: (assetInfo) => {
                     const name = assetInfo.name || '';
                     if (name.endsWith('.css')) {
-                        return `css/[name].[hash].css`;
+                        return `css/[name].css`;
                     }
                     if (/\.(woff2?|ttf|otf|eot)$/i.test(name)) {
                         return `fonts/[name].[ext]`;

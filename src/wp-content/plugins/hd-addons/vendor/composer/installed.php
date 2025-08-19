@@ -3,7 +3,7 @@
         'name' => 'plugins/hd-addons',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '7072f84aa362ffbdf50773105dde764b2a37685e',
+        'reference' => '1ff6bcf1fcc3e8801e2e3186581ae6967e813252',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'enshrined/svg-sanitize' => array(
-            'pretty_version' => '0.21.0',
-            'version' => '0.21.0.0',
-            'reference' => '5e477468fac5c5ce933dce53af3e8e4e58dcccc9',
+            'pretty_version' => '0.22.0',
+            'version' => '0.22.0.0',
+            'reference' => '0afa95ea74be155a7bcd6c6fb60c276c39984500',
             'type' => 'library',
             'install_path' => __DIR__ . '/../enshrined/svg-sanitize',
             'aliases' => array(),
@@ -40,7 +40,7 @@
         'plugins/hd-addons' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '7072f84aa362ffbdf50773105dde764b2a37685e',
+            'reference' => '1ff6bcf1fcc3e8801e2e3186581ae6967e813252',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -49,7 +49,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => '3aaa2be71bcc17b49137b9e8ecd6619a5997b358',
+            'reference' => '45efa5832686533f38dc0445a8b185f6d0649c2f',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(

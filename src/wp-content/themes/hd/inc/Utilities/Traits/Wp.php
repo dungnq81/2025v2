@@ -820,7 +820,7 @@ trait Wp {
 		self::$target_post_types = $target_post_types;
 
 		// Add a hook with high priority to modify a query
-		add_action( 'pre_get_posts', [ __CLASS__, 'modifyPostsPerPage' ], 9999 );
+		add_action( 'pre_get_posts', [ __CLASS__, '_modifyPostsPerPage' ], 9999 );
 	}
 
 	// -------------------------------------------------------------
@@ -832,7 +832,7 @@ trait Wp {
 	 *
 	 * @return void
 	 */
-	public static function modifyPostsPerPage( \WP_Query $query ): void {
+	public static function _modifyPostsPerPage( \WP_Query $query ): void {
 		if ( self::isAdmin() || $query->is_main_query() ) {
 			return;
 		}
@@ -851,7 +851,7 @@ trait Wp {
 		$query->set( 'posts_per_page', self::$post_limit );
 
 		// Remove the hook immediately after execution to prevent affecting other queries
-		remove_action( 'pre_get_posts', [ __CLASS__, 'modifyPostsPerPage' ], 9999 );
+		remove_action( 'pre_get_posts', [ __CLASS__, '_modifyPostsPerPage' ], 9999 );
 	}
 
 	// -------------------------------------------------------------
@@ -875,7 +875,7 @@ trait Wp {
 		mixed $term,
 		string|bool $post_type = 'post',
 		?int $limit = 12,
-		bool $return_query = false,
+		bool $return_query = true,
 		?bool $include_children = true,
 		array $exclude_ids = [],
 		string $orderby = 'date',
@@ -931,7 +931,6 @@ trait Wp {
 		}
 
 		if ( $ids === false ) {
-
 			// Products
 			if ( $is_product ) {
 				$wc_args = [
@@ -1104,7 +1103,6 @@ trait Wp {
 		}
 
 		if ( $ids === false ) {
-
 			// Products
 			if ( $is_product ) {
 				$wc_args = [
@@ -1227,7 +1225,6 @@ trait Wp {
 
 		$ids = wp_cache_get( $ckey, 'qbt' );
 		if ( $ids === false ) {
-
 			if ( $is_product && $since_ts === false ) {
 				$wc_args = [
 					'status'  => 'publish',
@@ -1482,7 +1479,7 @@ trait Wp {
 	public static function siteTitleOrLogo( bool $echo = true, ?string $home_heading = 'h1', ?string $class = 'logo' ): ?string {
 		$logo_title = '';
 		$logo_class = ! empty( $class ) ? ' class="' . $class . '"' : '';
-		$home_link  = function_exists( 'pll_home_url' ) ? pll_home_url() : self::home( '/' );
+		$home_link  = \function_exists( 'pll_home_url' ) ? pll_home_url() : self::home( '/' );
 
 		if ( function_exists( 'the_custom_logo' ) && has_custom_logo() ) {
 			// replace \get_custom_logo() with self::customSiteLogo()

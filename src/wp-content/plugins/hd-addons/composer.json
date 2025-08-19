@@ -14,9 +14,9 @@
     },
     "require": {
         "php": ">=8.2",
-        "enshrined/svg-sanitize": "^0.21.0",
-        "symfony/yaml": "^v7.3.1",
-        "matthiasmullie/minify": "^1.3.75"
+        "enshrined/svg-sanitize": "0.22.0",
+        "symfony/yaml": "v7.3.2",
+        "matthiasmullie/minify": "1.3.75"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest"

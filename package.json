@@ -15,7 +15,7 @@
         "extends @wordpress/browserslist-config"
     ],
     "devDependencies": {
-        "@tailwindcss/vite": "^4.1.11",
+        "@tailwindcss/vite": "^4.1.12",
         "@vheemstra/vite-plugin-imagemin": "^2.2.0",
         "@wordpress/browserslist-config": "^6.28.0",
         "autoprefixer": "^10.4.21",
@@ -32,7 +32,7 @@
         "vite-plugin-static-copy": "^2.3.1"
     },
     "dependencies": {
-        "@fancyapps/ui": "^6.0.22",
+        "@fancyapps/ui": "^6.0.23",
         "aos": "^2.3.4",
         "current-device": "^0.10.2",
         "ensemble": "github:loltgt/ensemble",
@@ -41,9 +41,9 @@
         "jquery": "^3.7.1",
         "nanoid": "^5.1.5",
         "select2": "4.1.0-rc.0",
-        "sweetalert2": "^11.22.2",
+        "sweetalert2": "^11.22.4",
         "swiper": "^11.2.10",
-        "tailwindcss": "^4.1.11",
+        "tailwindcss": "^4.1.12",
         "vanilla-lazyload": "^19.1.3"
     }
 }
