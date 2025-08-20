@@ -74,9 +74,9 @@ trait Wp {
 	 * @param bool $referer
 	 * @param bool $display
 	 *
-	 * @return string|void
+	 * @return string|null
 	 */
-	public static function CSRFToken( string|int $action = - 1, string $name = '_csrf_token', bool $referer = false, bool $display = false ) {
+	public static function CSRFToken( string|int $action = - 1, string $name = '_csrf_token', bool $referer = false, bool $display = false ): ?string {
 		$name        = esc_attr( $name );
 		$token       = wp_create_nonce( $action );
 		$nonce_field = '<input type="hidden" id="' . self::random( 10 ) . '" name="' . $name . '" value="' . esc_attr( $token ) . '" />';
@@ -87,9 +87,11 @@ trait Wp {
 
 		if ( $display ) {
 			echo $nonce_field;
-		} else {
-			return $nonce_field;
+
+			return null;
 		}
+
+		return $nonce_field;
 	}
 
 	// -------------------------------------------------------------
@@ -429,9 +431,9 @@ trait Wp {
 	/**
 	 * @param array $args
 	 *
-	 * @return bool|string|void
+	 * @return false|string|null
 	 */
-	public static function verticalNav( array $args = [] ) {
+	public static function verticalNav( array $args = [] ): false|string|null {
 		$args = wp_parse_args(
 			$args,
 			[
@@ -449,21 +451,21 @@ trait Wp {
 
 		if ( true === $args['echo'] ) {
 			echo wp_nav_menu( $args );
-		} else {
-			return wp_nav_menu( $args );
+
+			return null;
 		}
+
+		return wp_nav_menu( $args );
 	}
 
 	// -------------------------------------------------------------
 
 	/**
-	 * @link http://codex.wordpress.org/Function_Reference/wp_nav_menu
-	 *
 	 * @param array $args
 	 *
-	 * @return bool|string|void
+	 * @return false|string|null
 	 */
-	public static function horizontalNav( array $args = [] ) {
+	public static function horizontalNav( array $args = [] ): false|string|null {
 		$args = wp_parse_args(
 			$args,
 			[
@@ -481,9 +483,11 @@ trait Wp {
 
 		if ( true === $args['echo'] ) {
 			echo wp_nav_menu( $args );
-		} else {
-			return wp_nav_menu( $args );
+
+			return null;
 		}
+
+		return wp_nav_menu( $args );
 	}
 
 	// -------------------------------------------------------------

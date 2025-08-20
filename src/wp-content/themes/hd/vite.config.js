@@ -29,6 +29,7 @@ const jsFiles = [
     // (components)
     'components/home',
     'components/preload-polyfill',
+    'components/social-share',
     'components/swiper',
     'components/woocommerce',
 

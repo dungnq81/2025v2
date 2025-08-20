@@ -134,12 +134,21 @@ final class Theme {
 		\HD_Asset::enqueueStyle( 'index-css', ASSETS_URL . 'css/index-css.css', [ 'vendor-css' ], $version );
 
 		/** JS */
-		\HD_Asset::enqueueScript( 'preload-js', ASSETS_URL . 'js/preload-polyfill.js', [], $version, false, [ 'module', 'async' ] );
-		\HD_Asset::enqueueScript( 'index-js', ASSETS_URL . 'js/index.js', [ 'jquery-core' ], $version, true, [ 'module', 'defer' ] );
+		\HD_Asset::enqueueScript( 'preload-js', ASSETS_URL . 'js/preload-polyfill.js', [], $version, false, [
+			'module',
+			'async'
+		] );
+		\HD_Asset::enqueueScript( 'index-js', ASSETS_URL . 'js/index.js', [ 'jquery-core' ], $version, true, [
+			'module',
+			'defer'
+		] );
 
 		/** Add-ons */
 		\HD_Asset::enqueueStyle( "swiper-css", ASSETS_URL . "css/swiper-css.css", [ "index-css" ], $version );
-		\HD_Asset::enqueueScript( 'swiper-js', ASSETS_URL . 'js/swiper.js', [ 'jquery-core' ], $version, true, [ 'module', 'defer' ] );
+		\HD_Asset::enqueueScript( 'swiper-js', ASSETS_URL . 'js/swiper.js', [ 'jquery-core' ], $version, true, [
+			'module',
+			'defer'
+		] );
 
 		/** Comments */
 		if ( is_singular() && comments_open() && \HD_Helper::getOption( 'thread_comments' ) ) {
@@ -193,7 +202,10 @@ final class Theme {
 
 		// Removes the styling added to the header for recent comments
 		global $wp_widget_factory;
-		remove_action( 'wp_head', [ $wp_widget_factory->widgets['WP_Widget_Recent_Comments'], 'recent_comments_style' ] );
+		remove_action( 'wp_head', [
+			$wp_widget_factory->widgets['WP_Widget_Recent_Comments'],
+			'recent_comments_style'
+		] );
 	}
 
 	// --------------------------------------------------

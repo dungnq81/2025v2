@@ -32,7 +32,7 @@ class LoginAttempts {
 
 	public function __construct() {
 		$_options                   = Helper::getOption( 'login_security__options' );
-		$this->limit_login_attempts = (int) ($_options['limit_login_attempts'] ?? 0);
+		$this->limit_login_attempts = (int) ( $_options['limit_login_attempts'] ?? 0 );
 
 		// Bail if optimization is disabled.
 		if ( $this->limit_login_attempts === 0 ) {

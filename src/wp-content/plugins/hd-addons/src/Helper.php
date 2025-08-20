@@ -97,9 +97,9 @@ final class Helper {
 			echo $nonce_field;
 
 			return null;
-		} else {
-			return $nonce_field;
 		}
+
+		return $nonce_field;
 	}
 
 	// --------------------------------------------------

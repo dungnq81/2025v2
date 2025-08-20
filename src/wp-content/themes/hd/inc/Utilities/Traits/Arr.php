@@ -91,7 +91,7 @@ trait Arr {
 			return wp_is_numeric_array( $array );
 		}
 
-		return array_keys( $array ) === range( 0, count( $array ) - 1 );
+		return array_is_list( $array );
 	}
 
 	// --------------------------------------------------

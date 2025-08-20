@@ -13,7 +13,7 @@ class LoginUrl {
 	/* ---------- CONFIG -------------------------------------------------- */
 
 	private const CLU_TOKEN = 'token';
-	private array $options  = [];
+	private array $options = [];
 
 	/* ---------- CONSTRUCT ----------------------------------------------- */
 

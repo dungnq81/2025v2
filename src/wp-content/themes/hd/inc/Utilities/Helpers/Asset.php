@@ -13,37 +13,61 @@ final class Asset {
 	// ----------------------------------------
 
 	/**
-	 * @param string $handle
-	 * @param string $src
+	 * @param string|array $handle
+	 * @param string|bool|null $src
 	 * @param array $deps
 	 * @param string|bool|null $ver
 	 * @param string $media
 	 *
 	 * @return void
 	 */
-	public static function enqueueStyle( string $handle, string $src, array $deps = [], string|bool|null $ver = null, string $media = 'all' ): void {
-		if ( empty( $src ) ) {
+	public static function enqueueStyle(
+		string|array $handle,
+		string|bool|null $src = null,
+		array $deps = [],
+		string|bool|null $ver = null,
+		string $media = 'all'
+	): void {
+		if ( is_array( $handle ) ) {
+			$args = wp_parse_args( $handle, [
+				'handle' => '',
+				'src'    => null,
+				'url'    => null,
+				'deps'   => [],
+				'ver'    => null,
+				'media'  => 'all',
+			] );
+
+			// url
+			if ( empty( $args['src'] ) && ! empty( $args['url'] ) ) {
+				$args['src'] = $args['url'];
+			}
+		} else {
+			$args = [
+				'handle' => $handle,
+				'src'    => $src,
+				'deps'   => $deps,
+				'ver'    => $ver,
+				'media'  => $media,
+			];
+		}
+
+		if ( empty( $args['handle'] ) || empty( $args['src'] ) ) {
 			return;
 		}
 
-		$args = [
-			'src'   => $src,
-			'deps'  => $deps,
-			'ver'   => $ver,
-			'media' => $media,
-		];
-
-		if ( ! wp_style_is( $handle, 'registered' ) ) {
-			wp_register_style( $handle, $args['src'], $args['deps'], $args['ver'], $args['media'] );
+		if ( ! wp_style_is( $args['handle'], 'registered' ) ) {
+			wp_register_style( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['media'] );
 		}
-		wp_enqueue_style( $handle );
+
+		wp_enqueue_style( $args['handle'] );
 	}
 
 	// ----------------------------------------
 
 	/**
-	 * @param string $handle
-	 * @param string $src
+	 * @param string|array $handle
+	 * @param string|bool|null $src
 	 * @param array $deps
 	 * @param string|bool|null $ver
 	 * @param bool $in_footer
@@ -51,26 +75,65 @@ final class Asset {
 	 *
 	 * @return void
 	 */
-	public static function enqueueScript( string $handle, string $src, array $deps = [], string|bool|null $ver = null, bool $in_footer = true, array $extra = [] ): void {
-		if ( empty( $src ) ) {
+	public static function enqueueScript(
+		string|array $handle,
+		string|bool|null $src = null,
+		array $deps = [],
+		string|bool|null $ver = null,
+		bool $in_footer = true,
+		array $extra = []
+	): void {
+		if ( is_array( $handle ) ) {
+			$args = wp_parse_args( $handle, [
+				'handle'    => '',
+				'src'       => null,
+				'url'       => null,
+				'deps'      => [],
+				'ver'       => null,
+				'in_footer' => true,
+				'extra'     => [],
+				'attrs'     => [],
+			] );
+
+			// url
+			if ( empty( $args['src'] ) && ! empty( $args['url'] ) ) {
+				$args['src'] = $args['url'];
+			}
+
+			// attrs
+			if ( ! empty( $args['attrs'] ) ) {
+				if ( ! is_array( $args['extra'] ) ) {
+					$args['extra'] = [];
+				}
+
+				if ( empty( $args['extra']['attrs'] ) ) {
+					$args['extra']['attrs'] = $args['attrs'];
+				}
+			}
+		} else {
+			$args = [
+				'handle'    => $handle,
+				'src'       => $src,
+				'deps'      => $deps,
+				'ver'       => $ver,
+				'in_footer' => $in_footer,
+				'extra'     => $extra,
+			];
+		}
+
+		// Validate
+		if ( empty( $args['handle'] ) || empty( $args['src'] ) ) {
 			return;
 		}
 
-		$args = [
-			'src'       => $src,
-			'deps'      => $deps,
-			'ver'       => $ver,
-			'in_footer' => $in_footer,
-			'extra'     => $extra,
-		];
-
-		if ( ! wp_script_is( $handle, 'registered' ) ) {
-			wp_register_script( $handle, $args['src'], $args['deps'], $args['ver'], $args['in_footer'] );
+		if ( ! wp_script_is( $args['handle'], 'registered' ) ) {
+			wp_register_script( $args['handle'], $args['src'], $args['deps'], $args['ver'], (bool) $args['in_footer'] );
 		}
-		wp_enqueue_script( $handle );
+
+		wp_enqueue_script( $args['handle'] );
 
 		if ( ! empty( $args['extra'] ) ) {
-			wp_script_add_data( $handle, 'extra', $args['extra'] );
+			wp_script_add_data( $args['handle'], 'extra', $args['extra'] );
 		}
 	}
 
@@ -79,11 +142,15 @@ final class Asset {
 	/**
 	 * @param string $handle
 	 * @param string $object_name
-	 * @param array|null $l10n
+	 * @param array|null|bool $l10n
 	 *
 	 * @return void
 	 */
-	public static function localize( string $handle, string $object_name, ?array $l10n ): void {
+	public static function localize(
+		string $handle,
+		string $object_name,
+		array|bool|null $l10n
+	): void {
 		if ( empty( $object_name ) || empty( $l10n ) ) {
 			return;
 		}
@@ -97,11 +164,11 @@ final class Asset {
 
 	/**
 	 * @param string $handle
-	 * @param string $css
+	 * @param string|bool|null $css
 	 *
 	 * @return void
 	 */
-	public static function inlineStyle( string $handle, string $css ): void {
+	public static function inlineStyle( string $handle, string|null|bool $css ): void {
 		if ( empty( $css ) ) {
 			return;
 		}
@@ -115,12 +182,12 @@ final class Asset {
 
 	/**
 	 * @param string $handle
-	 * @param string $code
+	 * @param string|bool|null $code
 	 * @param string $position
 	 *
 	 * @return void
 	 */
-	public static function inlineScript( string $handle, string $code, string $position = 'after' ): void {
+	public static function inlineScript( string $handle, string|null|bool $code, string $position = 'after' ): void {
 		if ( empty( $code ) ) {
 			return;
 		}

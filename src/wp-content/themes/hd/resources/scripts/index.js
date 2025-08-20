@@ -6,8 +6,9 @@ import './utils/global.js';
 import './utils/script-loader.js';
 
 import {stickyBar} from './utils/sticky-bar.js';
-import {initSocialShare} from './utils/social-share.js';
 //import CookieService from './utils/cookie.js';
+
+import {initSocialShare} from './components/social-share.js';
 
 // Styles
 import '../styles/3rd/_index.scss';
