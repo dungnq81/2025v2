@@ -9,7 +9,7 @@ const THEME_VERSION = '1.8.0';
 const TEXT_DOMAIN   = 'hd';
 const AUTHOR        = 'Gaudev';
 
-define( 'THEME_PATH', untrailingslashit( get_template_directory() ) . DIRECTORY_SEPARATOR ); // **/wp-content/themes/**/
+define( 'THEME_PATH', untrailingslashit( get_template_directory() ) . DIRECTORY_SEPARATOR ); // **\wp-content\themes\**\
 define( 'THEME_URL', untrailingslashit( get_template_directory_uri() ) . '/' );  // http(s)://**/wp-content/themes/**/
 
 const INC_PATH   = THEME_PATH . 'inc' . DIRECTORY_SEPARATOR;

@@ -249,6 +249,11 @@ final class Asset {
 
 		if ( wp_style_is( $handle, 'registered' ) || wp_style_is( $handle, 'enqueued' ) ) {
 			wp_add_inline_style( $handle, $css );
+		} else {
+			$fallback = 'addon-inline-style-' . md5( $handle );
+			wp_register_style( $fallback, false );
+			wp_enqueue_style( $fallback );
+			wp_add_inline_style( $fallback, $css );
 		}
 	}
 
@@ -268,6 +273,11 @@ final class Asset {
 
 		if ( wp_script_is( $handle, 'registered' ) || wp_script_is( $handle, 'enqueued' ) ) {
 			wp_add_inline_script( $handle, $code, $position );
+		} else {
+			$fallback = 'addon-inline-script-' . md5( $handle );
+			wp_register_script( $fallback, false );
+			wp_enqueue_script( $fallback );
+			wp_add_inline_script( $fallback, $code, $position );
 		}
 	}
 }

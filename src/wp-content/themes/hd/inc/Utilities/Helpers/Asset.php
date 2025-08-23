@@ -13,6 +13,86 @@ final class Asset {
 	// ----------------------------------------
 
 	/**
+	 * @param string|null $entry
+	 * @param string $handle_prefix
+	 *
+	 * @return string
+	 * @throws \JsonException
+	 */
+	public static function handle( ?string $entry = null, string $handle_prefix = '' ): string {
+		if ( ! $entry ) {
+			return '';
+		}
+
+		$resolve = Helper::manifestResolve( $entry, $handle_prefix );
+
+		return ! empty( $resolve['handle'] ) ? $resolve['handle'] : '';
+	}
+
+	// ----------------------------------------
+
+	/**
+	 * @param string|null $entry
+	 * @param array $deps
+	 * @param string|bool|null $ver
+	 * @param string $media
+	 *
+	 * @return void
+	 * @throws \JsonException
+	 */
+	public static function enqueueCSS(
+		?string $entry = null,
+		array $deps = [],
+		string|bool|null $ver = null,
+		string $media = 'all'
+	): void {
+		$resolve = Helper::manifestResolve( $entry );
+		if ( empty( $resolve ) ) {
+			return;
+		}
+
+		$resolve['deps']  = $deps;
+		$resolve['ver']   = $ver;
+		$resolve['media'] = $media;
+
+		self::enqueueStyle( $resolve );
+	}
+
+	// ----------------------------------------
+
+	/**
+	 * @param string|null $entry
+	 * @param array $deps
+	 * @param string|bool|null $ver
+	 * @param bool $in_footer
+	 * @param array $extra
+	 *
+	 * @return void
+	 * @throws \JsonException
+	 */
+	public static function enqueueJS(
+		?string $entry = null,
+		array $deps = [],
+		string|bool|null $ver = null,
+		bool $in_footer = true,
+		array $extra = []
+	): void {
+		$resolve = Helper::manifestResolve( $entry );
+		if ( empty( $resolve ) ) {
+			return;
+		}
+
+		$resolve['deps']      = $deps;
+		$resolve['ver']       = $ver;
+		$resolve['in_footer'] = $in_footer;
+		$resolve['extra']     = $extra;
+
+		self::enqueueScript( $resolve );
+	}
+
+	// ----------------------------------------
+
+	/**
 	 * @param string|array $handle
 	 * @param string|bool|null $src
 	 * @param array $deps
@@ -32,16 +112,10 @@ final class Asset {
 			$args = wp_parse_args( $handle, [
 				'handle' => '',
 				'src'    => null,
-				'url'    => null,
 				'deps'   => [],
 				'ver'    => null,
 				'media'  => 'all',
 			] );
-
-			// url
-			if ( empty( $args['src'] ) && ! empty( $args['url'] ) ) {
-				$args['src'] = $args['url'];
-			}
 		} else {
 			$args = [
 				'handle' => $handle,
@@ -175,6 +249,11 @@ final class Asset {
 
 		if ( wp_style_is( $handle, 'registered' ) || wp_style_is( $handle, 'enqueued' ) ) {
 			wp_add_inline_style( $handle, $css );
+		} else {
+			$fallback = 'inline-style-' . md5( $handle );
+			wp_register_style( $fallback, false );
+			wp_enqueue_style( $fallback );
+			wp_add_inline_style( $fallback, $css );
 		}
 	}
 
@@ -194,6 +273,11 @@ final class Asset {
 
 		if ( wp_script_is( $handle, 'registered' ) || wp_script_is( $handle, 'enqueued' ) ) {
 			wp_add_inline_script( $handle, $code, $position );
+		} else {
+			$fallback = 'inline-script-' . md5( $handle );
+			wp_register_script( $fallback, false );
+			wp_enqueue_script( $fallback );
+			wp_add_inline_script( $fallback, $code, $position );
 		}
 	}
 }

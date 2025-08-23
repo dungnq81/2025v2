@@ -663,4 +663,245 @@ final class Helper {
 		// Return obfuscated email using HTML entities only
 		return '<a href="mailto:' . $encodedEmail . '"' . $attrString . '>' . $encodedTitle . '</a>';
 	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @return mixed
+	 * @throws \JsonException
+	 */
+	public static function manifest(): mixed {
+		static $cache = [];
+
+		$manifest_base = THEME_PATH . 'assets/';
+		$key           = 'manifest-theme-auto:filtered';
+
+		if ( isset( $cache[ $key ] ) ) {
+			return $cache[ $key ];
+		}
+
+		$candidates  = [ $manifest_base . '.vite/manifest.json' ];
+		$rawManifest = null;
+
+		foreach ( $candidates as $path ) {
+			if ( is_readable( $path ) ) {
+				$json = file_get_contents( $path );
+				if ( $json !== false ) {
+					$arr = json_decode( $json, true, 512, JSON_THROW_ON_ERROR );
+					if ( is_array( $arr ) ) {
+						$rawManifest = $arr;
+						break;
+					}
+				}
+			}
+		}
+
+		if ( ! is_array( $rawManifest ) ) {
+			return $cache[ $key ] = [];
+		}
+
+		$filtered = [];
+
+		foreach ( $rawManifest as $entryKey => $entry ) {
+			if ( ! is_array( $entry ) ) {
+				continue;
+			}
+
+			$isVendor = ( preg_match( '/^_?vendor\..+\.(js|css)$/', (string) $entryKey ) === 1 );
+			$isEntry  = ! empty( $entry['isEntry'] );
+
+			if ( ! $isVendor && ! $isEntry ) {
+				continue;
+			}
+
+			$keepFields = [
+				'file',
+				'name',
+				'src',
+				'css',
+				'isEntry'
+			];
+
+			$filtered[ $entryKey ] = array_intersect_key( $entry, array_flip( $keepFields ) );
+		}
+
+		return $cache[ $key ] = $filtered;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * Resolve a single entry from Vite manifest.
+	 *
+	 * @param string|null $entry \Ex: 'components/home.js', 'index.scss', 'vendor.js', 'vendor.css'.
+	 * @param string $handle_prefix
+	 *
+	 * @return array
+	 * @throws \JsonException
+	 */
+	public static function manifestResolve( ?string $entry = null, string $handle_prefix = '' ): array {
+		if ( ! is_string( $entry ) || ! trim( $entry ) ) {
+			return [];
+		}
+
+		$manifest = self::manifest();
+		if ( ! $manifest ) {
+			return [];
+		}
+
+		//.
+		$normalizePath = static function ( string $p ): string {
+			$p = str_replace( '\\', '/', $p );
+			$p = preg_replace( '#^\./#', '', $p );
+			$p = preg_replace( '#/+#', '/', $p );
+
+			return trim( $p, '/' );
+		};
+
+		$makeSlugFromPath = static function ( string $pathNoExt ): string {
+			$pathNoExt = str_replace( '\\', '/', $pathNoExt );
+			$pathNoExt = preg_replace( '#/+#', '/', $pathNoExt );
+			$pathNoExt = trim( $pathNoExt, '/' );
+			$slug      = strtolower( preg_replace( '/[^a-z0-9]+/i', '-', $pathNoExt ) );
+			$slug      = trim( $slug, '-' );
+
+			return $slug ?: 'entry';
+		};
+
+		$makeHandle = static function ( $b, $kind ) use ( $handle_prefix ) {
+			return $handle_prefix . $b . '-' . $kind;
+		};
+
+		$entry = trim( $entry );
+		$entry = $normalizePath( $entry );
+
+		// --- Vendor JS ---
+		if ( $entry === 'vendor.js' ) {
+			foreach ( $manifest as $k => $v ) {
+				if ( is_array( $v ) && preg_match( '/^_?vendor\..+\.js$/', $k ) ) {
+					$file = $v['file'] ?? '';
+					if ( ! $file ) {
+						return [];
+					}
+
+					return [
+						'handle' => $makeHandle( 'vendor', 'js' ),
+						'src'    => THEME_URL . 'assets/' . $file,
+						'file'   => $v['src'] ?? '',
+					];
+				}
+			}
+
+			return [];
+		}
+
+		// --- Vendor CSS ---
+		if ( $entry === 'vendor.css' ) {
+			foreach ( $manifest as $k => $v ) {
+				if ( is_array( $v ) && preg_match( '/^_?vendor\..+\.css$/', $k ) ) {
+					$file = $v['file'] ?? '';
+					if ( ! $file ) {
+						return [];
+					}
+
+					return [
+						'handle' => $makeHandle( 'vendor', 'css' ),
+						'src'    => THEME_URL . 'assets/' . $file,
+						'file'   => $v['src'] ?? '',
+					];
+				}
+			}
+
+			// fallback
+			foreach ( $manifest as $k => $v ) {
+				if ( ! empty( $v['css'][0] ) && preg_match( '/^_?vendor\..+\.js$/', $k ) ) {
+					return [
+						'handle' => $makeHandle( 'vendor', 'css' ),
+						'src'    => THEME_URL . 'assets/' . $v['css'][0],
+					];
+				}
+			}
+
+			return [];
+		}
+
+		// --- Entries ---
+		$ext       = strtolower( pathinfo( $entry, PATHINFO_EXTENSION ) );
+		$pathNoExt = preg_replace( '/\.' . preg_quote( $ext, '/' ) . '$/i', '', $entry );
+		$baseSlug  = $makeSlugFromPath( $pathNoExt );
+		$isCss     = in_array( $ext, [ 'css', 'scss' ], true );
+		$isJs      = ( $ext === 'js' );
+
+		$srcTailCandidates = [];
+		if ( $isCss ) {
+			$srcTailCandidates[] = $pathNoExt . '.scss';
+			$srcTailCandidates[] = $pathNoExt . '.css';
+		} elseif ( $isJs ) {
+			$srcTailCandidates[] = $pathNoExt . '.js';
+		} else {
+			return [];
+		}
+
+		$found = null;
+		foreach ( $manifest as $k => $item ) {
+			if (
+				! is_array( $item ) ||
+				empty( $item['isEntry'] ) ||
+				empty( $item['src'] ) ||
+				! is_string( $item['src'] ) ||
+				preg_match( '/^_?vendor\..+\.(js|css)$/', $k )
+			) {
+				continue;
+			}
+
+			foreach ( $srcTailCandidates as $tail ) {
+				if ( str_ends_with( $item['src'], $tail ) ) {
+					$found = $item;
+					break 2;
+				}
+			}
+		}
+
+		if ( ! $found ) {
+			return [];
+		}
+
+		// --- JS ---
+		if ( $isJs ) {
+			$handle = $makeHandle( $baseSlug, 'js' );
+
+			if ( ! empty( $found['file'] ) ) {
+				return [
+					'handle' => $handle,
+					'src'    => THEME_URL . 'assets/' . $found['file'],
+					'file'   => $found['src'] ?? '',
+				];
+			}
+		}
+
+		// --- CSS ---
+		if ( $isCss ) {
+			$handle = $makeHandle( $baseSlug, 'css' );
+
+			if ( ! empty( $found['css'][0] ) ) {
+				return [
+					'handle' => $handle,
+					'src'    => THEME_URL . 'assets/' . $found['css'][0],
+					'file'   => $found['src'] ?? '',
+				];
+			}
+
+			if ( ! empty( $found['file'] ) ) {
+				return [
+					'handle' => $handle,
+					'src'    => THEME_URL . 'assets/' . $found['file'],
+					'file'   => $found['src'] ?? '',
+				];
+			}
+		}
+
+		return [];
+	}
+
+	// --------------------------------------------------
 }

@@ -1302,14 +1302,14 @@ final class Helper {
 		static $cache = [];
 
 		$manifest_base = ADDONS_PATH . 'assets/';
-		$key           = 'manifest-auto';
+		$key           = 'manifest-auto:filtered';
 
 		if ( isset( $cache[ $key ] ) ) {
 			return $cache[ $key ];
 		}
 
-		$candidates[] = $manifest_base . '.vite/manifest.json';
-		$manifest     = [];
+		$candidates  = [ $manifest_base . '.vite/manifest.json' ];
+		$rawManifest = null;
 
 		foreach ( $candidates as $path ) {
 			if ( is_readable( $path ) ) {
@@ -1317,16 +1317,43 @@ final class Helper {
 				if ( $json !== false ) {
 					$arr = json_decode( $json, true, 512, JSON_THROW_ON_ERROR );
 					if ( is_array( $arr ) ) {
-						$manifest = $arr;
+						$rawManifest = $arr;
 						break;
 					}
 				}
 			}
 		}
 
-		$cache[ $key ] = is_array( $manifest ) ? $manifest : [];
+		if ( ! is_array( $rawManifest ) ) {
+			return $cache[ $key ] = [];
+		}
 
-		return $cache[ $key ];
+		$filtered = [];
+
+		foreach ( $rawManifest as $entryKey => $entry ) {
+			if ( ! is_array( $entry ) ) {
+				continue;
+			}
+
+			$isVendor = ( preg_match( '/^_?vendor\..+\.(js|css)$/', (string) $entryKey ) === 1 );
+			$isEntry  = ! empty( $entry['isEntry'] );
+
+			if ( ! $isVendor && ! $isEntry ) {
+				continue;
+			}
+
+			$keepFields = [
+				'file',
+				'name',
+				'src',
+				'css',
+				'isEntry'
+			];
+
+			$filtered[ $entryKey ] = array_intersect_key( $entry, array_flip( $keepFields ) );
+		}
+
+		return $cache[ $key ] = $filtered;
 	}
 
 	// -------------------------------------------------------------
@@ -1379,7 +1406,7 @@ final class Helper {
 		// --- Vendor JS ---
 		if ( $entry === 'vendor.js' ) {
 			foreach ( $manifest as $k => $v ) {
-				if ( is_array( $v ) && preg_match( '/^vendor\..+\.js$/', $k ) ) {
+				if ( is_array( $v ) && preg_match( '/^_?vendor\..+\.js$/', $k ) ) {
 					$file = $v['file'] ?? '';
 					if ( ! $file ) {
 						return [];
@@ -1399,7 +1426,7 @@ final class Helper {
 		// --- Vendor CSS ---
 		if ( $entry === 'vendor.css' ) {
 			foreach ( $manifest as $k => $v ) {
-				if ( is_array( $v ) && preg_match( '/^_vendor\..+\.css$/', $k ) ) {
+				if ( is_array( $v ) && preg_match( '/^_?vendor\..+\.css$/', $k ) ) {
 					$file = $v['file'] ?? '';
 					if ( ! $file ) {
 						return [];
@@ -1415,7 +1442,7 @@ final class Helper {
 
 			// fallback
 			foreach ( $manifest as $k => $v ) {
-				if ( ! empty( $v['css'][0] ) && preg_match( '/^_vendor\..+\.js$/', $k ) ) {
+				if ( ! empty( $v['css'][0] ) && preg_match( '/^_?vendor\..+\.js$/', $k ) ) {
 					return [
 						'handle' => $makeHandle( 'vendor', 'css' ),
 						'src'    => ADDONS_URL . 'assets/' . $v['css'][0],
@@ -1450,8 +1477,7 @@ final class Helper {
 				empty( $item['isEntry'] ) ||
 				empty( $item['src'] ) ||
 				! is_string( $item['src'] ) ||
-				preg_match( '/^_vendor\..+\.css$/', $k ) ||
-				preg_match( '/^_vendor\..+\.js$/', $k )
+				preg_match( '/^_?vendor\..+\.(js|css)$/', $k )
 			) {
 				continue;
 			}

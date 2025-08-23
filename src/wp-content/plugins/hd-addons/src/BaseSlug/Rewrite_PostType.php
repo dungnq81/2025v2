@@ -59,16 +59,20 @@ class Rewrite_PostType {
 	public function redirect(): void {
 		global $post;
 
-		if ( is_object( $post ) &&
-		     ! is_preview() &&
-		     ! is_admin() &&
-		     is_single() &&
-		     in_array( $post->post_type, $this->base_slug_post_type, false )
+		if (
+			is_object( $post ) &&
+			! is_preview() &&
+			! is_admin() &&
+			is_single() &&
+			in_array( $post->post_type, $this->base_slug_post_type, false )
 		) {
 			$new_url  = get_permalink();
 			$real_url = \Addons\Helper::getCurrentUrl();
 
-			if ( ! str_contains( $real_url, $new_url ) && substr_count( $new_url, '/' ) !== substr_count( $real_url, '/' ) ) {
+			if (
+				! str_contains( $real_url, $new_url ) &&
+				substr_count( $new_url, '/' ) !== substr_count( $real_url, '/' )
+			) {
 				remove_filter( 'post_type_link', [ $this, 'post_type_link' ], 10 );
 				$old_url = get_permalink();
 
