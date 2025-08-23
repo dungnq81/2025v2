@@ -115,7 +115,7 @@ final class BaseSlug {
 			// ----------------------------------
 			// product_cat
 			// ----------------------------------
-			if ( $custom_tax->name === 'product_cat' && \Addons\Helper::checkPluginActive( 'woocommerce/woocommerce.php' ) ) {
+			if ( $custom_tax->name === 'product_cat' && \Addons\Helper::isWoocommerceActive() ) {
 				$permalink_structure = \wc_get_permalink_structure();
 
 				$old_category_base = trim( $permalink_structure['category_rewrite_slug'], '/' );
@@ -149,7 +149,7 @@ final class BaseSlug {
 			if (
 				$custom_tax->name === 'product_tag' &&
 				in_array( 'product_tag', $this->base_slug_taxonomy, false ) &&
-				\Addons\Helper::checkPluginActive( 'woocommerce/woocommerce.php' )
+				\Addons\Helper::isWoocommerceActive()
 			) {
 				$permalink_structure = \wc_get_permalink_structure();
 				$old_category_base   = trim( $permalink_structure['tag_rewrite_slug'], '/' );

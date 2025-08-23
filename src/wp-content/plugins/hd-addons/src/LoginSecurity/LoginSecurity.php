@@ -35,12 +35,13 @@ final class LoginSecurity {
 
 	/**
 	 * @return void
+	 * @throws \JsonException
 	 */
 	public function loginEnqueueAssets(): void {
 		$version = Helper::version();
 
-		Asset::enqueueStyle( 'login-css', ADDONS_URL . 'assets/css/login-css.css', [], $version );
-		Asset::enqueueScript( 'login-js', ADDONS_URL . 'assets/js/login.js', [ 'jquery' ], $version, true, [ 'module', 'defer' ] );
+		Asset::enqueueCSS( 'login.scss', [], $version );
+		Asset::enqueueJS( 'login.js', [ 'jquery' ], $version, true, [ 'module', 'defer' ] );
 
 		$default_logo = '';
 		$default_bg   = '';
@@ -74,7 +75,7 @@ final class LoginSecurity {
 		}
 
 		if ( $inline = $css->css_output() ) {
-			Asset::inlineStyle( 'login-css', $inline );
+			Asset::inlineStyle( Asset::handle( 'login.scss' ), $inline );
 		}
 	}
 

@@ -53,10 +53,17 @@ class LoginOtpVerification {
 	 * Enqueue JS on OTP login page
 	 *
 	 * @return void
+	 * @throws \JsonException
 	 */
 	public function enqueueAssets(): void {
 		if ( $this->_isEnabled() ) {
-			\Addons\Asset::enqueueScript( 'login-otp-js', ADDONS_URL . 'assets/js/login-otp.js', [ 'login-js' ], null, true, [ 'module', 'defer' ] );
+			\Addons\Asset::enqueueJS(
+				'login-otp.js',
+				[ \Addons\Asset::handle( 'login.js' ) ],
+				null,
+				true,
+				[ 'module', 'defer' ]
+			);
 		}
 	}
 

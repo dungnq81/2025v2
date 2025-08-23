@@ -461,7 +461,7 @@ final class GlobalSetting {
 		/** ---------------------------------------- */
 
 		/** WooCommerce */
-		if ( isset( $data['woocommerce-hidden'] ) && Helper::checkPluginActive( 'woocommerce/woocommerce.php' ) ) {
+		if ( isset( $data['woocommerce-hidden'] ) && Helper::isWoocommerceActive() ) {
 			$arrs = [
 				'woocommerce_jsonld',
 				'woocommerce_default_css'

@@ -17,7 +17,7 @@
 		$current_description = ! empty( $value['description'] ) ? __( $value['description'], ADDONS_TEXTDOMAIN ) : '';
 
 		// WooCommerce
-		if ( (string) $current_slug === 'woocommerce' && ! \Addons\Helper::checkPluginActive( 'woocommerce/woocommerce.php' ) ) {
+		if ( (string) $current_slug === 'woocommerce' && ! \Addons\Helper::isWoocommerceActive() ) {
 			continue;
 		}
 

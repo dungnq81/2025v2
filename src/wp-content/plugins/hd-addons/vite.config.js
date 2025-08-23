@@ -13,9 +13,9 @@ const directoriesToCopy = [
 
 // SASS
 const sassFiles = [
-    'login-css',
-    'admin-css',
-    'addon-css',
+    'login',
+    'admin',
+    'addon',
 ];
 
 // JS
@@ -46,17 +46,17 @@ export default {
                 ...jsFiles.map((file) => `${resources}/scripts/${file}.js`),
             ],
             output: {
-                entryFileNames: `js/[name].js`,
-                chunkFileNames: `js/[name].js`,
+                entryFileNames: `js/[name].[hash].js`,
+                chunkFileNames: `js/[name].[hash].js`,
                 manualChunks(id) {
                     if (id.includes('node_modules') || id.includes('scripts/3rd') || id.includes('styles/3rd')) {
-                        return '_vendor';
+                        return 'vendor';
                     }
                 },
                 assetFileNames: (assetInfo) => {
                     const name = assetInfo.name || '';
                     if (name.endsWith('.css')) {
-                        return `css/[name].css`;
+                        return `css/[name].[hash].css`;
                     }
                     if (/\.(woff2?|ttf|otf|eot)$/i.test(name)) {
                         return `fonts/[name].[ext]`;

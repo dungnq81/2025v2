@@ -388,7 +388,7 @@ class LoginUrl {
 		$custom_login_uri = ! empty( $opt['custom_login_uri'] ) ? $opt['custom_login_uri'] : 'wp-login.php';
 
 		// Check if the `WPS Hide Login` plugin is active.
-		if ( \class_exists( 'WPS\WPS_Hide_Login\Plugin' ) ) {
+		if ( \class_exists( \WPS\WPS_Hide_Login\Plugin::class ) ) {
 			return true;
 		}
 

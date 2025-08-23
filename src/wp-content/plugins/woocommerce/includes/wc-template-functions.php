@@ -1309,7 +1309,7 @@ if ( ! function_exists( 'woocommerce_taxonomy_archive_description' ) ) {
 				$term_description = apply_filters( 'woocommerce_taxonomy_archive_description_raw', $term->description, $term );
 
 				if ( ! empty( $term_description ) ) {
-					echo '<div class="term-description toggle-target">' . wc_format_content( wp_kses_post( $term_description ) ) . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo '<div class="term-description">' . wc_format_content( wp_kses_post( $term_description ) ) . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				}
 			}
 		}
@@ -1379,7 +1379,7 @@ if ( ! function_exists( 'woocommerce_product_archive_description' ) ) {
 
 				$description = wc_format_content( wp_kses( $shop_page->post_content, $allowed_html ) );
 				if ( $description ) {
-					echo '<div class="page-description toggle-target">' . $description . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo '<div class="page-description">' . $description . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				}
 			}
 		}

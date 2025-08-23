@@ -43,7 +43,7 @@ class Rewrite_PostType {
 			     in_array( $custom_post->name, $this->base_slug_post_type, false )
 			) {
 				// woocommerce
-				if ( $post->post_type === 'product' && \Addons\Helper::checkPluginActive( 'woocommerce/woocommerce.php' ) ) {
+				if ( $post->post_type === 'product' && \Addons\Helper::isWoocommerceActive() ) {
 					return str_replace( $this->_get_product_base(), '/', $permalink );
 				}
 

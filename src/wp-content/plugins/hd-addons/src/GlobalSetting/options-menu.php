@@ -26,7 +26,7 @@
 			$title   = ! empty( $value['title'] ) ? __( $value['title'], ADDONS_TEXTDOMAIN ) : '';
 
 			// WooCommerce
-			if ( (string) $slug === 'woocommerce' && ! \Addons\Helper::checkPluginActive( 'woocommerce/woocommerce.php' ) ) {
+			if ( (string) $slug === 'woocommerce' && ! \Addons\Helper::isWoocommerceActive() ) {
 				continue;
 			}
 

@@ -1802,7 +1802,7 @@ trait Wp {
 		}
 
 		// Support for Yoast SEO plugin
-		if ( class_exists( '\WPSEO_Primary_Term' ) ) {
+		if ( class_exists( \WPSEO_Primary_Term::class ) ) {
 			try {
 				$yoast_primary_term = new \WPSEO_Primary_Term( $taxonomy, $post );
 				if ( method_exists( $yoast_primary_term, 'get_primary_term' ) ) {

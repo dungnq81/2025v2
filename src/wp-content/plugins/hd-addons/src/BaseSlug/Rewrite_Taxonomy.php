@@ -58,7 +58,7 @@ class Rewrite_Taxonomy {
 				$category_base = trim( str_replace( '%' . $custom_tax->name . '%', '', $wp_rewrite->get_extra_permastruct( $custom_tax->name ) ), '/' );
 
 				// woocommerce
-				if ( $custom_tax->name === 'product_cat' && \Addons\Helper::checkPluginActive( 'woocommerce/woocommerce.php' ) ) {
+				if ( $custom_tax->name === 'product_cat' && \Addons\Helper::isWoocommerceActive() ) {
 					$permalink_structure = \wc_get_permalink_structure();
 					$category_base       = trim( $permalink_structure['category_rewrite_slug'], '/' );
 				}

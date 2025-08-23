@@ -73,6 +73,16 @@ abstract class Abstract_LazyLoad {
 				continue;
 			}
 
+			// Skip ( data-, .lazy )
+			if (
+				preg_match( '/\bclass=["\'][^"\']*\blazy\b[^"\']*["\']/i', $item ) ||
+				preg_match( '/\bdata-src=|data-srcset=/i', $item )
+			) {
+				$search[]  = $item;
+				$replace[] = $item;
+				continue;
+			}
+
 			// Check if we have a filter for excluding specific asset from being lazily loaded.
 			if ( ! empty( $excluded_all ) ) {
 				// Match the url of the asset.

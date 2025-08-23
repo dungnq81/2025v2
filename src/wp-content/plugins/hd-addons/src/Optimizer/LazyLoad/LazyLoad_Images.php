@@ -5,20 +5,19 @@ namespace Addons\Optimizer\LazyLoad;
 \defined( 'ABSPATH' ) || exit;
 
 class LazyLoad_Images extends Abstract_LazyLoad {
-
 	// -------------------------------------------------------------
 
 	// Regex parts for checking content.
 	public string $regexp = '/<img[\s\r\n]+[^>]*?>|<picture\b[^>]*?>.*?<source[\s\r\n]+[^>]*?>.*?<\/picture>/is';
 
 	// Regex for already replaced items.
-	public string $regex_replaced = "/(src=['\"]data:image|srcset=['\"]data-srcset)/is";
+	public string $regex_replaced = '/(?:\s|^)(?:src=["\']data:image|data-src=|data-srcset=|class=["\'][^"\']*\blazy\b[^"\']*["\'])/i';
 
 	// Replace patterns.
 	public array $patterns = [
-		'/(?<!noscript\>)(<img\b[^>]*?)(src)=["|\']((?!data).*?)["|\']/i',
-		'/(?<!noscript\>)(<img\b[^>]*?)(srcset)=["|\'](.*?)["|\']/i',
-		'/(?<!noscript\>)(<source\b[^>]*?)(srcset)=["|\'](.*?)["|\']/i',
+		'/(?<!noscript\>)(<img\b[^>]*?)(?<!data-)(src)=["\']((?!data:).*?)["\']/i',
+		'/(?<!noscript\>)(<img\b[^>]*?)(?<!data-)(srcset)=["\'](.*?)["\']/i',
+		'/(?<!noscript\>)(<source\b[^>]*?)(?<!data-)(srcset)=["\'](.*?)["\']/i',
 	];
 
 	// Replacements.

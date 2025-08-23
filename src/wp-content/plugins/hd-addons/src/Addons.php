@@ -34,13 +34,13 @@ final class Addons {
 	 */
 	public function pluginsLoaded(): void {
 		// Classic Editor
-		if ( Helper::checkPluginActive( 'classic-editor/classic-editor.php' ) ) {
+		if ( Helper::isClassicEditorActive() ) {
 			remove_action( 'admin_init', [ \Classic_Editor::class, 'register_settings' ] );
 		}
 
 		// Load modules from YAML config
 		$modules = wp_cache_get( 'addons_module' );
-		if ( false === $modules ) {
+		if ( ! $modules ) {
 			$modules = Helper::loadYaml( ADDONS_PATH . 'config.yaml' ) ?: [];
 			wp_cache_set( 'addons_module', $modules, '', 12 * HOUR_IN_SECONDS );
 		}
@@ -51,7 +51,7 @@ final class Addons {
 			}
 
 			// Skip Woocommerce module nếu chưa active
-			if ( 'woocommerce' === (string) $slug && ! Helper::checkPluginActive( 'woocommerce/woocommerce.php' ) ) {
+			if ( 'woocommerce' === (string) $slug && ! Helper::isWoocommerceActive() ) {
 				continue;
 			}
 
@@ -110,12 +110,13 @@ final class Addons {
 	 * @param $hook
 	 *
 	 * @return void
+	 * @throws \JsonException
 	 */
 	public function adminEnqueueAssets( $hook ): void {
 		$version = Helper::version();
 
-		Asset::enqueueStyle( 'admin-addon-css', ADDONS_URL . 'assets/css/admin-css.css', [], $version );
-		Asset::enqueueScript( 'admin-addon-js', ADDONS_URL . 'assets/js/admin.js', [ 'jquery-core' ], $version, true, [ 'module', 'defer' ] );
+		Asset::enqueueCSS( 'admin.scss', [], $version );
+		Asset::enqueueJS( 'admin.js', [ 'jquery-core' ], $version, true, [ 'module', 'defer' ] );
 
 		// addon-page settings
 		$allowed = [
@@ -130,9 +131,9 @@ final class Addons {
 		wp_enqueue_style( 'wp-color-picker' );
 		wp_enqueue_script( 'wp-color-picker' );
 
-		Asset::enqueueStyle( '_vendor-css', ADDONS_URL . 'assets/css/_vendor.css', [], $version );
-		Asset::enqueueStyle( 'addon-css', ADDONS_URL . 'assets/css/addon-css.css', [ '_vendor-css' ], $version );
-		Asset::enqueueScript( 'addon-js', ADDONS_URL . 'assets/js/addon.js', [ 'wp-color-picker' ], $version, true, [ 'module', 'defer' ] );
+		Asset::enqueueCSS( 'vendor.css', [], $version );
+		Asset::enqueueCSS( 'addon.scss', [ Asset::handle( 'vendor.css' ) ], $version );
+		Asset::enqueueJS( 'addon.js', [ 'wp-color-picker' ], $version, true, [ 'module', 'defer' ] );
 
 		wp_enqueue_style( 'wp-codemirror' );
 
@@ -140,6 +141,6 @@ final class Addons {
 			'codemirror_css'  => wp_enqueue_code_editor( [ 'type' => 'text/css' ] ),
 			'codemirror_html' => wp_enqueue_code_editor( [ 'type' => 'text/html' ] ),
 		];
-		Asset::localize( 'addon-js', 'codemirror_settings', $l10n );
+		Asset::localize( Asset::handle( 'addon.js' ), 'codemirror_settings', $l10n );
 	}
 }

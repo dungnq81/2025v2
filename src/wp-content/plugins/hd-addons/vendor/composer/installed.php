@@ -3,7 +3,7 @@
         'name' => 'plugins/hd-addons',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '1ff6bcf1fcc3e8801e2e3186581ae6967e813252',
+        'reference' => '7ed9ebd8c2a71f67bf6de34abd9771128e84b2dd',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -40,7 +40,7 @@
         'plugins/hd-addons' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '1ff6bcf1fcc3e8801e2e3186581ae6967e813252',
+            'reference' => '7ed9ebd8c2a71f67bf6de34abd9771128e84b2dd',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -49,7 +49,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => '45efa5832686533f38dc0445a8b185f6d0649c2f',
+            'reference' => 'afc1b5ea0233d87f958f1a73da7468f387da9022',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(
@@ -67,8 +67,8 @@
             'dev_requirement' => false,
         ),
         'symfony/polyfill-ctype' => array(
-            'pretty_version' => 'v1.32.0',
-            'version' => '1.32.0.0',
+            'pretty_version' => 'v1.33.0',
+            'version' => '1.33.0.0',
             'reference' => 'a3cc8b044a6ea513310cbd48ef7333b384945638',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-ctype',

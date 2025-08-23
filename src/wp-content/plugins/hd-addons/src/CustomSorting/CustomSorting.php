@@ -78,12 +78,12 @@ final class CustomSorting {
 	 * @param $hook_suffix
 	 *
 	 * @return void
+	 * @throws \JsonException
 	 */
 	public function admin_enqueue_scripts( $hook_suffix ): void {
 		if ( $this->_check_custom_sorting_script() ) {
-			\Addons\Asset::enqueueScript(
-				'sorting-js',
-				ADDONS_URL . 'assets/js/sorting.js',
+			\Addons\Asset::enqueueJS(
+				'sorting.js',
 				[ 'jquery-core', 'jquery-ui-sortable' ],
 				\Addons\Helper::version(),
 				true,

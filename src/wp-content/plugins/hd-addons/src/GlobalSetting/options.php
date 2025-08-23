@@ -19,7 +19,7 @@ $current_slug           = $current_slug ?? 'global_setting';
 		}
 
         // WooCommerce
-        if ( (string) $slug === 'woocommerce' && ! \Addons\Helper::checkPluginActive( 'woocommerce/woocommerce.php' ) ) {
+        if ( (string) $slug === 'woocommerce' && ! \Addons\Helper::isWoocommerceActive() ) {
             continue;
         }
     ?>

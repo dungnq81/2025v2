@@ -73,10 +73,12 @@ final class LazyLoad {
 	 */
 	private function _add_lazy_load_hooks(): void {
 		foreach ( $this->lazyload_hooks as $name => $attributes ) {
+
 			// Loop through all attributes.
 			foreach ( $attributes as $hook ) {
-				// Add the hooks.
-				add_filter( $hook, [ $this->{$name}, 'filter_html' ], 999999 );
+				if ( ! has_filter( $hook, [ $this->{$name}, 'filter_html' ] ) ) {
+					add_filter( $hook, [ $this->{$name}, 'filter_html' ], 999999 );
+				}
 			}
 		}
 
@@ -88,11 +90,11 @@ final class LazyLoad {
 
 	/**
 	 * @return void
+	 * @throws \JsonException
 	 */
 	public function load_scripts(): void {
-		\Addons\Asset::enqueueScript(
-			'lazyload-js',
-			ADDONS_URL . 'assets/js/lazyload.js',
+		\Addons\Asset::enqueueJS(
+			'lazyload.js',
 			[],
 			\Addons\Helper::version(),
 			true,

@@ -9,9 +9,9 @@ final class Faker {
 
 	public function __construct() {
 		//add_filter( 'pre_http_request', [ $this, 'acf_license_request' ], 10, 3 ); // ACF pro
-		add_action( 'wp_loaded', [ $this, 'wordfence_pre' ], 99 );                 // Wordfence Security
-		add_action( 'wp_loaded', [ $this, 'cf7_gsc_pro' ], 99 );                   // CF7 Google Sheet Connector Pro
-		add_action( 'wp_loaded', [ $this, 'woocommerce_gsc_pro' ], 99 );           // WooCommerce GSheetConnector Pro
+		//add_action( 'wp_loaded', [ $this, 'wordfence_pre' ], 99 );                 // Wordfence Security
+		//add_action( 'wp_loaded', [ $this, 'cf7_gsc_pro' ], 99 );                   // CF7 Google Sheet Connector Pro
+		//add_action( 'wp_loaded', [ $this, 'woocommerce_gsc_pro' ], 99 );           // WooCommerce GSheetConnector Pro
 	}
 
 	// -------------------------------------------------------------
@@ -206,7 +206,7 @@ final class Faker {
 		}
 
 		// wfLicense
-		if ( class_exists( 'wfLicense' ) ) {
+		if ( class_exists( \wfLicense::class ) ) {
 			$date = new \DateTime();
 			$date->modify( "+{$RemainingDays} days" );
 

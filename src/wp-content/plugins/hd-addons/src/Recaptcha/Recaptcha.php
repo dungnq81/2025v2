@@ -69,7 +69,14 @@ final class Recaptcha {
 			GOOGLE_RECAPTCHA_V2_SITE_KEY &&
 			GOOGLE_RECAPTCHA_V2_SECRET_KEY
 		) {
-			\Addons\Asset::enqueueScript( 'recaptcha-js', $this->get_api_url( $version, $render ), [], null, true, [ 'module', 'async' ] );
+			\Addons\Asset::enqueueScript(
+				'recaptcha-js',
+				$this->get_api_url( $version, $render ),
+				[],
+				null,
+				true,
+				[ 'module', 'async' ]
+			);
 		}
 	}
 }

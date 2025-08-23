@@ -58,7 +58,7 @@ final class ACF {
 		//			'codesample',
 		//			'subscript',
 		//			'superscript',
-		//			'ml_tinymce_language_select_button', // wpglobus plugin
+		//			'ml_tinymce_language_select_button', // wpglobus
 		//			'fullscreen',
 		//		];
 
@@ -105,7 +105,7 @@ final class ACF {
 	 * @return mixed
 	 */
 	public function navMenuObjects( $items, $args ): mixed {
-		foreach ( $items as &$item ) {
+		foreach ( $items as $item ) {
 			$title = $item?->title;
 			$ACF   = \HD_Helper::getFields( $item, true );
 

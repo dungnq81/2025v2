@@ -531,11 +531,13 @@ final class Helper {
 		if ( isset( $pool[ $file ] ) ) {
 			return $pool[ $file ];
 		}
+
 		if ( ! class_exists( Yaml::class ) ) {
 			self::errorLog( 'Symfony YAML missing' );
 
 			return $pool[ $file ] = [];
 		}
+
 		try {
 			return $pool[ $file ] = Yaml::parseFile( $file );
 		} catch ( ParseException $e ) {
@@ -922,13 +924,19 @@ final class Helper {
 		}
 
 		// Clear FlyingPress cache
-		if ( self::checkPluginActive( 'flying-press/flying-press.php' ) ) {
-			class_exists( \FlyingPress\Purge::class ) && \FlyingPress\Purge::purge_everything();
+		if (
+			class_exists( \FlyingPress\Purge::class ) ||
+			self::checkPluginActive( 'flying-press/flying-press.php' )
+		) {
+			\FlyingPress\Purge::purge_everything();
 		}
 
 		// LiteSpeed cache
-		if ( self::checkPluginActive( 'litespeed-cache/litespeed-cache.php' ) ) {
-			class_exists( \LiteSpeed\Purge::class ) && \LiteSpeed\Purge::purge_all();
+		if (
+			class_exists( \LiteSpeed\Purge::class ) ||
+			self::checkPluginActive( 'litespeed-cache/litespeed-cache.php' )
+		) {
+			\LiteSpeed\Purge::purge_all();
 		}
 	}
 
@@ -1083,13 +1091,26 @@ final class Helper {
 	/**
 	 * @return bool
 	 */
+	public static function isClassicEditorActive(): bool {
+		if ( \class_exists( \Classic_Editor::class ) ) {
+			return true;
+		}
+
+		return self::checkPluginActive( 'classic-editor/classic-editor.php' );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @return bool
+	 */
 	public static function isWoocommerceActive(): bool {
 		if (
 			\function_exists( 'WC' ) ||
 			\function_exists( 'wc_get_container' ) ||
 			\defined( 'WC_VERSION' ) ||
 			\defined( 'WC_ABSPATH' ) ||
-			\class_exists( 'WooCommerce', false )
+			\class_exists( \WooCommerce::class )
 		) {
 			return true;
 		}
@@ -1105,7 +1126,7 @@ final class Helper {
 	public static function isAcfActive(): bool {
 		if (
 			\function_exists( 'acf' ) ||
-			\class_exists( 'ACF', false )
+			\class_exists( \ACF::class )
 		) {
 			return true;
 		}
@@ -1123,7 +1144,7 @@ final class Helper {
 	public static function isAcfProActive(): bool {
 		if (
 			\defined( 'ACF_PRO' ) ||
-			\class_exists( 'acf_pro', false )
+			\class_exists( \acf_pro::class )
 		) {
 			return true;
 		}
@@ -1156,8 +1177,8 @@ final class Helper {
 	 */
 	public static function isRankMathActive(): bool {
 		if (
-			\class_exists( 'RankMath', false ) ||
-			\class_exists( 'RankMathPro', false )
+			\class_exists( \RankMath::class ) ||
+			\class_exists( \RankMathPro::class )
 		) {
 			return true;
 		}
@@ -1174,7 +1195,7 @@ final class Helper {
 	public static function isCf7Active(): bool {
 		if (
 			\defined( 'WPCF7_PLUGIN_BASENAME' ) ||
-			\class_exists( 'WPCF7', false )
+			\class_exists( \WPCF7::class )
 		) {
 			return true;
 		}
@@ -1269,6 +1290,219 @@ final class Helper {
 			//
 
 		] );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @return mixed
+	 * @throws \JsonException
+	 */
+	public static function manifest(): mixed {
+		static $cache = [];
+
+		$manifest_base = ADDONS_PATH . 'assets/';
+		$key           = 'manifest-auto';
+
+		if ( isset( $cache[ $key ] ) ) {
+			return $cache[ $key ];
+		}
+
+		$candidates[] = $manifest_base . '.vite/manifest.json';
+		$manifest     = [];
+
+		foreach ( $candidates as $path ) {
+			if ( is_readable( $path ) ) {
+				$json = file_get_contents( $path );
+				if ( $json !== false ) {
+					$arr = json_decode( $json, true, 512, JSON_THROW_ON_ERROR );
+					if ( is_array( $arr ) ) {
+						$manifest = $arr;
+						break;
+					}
+				}
+			}
+		}
+
+		$cache[ $key ] = is_array( $manifest ) ? $manifest : [];
+
+		return $cache[ $key ];
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * Resolve a single entry from Vite manifest.
+	 *
+	 * @param string|null $entry \Ex: 'addon.js', 'login.css', 'vendor.js', 'vendor.css'.
+	 * @param string $handle_prefix
+	 *
+	 * @return array
+	 * @throws \JsonException
+	 */
+	public static function manifestResolve( ?string $entry = null, string $handle_prefix = 'addon-' ): array {
+		if ( ! is_string( $entry ) || ! trim( $entry ) ) {
+			return [];
+		}
+
+		$manifest = self::manifest();
+		if ( ! $manifest ) {
+			return [];
+		}
+
+		//.
+		$normalizePath = static function ( string $p ): string {
+			$p = str_replace( '\\', '/', $p );
+			$p = preg_replace( '#^\./#', '', $p );
+			$p = preg_replace( '#/+#', '/', $p );
+
+			return trim( $p, '/' );
+		};
+
+		$makeSlugFromPath = static function ( string $pathNoExt ): string {
+			$pathNoExt = str_replace( '\\', '/', $pathNoExt );
+			$pathNoExt = preg_replace( '#/+#', '/', $pathNoExt );
+			$pathNoExt = trim( $pathNoExt, '/' );
+			$slug      = strtolower( preg_replace( '/[^a-z0-9]+/i', '-', $pathNoExt ) );
+			$slug      = trim( $slug, '-' );
+
+			return $slug ?: 'entry';
+		};
+
+		$makeHandle = static function ( $b, $kind ) use ( $handle_prefix ) {
+			return $handle_prefix . $b . '-' . $kind;
+		};
+
+		$entry = trim( $entry );
+		$entry = $normalizePath( $entry );
+
+		// --- Vendor JS ---
+		if ( $entry === 'vendor.js' ) {
+			foreach ( $manifest as $k => $v ) {
+				if ( is_array( $v ) && preg_match( '/^vendor\..+\.js$/', $k ) ) {
+					$file = $v['file'] ?? '';
+					if ( ! $file ) {
+						return [];
+					}
+
+					return [
+						'handle' => $makeHandle( 'vendor', 'js' ),
+						'src'    => ADDONS_URL . 'assets/' . $file,
+						'file'   => $v['src'] ?? '',
+					];
+				}
+			}
+
+			return [];
+		}
+
+		// --- Vendor CSS ---
+		if ( $entry === 'vendor.css' ) {
+			foreach ( $manifest as $k => $v ) {
+				if ( is_array( $v ) && preg_match( '/^_vendor\..+\.css$/', $k ) ) {
+					$file = $v['file'] ?? '';
+					if ( ! $file ) {
+						return [];
+					}
+
+					return [
+						'handle' => $makeHandle( 'vendor', 'css' ),
+						'src'    => ADDONS_URL . 'assets/' . $file,
+						'file'   => $v['src'] ?? '',
+					];
+				}
+			}
+
+			// fallback
+			foreach ( $manifest as $k => $v ) {
+				if ( ! empty( $v['css'][0] ) && preg_match( '/^_vendor\..+\.js$/', $k ) ) {
+					return [
+						'handle' => $makeHandle( 'vendor', 'css' ),
+						'src'    => ADDONS_URL . 'assets/' . $v['css'][0],
+					];
+				}
+			}
+
+			return [];
+		}
+
+		// --- Entries ---
+		$ext       = strtolower( pathinfo( $entry, PATHINFO_EXTENSION ) );
+		$pathNoExt = preg_replace( '/\.' . preg_quote( $ext, '/' ) . '$/i', '', $entry );
+		$baseSlug  = $makeSlugFromPath( $pathNoExt );
+		$isCss     = in_array( $ext, [ 'css', 'scss' ], true );
+		$isJs      = ( $ext === 'js' );
+
+		$srcTailCandidates = [];
+		if ( $isCss ) {
+			$srcTailCandidates[] = $pathNoExt . '.scss';
+			$srcTailCandidates[] = $pathNoExt . '.css';
+		} elseif ( $isJs ) {
+			$srcTailCandidates[] = $pathNoExt . '.js';
+		} else {
+			return [];
+		}
+
+		$found = null;
+		foreach ( $manifest as $k => $item ) {
+			if (
+				! is_array( $item ) ||
+				empty( $item['isEntry'] ) ||
+				empty( $item['src'] ) ||
+				! is_string( $item['src'] ) ||
+				preg_match( '/^_vendor\..+\.css$/', $k ) ||
+				preg_match( '/^_vendor\..+\.js$/', $k )
+			) {
+				continue;
+			}
+
+			foreach ( $srcTailCandidates as $tail ) {
+				if ( str_ends_with( $item['src'], $tail ) ) {
+					$found = $item;
+					break 2;
+				}
+			}
+		}
+
+		if ( ! $found ) {
+			return [];
+		}
+
+		// --- JS ---
+		if ( $isJs ) {
+			$handle = $makeHandle( $baseSlug, 'js' );
+
+			if ( ! empty( $found['file'] ) ) {
+				return [
+					'handle' => $handle,
+					'src'    => ADDONS_URL . 'assets/' . $found['file'],
+					'file'   => $found['src'] ?? '',
+				];
+			}
+		}
+
+		// --- CSS ---
+		if ( $isCss ) {
+			$handle = $makeHandle( $baseSlug, 'css' );
+
+			if ( ! empty( $found['css'][0] ) ) {
+				return [
+					'handle' => $handle,
+					'src'    => ADDONS_URL . 'assets/' . $found['css'][0],
+					'file'   => $found['src'] ?? '',
+				];
+			}
+
+			if ( ! empty( $found['file'] ) ) {
+				return [
+					'handle' => $handle,
+					'src'    => ADDONS_URL . 'assets/' . $found['file'],
+					'file'   => $found['src'] ?? '',
+				];
+			}
+		}
+
+		return [];
 	}
 
 	// -------------------------------------------------------------

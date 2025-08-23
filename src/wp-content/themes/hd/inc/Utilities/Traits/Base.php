@@ -312,7 +312,7 @@ trait Base {
 			\function_exists( 'wc_get_container' ) ||
 			\defined( 'WC_VERSION' ) ||
 			\defined( 'WC_ABSPATH' ) ||
-			\class_exists( 'WooCommerce', false )
+			\class_exists( \WooCommerce::class )
 		) {
 			return true;
 		}
@@ -328,7 +328,7 @@ trait Base {
 	public static function isAcfActive(): bool {
 		if (
 			\function_exists( 'acf' ) ||
-			\class_exists( 'ACF', false )
+			\class_exists( \ACF::class )
 		) {
 			return true;
 		}
@@ -346,7 +346,7 @@ trait Base {
 	public static function isAcfProActive(): bool {
 		if (
 			\defined( 'ACF_PRO' ) ||
-			\class_exists( 'acf_pro', false )
+			\class_exists( \acf_pro::class )
 		) {
 			return true;
 		}
@@ -379,8 +379,8 @@ trait Base {
 	 */
 	public static function isRankMathActive(): bool {
 		if (
-			\class_exists( 'RankMath', false ) ||
-			\class_exists( 'RankMathPro', false )
+			\class_exists( \RankMath::class ) ||
+			\class_exists( \RankMathPro::class )
 		) {
 			return true;
 		}
@@ -397,7 +397,7 @@ trait Base {
 	public static function isCf7Active(): bool {
 		if (
 			\defined( 'WPCF7_PLUGIN_BASENAME' ) ||
-			\class_exists( 'WPCF7', false )
+			\class_exists( \WPCF7::class )
 		) {
 			return true;
 		}
