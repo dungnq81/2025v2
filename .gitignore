@@ -30,5 +30,6 @@ pnpm-lock.yaml
 composer.lock
 
 # WP
-uploads/
-**/uploads/
+**/uploads/**
+!**/uploads/.gitkeep
+
