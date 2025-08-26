@@ -358,7 +358,17 @@ trait Url {
 			}
 		}
 
-		return '/' . implode( '/', $stack );
+		$normalized = implode( '/', $stack );
+
+		if ( preg_match( '/^[A-Za-z]:/', $path ) ) {
+			return $normalized;
+		}
+
+		if ( str_starts_with( $path, '/' ) ) {
+			return '/' . $normalized;
+		}
+
+		return $normalized;
 	}
 
 	// --------------------------------------------------

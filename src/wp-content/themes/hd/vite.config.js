@@ -76,7 +76,10 @@ export default {
                     if (/\.(woff2?|ttf|otf|eot)$/i.test(name)) {
                         return `fonts/[name].[ext]`;
                     }
-                    return `img/[name].[ext]`;
+                    if (/\.(png|jpe?g|gif|svg|webp|avif)$/i.test(name)) {
+                        return `img/[name].[ext]`;
+                    }
+                    return `files/[name].[ext]`;
                 },
             },
         },

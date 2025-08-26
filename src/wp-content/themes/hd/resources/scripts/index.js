@@ -8,6 +8,7 @@ import './utils/script-loader.js';
 import {stickyBar} from './utils/sticky-bar.js';
 //import CookieService from './utils/cookie.js';
 
+import './components/swiper.js';
 import {initSocialShare} from './components/social-share.js';
 
 // Styles

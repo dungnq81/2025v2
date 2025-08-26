@@ -29,7 +29,7 @@ trait Wp {
 	 *
 	 * @return void
 	 */
-	public static function blockTemplate( $slug, array $args = [], bool $use_cache = false, int $cache_in_hours = 12 ): void {
+	public static function blockTemplate( $slug, array $args = [], bool $use_cache = true, int $cache_in_hours = 12 ): void {
 		$block_slug = basename( $slug, '.php' );
 		$hook_name  = 'enqueue_assets_blocks_' . str_replace( '-', '_', $block_slug );
 		do_action( $hook_name );
@@ -46,7 +46,7 @@ trait Wp {
 		$cache_key     = 'hd_block_cache_' . md5( $slug . serialize( $args ) );
 		$cached_output = get_transient( $cache_key );
 		if ( ! empty( $cached_output ) ) {
-			if ( mb_strlen( $cached_output, 'UTF-8' ) <= 10240 ) { // 10kb
+			if ( mb_strlen( $cached_output, 'UTF-8' ) <= 1024 * 2 ) { // 2kb
 				echo $cached_output;
 
 				return;
@@ -59,7 +59,7 @@ trait Wp {
 		get_template_part( $slug, null, $args );
 		$output = ob_get_clean();
 
-		if ( ! empty( $output ) && mb_strlen( $output, 'UTF-8' ) <= 10240 ) {
+		if ( ! empty( $output ) && mb_strlen( $output, 'UTF-8' ) <= 1024 * 2 ) {
 			set_transient( $cache_key, $output, $cache_in_hours * HOUR_IN_SECONDS );
 		}
 

@@ -104,6 +104,7 @@ final class Theme {
 	 * Enqueue scripts and styles
 	 *
 	 * @return void
+	 * @throws \JsonException
 	 */
 	public function enqueueAssets(): void {
 		$version = \HD_Helper::version();
@@ -130,25 +131,12 @@ final class Theme {
 		\HD_Asset::inlineScript( 'jquery-core', 'Object.assign(window,{ $:jQuery,jQuery });', 'after' );
 
 		/** CSS */
-		\HD_Asset::enqueueStyle( 'vendor-css', ASSETS_URL . 'css/_vendor.css', [], $version );
-		\HD_Asset::enqueueStyle( 'index-css', ASSETS_URL . 'css/index-css.css', [ 'vendor-css' ], $version );
+		\HD_Asset::enqueueCSS( 'vendor.css', [], $version );
+		\HD_Asset::enqueueCSS( 'index.scss', [ \HD_Asset::handle( 'vendor.css' ) ], $version );
 
 		/** JS */
-		\HD_Asset::enqueueScript( 'preload-js', ASSETS_URL . 'js/preload-polyfill.js', [], $version, false, [
-			'module',
-			'async'
-		] );
-		\HD_Asset::enqueueScript( 'index-js', ASSETS_URL . 'js/index.js', [ 'jquery-core' ], $version, true, [
-			'module',
-			'defer'
-		] );
-
-		/** Add-ons */
-		\HD_Asset::enqueueStyle( "swiper-css", ASSETS_URL . "css/swiper-css.css", [ "index-css" ], $version );
-		\HD_Asset::enqueueScript( 'swiper-js', ASSETS_URL . 'js/swiper.js', [ 'jquery-core' ], $version, true, [
-			'module',
-			'defer'
-		] );
+		\HD_Asset::enqueueJS( 'components/preload-polyfill.js', [], $version, false, [ 'module', 'async' ] );
+		\HD_Asset::enqueueJS( 'index.js', [ 'jquery-core' ], $version, true, [ 'module', 'defer' ] );
 
 		/** Comments */
 		if ( is_singular() && comments_open() && \HD_Helper::getOption( 'thread_comments' ) ) {

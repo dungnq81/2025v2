@@ -749,15 +749,7 @@ final class Helper {
 			return [];
 		}
 
-		//.
-		$normalizePath = static function ( string $p ): string {
-			$p = str_replace( '\\', '/', $p );
-			$p = preg_replace( '#^\./#', '', $p );
-			$p = preg_replace( '#/+#', '/', $p );
-
-			return trim( $p, '/' );
-		};
-
+		// --- Closure ---
 		$makeSlugFromPath = static function ( string $pathNoExt ): string {
 			$pathNoExt = str_replace( '\\', '/', $pathNoExt );
 			$pathNoExt = preg_replace( '#/+#', '/', $pathNoExt );
@@ -772,8 +764,10 @@ final class Helper {
 			return $handle_prefix . $b . '-' . $kind;
 		};
 
+		// ---
+
 		$entry = trim( $entry );
-		$entry = $normalizePath( $entry );
+		$entry = self::normalizePath( $entry );
 
 		// --- Vendor JS ---
 		if ( $entry === 'vendor.js' ) {

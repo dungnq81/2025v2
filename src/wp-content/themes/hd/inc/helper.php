@@ -65,7 +65,7 @@ if ( ! function_exists( '_remove_cookie' ) ) {
 	 *
 	 * @return void
 	 */
-	function _remove_cookie( string $name, bool $httponly = false ): void {
+	function _remove_cookie( string $name, bool $httponly = true ): void {
 		setcookie( $name, '', time() - 3600, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), $httponly );
 	}
 }
@@ -81,7 +81,7 @@ if ( ! function_exists( '_add_cookie' ) ) {
 	 *
 	 * @return bool
 	 */
-	function _add_cookie( string $name, $value, int $minute = 1440, bool $httponly = false ): bool {
+	function _add_cookie( string $name, $value, int $minute = 720, bool $httponly = true ): bool {
 		if ( is_scalar( $value ) ) {
 			setcookie( $name, $value, time() + $minute * MINUTE_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), $httponly );
 

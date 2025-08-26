@@ -17,22 +17,22 @@
     "devDependencies": {
         "@tailwindcss/vite": "^4.1.12",
         "@vheemstra/vite-plugin-imagemin": "^2.2.0",
-        "@wordpress/browserslist-config": "^6.28.0",
+        "@wordpress/browserslist-config": "^6.29.0",
         "autoprefixer": "^10.4.21",
-        "concurrently": "^9.2.0",
+        "concurrently": "^9.2.1",
         "cross-env": "^7.0.3",
         "imagemin-gifsicle": "^7.0.0",
         "imagemin-mozjpeg": "^10.0.0",
         "imagemin-pngquant": "^10.0.0",
         "imagemin-svgo": "^11.0.1",
         "postcss": "^8.5.6",
-        "sass": "^1.90.0",
+        "sass": "^1.91.0",
         "terser": "^5.43.1",
         "vite": "^6.3.5",
-        "vite-plugin-static-copy": "^2.3.1"
+        "vite-plugin-static-copy": "^2.3.2"
     },
     "dependencies": {
-        "@fancyapps/ui": "^6.0.23",
+        "@fancyapps/ui": "^6.0.25",
         "aos": "^2.3.4",
         "current-device": "^0.10.2",
         "ensemble": "github:loltgt/ensemble",

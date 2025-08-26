@@ -32,6 +32,9 @@ final class Customizer {
 	 * @param \WP_Customize_Manager $wp_customize Theme Customizer object.
 	 */
 	public function customizeRegister( \WP_Customize_Manager $wp_customize ): void {
+		// hide 'Additional CSS' tab
+		$wp_customize->remove_section( 'custom_css' );
+
 		$this->_logoAndTitle( $wp_customize );
 
 		// -------------------------------------------------------------

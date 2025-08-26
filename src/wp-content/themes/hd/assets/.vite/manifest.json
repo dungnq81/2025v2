@@ -1,6 +1,10 @@
 {
-  "_vendor.CBc_Wztb.js": {
-    "file": "js/vendor.CBc_Wztb.js",
+  "_vendor.kk36it6A.css": {
+    "file": "css/vendor.kk36it6A.css",
+    "src": "_vendor.kk36it6A.css"
+  },
+  "_vendor.wut0sgOv.js": {
+    "file": "js/vendor.wut0sgOv.js",
     "name": "vendor",
     "css": [
       "css/vendor.kk36it6A.css"
@@ -15,10 +19,6 @@
       "fonts/fa-brands-400.woff2",
       "fonts/fa-brands-400.ttf"
     ]
-  },
-  "_vendor.kk36it6A.css": {
-    "file": "css/vendor.kk36it6A.css",
-    "src": "_vendor.kk36it6A.css"
   },
   "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-brands-400.ttf": {
     "file": "fonts/fa-brands-400.ttf",
@@ -71,21 +71,21 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/components/social-share.js": {
-    "file": "js/social-share.BBi8iOYB.js",
+    "file": "js/social-share.DzhVfaNM.js",
     "name": "social-share",
     "src": "src/wp-content/themes/hd/resources/scripts/components/social-share.js",
     "isEntry": true,
     "imports": [
-      "_vendor.CBc_Wztb.js"
+      "_vendor.wut0sgOv.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/swiper.js": {
-    "file": "js/swiper.CBU6lsKd.js",
+    "file": "js/swiper.Bnj898sM.js",
     "name": "swiper",
     "src": "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
     "isEntry": true,
     "imports": [
-      "_vendor.CBc_Wztb.js"
+      "_vendor.wut0sgOv.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/woocommerce.js": {
@@ -95,12 +95,13 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/index.js": {
-    "file": "js/index.AHY7xjv8.js",
+    "file": "js/index.DILDXkRj.js",
     "name": "index",
     "src": "src/wp-content/themes/hd/resources/scripts/index.js",
     "isEntry": true,
     "imports": [
-      "_vendor.CBc_Wztb.js",
+      "_vendor.wut0sgOv.js",
+      "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
       "src/wp-content/themes/hd/resources/scripts/components/social-share.js"
     ]
   },

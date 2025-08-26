@@ -14,7 +14,7 @@ jQuery(function ($) {
             $editorWrapper.show();
 
             // Force WordPress to re-init editor
-            setTimeout(function() {
+            setTimeout(function () {
                 $(window).trigger('resize');
             }, 10);
         }

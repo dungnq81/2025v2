@@ -166,7 +166,7 @@ final class Asset {
 				'ver'       => null,
 				'in_footer' => true,
 				'extra'     => [],
-				'attrs'     => [],
+				'attr'      => [],
 			] );
 
 			// url
@@ -174,15 +174,9 @@ final class Asset {
 				$args['src'] = $args['url'];
 			}
 
-			// attrs
-			if ( ! empty( $args['attrs'] ) ) {
-				if ( ! is_array( $args['extra'] ) ) {
-					$args['extra'] = [];
-				}
-
-				if ( empty( $args['extra']['attrs'] ) ) {
-					$args['extra']['attrs'] = $args['attrs'];
-				}
+			// attr
+			if ( ! empty( $args['attr'] ) && empty( $args['extra'] ) ) {
+				$args['extra'] = $args['attr'];
 			}
 		} else {
 			$args = [
