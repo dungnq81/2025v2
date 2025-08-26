@@ -28,3 +28,6 @@ target/
 # Other
 pnpm-lock.yaml
 composer.lock
+
+# WP
+uploads/
