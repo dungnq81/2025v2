@@ -345,7 +345,7 @@ function hd_settings_filter_callback( array $arr ): array {
 		// Custom post-type and taxonomy.
 		//
 		'post_type_terms'      => [
-			'post'  => 'category',
+			'post' => 'category',
 		],
 
 		//
@@ -370,7 +370,9 @@ function hd_settings_filter_callback( array $arr ): array {
 		//
 		'defer_script'         => [
 			// defer.
+			'admin-bar'      => 'defer',
 			'contact-form-7' => 'defer',
+			'swv'            => 'defer',
 
 			// delay.
 			'comment-reply'  => 'delay',
@@ -382,6 +384,7 @@ function hd_settings_filter_callback( array $arr ): array {
 		//
 		'defer_style'          => [
 			'dashicons',
+			'admin-bar',
 			'contact-form-7',
 		],
 

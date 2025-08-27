@@ -14,13 +14,14 @@ final class Editor {
 
 		( new TinyMCE() );
 
-		add_action( 'admin_init', [ $this, 'editor_admin_init' ], 11 );
-		add_action( 'wp_enqueue_scripts', [ $this, 'editor_enqueue_scripts' ], 98 );
+		add_action( 'admin_init', [ $this, 'admin_init' ], 11 );
+		add_action( 'init', [ $this, 'init' ], 20 );
+		add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ], 20 );
 	}
 
 	// ------------------------------------------------------
 
-	public function editor_admin_init(): void {
+	public function admin_init(): void {
 		$use_widgets_block_editor_off           = $this->editor_options['use_widgets_block_editor_off'] ?? '';
 		$gutenberg_use_widgets_block_editor_off = $this->editor_options['gutenberg_use_widgets_block_editor_off'] ?? '';
 		$use_block_editor_for_post_type_off     = $this->editor_options['use_block_editor_for_post_type_off'] ?? '';
@@ -41,9 +42,8 @@ final class Editor {
 			// Consider disabling other Block Editor functionality.
 			add_filter( 'use_block_editor_for_post_type', '__return_false', 100 );
 
+			// Older Gutenberg versions.
 			if ( \function_exists( 'gutenberg_register_scripts_and_styles' ) ) {
-
-				// Support older Gutenberg versions.
 				add_filter( 'gutenberg_can_edit_post_type', '__return_false', 100 );
 				$this->_remove_gutenberg_hooks();
 			}
@@ -55,7 +55,26 @@ final class Editor {
 	/**
 	 * @return void
 	 */
-	public function editor_enqueue_scripts(): void {
+	public function init(): void {
+
+		/** Remove block CSS */
+		if ( $this->editor_options['block_style_off'] ?? '' ) {
+			add_action( 'wp_footer', static function () {
+				ob_start();
+			}, 0 );
+
+			add_action( 'wp_footer', static function () {
+				echo preg_replace( '#<style[^>]*id=[\'"]core-block-supports-inline-css[\'"][^>]*>.*?</style>#si', '', ob_get_clean() );
+			}, 9999 );
+		}
+	}
+
+	// ------------------------------------------------------
+
+	/**
+	 * @return void
+	 */
+	public function wp_enqueue_scripts(): void {
 		wp_dequeue_style( 'classic-theme-styles' );
 
 		/** Remove block CSS */
