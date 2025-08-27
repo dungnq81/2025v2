@@ -22,8 +22,8 @@ final class Hook {
         // wp_head
         // -----------------------------------------------
         add_action( 'wp_head', [ $this, 'wp_head_action' ], 1 );
-        add_action( 'wp_head', [ $this, 'other_head_action' ], 10 );
-        add_action( 'wp_head', [ $this, 'external_fonts_action' ], 11 );
+        add_action( 'wp_head', [ $this, 'other_head_action' ], 9 );
+        add_action( 'wp_head', [ $this, 'external_fonts_action' ], 99 );
 
         // -----------------------------------------------
         // hd_header_before_action
@@ -107,9 +107,9 @@ final class Hook {
         //echo '<meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=1.0" />';
         echo '<meta name="viewport" content="width=device-width, initial-scale=1.0" />';
 
-        if ( is_singular() && pings_open() ) {
-            printf( '<link rel="pingback" href="%s" />', esc_url( get_bloginfo( 'pingback_url' ) ) );
-        }
+//        if ( is_singular() && pings_open() ) {
+//            printf( '<link rel="pingback" href="%s" />', esc_url( get_bloginfo( 'pingback_url' ) ) );
+//        }
     }
 
     // -----------------------------------------------

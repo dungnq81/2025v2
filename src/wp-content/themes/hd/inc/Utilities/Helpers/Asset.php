@@ -14,6 +14,29 @@ final class Asset {
 
 	/**
 	 * @param string|null $entry
+	 * @param bool $relative_link
+	 *
+	 * @return string
+	 * @throws \JsonException
+	 */
+	public static function src( ?string $entry = null, bool $relative_link = false ): string {
+		if ( ! $entry ) {
+			return '';
+		}
+
+		$resolve = Helper::manifestResolve( $entry );
+		$src     = ! empty( $resolve['src'] ) ? $resolve['src'] : '';
+		if ( ! $src ) {
+			return '';
+		}
+
+		return $relative_link ? str_replace( THEME_URL, '', $src ) : $src;
+	}
+
+	// ----------------------------------------
+
+	/**
+	 * @param string|null $entry
 	 * @param string $handle_prefix
 	 *
 	 * @return string

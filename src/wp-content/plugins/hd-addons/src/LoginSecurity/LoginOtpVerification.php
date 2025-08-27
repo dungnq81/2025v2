@@ -177,7 +177,7 @@ class LoginOtpVerification {
 			] );
 		}
 
-		// Success → log the user in again and redirect
+		// Success + log the user in again and redirect
 		$this->_loginUser( $userId );
 		$this->_interimCheck();
 
@@ -272,7 +272,7 @@ class LoginOtpVerification {
 			return false;
 		}
 
-		// Success → store cool-down and transients
+		// Success + store cool-down and transients
 		update_user_meta( $user->ID, self::META_LASTSEND, current_time( 'timestamp' ) );
 		set_transient( sprintf( self::KEY_OTP, $user->ID ), wp_hash( $otp ), self::OTP_LIFETIME );
 		set_transient( sprintf( self::KEY_ATTEMPT, $user->ID ), 0, self::OTP_LIFETIME );

@@ -17,8 +17,8 @@
      * HOOK: wp_head
      *
      * @see Hook::wp_head_action - 1
-     * @see Hook::other_head_action - 10
-     * @see Hook::external_fonts_action - 11
+     * @see Hook::other_head_action - 9
+     * @see Hook::external_fonts_action - 99
      */
     wp_head();
     ?>

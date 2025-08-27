@@ -78,8 +78,7 @@ final class Admin {
      * @throws \JsonException
      */
     public function blockEditorAssets(): void {
-        $version = \HD_Helper::version();
-        \HD_Asset::enqueueCSS( 'editor-style.scss', [], $version );
+        \HD_Asset::enqueueCSS( 'editor-style.scss', [], \HD_Helper::version() );
     }
 
     // --------------------------------------------------
@@ -153,13 +152,14 @@ final class Admin {
 
     /**
      * @return void
+     * @throws \JsonException
      */
     public function adminInit(): void {
+        //
         // editor-style for Classic Editor
-        add_editor_style( ASSETS_URL . 'css/editor-style-css.css' );
+        add_editor_style( \HD_Asset::src( 'editor-style.scss', true ) );
 
-        $admin_list_table = \HD_Helper::filterSettingOptions( 'admin_list_table', [] );
-
+        $admin_list_table                = \HD_Helper::filterSettingOptions( 'admin_list_table', [] );
         $term_row_actions                = $admin_list_table['term_row_actions'] ?? [];
         $post_row_actions                = $admin_list_table['post_row_actions'] ?? [];
         $term_thumb_columns              = $admin_list_table['term_thumb_columns'] ?? [];
