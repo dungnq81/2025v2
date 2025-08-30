@@ -1,0 +1,5 @@
+/* tailwind/components/index.css */
+
+.c-flex-center {
+    @apply flex items-center justify-center;
+}

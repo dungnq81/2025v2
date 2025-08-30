@@ -673,7 +673,7 @@ final class Helper {
 	public static function manifest(): mixed {
 		static $cache = [];
 
-		$manifest_base = THEME_PATH . 'assets/';
+		$manifest_base = rtrim( THEME_PATH, '/\\' ) . '/assets/';
 		$key           = 'manifest-theme-auto:filtered';
 
 		if ( isset( $cache[ $key ] ) ) {
@@ -684,24 +684,28 @@ final class Helper {
 		$rawManifest = null;
 
 		foreach ( $candidates as $path ) {
-			if ( is_readable( $path ) ) {
-				$json = file_get_contents( $path );
-				if ( $json !== false ) {
-					$arr = json_decode( $json, true, 512, JSON_THROW_ON_ERROR );
-					if ( is_array( $arr ) ) {
-						$rawManifest = $arr;
-						break;
-					}
-				}
+			if ( ! is_readable( $path ) || ! is_file( $path ) ) {
+				continue;
+			}
+
+			$data = wp_json_file_decode( $path, [ 'associative' => true, 'depth' => 512, ] );
+			if ( is_wp_error( $data ) ) {
+				error_log( '[manifest] JSON decode error at ' . $path . ': ' . $data->get_error_message() );
+				continue;
+			}
+
+			if ( is_array( $data ) ) {
+				$rawManifest = $data;
+				break;
 			}
 		}
 
+		// check $rawManifest
 		if ( ! is_array( $rawManifest ) ) {
 			return $cache[ $key ] = [];
 		}
 
 		$filtered = [];
-
 		foreach ( $rawManifest as $entryKey => $entry ) {
 			if ( ! is_array( $entry ) ) {
 				continue;
@@ -714,14 +718,7 @@ final class Helper {
 				continue;
 			}
 
-			$keepFields = [
-				'file',
-				'name',
-				'src',
-				'css',
-				'isEntry'
-			];
-
+			$keepFields            = [ 'file', 'name', 'src', 'css', 'isEntry' ];
 			$filtered[ $entryKey ] = array_intersect_key( $entry, array_flip( $keepFields ) );
 		}
 

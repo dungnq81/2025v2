@@ -101,34 +101,6 @@ trait Cast {
 	// --------------------------------------------------
 
 	/**
-	 * @param mixed $value
-	 * @param bool $explode
-	 *
-	 * @return array
-	 */
-	public static function toArrayDeep( mixed $value, bool $explode = true ): array {
-		$values = static::toArray( $value, $explode );
-
-		foreach ( $values as $key => $item ) {
-			if ( is_object( $item ) ) {
-				$values[ $key ] = static::toArrayDeep( $item, $explode );
-			}
-		}
-
-		try {
-			$json = json_encode( $values, JSON_INVALID_UTF8_IGNORE | JSON_THROW_ON_ERROR );
-
-			return json_decode( $json, true, 512, JSON_INVALID_UTF8_IGNORE | JSON_THROW_ON_ERROR );
-		} catch ( \JsonException $error ) {
-			self::errorLog( 'Message: ' . $error->getMessage() );
-
-			return [];
-		}
-	}
-
-	// --------------------------------------------------
-
-	/**
 	 * Convert a mixed value to a string.
 	 *
 	 * @param mixed $value The value to convert.

@@ -202,11 +202,11 @@ final class Hook {
             echo apply_filters(
                     'hd_back_to_top_output_filter',
                     sprintf(
-                            '<a title="%1$s" aria-label="%1$s" rel="nofollow" href="#" class="back-to-top toTop" data-scroll-speed="%2$s" data-scroll-start="%3$s">%4$s</a>',
+                            '<a title="%1$s" aria-label="%1$s" rel="nofollow" href="#" class="js-back-to-top c-flex-center right-2.5 bottom-[70px] fixed z-[999] w-7 h-7 border rounded opacity-0 transition-opacity duration-300 data-[show=true]:opacity-100" data-show="false" data-scroll-speed="%2$s" data-scroll-start="%3$s">%4$s</a>',
                             esc_attr__( 'Scroll back to top', TEXT_DOMAIN ),
                             absint( apply_filters( 'hd_back_to_top_scroll_speed_filter', 400 ) ),
                             absint( apply_filters( 'hd_back_to_top_scroll_start_filter', 300 ) ),
-                            '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none"><path d="M8.47 4.22a.75.75 0 0 0 0 1.06L15.19 12l-6.72 6.72a.75.75 0 1 0 1.06 1.06l7.25-7.25a.75.75 0 0 0 0-1.06L9.53 4.22a.75.75 0 0 0-1.06 0z" fill="currentColor"></path></g></svg>'
+                            '<svg class="w-6 h-6 relative block -rotate-90" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none"><path d="M8.47 4.22a.75.75 0 0 0 0 1.06L15.19 12l-6.72 6.72a.75.75 0 1 0 1.06 1.06l7.25-7.25a.75.75 0 0 0 0-1.06L9.53 4.22a.75.75 0 0 0-1.06 0z" fill="currentColor"></path></g></svg>'
                     )
             );
         }
@@ -226,8 +226,7 @@ final class Hook {
 
     // -----------------------------------------------
 
-    public function _construct_footer_cta(): void {
-    }
+    public function _construct_footer_cta(): void {}
 
     // -----------------------------------------------
 
@@ -257,10 +256,10 @@ final class Hook {
                     <?php
                     foreach ( [ $footer_menu_1, $footer_menu_2 ] as $key => $menu ) :
                         if ( ! empty( $menu ) ) :
-                            ?>
-                            <div class="menu-<?= $key ?>">
-                                <div class="footer-menu"><?= wp_nav_menu( [ 'menu' => $menu, 'echo' => false ] ) ?></div>
-                            </div>
+                        ?>
+                        <div class="menu-<?= $key ?>">
+                            <div class="footer-menu"><?= wp_nav_menu( [ 'menu' => $menu, 'echo' => false ] ) ?></div>
+                        </div>
                         <?php endif; endforeach; ?>
 
                     <div class="social-links">
@@ -278,7 +277,7 @@ final class Hook {
     public function _construct_footer_credit(): void {
         ?>
         <div id="footer-credit" class="footer-credit">
-            <div class="container fluid flex flex-x gap">
+            <div class="container flex flex-x gap">
                 <?php
 
                 $footer_credit = \HD_Helper::getThemeMod( 'footer_credit_setting' );

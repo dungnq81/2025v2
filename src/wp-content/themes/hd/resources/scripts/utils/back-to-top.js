@@ -1,7 +1,7 @@
 // back-to-top.js
 
 class BackToTop {
-    constructor(selector = '.back-to-top', smoothScrollEnabled = true, defaultScrollSpeed = 400) {
+    constructor(selector = '.js-back-to-top', smoothScrollEnabled = true, defaultScrollSpeed = 400) {
         this.buttonSelector = selector;
         this.smoothScrollEnabled = smoothScrollEnabled;
         this.defaultScrollSpeed = defaultScrollSpeed;
@@ -30,8 +30,10 @@ class BackToTop {
 
         if (scrolled > this.scrollThreshold) {
             this.goTopBtn.classList.add('back-to-top__show');
+            this.goTopBtn.setAttribute('data-show', 'true');
         } else {
             this.goTopBtn.classList.remove('back-to-top__show');
+            this.goTopBtn.setAttribute('data-show', 'false')
         }
     }
 

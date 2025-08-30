@@ -165,7 +165,6 @@ if ( ! function_exists( '_recaptcha_verify' ) ) {
 	 * @param string $recaptcha_response
 	 *
 	 * @return false|mixed
-	 * @throws \JsonException
 	 */
 	function _recaptcha_verify( string $version, string $recaptcha_response ): mixed {
 		$recaptcha_options = \HD_Helper::getOption( 'recaptcha__options' );
@@ -175,25 +174,35 @@ if ( ! function_exists( '_recaptcha_verify' ) ) {
 
 		// reCaptcha v2
 		if ( 'v2' === $version ) {
-			$recaptchaResponse = $recaptcha_response;
-			$secretKey         = $recaptcha_options['recaptcha_v2_secret_key'] ?? '';
-			$verifyUrl         = 'https://www.google.com/recaptcha/api/siteverify';
+			$secretKey = $recaptcha_options['recaptcha_v2_secret_key'] ?? '';
+			$verifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
 
-			$options = [
-				'http' => [
-					'method'  => 'POST',
-					'header'  => 'Content-Type: application/x-www-form-urlencoded',
-					'content' => http_build_query( [
-						'secret'   => $secretKey,
-						'response' => $recaptchaResponse,
-					] ),
+			// Prepare the data for verification
+			$response = wp_remote_post( $verifyUrl, [
+				'body' => [
+					'secret'   => $secretKey,
+					'response' => $recaptcha_response,
 				],
-			];
+			] );
 
-			// Send the verification request
-			$result = file_get_contents( $verifyUrl, false, stream_context_create( $options ) );
+			if ( is_wp_error( $response ) ) {
+				error_log( '[recaptcha] HTTP error: ' . $response->get_error_message() );
 
-			return json_decode( $result, false, 512, JSON_THROW_ON_ERROR );
+				return false;
+			}
+
+			$body = wp_remote_retrieve_body( $response );
+			if ( empty( $body ) ) {
+				return false;
+			}
+
+			try {
+				return json_decode( $body, false, 512, JSON_THROW_ON_ERROR );
+			} catch ( \JsonException $e ) {
+				error_log( '[recaptcha] JSON decode error: ' . $e->getMessage() );
+
+				return false;
+			}
 		}
 
 		// reCaptcha v3

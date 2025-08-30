@@ -53,20 +53,20 @@ function register_sidebar_callback(): void {
 	// Product Attributes
 	//----------------------------------------------------------
 
-	if ( \HD_Helper::isWoocommerceActive() ) {
-		register_sidebar(
-			[
-				'container'     => false,
-				'id'            => 'product-attributes-sidebar',
-				'name'          => __( 'Product Attributes', TEXT_DOMAIN ),
-				'description'   => __( 'Widgets added here will appear in product archives sidebar.', TEXT_DOMAIN ),
-				'before_widget' => '<div class="%2$s">',
-				'after_widget'  => '</div>',
-				'before_title'  => '<span>',
-				'after_title'   => '</span>',
-			]
-		);
-	}
+//	if ( \HD_Helper::isWoocommerceActive() ) {
+//		register_sidebar(
+//			[
+//				'container'     => false,
+//				'id'            => 'product-attributes-sidebar',
+//				'name'          => __( 'Product Attributes', TEXT_DOMAIN ),
+//				'description'   => __( 'Widgets added here will appear in product archives sidebar.', TEXT_DOMAIN ),
+//				'before_widget' => '<div class="%2$s">',
+//				'after_widget'  => '</div>',
+//				'before_title'  => '<span>',
+//				'after_title'   => '</span>',
+//			]
+//		);
+//	}
 
 	//----------------------------------------------------------
 	// Other...
@@ -217,7 +217,11 @@ function nav_menu_css_class_callback( $classes, $menu_item, $args, $depth ): arr
 		}
 	}
 
-	if ( 1 === $menu_item->current || $menu_item->current_item_ancestor || $menu_item->current_item_parent ) {
+	if (
+		1 === $menu_item->current ||
+		$menu_item->current_item_ancestor ||
+		$menu_item->current_item_parent
+	) {
 		$classes[] = 'active';
 	}
 

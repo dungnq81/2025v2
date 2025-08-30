@@ -90,10 +90,6 @@ final class Addons {
 			: explode( ' ', $reg->extra['addon'] );
 
 		foreach ( $extras as $attr ) {
-			if ( 'defer' === $attr ) {
-				$attr = 'defer data-wp-strategy="defer"';
-			}
-
 			if ( 'module' === $attr && ! str_contains( $tag, 'type="module"' ) ) {
 				$tag = preg_replace( '#(?=></script>)#', ' type="module"', $tag, 1 );
 			} elseif ( ! preg_match( "#\s$attr(=|>|\s)#", $tag ) ) {
