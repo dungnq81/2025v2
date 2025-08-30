@@ -1,0 +1,133 @@
+{
+  "_vendor.DNze6hbu.js": {
+    "file": "js/vendor.DNze6hbu.js",
+    "name": "vendor",
+    "css": [
+      "css/vendor.shaQkcE5.css"
+    ],
+    "assets": [
+      "fonts/fa-light-300.woff2",
+      "fonts/fa-light-300.ttf",
+      "fonts/fa-regular-400.woff2",
+      "fonts/fa-regular-400.ttf",
+      "fonts/fa-solid-900.woff2",
+      "fonts/fa-solid-900.ttf",
+      "fonts/fa-brands-400.woff2",
+      "fonts/fa-brands-400.ttf"
+    ]
+  },
+  "_vendor.shaQkcE5.css": {
+    "file": "css/vendor.shaQkcE5.css",
+    "src": "_vendor.shaQkcE5.css"
+  },
+  "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-brands-400.ttf": {
+    "file": "fonts/fa-brands-400.ttf",
+    "src": "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-brands-400.ttf"
+  },
+  "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-brands-400.woff2": {
+    "file": "fonts/fa-brands-400.woff2",
+    "src": "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-brands-400.woff2"
+  },
+  "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-light-300.ttf": {
+    "file": "fonts/fa-light-300.ttf",
+    "src": "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-light-300.ttf"
+  },
+  "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-light-300.woff2": {
+    "file": "fonts/fa-light-300.woff2",
+    "src": "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-light-300.woff2"
+  },
+  "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-regular-400.ttf": {
+    "file": "fonts/fa-regular-400.ttf",
+    "src": "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-regular-400.ttf"
+  },
+  "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-regular-400.woff2": {
+    "file": "fonts/fa-regular-400.woff2",
+    "src": "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-regular-400.woff2"
+  },
+  "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-solid-900.ttf": {
+    "file": "fonts/fa-solid-900.ttf",
+    "src": "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-solid-900.ttf"
+  },
+  "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-solid-900.woff2": {
+    "file": "fonts/fa-solid-900.woff2",
+    "src": "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-solid-900.woff2"
+  },
+  "src/wp-content/themes/hd/resources/scripts/admin.js": {
+    "file": "js/admin.n2qKbRe0.js",
+    "name": "admin",
+    "src": "src/wp-content/themes/hd/resources/scripts/admin.js",
+    "isEntry": true
+  },
+  "src/wp-content/themes/hd/resources/scripts/components/home.js": {
+    "file": "js/home.Dl1Y8bqR.js",
+    "name": "home",
+    "src": "src/wp-content/themes/hd/resources/scripts/components/home.js",
+    "isEntry": true
+  },
+  "src/wp-content/themes/hd/resources/scripts/components/preload-polyfill.js": {
+    "file": "js/preload-polyfill.zDZbmMZi.js",
+    "name": "preload-polyfill",
+    "src": "src/wp-content/themes/hd/resources/scripts/components/preload-polyfill.js",
+    "isEntry": true
+  },
+  "src/wp-content/themes/hd/resources/scripts/components/social-share.js": {
+    "file": "js/social-share.DSPbP-JJ.js",
+    "name": "social-share",
+    "src": "src/wp-content/themes/hd/resources/scripts/components/social-share.js",
+    "isEntry": true,
+    "imports": [
+      "_vendor.DNze6hbu.js"
+    ]
+  },
+  "src/wp-content/themes/hd/resources/scripts/components/swiper.js": {
+    "file": "js/swiper.BoleyTl9.js",
+    "name": "swiper",
+    "src": "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
+    "isEntry": true,
+    "imports": [
+      "_vendor.DNze6hbu.js"
+    ]
+  },
+  "src/wp-content/themes/hd/resources/scripts/components/woocommerce.js": {
+    "file": "js/woocommerce.CWgBRUes.js",
+    "name": "woocommerce",
+    "src": "src/wp-content/themes/hd/resources/scripts/components/woocommerce.js",
+    "isEntry": true
+  },
+  "src/wp-content/themes/hd/resources/scripts/index.js": {
+    "file": "js/index.BhO-Qtxb.js",
+    "name": "index",
+    "src": "src/wp-content/themes/hd/resources/scripts/index.js",
+    "isEntry": true,
+    "imports": [
+      "_vendor.DNze6hbu.js",
+      "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
+      "src/wp-content/themes/hd/resources/scripts/components/social-share.js"
+    ]
+  },
+  "src/wp-content/themes/hd/resources/styles/admin.scss": {
+    "file": "css/admin.CEu5kDJe.css",
+    "src": "src/wp-content/themes/hd/resources/styles/admin.scss",
+    "isEntry": true
+  },
+  "src/wp-content/themes/hd/resources/styles/editor-style.scss": {
+    "file": "css/editor-style.B1TD7tKJ.css",
+    "src": "src/wp-content/themes/hd/resources/styles/editor-style.scss",
+    "isEntry": true
+  },
+  "src/wp-content/themes/hd/resources/styles/index.scss": {
+    "file": "css/index.lCdNZlRw.css",
+    "src": "src/wp-content/themes/hd/resources/styles/index.scss",
+    "isEntry": true
+  },
+  "src/wp-content/themes/hd/resources/styles/partials/home.scss": {
+    "file": "css/home.C0rfp1V9.css",
+    "src": "src/wp-content/themes/hd/resources/styles/partials/home.scss",
+    "isEntry": true
+  },
+  "src/wp-content/themes/hd/resources/styles/partials/woocommerce.scss": {
+    "file": "css/woocommerce.BRhDRBkw.css",
+    "src": "src/wp-content/themes/hd/resources/styles/partials/woocommerce.scss",
+    "isEntry": true
+  }
+}
