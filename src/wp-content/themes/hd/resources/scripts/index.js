@@ -1,10 +1,11 @@
+import $ from 'jquery';
 import device from 'current-device';
 import {nanoid} from 'nanoid';
+import Foundation from './3rd/zf.js';
 
 import './utils/back-to-top.js';
 import './utils/global.js';
 import './utils/script-loader.js';
-
 import {stickyBar} from './utils/sticky-bar.js';
 //import CookieService from './utils/cookie.js';
 

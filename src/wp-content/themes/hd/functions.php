@@ -5,7 +5,7 @@
  * @author Gaudev
  */
 
-const THEME_VERSION = '1.8.0';
+const THEME_VERSION = '1.9.0';
 const TEXT_DOMAIN   = 'hd';
 const AUTHOR        = 'Gaudev';
 
@@ -58,5 +58,6 @@ require_once __DIR__ . '/inc/helper.php';
 // Initialize theme.
 ( \HD\Core\Theme::get_instance() );
 
-$rest_instance = ( \HD\API\API::get_instance() );
-define( 'RESTAPI_URL', untrailingslashit( $rest_instance->restApiUrl() ) . '/' );
+if ( ! defined( 'RESTAPI_URL' ) ) {
+	define( 'RESTAPI_URL', untrailingslashit( ( \HD\API\API::get_instance() )->restApiUrl() ) . '/' );
+}

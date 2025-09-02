@@ -688,7 +688,7 @@ final class Helper {
 				continue;
 			}
 
-			$data = wp_json_file_decode( $path, [ 'associative' => true, 'depth' => 512, ] );
+			$data = wp_json_file_decode( $path, [ 'associative' => true, 'depth' => 512 ] );
 			if ( is_wp_error( $data ) ) {
 				error_log( '[manifest] JSON decode error at ' . $path . ': ' . $data->get_error_message() );
 				continue;
