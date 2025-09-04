@@ -4,7 +4,10 @@
 
 @import "./variables.css";
 @import "./themes.css";
-@import "./components/index.css";
 @import "./utilities/index.css";
+@import "./components/index.css";
 
-@config '../../../tailwind.config.js';
+@source "../../../../hd/**/*.{html,js,php,scss,json}";
+@source not "../../../../hd/vendor/**";
+
+@plugin "./plugins/index.js";

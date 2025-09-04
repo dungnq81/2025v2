@@ -1,9 +1,9 @@
 {
-  "_vendor.C9Wg14T1.js": {
-    "file": "js/vendor.C9Wg14T1.js",
+  "_vendor.7IaWbD2V.js": {
+    "file": "js/vendor.7IaWbD2V.js",
     "name": "vendor",
     "css": [
-      "css/vendor.DJ6MU_JQ.css"
+      "css/vendor.Vf3uTwnl.css"
     ],
     "assets": [
       "fonts/fa-light-300.woff2",
@@ -16,9 +16,9 @@
       "fonts/fa-brands-400.ttf"
     ]
   },
-  "_vendor.DJ6MU_JQ.css": {
-    "file": "css/vendor.DJ6MU_JQ.css",
-    "src": "_vendor.DJ6MU_JQ.css"
+  "_vendor.Vf3uTwnl.css": {
+    "file": "css/vendor.Vf3uTwnl.css",
+    "src": "_vendor.Vf3uTwnl.css"
   },
   "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-brands-400.ttf": {
     "file": "fonts/fa-brands-400.ttf",
@@ -53,80 +53,80 @@
     "src": "src/wp-content/themes/hd/resources/fonts/fontawesome/webfonts/fa-solid-900.woff2"
   },
   "src/wp-content/themes/hd/resources/scripts/admin.js": {
-    "file": "js/admin.CS-HrLqS.js",
+    "file": "js/admin.n2qKbRe0.js",
     "name": "admin",
     "src": "src/wp-content/themes/hd/resources/scripts/admin.js",
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/components/home.js": {
-    "file": "js/home.AMHuOZMk.js",
+    "file": "js/home.Dl1Y8bqR.js",
     "name": "home",
     "src": "src/wp-content/themes/hd/resources/scripts/components/home.js",
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/components/preload-polyfill.js": {
-    "file": "js/preload-polyfill.BRbQp2pn.js",
+    "file": "js/preload-polyfill.zDZbmMZi.js",
     "name": "preload-polyfill",
     "src": "src/wp-content/themes/hd/resources/scripts/components/preload-polyfill.js",
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/components/social-share.js": {
-    "file": "js/social-share.B0Uw7UtK.js",
+    "file": "js/social-share.CYNlEo4h.js",
     "name": "social-share",
     "src": "src/wp-content/themes/hd/resources/scripts/components/social-share.js",
     "isEntry": true,
     "imports": [
-      "_vendor.C9Wg14T1.js"
+      "_vendor.7IaWbD2V.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/swiper.js": {
-    "file": "js/swiper.CXXtaSkY.js",
+    "file": "js/swiper.dTSxoYbJ.js",
     "name": "swiper",
     "src": "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
     "isEntry": true,
     "imports": [
-      "_vendor.C9Wg14T1.js"
+      "_vendor.7IaWbD2V.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/woocommerce.js": {
-    "file": "js/woocommerce.-OQfU3SQ.js",
+    "file": "js/woocommerce.CWgBRUes.js",
     "name": "woocommerce",
     "src": "src/wp-content/themes/hd/resources/scripts/components/woocommerce.js",
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/index.js": {
-    "file": "js/index.BpNmiSJh.js",
+    "file": "js/index.C5hH7HaZ.js",
     "name": "index",
     "src": "src/wp-content/themes/hd/resources/scripts/index.js",
     "isEntry": true,
     "imports": [
-      "_vendor.C9Wg14T1.js",
+      "_vendor.7IaWbD2V.js",
       "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
       "src/wp-content/themes/hd/resources/scripts/components/social-share.js"
     ]
   },
   "src/wp-content/themes/hd/resources/styles/admin.scss": {
-    "file": "css/admin.Btd2-3K4.css",
+    "file": "css/admin.CEu5kDJe.css",
     "src": "src/wp-content/themes/hd/resources/styles/admin.scss",
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/styles/editor-style.scss": {
-    "file": "css/editor-style.B97r3dxk.css",
+    "file": "css/editor-style.B1TD7tKJ.css",
     "src": "src/wp-content/themes/hd/resources/styles/editor-style.scss",
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/styles/index.scss": {
-    "file": "css/index.BQavU1BS.css",
+    "file": "css/index.lCdNZlRw.css",
     "src": "src/wp-content/themes/hd/resources/styles/index.scss",
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/styles/partials/home.scss": {
-    "file": "css/home.BQL1R6ac.css",
+    "file": "css/home.C0rfp1V9.css",
     "src": "src/wp-content/themes/hd/resources/styles/partials/home.scss",
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/styles/partials/woocommerce.scss": {
-    "file": "css/woocommerce.tn0RQdqM.css",
+    "file": "css/woocommerce.BRhDRBkw.css",
     "src": "src/wp-content/themes/hd/resources/styles/partials/woocommerce.scss",
     "isEntry": true
   }

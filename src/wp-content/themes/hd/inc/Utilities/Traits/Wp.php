@@ -906,9 +906,9 @@ trait Wp {
 		$terms = ! empty( $term_ids ) ? $term_ids : $term_slugs;
 
 		// Normalize limit
-		$limit = (int) $limit;
-		if ( $limit < 0 ) {
-			$limit = - 1;
+		$limit = max( (int) $limit, - 1 );
+		if ( $limit === - 1 ) {
+			$limit = 100;
 		}
 
 		// Normalize orderby & order
@@ -1067,9 +1067,9 @@ trait Wp {
 		}
 
 		// Normalize limit
-		$limit = (int) $limit;
-		if ( $limit < 0 ) {
-			$limit = - 1;
+		$limit = max( (int) $limit, - 1 );
+		if ( $limit === - 1 ) {
+			$limit = 100;
 		}
 
 		// Normalize orderby & order
@@ -1209,9 +1209,9 @@ trait Wp {
 		int $cache_expire = 600,
 	): \WP_Query|false|array {
 		$exclude_ids    = array_values( array_unique( array_map( 'intval', $exclude_ids ) ) );
-		$posts_per_page = (int) $posts_per_page;
-		if ( $posts_per_page < 0 ) {
-			$posts_per_page = - 1;
+		$posts_per_page = max( (int) $posts_per_page, - 1 );
+		if ( $posts_per_page === - 1 ) {
+			$posts_per_page = 100;
 		}
 
 		// Handle date_query for recent posts
