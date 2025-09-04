@@ -13,8 +13,8 @@ import './components/swiper.js';
 import {initSocialShare} from './components/social-share.js';
 
 // Styles
+import '../styles/tailwind/index.css';
 import '../styles/3rd/_index.scss';
-import '../styles/tailwind/index.css'
 
 /** Fancybox */
 //import {Fancybox} from '@fancyapps/ui';

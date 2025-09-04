@@ -25,7 +25,7 @@ do_action( 'hd_footer_before_action' );
 	/**
      * HOOK: hd_footer_action
      *
-	 * @see Hook::construct_footer_action - 10
+	 * @see Hook::construct_footer_action() - 10
 	 */
 	do_action( 'hd_footer_action' );
 	?>
@@ -34,14 +34,15 @@ do_action( 'hd_footer_before_action' );
 /**
  * HOOK: hd_footer_after_action
  *
- * @see ContactLink::add_this_contact_link - 11
+ * @see ContactLink::add_this_contact_link() - 11
  */
 do_action( 'hd_footer_after_action' );
 
 /**
  * HOOK: wp_footer
  *
- * @see Hook::wp_footer_action - 32
+ * @see Hook::wp_footer_action() - 32
+ * @see Hook::wp_footer_custom_js_action() - 99
  */
 wp_footer();
 ?>

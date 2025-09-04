@@ -1,45 +1,45 @@
-/* tailwind/utilities/fluid.css */
+/* tailwind/utilities/clamp.css */
 
-@layer utilities {
-    .u-fs-clamp {
-        --fs-root: 16;
-        --fs-min: 16;
-        --fs-max: 24;
-        --fs-base: 0;
-        --fs-minw: 360;
-        --fs-maxw: 1280;
+/* font-size clamp */
+@utility u-fs-clamp {
+    --fs-root: 16;
+    --fs-min: 16;
+    --fs-max: 24;
+    --fs-base: 0;
+    --fs-minw: 360;
+    --fs-maxw: 1280;
 
-        /* PRECOMPUTE */
-        --min-rem: calc(var(--fs-min) / var(--fs-root) * 1rem);
-        --max-rem: calc(var(--fs-max) / var(--fs-root) * 1rem);
-        --minw-l: calc(var(--fs-minw) * 1px);
-        --range-l: calc((var(--fs-maxw) - var(--fs-minw)) * 1px);
+    /* PRECOMPUTE */
+    --min-rem: calc(var(--fs-min) / var(--fs-root) * 1rem);
+    --max-rem: calc(var(--fs-max) / var(--fs-root) * 1rem);
+    --minw-l: calc(var(--fs-minw) * 1px);
+    --range-l: calc((var(--fs-maxw) - var(--fs-minw)) * 1px);
 
-        /* RATIO t ∈ [0..1] */
-        --t: calc((100vw - var(--minw-l)) / var(--range-l));
+    /* RATIO t ∈ [0..1] */
+    --t: calc((100vw - var(--minw-l)) / var(--range-l));
 
-        --intercept: var(--min-rem);
-        --slope: calc(var(--max-rem) - var(--min-rem));
+    --intercept: var(--min-rem);
+    --slope: calc(var(--max-rem) - var(--min-rem));
 
-        font-size: clamp(
-                var(--min-rem),
-                calc(var(--intercept) + var(--slope) * var(--t)),
-                var(--max-rem)
-        );
-    }
+    font-size: clamp(
+            var(--min-rem),
+            calc(var(--intercept) + var(--slope) * var(--t)),
+            var(--max-rem)
+    );
+}
 
-    .u-fs-lh {
-        /* PRECOMPUTE */
-        --min-lh: calc(var(--min-rem) * var(--fs-base));
-        --max-lh: calc(var(--max-rem) * var(--fs-base));
+/* line-height clamp */
+@utility u-fs-lh {
+    /* PRECOMPUTE */
+    --min-lh: calc(var(--min-rem) * var(--fs-base));
+    --max-lh: calc(var(--max-rem) * var(--fs-base));
 
-        --intercept-lh: var(--min-lh);
-        --slope-lh: calc(var(--max-lh) - var(--min-lh));
+    --intercept-lh: var(--min-lh);
+    --slope-lh: calc(var(--max-lh) - var(--min-lh));
 
-        line-height: clamp(
-                var(--min-lh),
-                calc(var(--intercept-lh) + var(--slope-lh) * var(--t)),
-                var(--max-lh)
-        );
-    }
+    line-height: clamp(
+            var(--min-lh),
+            calc(var(--intercept-lh) + var(--slope-lh) * var(--t)),
+            var(--max-lh)
+    );
 }

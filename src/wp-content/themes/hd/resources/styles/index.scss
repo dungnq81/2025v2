@@ -1,7 +1,10 @@
+/* index.scss */
+
 @use 'utils/variables' as vars;
 @use 'utils/functions' as func;
 @use 'utils/mixins' as mixin;
 
-.test-index {
-    display: block;
-}
+@use 'partials';
+
+//
+// Index layout.

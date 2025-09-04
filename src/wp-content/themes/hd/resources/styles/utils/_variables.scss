@@ -1,3 +1,5 @@
+/* utils/_variables.scss */
+
 // Layout breakpoints
 //
 // Define the minimum dimensions at which your layout will change,
@@ -17,16 +19,12 @@ $mq-breakpoints: (
         xxl: $xxl,
 ) !default;
 
-$container-gutter: 10px !default;
-$container-gutter-md: 20px !default;
-$container-gutter-lg: 40px !default;
-
 $mq-containers: (
-        sm: $sm + $container-gutter * 2,
-        md: $md + $container-gutter-md * 2,
-        lg: $lg + $container-gutter-lg * 2,
-        xl: $xl + $container-gutter-lg * 2,
-        xxl: $xxl + $container-gutter-lg * 2,
+        sm: $sm,
+        md: $md,
+        lg: $lg,
+        xl: $xl,
+        xxl: $xxl,
 ) !default;
 
 // line-height
@@ -69,8 +67,8 @@ $gutters: (
 //
 // Fonts
 
-$header-font: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Ubuntu', Arial, cursive, sans-serif !default;
-$body-font: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, 'Ubuntu', Arial, cursive, sans-serif !default;
+$header-font: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Arial, cursive, sans-serif !default;
+$body-font: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Arial, cursive, sans-serif !default;
 $awesome-font: 'Font Awesome 6 Pro', 'Font Awesome 6 Brands', sans-serif !default;
 $awesome-sharp-font: 'Font Awesome 6 Sharp', 'Font Awesome 6 Brands', sans-serif !default;
 $monospace-font: Consolas, 'Liberation Mono', Courier, monospace !default;

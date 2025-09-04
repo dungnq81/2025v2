@@ -1,0 +1,7 @@
+/* tailwind/properties.css */
+
+@property --percentage {
+    syntax: '<length-percentage>';
+    inherits: false;
+    initial-value: 0%;
+}

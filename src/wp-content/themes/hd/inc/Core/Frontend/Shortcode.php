@@ -133,13 +133,10 @@ final class Shortcode {
 		ob_start();
 
 		?>
-        <form action="<?= \HD_Helper::home() ?>" class="frm-search" method="get" accept-charset="UTF-8" data-abide
-              novalidate>
-            <label for="<?= $id ?>" class="screen-reader-text"><?= $title_for ?></label>
-            <input id="<?= $id ?>" required pattern="^(.*\S+.*)$" type="search" autocomplete="off" name="s"
-                   value="<?= get_search_query() ?>" placeholder="<?= $placeholder_title; ?>">
-            <button type="submit" data-fa=""
-                    aria-label="Search"><?= $title ? '<span>' . $title . '</span>' : '' ?></button>
+        <form action="<?= \HD_Helper::home() ?>" class="frm-search" method="get" accept-charset="UTF-8">
+            <label for="<?= $id ?>" class="sr-only"><?= $title_for ?></label>
+            <input id="<?= $id ?>" required pattern="^(.*\S+.*)$" type="search" autocomplete="off" name="s" value="<?= get_search_query() ?>" placeholder="<?= $placeholder_title; ?>">
+            <button type="submit" data-fa="" aria-label="Search"><?= $title ? '<span>' . $title . '</span>' : '' ?></button>
 			<?php echo \HD_Helper::isWoocommerceActive() ? '<input type="hidden" name="post_type" value="product">' : ''; ?>
         </form>
 		<?php
@@ -178,19 +175,14 @@ final class Shortcode {
 		ob_start();
 
 		?>
-        <a class="trigger-s" title="<?= \HD_Helper::escAttr( $title ) ?>" href="javascript:;"
-           data-toggle="dropdown-<?= $id ?>" data-fa=""><span><?= $title ?></span></a>
+        <a class="trigger-s" title="<?= \HD_Helper::escAttr( $title ) ?>" href="javascript:;" data-toggle="dropdown-<?= $id ?>" data-fa=""><span><?= $title ?></span></a>
         <div role="search" class="dropdown-pane" id="dropdown-<?= $id ?>" data-dropdown data-auto-focus="true">
-            <form action="<?= \HD_Helper::home() ?>" class="frm-search" method="get" accept-charset="UTF-8" data-abide
-                  novalidate>
+            <form action="<?= \HD_Helper::home() ?>" class="frm-search" method="get" accept-charset="UTF-8">
                 <div class="frm-container">
-                    <label for="<?= $id ?>" class="screen-reader-text"><?= $title_for ?></label>
-                    <input id="<?= $id ?>" required pattern="^(.*\S+.*)$" type="search" name="s"
-                           value="<?= get_search_query() ?>" placeholder="<?= $placeholder_title ?>">
-                    <button class="btn-s" type="submit" data-fa="" aria-label="Search"><span><?= $title ?></span>
-                    </button>
-                    <button class="trigger-s-close" type="button" data-fa="" aria-label="Close">
-                        <span><?= $close_title ?></span></button>
+                    <label for="<?= $id ?>" class="sr-only"><?= $title_for ?></label>
+                    <input id="<?= $id ?>" required pattern="^(.*\S+.*)$" type="search" name="s" value="<?= get_search_query() ?>" placeholder="<?= $placeholder_title ?>">
+                    <button class="btn-s" type="submit" data-fa="" aria-label="Search"><span><?= $title ?></span></button>
+                    <button class="trigger-s-close" type="button" data-fa="" aria-label="Close"><span><?= $close_title ?></span></button>
                 </div>
 				<?php echo \HD_Helper::isWoocommerceActive() ? '<input type="hidden" name="post_type" value="product">' : ''; ?>
             </form>

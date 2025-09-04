@@ -2,10 +2,11 @@
 
 @import "tailwindcss";
 
-@import "./variables.css";
+@import "./properties.css";
 @import "./themes.css";
-@import "./utilities/index.css";
+@import "./base.css";
 @import "./components/index.css";
+@import "./utilities/index.css";
 
 @source "../../../../hd/**/*.{html,js,php,scss,json}";
 @source not "../../../../hd/vendor/**";

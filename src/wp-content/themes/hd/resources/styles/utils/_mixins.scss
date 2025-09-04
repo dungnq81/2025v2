@@ -1,3 +1,5 @@
+/* utils/_mixins.scss */
+
 @use 'sass:meta';
 @use 'sass:string';
 @use 'sass:math';
@@ -235,60 +237,24 @@
 @mixin container( $xxl: false ) {
     margin-inline: auto;
 
-    &:not(.no-gutter) {
-        padding-inline: func.fs(vars.$container-gutter);
+    &:not(.full) {
+        max-width: map.get(vars.$mq-containers, sm);
 
         @include mq-min(md) {
-            padding-inline: func.fs(vars.$container-gutter-md);
+            max-width: map.get(vars.$mq-containers, md);
         }
 
         @include mq-min(lg) {
-            padding-inline: func.fs(vars.$container-gutter-lg);
-        }
-    }
-
-    &:not(.full) {
-        &:not(.no-gutter) {
-            max-width: map.get(vars.$mq-containers, sm);
-
-            @include mq-min(md) {
-                max-width: map.get(vars.$mq-containers, md);
-            }
-
-            @include mq-min(lg) {
-                max-width: map.get(vars.$mq-containers, lg);
-            }
-
-            @include mq-min(xl) {
-                max-width: map.get(vars.$mq-containers, xl);
-            }
-
-            @if $xxl == true {
-                @include mq-min(xxl) {
-                    max-width: map.get(vars.$mq-containers, xxl);
-                }
-            }
+            max-width: map.get(vars.$mq-containers, lg);
         }
 
-        &.no-gutter {
-            max-width: map.get(vars.$mq-breakpoints, sm);
+        @include mq-min(xl) {
+            max-width: map.get(vars.$mq-containers, xl);
+        }
 
-            @include mq-min(md) {
-                max-width: map.get(vars.$mq-breakpoints, md);
-            }
-
-            @include mq-min(lg) {
-                max-width: map.get(vars.$mq-breakpoints, lg);
-            }
-
-            @include mq-min(xl) {
-                max-width: map.get(vars.$mq-breakpoints, xl);
-            }
-
-            @if $xxl == true {
-                @include mq-min(xxl) {
-                    max-width: map.get(vars.$mq-breakpoints, xxl);
-                }
+        @if $xxl == true {
+            @include mq-min(xxl) {
+                max-width: map.get(vars.$mq-containers, xxl);
             }
         }
     }

@@ -1,4 +1,4 @@
-// tailwind/plugins/tw-clamp.js
+// tailwind/plugins/clamp.js
 
 export default (opts = {}) => {
     const root = Number(opts.root ?? 16);

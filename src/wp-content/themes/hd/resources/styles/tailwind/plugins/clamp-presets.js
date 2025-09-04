@@ -1,4 +1,4 @@
-/* tailwind/plugins/tw-clamp-presets.js */
+/* tailwind/plugins/clamp-presets.js */
 
 export default {
     h1: {min: 24, max: 48},

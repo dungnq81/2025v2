@@ -102,7 +102,7 @@ Config::define( 'NONCE_SALT', env( 'NONCE_SALT' ) );
  */
 
 Config::define( 'DISALLOW_FILE_EDIT', true ); // Disable the plugin and theme file editor in the admin and
-Config::define( 'DISALLOW_FILE_MODS', true ); // disable plugin and theme updates and installation from the admin
+Config::define( 'DISALLOW_FILE_MODS', false ); // Disable plugin and theme updates and installation from the admin
 
 /** Force SSL for admin */
 Config::define( 'FORCE_SSL_ADMIN', env( 'FORCE_SSL_ADMIN' ) ?? true );

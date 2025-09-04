@@ -57,7 +57,7 @@ import { OffCanvas } from 'foundation-sites/js/foundation.offcanvas';
 //import { Toggler } from 'foundation-sites/js/foundation.toggler';
 //import { Equalizer } from 'foundation-sites/js/foundation.equalizer';
 //import { Interchange } from 'foundation-sites/js/foundation.interchange';
-import { Abide } from 'foundation-sites/js/foundation.abide';
+//import { Abide } from 'foundation-sites/js/foundation.abide';
 
 const plugins = [
     { plugin: Dropdown, name: 'Dropdown' },
@@ -75,7 +75,7 @@ const plugins = [
     //{ plugin: Toggler, name: 'Toggler' },
     //{ plugin: Equalizer, name: 'Equalizer' },
     //{ plugin: Interchange, name: 'Interchange' },
-    { plugin: Abide, name: 'Abide' },
+    //{ plugin: Abide, name: 'Abide' },
 ];
 
 plugins.forEach(({ plugin, name }) => {
@@ -94,17 +94,17 @@ Foundation.addToJquery($);
  * @param parent
  * @returns {boolean}
  */
-function notEqualToValidator($el, required, parent) {
-    if (!required) return true;
-
-    let input1Value = $('#' + $el.attr('data-notEqualTo')).val(),
-        input2Value = $el.val();
-
-    // Return true if they are different, false if they are the same
-    return input1Value !== input2Value;
-}
-
-Foundation.Abide.defaults.validators['notEqualTo'] = notEqualToValidator;
+// function notEqualToValidator($el, required, parent) {
+//     if (!required) return true;
+//
+//     let input1Value = $('#' + $el.attr('data-notEqualTo')).val(),
+//         input2Value = $el.val();
+//
+//     // Return true if they are different, false if they are the same
+//     return input1Value !== input2Value;
+// }
+//
+// Foundation.Abide.defaults.validators['notEqualTo'] = notEqualToValidator;
 
 $(() => $(document).foundation());
 

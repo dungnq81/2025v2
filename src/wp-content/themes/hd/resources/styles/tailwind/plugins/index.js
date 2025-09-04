@@ -3,8 +3,8 @@
 import {composeHandlers} from './_compose.js';
 
 /* .p-fs-clamp- */
-import presets from './tw-clamp-presets.js';
-import fluidTypeFactory from './tw-clamp.js';
+import presets from './clamp-presets.js';
+import fluidTypeFactory from './clamp.js';
 
 const fluidType = fluidTypeFactory({
     root: 16,

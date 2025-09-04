@@ -16,9 +16,9 @@
     /**
      * HOOK: wp_head
      *
-     * @see Hook::wp_head_action - 1
-     * @see Hook::other_head_action - 9
-     * @see Hook::external_fonts_action - 99
+     * @see Hook::wp_head_action() - 1
+     * @see Hook::other_head_action() - 9
+     * @see Hook::external_fonts_action() - 99
      */
     wp_head();
     ?>
@@ -28,15 +28,15 @@
     /**
      * HOOK: wp_body_open
      *
-     * @see CustomScript::body_scripts_top__hook - 99
+     * @see CustomScript::body_scripts_top() - 99
      */
     do_action( 'wp_body_open' );
 
     /**
      * HOOK: hd_header_before_action
      *
-     * @see Hook::skip_to_content_link_action - 2
-     * @see Hook::off_canvas_menu_action - 11
+     * @see Hook::skip_to_content_link_action() - 2
+     * @see Hook::off_canvas_menu_action() - 11
      */
     do_action( 'hd_header_before_action' );
     ?>
@@ -45,7 +45,7 @@
 		/**
          * HOOK: hd_header_action
          *
-		 * @see Hook::construct_header_action - 10
+		 * @see Hook::construct_header_action() - 10
 		 */
 		do_action( 'hd_header_action' );
 		?>

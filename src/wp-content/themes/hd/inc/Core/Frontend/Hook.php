@@ -94,18 +94,15 @@ final class Hook {
             $version = \HD_Helper::version();
 
             \HD_Asset::enqueueCSS( 'partials/home.scss', [ \HD_Asset::handle( 'index.scss' ) ], $version );
-            \HD_Asset::enqueueJS( 'components/home.js', [ \HD_Asset::handle( 'index.js' ) ], $version, true, [
-                    'module',
-                    'defer'
-            ] );
+            \HD_Asset::enqueueJS( 'components/home.js', [ \HD_Asset::handle( 'index.js' ) ], $version, true, [ 'module', 'defer' ] );
         } );
     }
 
     /* ---------- PUBLIC -------------------------------------------------- */
 
     public function wp_head_action(): void {
-        //echo '<meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale=1.0, maximum-scale=2.0, minimum-scale=1.0" />';
         echo '<meta name="viewport" content="width=device-width, initial-scale=1.0" />';
+        echo '<meta name="format-detection" content="telephone=no,email=no,address=no">';
 
 //        if ( is_singular() && pings_open() ) {
 //            printf( '<link rel="pingback" href="%s" />', esc_url( get_bloginfo( 'pingback_url' ) ) );
@@ -115,8 +112,6 @@ final class Hook {
     // -----------------------------------------------
 
     public function other_head_action(): void {
-        echo '<meta name="format-detection" content="telephone=no,email=no,address=no">';
-
         // manifest.json
         if ( is_file( ABSPATH . 'manifest.json' ) ) {
             printf( '<link rel="manifest" href="%s" />', esc_url( home_url( 'manifest.json' ) ) );

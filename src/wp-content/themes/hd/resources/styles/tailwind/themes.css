@@ -1,1 +1,10 @@
 /* tailwind/themes.css */
+
+@theme {
+    --font-header: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Arial, cursive, sans-serif;
+    --font-body: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Arial, cursive, sans-serif;
+    --font-mono: Consolas, 'Liberation Mono', Courier, monospace;
+
+    --default-font-family: var(--font-body);
+    --default-mono-font-family: var(--font-mono);
+}
