@@ -1,7 +1,19 @@
 /* tailwind/components/index.css */
 
 @layer components {
-    .c-flex-center {
-        @apply flex items-center justify-center;
+    .c-light-bg {
+        background: var(--bg-light-color);
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.02);
+    }
+
+    input[type="number"].c-input-text {
+        appearance: textfield;
+    }
+
+    input[type="number"].c-input-text:where(::-webkit-inner-spin-button, ::-webkit-outer-spin-button) {
+        -webkit-appearance: none;
+        margin: 0;
     }
 }

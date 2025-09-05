@@ -45,6 +45,7 @@ if ( ! in_array( $position, [ 'left', 'right', 'top', 'bottom' ], false ) ) {
 
 		echo \HD_Helper::doShortcode( 'inline_search' );
 		echo \HD_Helper::doShortcode( 'vertical_menu' );
+
 		?>
 	</div>
 </div>
