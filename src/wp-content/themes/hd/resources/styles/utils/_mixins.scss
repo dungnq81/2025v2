@@ -363,7 +363,7 @@
     }
 }
 
-@mixin clamp-font-size( $min: 10px, $max: 100px, $base: 0, $min-width: vars.$sm, $max-width: vars.$xxl ) {
+@mixin clamp-font-size( $min: 10px, $max: 100px, $base: 0, $min-width: 380px, $max-width: 1900px ) {
     $min-rem: func.fs($min);
     $max-rem: func.fs($max);
     $min-width-rem: func.fs($min-width);

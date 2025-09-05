@@ -14,7 +14,7 @@
     },
     "require-dev": {
         "wp-cli/wp-cli-bundle": "v2.12.0",
-        "symfony/var-dumper": "v7.3.2",
+        "symfony/var-dumper": "v7.3.3",
         "roave/security-advisories": "dev-latest"
     },
     "minimum-stability": "dev",

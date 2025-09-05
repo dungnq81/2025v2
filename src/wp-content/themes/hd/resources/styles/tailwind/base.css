@@ -5,12 +5,7 @@
         @apply font-light text-(length:--global-fs) bg-(--bg-color) text-(--text-color) leading-(--global-line-height);
     }
 
-    :is(
-        [type='submit']:not(:disabled),
-        [type='reset']:not(:disabled),
-        [type='button']:not(:disabled),
-        [role="button"]:not(:disabled)
-    ) {
+    :is([type='submit']:not(:disabled), [type='reset']:not(:disabled), [type='button']:not(:disabled), [role="button"]:not(:disabled)) {
         cursor: pointer;
     }
 
@@ -23,23 +18,17 @@
     }
 
     :is(h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6) {
-        font-size: inherit;
+        @apply font-(family-name:--font-header) text-(--header-text-color) leading-(--header-line-height);
         font-weight: inherit;
-        font-family: var(--font-header);
-        color: var(--header-text-color);
-        line-height: var(--header-line-height);
     }
 
     :is(h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6) a {
-        text-decoration: none;
-        display: inline-block;
-        color: currentColor;
+        @apply no-underline inline-block text-current;
     }
 
     :is(h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6) p {
-        color: currentColor;
+        @apply text-current mb-0;
         line-height: inherit;
-        margin-bottom: 0;
     }
 
     :is(a, area, button, [role="button"], input, label, select, summary, textarea) {
@@ -49,29 +38,28 @@
     }
 
     * > p {
-        overflow-wrap: break-word;
-        margin-top: 0;
+        @apply wrap-break-word mt-0;
         line-height: inherit;
 
         &:not(:last-child) {
-            margin-bottom: 15px;
+            @apply mb-4;
         }
 
         &:last-child {
-            margin-bottom: 0;
+            @apply mb-0;
         }
     }
 
     :is(span, label) > a:hover {
-        text-decoration: none !important;
+        @apply no-underline;
     }
 
     a:hover {
-        text-decoration: none;
+        @apply no-underline;
     }
 
     a :where(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6) {
-        color: currentColor;
+        @apply text-current;
     }
 
     img {
@@ -79,7 +67,7 @@
     }
 
     img:not([src]) {
-        visibility: hidden;
+        @apply invisible;
     }
 
     img:where(.aligncenter, .align-center) {
@@ -111,13 +99,11 @@
     }
 
     [data-fa]::before {
-        content: attr(data-fa);
-        font-family: var(--font-awesome);
+        @apply content-[attr(data-fa)] font-(family-name:--font-awesome);
     }
 
     [data-fa-after]::after {
-        content: attr(data-fa-after);
-        font-family: var(--font-awesome);
+        @apply content-[attr(data-fa-after)] font-(family-name:--font-awesome);
     }
 
     input:-webkit-autofill {

@@ -8,7 +8,7 @@ import fluidTypeFactory from './clamp.js';
 
 const fluidType = fluidTypeFactory({
     root: 16,
-    defaults: {minw: 360, maxw: 1280, base: 0},
+    defaults: {minw: 380, maxw: 1900, base: 0},
     presets,
 });
 

@@ -2,4 +2,36 @@
 
 @import "./clamp.css";
 
-@layer utilities {}
+@layer utilities {
+    .u-text-inherit {
+        font-size: inherit;
+    }
+
+    .u-font-inherit {
+        font-weight: inherit;
+    }
+
+    .u-heading-1 {
+        @apply p-fs-clamp-h1;
+    }
+
+    .u-heading-2 {
+        @apply p-fs-clamp-h2;
+    }
+
+    .u-heading-3 {
+        @apply p-fs-clamp-h3;
+    }
+
+    .u-heading-4 {
+        @apply p-fs-clamp-h4;
+    }
+
+    .u-heading-5 {
+        @apply p-fs-clamp-h5;
+    }
+
+    .u-heading-6 {
+        @apply p-fs-clamp-h6;
+    }
+}

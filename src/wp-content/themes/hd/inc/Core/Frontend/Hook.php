@@ -64,9 +64,8 @@ final class Hook {
         // -----------------------------------------------
         add_action( 'hd_footer_action', [ $this, 'construct_footer_action' ], 10 );
 
-        add_action( 'construct_footer', [ $this, '_construct_footer_cta' ], 10 );
-        add_action( 'construct_footer', [ $this, '_construct_footer_columns' ], 11 );
-        add_action( 'construct_footer', [ $this, '_construct_footer_credit' ], 12 );
+        add_action( 'construct_footer', [ $this, '_construct_footer_columns' ], 10 );
+        add_action( 'construct_footer', [ $this, '_construct_footer_credit' ], 11 );
         add_action( 'construct_footer', [ $this, '_construct_footer_custom' ], 98 );
 
         // -----------------------------------------------
@@ -197,7 +196,7 @@ final class Hook {
             echo apply_filters(
                     'hd_back_to_top_output_filter',
                     sprintf(
-                            '<a title="%1$s" aria-label="%1$s" rel="nofollow" href="#" class="js-back-to-top c-flex-center right-2.5 bottom-[70px] fixed z-[999] w-7 h-7 border rounded opacity-0 transition-opacity duration-300 data-[show=true]:opacity-100" data-show="false" data-scroll-speed="%2$s" data-scroll-start="%3$s">%4$s</a>',
+                            '<a title="%1$s" aria-label="%1$s" rel="nofollow" href="#" class="js-back-to-top c-flex-center right-3 bottom-18 fixed z-[999] w-7 h-7 border rounded opacity-0 transition-opacity duration-300 data-[show=true]:opacity-100" data-show="false" data-scroll-speed="%2$s" data-scroll-start="%3$s">%4$s</a>',
                             esc_attr__( 'Scroll back to top', TEXT_DOMAIN ),
                             absint( apply_filters( 'hd_back_to_top_scroll_speed_filter', 400 ) ),
                             absint( apply_filters( 'hd_back_to_top_scroll_start_filter', 300 ) ),
@@ -211,17 +210,12 @@ final class Hook {
 
     public function construct_footer_action(): void {
         /**
-         * @see self::_construct_footer_cta - 10
          * @see self::_construct_footer_columns - 10
-         * @see self::_construct_footer_credit - 10
-         * @see self::_construct_footer_custom - 32
+         * @see self::_construct_footer_credit - 11
+         * @see self::_construct_footer_custom - 98
          */
         do_action( 'construct_footer' );
     }
-
-    // -----------------------------------------------
-
-    public function _construct_footer_cta(): void {}
 
     // -----------------------------------------------
 

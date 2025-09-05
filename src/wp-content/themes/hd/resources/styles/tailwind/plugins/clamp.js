@@ -2,7 +2,7 @@
 
 export default (opts = {}) => {
     const root = Number(opts.root ?? 16);
-    const defaults = {minw: 360, maxw: 1280, base: 0, ...(opts.defaults || {})};
+    const defaults = {minw: 380, maxw: 1900, base: 0, ...(opts.defaults || {})};
     const presets = opts.presets || {};
 
     const buildClamp = (minPx, maxPx, base = defaults.base, minw = defaults.minw, maxw = defaults.maxw) => {
@@ -33,11 +33,12 @@ export default (opts = {}) => {
         if (base > 0) {
             out.lineHeight = `clamp(${minRem * base}rem, calc(${intercept * base}rem + ${slope * base}vw), ${maxRem * base}rem)`;
         }
+
         return out;
     };
 
     return ({matchUtilities, addUtilities}) => {
-        // Arbitrary utility: p-fs-clamp-[min,max,base?,minw?,maxw?] (min/max theo px)
+        // Arbitrary utility: p-fs-clamp-[min,max,base?,minw?,maxw?]
         matchUtilities(
             {
                 'p-fs-clamp': (raw) => {
@@ -62,6 +63,7 @@ export default (opts = {}) => {
                 return [`.p-fs-clamp-${name}`, buildClamp(min, max, base, minw, maxw)];
             })
         );
+
         addUtilities(presetUtilities);
     };
 };

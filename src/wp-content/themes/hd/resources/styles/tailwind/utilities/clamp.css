@@ -6,10 +6,9 @@
     --fs-min: 16;
     --fs-max: 24;
     --fs-base: 0;
-    --fs-minw: 360;
-    --fs-maxw: 1280;
+    --fs-minw: 380;
+    --fs-maxw: 1900;
 
-    /* PRECOMPUTE */
     --min-rem: calc(var(--fs-min) / var(--fs-root) * 1rem);
     --max-rem: calc(var(--fs-max) / var(--fs-root) * 1rem);
     --minw-l: calc(var(--fs-minw) * 1px);
@@ -30,7 +29,6 @@
 
 /* line-height clamp */
 @utility u-fs-lh {
-    /* PRECOMPUTE */
     --min-lh: calc(var(--min-rem) * var(--fs-base));
     --max-lh: calc(var(--max-rem) * var(--fs-base));
 

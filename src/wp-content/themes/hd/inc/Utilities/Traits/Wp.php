@@ -1636,10 +1636,16 @@ trait Wp {
 	 * @param mixed $term
 	 * @param string|null $class
 	 * @param string|null $default_tag
+	 * @param bool $strip_tags
 	 *
 	 * @return string|null
 	 */
-	public static function termExcerpt( mixed $term = 0, ?string $class = 'excerpt', ?string $default_tag = 'div' ): ?string {
+	public static function termExcerpt(
+		mixed $term = 0,
+		?string $class = 'term-excerpt',
+		?string $default_tag = 'div',
+		bool $strip_tags = false,
+	): ?string {
 		if ( ! $term ) {
 			$term = 0;
 		}
@@ -1649,12 +1655,15 @@ trait Wp {
 			return null;
 		}
 
-		$description = strip_tags( $description );
+		if ( $strip_tags ) {
+			$description = strip_tags( $description );
+		}
+
 		if ( ! $class ) {
 			return $description;
 		}
 
-		$tag = $default_tag ?? 'p';
+		$tag = $default_tag ?? 'div';
 
 		return '<' . $tag . " class=\"$class\">$description</" . $tag . '>';
 	}
