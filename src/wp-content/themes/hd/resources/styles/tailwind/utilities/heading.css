@@ -1,0 +1,25 @@
+/* tailwind/utilities/heading.css */
+
+@utility u-heading-1 {
+    @apply p-fs-clamp-h1;
+}
+
+@utility u-heading-2 {
+    @apply p-fs-clamp-h2;
+}
+
+@utility u-heading-3 {
+    @apply p-fs-clamp-h3;
+}
+
+@utility u-heading-4 {
+    @apply p-fs-clamp-h4;
+}
+
+@utility u-heading-5 {
+    @apply p-fs-clamp-h5;
+}
+
+@utility u-heading-6 {
+    @apply p-fs-clamp-h6;
+}

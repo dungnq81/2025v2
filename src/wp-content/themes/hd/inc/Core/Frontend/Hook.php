@@ -196,7 +196,7 @@ final class Hook {
             echo apply_filters(
                     'hd_back_to_top_output_filter',
                     sprintf(
-                            '<a title="%1$s" aria-label="%1$s" rel="nofollow" href="#" class="js-back-to-top c-flex-center right-3 bottom-18 fixed z-[999] w-7 h-7 border rounded opacity-0 transition-opacity duration-300 data-[show=true]:opacity-100" data-show="false" data-scroll-speed="%2$s" data-scroll-start="%3$s">%4$s</a>',
+                            '<a title="%1$s" aria-label="%1$s" rel="nofollow" href="#" class="js-back-to-top u-flex-center right-3 bottom-18 fixed z-[999] w-7 h-7 border rounded opacity-0 transition-opacity duration-300 data-[show=true]:opacity-100" data-show="false" data-scroll-speed="%2$s" data-scroll-start="%3$s">%4$s</a>',
                             esc_attr__( 'Scroll back to top', TEXT_DOMAIN ),
                             absint( apply_filters( 'hd_back_to_top_scroll_speed_filter', 400 ) ),
                             absint( apply_filters( 'hd_back_to_top_scroll_start_filter', 300 ) ),
@@ -231,11 +231,11 @@ final class Hook {
         ?>
         <div id="footer-columns" class="footer-columns">
             <?php if ( $footer_cta_title ) : ?>
-            <div class="footer-cta">
-                <div class="container fluid">
-                    <div class="cta"><?= $footer_cta_title ?></div>
+                <div class="footer-cta">
+                    <div class="container fluid">
+                        <div class="cta"><?= $footer_cta_title ?></div>
+                    </div>
                 </div>
-            </div>
             <?php endif; ?>
             <div class="footer-content">
                 <div class="container fluid flex flex-y">
@@ -265,20 +265,22 @@ final class Hook {
 
     public function _construct_footer_credit(): void {
         ?>
-        <div id="footer-credit" class="footer-credit">
-            <div class="container flex flex-x gap">
+        <div id="footer-credit" class="c-light-bg py-4">
+            <div class="container px-3 mx-auto text-center p-fs-clamp-[12,14] md:flex md:flex-wrap md:justify-between md:items-center md:gap-3">
                 <?php
 
                 $footer_credit = \HD_Helper::getThemeMod( 'footer_credit_setting' );
                 $footer_credit = ! empty( $footer_credit ) ? esc_html( $footer_credit ) : '&copy; ' . date( 'Y' ) . ' ' . get_bloginfo( 'name' ) . '. ' . esc_html__( 'All rights reserved.', TEXT_DOMAIN );
 
+                echo \HD_Helper::doShortcode( 'horizontal_menu', [
+                        'location'    => 'policy-nav',
+                        'depth'       => 1,
+                        'extra_class' => 'flex flex-wrap justify-center gap-3 md:gap-6',
+                        'link_class'  => 'flex flex-wrap gap-1 flex-row-reverse hover:text-(--text-color-1)',
+                ] );
+
                 ?>
-                <div class="cell left">
-                    <?php echo \HD_Helper::doShortcode( 'horizontal_menu', [ 'location' => 'policy-nav', 'depth'    => 1 ] ); ?>
-                </div>
-                <div class="cell right">
-                    <p class="copyright"><?php echo apply_filters( 'hd_footer_credit_filter', $footer_credit ); ?></p>
-                </div>
+                <p class="copyright"><?php echo apply_filters( 'hd_footer_credit_filter', $footer_credit ); ?></p>
             </div>
         </div>
         <?php

@@ -301,7 +301,7 @@ Feature: Manage WordPress plugins
   Scenario: List plugins
     Given a WP install
 
-    When I run `wp plugin activate akismet hello`
+    When I run `wp plugin activate --all`
     Then STDOUT should not be empty
 
     When I run `wp plugin list --status=inactive --field=name`
@@ -348,7 +348,7 @@ Feature: Manage WordPress plugins
       // Network: true
       """
 
-    When I run `wp plugin activate akismet hello`
+    When I run `wp plugin activate akismet`
     Then STDOUT should not be empty
 
     When I run `wp plugin install wordpress-importer --ignore-requirements`
@@ -425,13 +425,20 @@ Feature: Manage WordPress plugins
   @require-mysql
   Scenario: Enable and disable all plugins
     Given a WP install
+    And I run `wp plugin install https://github.com/wp-cli/sample-plugin/archive/refs/heads/master.zip`
 
     When I run `wp plugin activate --all`
     Then STDOUT should contain:
       """
       Plugin 'akismet' activated.
-      Plugin 'hello' activated.
-      Success: Activated 2 of 2 plugins.
+      """
+    And STDOUT should contain:
+      """
+      Plugin 'sample-plugin' activated.
+      """
+    And STDOUT should contain:
+      """
+      Success: Activated 3 of 3 plugins.
       """
 
     When I run `wp plugin activate --all`
@@ -445,16 +452,23 @@ Feature: Manage WordPress plugins
       """
       active
       active
+      active
       must-use
       must-use
       """
 
     When I run `wp plugin deactivate --all`
-    Then STDOUT should be:
+    Then STDOUT should contain:
       """
       Plugin 'akismet' deactivated.
-      Plugin 'hello' deactivated.
-      Success: Deactivated 2 of 2 plugins.
+      """
+    And STDOUT should contain:
+      """
+      Plugin 'sample-plugin' deactivated.
+      """
+    And STDOUT should contain:
+      """
+      Success: Deactivated 3 of 3 plugins.
       """
 
     When I run `wp plugin deactivate --all`
@@ -466,6 +480,7 @@ Feature: Manage WordPress plugins
     When I run `wp plugin list --field=status`
     Then STDOUT should be:
       """
+      inactive
       inactive
       inactive
       must-use
@@ -653,7 +668,7 @@ Feature: Manage WordPress plugins
   Scenario: Validate installed plugin's version.
     Given a WP installation
     And I run `wp plugin uninstall --all`
-    And I run `wp plugin install hello-dolly`
+    And I run `wp plugin install hello-dolly --force`
     And a wp-content/mu-plugins/test-plugin-update.php file:
       """
       <?php
@@ -739,16 +754,17 @@ Feature: Manage WordPress plugins
   @require-wp-5.5
   Scenario: Listing plugins should include name and auto_update
     Given a WP install
+    And I run `wp plugin install https://github.com/wp-cli/sample-plugin/archive/refs/heads/master.zip`
     When I run `wp plugin list --fields=name,auto_update`
     Then STDOUT should be a table containing rows:
       | name              | auto_update          |
-      | hello             | off                  |
+      | sample-plugin     | off                  |
 
-    When I run `wp plugin auto-updates enable hello`
+    When I run `wp plugin auto-updates enable sample-plugin`
     And I try `wp plugin list --fields=name,auto_update`
     Then STDOUT should be a table containing rows:
       | name              | auto_update          |
-      | hello             | on                   |
+      | sample-plugin     | on                   |
 
   Scenario: Listing plugins should include tested_up_to from the 'tested up to' header
     Given a WP install
@@ -879,6 +895,51 @@ Feature: Manage WordPress plugins
       """
       Warning: example: This update requires WordPress version 100
       """
+
+  @require-wp-4.0
+  Scenario: Show plugin update as unavailable if it has a new version but no update package provided by author
+    Given a WP install
+    And a wp-content/plugins/example/example.php file:
+      """
+      <?php
+        /**
+        * Plugin Name: Example Plugin
+        * Version: 1.0.0
+        * Requires at least: 3.7
+        * Tested up to: 6.7
+      """
+    And that HTTP requests to https://api.wordpress.org/plugins/update-check/1.1/ will respond with:
+      """
+      HTTP/1.1 200 OK
+
+      {
+        "plugins": [],
+        "translations": [],
+        "no_update": {
+          "example/example.php": {
+            "id": "w.org/plugins/example",
+            "slug": "example",
+            "plugin": "example/example.php",
+            "new_version": "2.0.0",
+
+            "requires_plugins": [],
+            "compatibility": []
+          }
+        }
+      }
+      """
+
+    When I run `wp plugin list`
+    Then STDOUT should be a table containing rows:
+      | name            | status   | update       | version  | update_version   | auto_update | requires   | requires_php   |
+      | example         | inactive | unavailable  | 1.0.0    | 2.0.0            | off         |            |                |
+
+    When I try `wp plugin update example`
+    Then STDERR should contain:
+      """
+      Warning: example: Update file not provided. Contact author for more details
+      """
+
 
   @require-wp-4.0
   Scenario: Show plugin update as unavailable if it doesn't meet PHP requirements

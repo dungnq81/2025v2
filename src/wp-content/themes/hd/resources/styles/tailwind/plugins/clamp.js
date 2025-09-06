@@ -2,7 +2,7 @@
 
 export default (opts = {}) => {
     const root = Number(opts.root ?? 16);
-    const defaults = {minw: 380, maxw: 1900, base: 0, ...(opts.defaults || {})};
+    const defaults = {minw: 640, maxw: 1536, base: 0, ...(opts.defaults || {})};
     const presets = opts.presets || {};
 
     const buildClamp = (minPx, maxPx, base = defaults.base, minw = defaults.minw, maxw = defaults.maxw) => {
@@ -24,12 +24,15 @@ export default (opts = {}) => {
 
         const minRem = minPx / root;
         const maxRem = maxPx / root;
-        const slope = ((maxRem - minRem) / (maxw - minw)) * 100;
-        const intercept = minRem - (slope * (minw / 100));
+        const minwRem = minw / root;
+        const maxwRem = maxw / root;
+        const slope = ((maxRem - minRem) / (maxwRem - minwRem)) * 100;
+        const intercept = minRem - slope * minwRem / 100;
 
         const out = {
             fontSize: `clamp(${minRem}rem, calc(${intercept}rem + ${slope}vw), ${maxRem}rem)`
         };
+
         if (base > 0) {
             out.lineHeight = `clamp(${minRem * base}rem, calc(${intercept * base}rem + ${slope * base}vw), ${maxRem * base}rem)`;
         }

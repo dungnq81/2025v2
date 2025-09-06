@@ -243,7 +243,7 @@ final class Shortcode {
 		$atts = shortcode_atts(
 			[
 				'location'         => 'main-nav',
-				'class'            => 'dropdown menu horizontal horizontal-menu desktop-menu',
+				'class'            => 'dropdown menu horizontal-menu',
 				'extra_class'      => '',
 				'id'               => \HD_Helper::escAttr( $id ),
 				'depth'            => 4,
@@ -257,8 +257,8 @@ final class Shortcode {
 		);
 
 		$location         = $atts['location'] ? \HD_Helper::escAttr( $atts['location'] ) : 'main-nav';
-		$class            = $atts['class'] ? \HD_Helper::escAttr( $atts['class'] ) : '';
-		$extra_class      = $atts['extra_class'] ? \HD_Helper::escAttr( $atts['extra_class'] ) : $location;
+		$class            = $atts['class'] ? \HD_Helper::escAttr( $atts['class'] ) . ' ' . $location : $location;
+		$extra_class      = $atts['extra_class'] ? \HD_Helper::escAttr( $atts['extra_class'] ) : '';
 		$depth            = $atts['depth'] ? absint( $atts['depth'] ) : 1;
 		$id               = $atts['id'] ?: \HD_Helper::escAttr( $id );
 		$li_class         = ! empty( $atts['li_class'] ) ? \HD_Helper::escAttr( $atts['li_class'] ) : '';
@@ -339,11 +339,13 @@ final class Shortcode {
 	public function posts( array $atts = [] ): false|string|null {
 		$default_atts = [
 			'post_type'        => 'post',
+            'taxonomy'         => 'category',
 			'term_ids'         => '',
-			'taxonomy'         => 'category',
+            'exclude_ids'      => [],
 			'include_children' => false,
-			'posts_per_page'   => 12,
-			'limit_time'       => '',
+			'limit'            => 12,
+            'orderby'          => 'date',
+            'order'            => 'DESC',
 			'wrapper_tag'      => '',
 			'wrapper_class'    => '',
 			'show'             => [
@@ -364,21 +366,21 @@ final class Shortcode {
 			'posts'
 		);
 
-		$term_ids         = $atts['term_ids'] ?: [];
-		$posts_per_page   = $atts['posts_per_page'] ? absint( $atts['posts_per_page'] ) : \HD_Helper::getOption( 'posts_per_page' );
-		$include_children = \HD_Helper::toBool( $atts['include_children'] );
-		$orderby          = [ 'date' => 'DESC' ];
-		$strtotime_str    = $atts['limit_time'] ? \HD_Helper::toString( $atts['limit_time'] ) : false;
+        $term_ids         = $atts['term_ids'] ?: [];
+        $exclude_ids      = $atts['exclude_ids'] ?: [];
+        $limit            = $atts['limit'] ? absint( $atts['limit'] ) : \HD_Helper::getOption( 'posts_per_page' );
+        $include_children = \HD_Helper::toBool( $atts['include_children'] );
 
 		$r = \HD_Helper::queryByTerms(
 			$term_ids,
 			$atts['post_type'],
 			$atts['taxonomy'],
+            $limit,
+            true,
 			$include_children,
-			$posts_per_page,
-			$orderby,
-			[],
-			$strtotime_str
+            $exclude_ids,
+            $atts['orderby'],
+            $atts['order'],
 		);
 
 		if ( ! $r ) {
@@ -392,7 +394,7 @@ final class Shortcode {
 		$i = 0;
 
 		// Load slides loop.
-		while ( $r->have_posts() && $i < $posts_per_page ) :
+		while ( $r->have_posts() && $i < $limit ) :
 			$r->the_post();
 
 			echo $wrapper_open;
