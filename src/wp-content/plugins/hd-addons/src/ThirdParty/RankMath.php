@@ -28,32 +28,22 @@ final class RankMath {
 		 * Filter to add plugins to the RMS TOC.
 		 */
 
-		/** Fixed TOC */
-		if ( \Addons\Helper::checkPluginActive( 'fixed-toc/fixed-toc.php' ) ) {
-			add_filter( 'rank_math/researches/toc_plugins', static function ( $toc_plugins ) {
-				$toc_plugins['fixed-toc/fixed-toc.php'] = 'Fixed TOC';
+		add_filter( 'rank_math/researches/toc_plugins', static function ( $toc_plugins ) {
+			$preferred = [
+				'fixed-toc/fixed-toc.php'                           => 'Fixed TOC',
+				'tocer/tocer.php'                                   => 'Tocer',
+				'easy-table-of-contents/easy-table-of-contents.php' => 'Easy Table of Contents',
+				'table-of-contents-plus/toc.php'                    => 'Table of Contents Plus',
+			];
 
-				return $toc_plugins;
-			} );
-		}
+			foreach ( $preferred as $file => $label ) {
+				if ( \Addons\Helper::checkPluginActive( $file ) ) {
+					return [ $file => $label ];
+				}
+			}
 
-		/** Tocer */
-		if ( \Addons\Helper::checkPluginActive( 'tocer/tocer.php' ) ) {
-			add_filter( 'rank_math/researches/toc_plugins', static function ( $toc_plugins ) {
-				$toc_plugins['tocer/tocer.php'] = 'Tocer';
-
-				return $toc_plugins;
-			} );
-		}
-
-		/** Easy Table of Contents */
-		if ( \Addons\Helper::checkPluginActive( 'easy-table-of-contents/easy-table-of-contents.php' ) ) {
-			add_filter( 'rank_math/researches/toc_plugins', static function ( $toc_plugins ) {
-				$toc_plugins['easy-table-of-contents/easy-table-of-contents.php'] = 'Easy Table of Contents';
-
-				return $toc_plugins;
-			} );
-		}
+			return $toc_plugins;
+		}, PHP_INT_MAX );
 	}
 
 	// --------------------------------------------------

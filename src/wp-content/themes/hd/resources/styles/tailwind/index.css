@@ -13,6 +13,5 @@
 
 @plugin "./plugins/index.js";
 @plugin "@iconify/tailwind4" {
-    prefix: "iconify";
     scale: 1.2;
 }

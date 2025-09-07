@@ -220,23 +220,14 @@ final class Hook {
     // -----------------------------------------------
 
     public function _construct_footer_columns(): void {
-        $footer_cta     = \HD_Helper::getField( 'footer_cta', 'option' );
         $footer_content = \HD_Helper::getField( 'footer_content', 'option' );
         $lg             = \HD_Helper::currentLanguage();
 
-        $footer_cta_title = $footer_cta[ 'gr_title_' . $lg ] ?? '';
         $footer_menu_1    = $footer_content[ 'footer_menu_1_' . $lg ] ?? [];
         $footer_menu_2    = $footer_content[ 'footer_menu_2_' . $lg ] ?? [];
 
         ?>
         <div id="footer-columns" class="footer-columns">
-            <?php if ( $footer_cta_title ) : ?>
-                <div class="footer-cta">
-                    <div class="container fluid">
-                        <div class="cta"><?= $footer_cta_title ?></div>
-                    </div>
-                </div>
-            <?php endif; ?>
             <div class="footer-content">
                 <div class="container fluid flex flex-y">
 

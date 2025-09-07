@@ -1892,7 +1892,7 @@ trait Wp {
 			printf(
 			/* translators: 1: SVG icon. 2: posted in a label, only visible to screen readers. 3: list of tags. */
 				'<div class="hashtag-links links">%1$s<span class="sr-only">%2$s</span>%3$s</div>',
-				'<i data-fa="#"></i>',
+				'<span class="icon-[flowbite--tag-outline]"></span>',
 				__( 'Từ khóa', TEXT_DOMAIN ),
 				$hashtag_list
 			);
@@ -2777,8 +2777,8 @@ trait Wp {
 			'end_size'  => 1,
 			'mid_size'  => 2,
 			'prev_next' => true,
-			'prev_text' => '<i data-fa=""></i>',
-			'next_text' => '<i data-fa=""></i>',
+			'prev_text' => '<span class="icon-[flowbite--chevron-left-outline]"></span>',
+			'next_text' => '<span class="icon-[flowbite--chevron-right-outline]"></span>',
 			'type'      => 'list',
 		] );
 
