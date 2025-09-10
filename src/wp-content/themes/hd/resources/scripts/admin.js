@@ -7,7 +7,7 @@ jQuery(function ($) {
     let selectedTemplate = $('#page_template');
     let $editorWrapper = $('#postdivrich');
 
-    function toggleEditor() {
+    function toggleEditor () {
         if (selectedTemplate.val() === 'templates/template-page-home.php') {
             $editorWrapper.hide();
         } else {

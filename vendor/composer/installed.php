@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '419e4e3fe092b1202b73b7dba13bd06ff9bad21c',
+        'reference' => '6e91cd1602d211c5d7defff65e324e2e04699809',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '419e4e3fe092b1202b73b7dba13bd06ff9bad21c',
+            'reference' => '6e91cd1602d211c5d7defff65e324e2e04699809',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -666,7 +666,7 @@
         'wp-cli/wp-cli' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'ae3545998aa8d2197be3c040bcbee82c4e0e7e66',
+            'reference' => '4d0741eb1050b4b939808410a44812127d680fce',
             'type' => 'library',
             'install_path' => __DIR__ . '/../wp-cli/wp-cli',
             'aliases' => array(

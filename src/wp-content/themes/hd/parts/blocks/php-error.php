@@ -17,9 +17,9 @@
     </style>
 </head>
 <body>
-<div class="php-version-error">
-    <h1>Error</h1>
-    <p><?php echo isset( $args['error_message'] ) ? esc_html( $args['error_message'] ) : 'An error occurred.'; ?></p>
-</div>
+    <div class="php-version-error">
+        <h1>Error</h1>
+        <p><?php echo isset( $args['error_message'] ) ? esc_html( $args['error_message'] ) : 'An error occurred.'; ?></p>
+    </div>
 </body>
 </html>

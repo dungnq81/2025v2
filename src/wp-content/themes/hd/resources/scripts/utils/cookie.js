@@ -11,7 +11,7 @@ export default class CookieService {
      * @param name
      * @returns {Promise<string|string|*>}
      */
-    static async get(name) {
+    static async get (name) {
         if (window.cookieStore) {
             const entry = await window.cookieStore.get(name);
             return entry?.value || '';
@@ -36,9 +36,9 @@ export default class CookieService {
      * @param sameSite
      * @returns {Promise<*>}
      */
-    static async set(name, value, {days = 365, path = '/', secure = true, sameSite = 'Lax'} = {}) {
+    static async set (name, value, { days = 365, path = '/', secure = true, sameSite = 'Lax' } = {}) {
         if (window.cookieStore) {
-            const opts = {name, value, path, sameSite};
+            const opts = { name, value, path, sameSite };
             if (days) {
                 const expires = new Date(Date.now() + days * 864e5);
                 opts.expires = expires;
@@ -67,9 +67,9 @@ export default class CookieService {
      * @param sameSite
      * @returns {Promise<*>}
      */
-    static async delete(name, {path = '/', sameSite = 'Lax'} = {}) {
+    static async delete (name, { path = '/', sameSite = 'Lax' } = {}) {
         if (window.cookieStore) {
-            return window.cookieStore.delete(name, {path, sameSite});
+            return window.cookieStore.delete(name, { path, sameSite });
         }
 
         // Set an expiration date in the past to remove the cookie

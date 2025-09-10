@@ -2,7 +2,7 @@
 
 export default (opts = {}) => {
     const root = Number(opts.root ?? 16);
-    const defaults = { minw: 640, maxw: 1536, base: 0, ...( opts.defaults || {} ) };
+    const defaults = { base: 0, minw: 640, maxw: 1536, ...( opts.defaults || {} ) };
     const presets = opts.presets || {};
 
     const buildClamp = (min, max, base = defaults.base, minw = defaults.minw, maxw = defaults.maxw) => {

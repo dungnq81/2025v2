@@ -4,12 +4,4 @@
 @import "./flexbox.css";
 @import "./grid.css";
 
-@layer utilities {
-    .u-text-inherit {
-        font-size: inherit;
-    }
-
-    .u-font-inherit {
-        font-weight: inherit;
-    }
-}
+@layer utilities {}

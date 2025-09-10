@@ -1,0 +1,168 @@
+{
+  "_vendor.DDIt37A5.js": {
+    "file": "js/vendor.DDIt37A5.js",
+    "name": "vendor",
+    "css": [
+      "css/vendor.QQvgBG1s.css"
+    ],
+    "assets": [
+      "fonts/SVN-Poppins-Light.woff2",
+      "fonts/SVN-Poppins-Light.ttf",
+      "fonts/SVN-Poppins-Light.otf",
+      "fonts/SVN-Poppins-LightItalic.woff2",
+      "fonts/SVN-Poppins-LightItalic.ttf",
+      "fonts/SVN-Poppins-LightItalic.otf",
+      "fonts/SVN-Poppins-Bold.woff2",
+      "fonts/SVN-Poppins-Bold.ttf",
+      "fonts/SVN-Poppins-Bold.otf",
+      "fonts/SVN-Poppins-BoldItalic.woff2",
+      "fonts/SVN-Poppins-BoldItalic.ttf",
+      "fonts/SVN-Poppins-BoldItalic.otf"
+    ]
+  },
+  "_vendor.QQvgBG1s.css": {
+    "file": "css/vendor.QQvgBG1s.css",
+    "src": "_vendor.QQvgBG1s.css"
+  },
+  "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/OTF/SVN-Poppins-Bold.otf": {
+    "file": "fonts/SVN-Poppins-Bold.otf",
+    "src": "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/OTF/SVN-Poppins-Bold.otf"
+  },
+  "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/OTF/SVN-Poppins-BoldItalic.otf": {
+    "file": "fonts/SVN-Poppins-BoldItalic.otf",
+    "src": "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/OTF/SVN-Poppins-BoldItalic.otf"
+  },
+  "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/OTF/SVN-Poppins-Light.otf": {
+    "file": "fonts/SVN-Poppins-Light.otf",
+    "src": "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/OTF/SVN-Poppins-Light.otf"
+  },
+  "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/OTF/SVN-Poppins-LightItalic.otf": {
+    "file": "fonts/SVN-Poppins-LightItalic.otf",
+    "src": "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/OTF/SVN-Poppins-LightItalic.otf"
+  },
+  "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/TTF/SVN-Poppins-Bold.ttf": {
+    "file": "fonts/SVN-Poppins-Bold.ttf",
+    "src": "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/TTF/SVN-Poppins-Bold.ttf"
+  },
+  "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/TTF/SVN-Poppins-BoldItalic.ttf": {
+    "file": "fonts/SVN-Poppins-BoldItalic.ttf",
+    "src": "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/TTF/SVN-Poppins-BoldItalic.ttf"
+  },
+  "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/TTF/SVN-Poppins-Light.ttf": {
+    "file": "fonts/SVN-Poppins-Light.ttf",
+    "src": "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/TTF/SVN-Poppins-Light.ttf"
+  },
+  "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/TTF/SVN-Poppins-LightItalic.ttf": {
+    "file": "fonts/SVN-Poppins-LightItalic.ttf",
+    "src": "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/TTF/SVN-Poppins-LightItalic.ttf"
+  },
+  "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/WOFF2/SVN-Poppins-Bold.woff2": {
+    "file": "fonts/SVN-Poppins-Bold.woff2",
+    "src": "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/WOFF2/SVN-Poppins-Bold.woff2"
+  },
+  "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/WOFF2/SVN-Poppins-BoldItalic.woff2": {
+    "file": "fonts/SVN-Poppins-BoldItalic.woff2",
+    "src": "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/WOFF2/SVN-Poppins-BoldItalic.woff2"
+  },
+  "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/WOFF2/SVN-Poppins-Light.woff2": {
+    "file": "fonts/SVN-Poppins-Light.woff2",
+    "src": "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/WOFF2/SVN-Poppins-Light.woff2"
+  },
+  "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/WOFF2/SVN-Poppins-LightItalic.woff2": {
+    "file": "fonts/SVN-Poppins-LightItalic.woff2",
+    "src": "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/WOFF2/SVN-Poppins-LightItalic.woff2"
+  },
+  "src/wp-content/themes/hd/resources/scripts/admin.js": {
+    "file": "js/admin.M1817Md5.js",
+    "name": "admin",
+    "src": "src/wp-content/themes/hd/resources/scripts/admin.js",
+    "isEntry": true
+  },
+  "src/wp-content/themes/hd/resources/scripts/components/home.js": {
+    "file": "js/home.Dl1Y8bqR.js",
+    "name": "home",
+    "src": "src/wp-content/themes/hd/resources/scripts/components/home.js",
+    "isEntry": true
+  },
+  "src/wp-content/themes/hd/resources/scripts/components/preload-polyfill.js": {
+    "file": "js/preload-polyfill.zDZbmMZi.js",
+    "name": "preload-polyfill",
+    "src": "src/wp-content/themes/hd/resources/scripts/components/preload-polyfill.js",
+    "isEntry": true
+  },
+  "src/wp-content/themes/hd/resources/scripts/components/social-share.js": {
+    "file": "js/social-share.D2xRxkYp.js",
+    "name": "social-share",
+    "src": "src/wp-content/themes/hd/resources/scripts/components/social-share.js",
+    "isEntry": true,
+    "imports": [
+      "_vendor.DDIt37A5.js"
+    ]
+  },
+  "src/wp-content/themes/hd/resources/scripts/components/swiper.js": {
+    "file": "js/swiper.kzya1rtX.js",
+    "name": "swiper",
+    "src": "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
+    "isEntry": true,
+    "imports": [
+      "_vendor.DDIt37A5.js"
+    ]
+  },
+  "src/wp-content/themes/hd/resources/scripts/components/woocommerce.js": {
+    "file": "js/woocommerce.CWgBRUes.js",
+    "name": "woocommerce",
+    "src": "src/wp-content/themes/hd/resources/scripts/components/woocommerce.js",
+    "isEntry": true
+  },
+  "src/wp-content/themes/hd/resources/scripts/index.js": {
+    "file": "js/index.Q4SJwU-c.js",
+    "name": "index",
+    "src": "src/wp-content/themes/hd/resources/scripts/index.js",
+    "isEntry": true,
+    "imports": [
+      "_vendor.DDIt37A5.js",
+      "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
+      "src/wp-content/themes/hd/resources/scripts/components/social-share.js"
+    ]
+  },
+  "src/wp-content/themes/hd/resources/styles/admin.scss": {
+    "file": "css/admin.BHRu2XEi.css",
+    "src": "src/wp-content/themes/hd/resources/styles/admin.scss",
+    "isEntry": true,
+    "names": [
+      "admin.css"
+    ]
+  },
+  "src/wp-content/themes/hd/resources/styles/editor-style.scss": {
+    "file": "css/editor-style.BjRVVF8f.css",
+    "src": "src/wp-content/themes/hd/resources/styles/editor-style.scss",
+    "isEntry": true,
+    "names": [
+      "editor-style.css"
+    ]
+  },
+  "src/wp-content/themes/hd/resources/styles/index.scss": {
+    "file": "css/index.DG1CWKZf.css",
+    "src": "src/wp-content/themes/hd/resources/styles/index.scss",
+    "isEntry": true,
+    "names": [
+      "index.css"
+    ]
+  },
+  "src/wp-content/themes/hd/resources/styles/partials/home.scss": {
+    "file": "css/home.BBYyEIVR.css",
+    "src": "src/wp-content/themes/hd/resources/styles/partials/home.scss",
+    "isEntry": true,
+    "names": [
+      "home.css"
+    ]
+  },
+  "src/wp-content/themes/hd/resources/styles/partials/woocommerce.scss": {
+    "file": "css/woocommerce.DyU21hq1.css",
+    "src": "src/wp-content/themes/hd/resources/styles/partials/woocommerce.scss",
+    "isEntry": true,
+    "names": [
+      "woocommerce.css"
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 // sticky-bar.js
 
-export function stickyBar(selector = '#masthead') {
+export function stickyBar (selector = '#masthead') {
     const navbar = document.querySelector(selector);
     if (!navbar) return;
 
@@ -35,7 +35,7 @@ export function stickyBar(selector = '#masthead') {
         }
     });
 
-    function handleScroll(scrollTop) {
+    function handleScroll (scrollTop) {
         const atBottom = scrollTop + window.innerHeight >= document.documentElement.scrollHeight - 5;
 
         if (scrollTop > distance) {

@@ -1,7 +1,7 @@
-import {nanoid} from 'nanoid';
+import { nanoid } from 'nanoid';
 import Swiper from 'swiper/bundle';
 
-function isEmpty(value) {
+function isEmpty (value) {
     if (value == null) return true;
     if (Array.isArray(value) || typeof value === 'string') return value.length === 0;
     if (typeof value === 'object') return Object.keys(value).length === 0;
@@ -10,7 +10,7 @@ function isEmpty(value) {
 
 // Initialize Swiper instances
 const initializeSwiper = (el, swiper_class, options) => {
-    if (!(el instanceof Element)) {
+    if (!( el instanceof Element )) {
         console.error('Error: The provided element is not a DOM element.');
         return;
     }
@@ -44,7 +44,7 @@ const generateClasses = () => {
 };
 
 // Default Swiper options
-const getDefaultOptions = () => ({
+const getDefaultOptions = () => ( {
     grabCursor: !0,
     allowTouchMove: !0,
     threshold: 5,
@@ -53,10 +53,10 @@ const getDefaultOptions = () => ({
     wrapperClass: 'swiper-wrapper',
     slideClass: 'swiper-slide',
     slideActiveClass: 'swiper-slide-active',
-});
+} );
 
 // Utility to generate random integers
-const random = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+const random = (min, max) => Math.floor(Math.random() * ( max - min + 1 )) + min;
 
 //
 // swipers single
@@ -86,14 +86,14 @@ const initializeSwipers = () => {
             };
         }
 
-        let swiperOptions = {...getDefaultOptions()};
+        let swiperOptions = { ...getDefaultOptions() };
 
         if (options.autoview) {
             swiperOptions.slidesPerView = 'auto';
             if (options.gap) {
                 swiperOptions.spaceBetween = 10;
                 swiperOptions.breakpoints = {
-                    768: {spaceBetween: 20},
+                    768: { spaceBetween: 20 },
                 };
             } else if (options.smallgap) {
                 swiperOptions.spaceBetween = parseInt(options.smallgap);
@@ -117,7 +117,7 @@ const initializeSwipers = () => {
         if (options.effect) {
             swiperOptions.effect = String(options.effect);
             if (swiperOptions.effect === 'fade') {
-                swiperOptions.fadeEffect = {crossFade: !0};
+                swiperOptions.fadeEffect = { crossFade: !0 };
             }
         }
 
@@ -185,12 +185,12 @@ const initializeSwipers = () => {
             swiperOptions.pagination = {
                 el: '.' + classes.paginationClass,
                 clickable: !0,
-                ...(paginationType === 'bullets' && {dynamicBullets: !0, type: 'bullets'}),
-                ...(paginationType === 'fraction' && {type: 'fraction'}),
-                ...(paginationType === 'progressbar' && {type: 'progressbar'}),
-                ...(paginationType === 'custom' && {
+                ...( paginationType === 'bullets' && { dynamicBullets: !0, type: 'bullets' } ),
+                ...( paginationType === 'fraction' && { type: 'fraction' } ),
+                ...( paginationType === 'progressbar' && { type: 'progressbar' } ),
+                ...( paginationType === 'custom' && {
                     renderBullet: (index, className) => `<span class="${className}">${index + 1}</span>`,
-                }),
+                } ),
             };
         }
 
@@ -261,7 +261,7 @@ const spgSwipers = () => {
             w_thumbs?.querySelector('.swiper-button-next').classList.add('next-thumbs-' + classes.rand);
             w_thumbs.classList.add('thumbs-' + classes.rand);
 
-            let thumbs_options = {...getDefaultOptions()};
+            let thumbs_options = { ...getDefaultOptions() };
             thumbs_options.breakpoints = {
                 0: {
                     spaceBetween: 5,
@@ -291,7 +291,7 @@ const spgSwipers = () => {
             w_images?.querySelector('.swiper-button-next').classList.add('next-images-' + classes.rand);
             w_images.classList.add('images-' + classes.rand);
 
-            let images_options = {...getDefaultOptions()};
+            let images_options = { ...getDefaultOptions() };
             images_options.slidesPerView = 'auto';
             images_options.spaceBetween = 10;
             images_options.watchSlidesProgress = !0;

@@ -234,8 +234,12 @@
     }
 }
 
-@mixin container( $xxl: false ) {
+@mixin container( $gutter: true, $xxl: vars.$xxl-container ) {
     margin-inline: auto;
+
+    @if $gutter == true {
+        padding-inline: map.get(vars.$gutters, gap);
+    }
 
     &:not(.full) {
         max-width: map.get(vars.$mq-containers, sm);

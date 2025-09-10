@@ -1,15 +1,15 @@
 // back-to-top.js
 
 class BackToTop {
-    constructor(selector = '.js-back-to-top', smoothScrollEnabled = true, defaultScrollSpeed = 400) {
+    constructor (selector = '.js-back-to-top', smoothScrollEnabled = true, defaultScrollSpeed = 400) {
         this.buttonSelector = selector;
         this.smoothScrollEnabled = smoothScrollEnabled;
         this.defaultScrollSpeed = defaultScrollSpeed;
         this.init();
     }
 
-    init() {
-        if (!('querySelector' in document && 'addEventListener' in window)) {
+    init () {
+        if (!( 'querySelector' in document && 'addEventListener' in window )) {
             return;
         }
 
@@ -25,7 +25,7 @@ class BackToTop {
         this.goTopBtn.addEventListener('click', this.scrollToTop.bind(this), false);
     }
 
-    trackScroll() {
+    trackScroll () {
         const scrolled = window.scrollY;
 
         if (scrolled > this.scrollThreshold) {
@@ -37,7 +37,7 @@ class BackToTop {
         }
     }
 
-    scrollToTop(event) {
+    scrollToTop (event) {
         event.preventDefault();
 
         if (this.smoothScrollEnabled) {
@@ -48,7 +48,7 @@ class BackToTop {
         }
     }
 
-    smoothScroll(duration) {
+    smoothScroll (duration) {
         const startLocation = window.scrollY;
         const distance = -startLocation;
         let startTime = null;
@@ -68,11 +68,11 @@ class BackToTop {
         requestAnimationFrame(animateScroll);
     }
 
-    easeInOutQuad(t, b, c, d) {
+    easeInOutQuad (t, b, c, d) {
         t /= d / 2;
-        if (t < 1) return (c / 2) * t * t + b;
+        if (t < 1) return ( c / 2 ) * t * t + b;
         t--;
-        return (-c / 2) * (t * (t - 2) - 1) + b;
+        return ( -c / 2 ) * ( t * ( t - 2 ) - 1 ) + b;
     }
 }
 

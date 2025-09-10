@@ -1,2 +1,5 @@
 /* tailwind/utilities/grid.css */
 
+@utility u-grid-center {
+    @apply grid place-items-center;
+}

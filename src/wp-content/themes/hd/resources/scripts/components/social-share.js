@@ -1,4 +1,4 @@
-import {SocialShare} from 'ensemble-social-share';
+import { SocialShare } from 'ensemble-social-share';
 
 const DEFAULT_OPTIONS = {
     layout: 'h',
@@ -28,7 +28,7 @@ const DEFAULT_OPTIONS = {
     },
 };
 
-function initSocialShare(element, customOptions = {}) {
+function initSocialShare (element, customOptions = {}) {
     const ele = document.querySelector(element);
     if (!ele) return;
 
@@ -46,25 +46,25 @@ function initSocialShare(element, customOptions = {}) {
     }
 }
 
-function observePrintButton() {
+function observePrintButton () {
     const buttons = [
-        {selector: '.share-intent-print', title: 'Print'}
+        { selector: '.share-intent-print', title: 'Print' }
     ];
 
     const observer = new MutationObserver(() => {
-        buttons.forEach(({selector, title}) => {
+        buttons.forEach(({ selector, title }) => {
             const button = document.querySelector(selector);
-            if (button && (!button.title || button.title === 'undefined')) {
+            if (button && ( !button.title || button.title === 'undefined' )) {
                 button.setAttribute('title', title);
             }
         });
 
-        if (buttons.every(({selector}) => document.querySelector(selector)?.title)) {
+        if (buttons.every(({ selector }) => document.querySelector(selector)?.title)) {
             observer.disconnect();
         }
     });
 
-    observer.observe(document.body, {childList: true, subtree: true});
+    observer.observe(document.body, { childList: true, subtree: true });
 }
 
-export {initSocialShare};
+export { initSocialShare };

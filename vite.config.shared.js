@@ -42,7 +42,7 @@ export const sharedConfig = {
     },
     build: {
         sourcemap: !isProduction,
-        target: 'modules',
+        //target: 'modules',
         //modulePreload: {polyfill: false},
         manifest: true,
         minify: isProduction ? 'terser' : false,

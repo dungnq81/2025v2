@@ -2,7 +2,7 @@
 
 @layer base {
     body {
-        @apply font-light text-(length:--global-fs) bg-(--bg-color) text-(--text-color) leading-(--global-line-height);
+        @apply antialiased font-light text-(length:--global-fs) bg-(--bg-color) text-(--text-color) leading-(--global-line-height);
     }
 
     :is([type='submit']:not(:disabled), [type='reset']:not(:disabled), [type='button']:not(:disabled), [role="button"]:not(:disabled)) {
@@ -29,6 +29,30 @@
     :is(h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6) p {
         @apply text-current mb-0;
         line-height: inherit;
+    }
+
+    :is(h1, .h1) {
+        @apply p-fs-clamp-h1;
+    }
+
+    :is(h2, .h2) {
+        @apply p-fs-clamp-h2;
+    }
+
+    :is(h3, .h3) {
+        @apply p-fs-clamp-h3;
+    }
+
+    :is(h4, .h4) {
+        @apply p-fs-clamp-h4;
+    }
+
+    :is(h5, .h5) {
+        @apply p-fs-clamp-h5;
+    }
+
+    :is(h6, .h6) {
+        @apply p-fs-clamp-h6;
     }
 
     :is(a, area, button, [role="button"], input, label, select, summary, textarea) {
