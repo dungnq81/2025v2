@@ -1,6 +1,6 @@
-import "./vendor.DDIt37A5.js";
-import "./swiper.kzya1rtX.js";
-import { i as initSocialShare } from "./social-share.D2xRxkYp.js";
+import "./vendor.C-TuldtG.js";
+import "./swiper.BnK0Ez3W.js";
+import { i as initSocialShare } from "./social-share.BBYW29j4.js";
 class BackToTop {
   constructor(selector = ".js-back-to-top", smoothScrollEnabled = true, defaultScrollSpeed = 400) {
     this.buttonSelector = selector;
@@ -83,7 +83,7 @@ setTimeout(() => {
     });
   });
   const observer = new MutationObserver(() => {
-    document.querySelectorAll('ul.sub-menu[role="menubar"]').forEach((menu) => {
+    document.querySelectorAll('ul.submenu[role="menubar"]').forEach((menu) => {
       menu.setAttribute("role", "menu");
     });
     document.querySelectorAll('[aria-hidden="true"] a, [aria-hidden="true"] button').forEach((el) => {
@@ -122,7 +122,7 @@ function stickyBar(selector = "#masthead") {
   const navbarHeight = navbar.offsetHeight;
   let lastScrollTop = 0;
   let ticking = false;
-  const getScrollTop = () => window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+  const getScrollTop = () => document.scrollingElement?.scrollTop ?? window.scrollY ?? window.pageYOffset ?? 0;
   const top = getScrollTop();
   if (top < 1) {
     navbar.classList.remove("sticky");
@@ -197,4 +197,4 @@ document.addEventListener("DOMContentLoaded", async () => {
     wrap.appendChild(tbl);
   });
 });
-//# sourceMappingURL=index.Q4SJwU-c.js.map
+//# sourceMappingURL=index.BiHXI16Z.js.map

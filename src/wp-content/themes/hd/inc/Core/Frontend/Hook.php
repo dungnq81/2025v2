@@ -112,7 +112,7 @@ final class Hook {
 
     public function other_head_action(): void {
         // manifest.json
-        if ( is_file( ABSPATH . 'manifest.json' ) ) {
+        if ( file_exists( ABSPATH . 'manifest.json' ) ) {
             printf( '<link rel="manifest" href="%s" />', esc_url( home_url( 'manifest.json' ) ) );
         }
 
@@ -228,23 +228,65 @@ final class Hook {
 
         ?>
         <div id="footer-columns" class="footer-columns">
-            <div class="footer-content">
-                <div class="container fluid flex flex-y">
+            <div class="u-container py-10 md:py-15 lg:py-20">
+                <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+                    <div class="footer-info grid grid-cols-1 gap-8 sm:grid-cols-2">
+                        <div class="seo-footer">
+                            <?= \HD_Helper::siteLogo( 'alt', 'footer-logo' ) ?>
 
-                    <?= \HD_Helper::siteLogo( 'alt', 'footer-logo' ) ?>
-
-                    <?php
-                    foreach ( [ $footer_menu_1, $footer_menu_2 ] as $key => $menu ) :
-                        if ( ! empty( $menu ) ) :
-                        ?>
-                        <div class="menu-<?= $key ?>">
-                            <div class="footer-menu"><?= wp_nav_menu( [ 'menu' => $menu, 'echo' => false ] ) ?></div>
+                            <ul class="footer-address">
+                                <li class="flex items-baseline gap-1">
+                                    <svg class="relative top-[6px]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M7 2a2 2 0 0 0-2 2v1a1 1 0 0 0 0 2v1a1 1 0 0 0 0 2v1a1 1 0 1 0 0 2v1a1 1 0 1 0 0 2v1a1 1 0 1 0 0 2v1a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm3 8a3 3 0 1 1 6 0a3 3 0 0 1-6 0m-1 7a3 3 0 0 1 3-3h2a3 3 0 0 1 3 3a1 1 0 0 1-1 1h-6a1 1 0 0 1-1-1" clip-rule="evenodd" /></svg>
+                                    <span>38A Lê Văn Huân, Phường Tân Bình, TP. HCM</span>
+                                </li>
+                                <li class="flex items-baseline gap-1">
+                                    <svg class="relative top-[6px]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M7.978 4a2.55 2.55 0 0 0-1.926.877C4.233 6.7 3.699 8.751 4.153 10.814c.44 1.995 1.778 3.893 3.456 5.572c1.68 1.679 3.577 3.018 5.57 3.459c2.062.456 4.115-.073 5.94-1.885a2.556 2.556 0 0 0 .001-3.861l-1.21-1.21a2.69 2.69 0 0 0-3.802 0l-.617.618a.806.806 0 0 1-1.14 0l-1.854-1.855a.807.807 0 0 1 0-1.14l.618-.62a2.69 2.69 0 0 0 0-3.803l-1.21-1.211A2.56 2.56 0 0 0 7.978 4" /></svg>
+                                    <a href="tel:0938002776">0938.002.776</a>
+                                </li>
+                                <li class="flex items-baseline gap-1">
+                                    <svg class="relative top-[6px]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="currentColor"><path d="M2.038 5.61A2 2 0 0 0 2 6v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6q0-.18-.03-.352l-.866.65l-7.89 6.032a2 2 0 0 1-2.429 0L2.884 6.288l-.846-.677Z"/><path d="M20.677 4.117A2 2 0 0 0 20 4H4q-.338.002-.642.105l.758.607L12 10.742L19.9 4.7z"/></g></svg>
+                                    <a href="mailto:info@webhd.vn">info@webhd.vn</a>
+                                </li>
+                            </ul>
+                            <div class="social-links">
+                                <?= \HD_Helper::doShortcode( 'social_menu', [
+                                        'class' => 'social-menu flex justify-center gap-4 mt-6 sm:justify-start md:gap-6',
+                                ] ) ?>
+                            </div>
                         </div>
-                        <?php endif; endforeach; ?>
-
-                    <div class="social-links">
-                        <span class="txt !hidden"><?= __( 'Social links', TEXT_DOMAIN ) ?></span>
-                        <?= \HD_Helper::doShortcode( 'social_menu' ) ?>
+                        <div class="newsletter-footer">
+                            <p class="footer-title font-bold uppercase u-heading lg:mb-8">Liên hệ</p>
+                            <div class="max-w-md">
+                                <p class="text-(--text-color) text-sm/6">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Earum id, iure consectetur et error hic!</p>
+                                <?= \HD_Helper::doShortcode( 'contact-form-7', [
+                                        'id'    => "09313bd",
+                                        'title' => "Gọi lại tôi"
+                                ] ) ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="menu-footer grid grid-cols-1 gap-8 sm:grid-cols-2">
+                        <div class="text-left lg:pl-8">
+                            <p class="footer-title font-bold uppercase u-heading lg:mb-8">Về chúng tôi</p>
+                            <ul class="text-[15px] space-y-3">
+                                <li><a class="c-hover hover:text-(--text-color-1)" href="#">Giới thiệu</a></li>
+                                <li><a class="c-hover hover:text-(--text-color-1)" href="#">Blog</a></li>
+                                <li><a class="c-hover hover:text-(--text-color-1)" href="#">Affiliate</a></li>
+                                <li><a class="c-hover hover:text-(--text-color-1)" href="#">Liên hệ</a></li>
+                            </ul>
+                        </div>
+                        <div class="text-left">
+                            <p class="footer-title font-bold uppercase u-heading lg:mb-8">Dịch vụ</p>
+                            <ul class="text-[15px] space-y-3">
+                                <li><a class="c-hover hover:text-(--text-color-1)" href="#">Thiết kế Website</a></li>
+                                <li><a class="c-hover hover:text-(--text-color-1)" href="#">SEO từ khóa Google</a></li>
+                                <li><a class="c-hover hover:text-(--text-color-1)" href="#">Google Ads</a></li>
+                                <li><a class="c-hover hover:text-(--text-color-1)" href="#">Facebook Ads</a></li>
+                                <li><a class="c-hover hover:text-(--text-color-1)" href="#">Hosting</a></li>
+                                <li><a class="c-hover hover:text-(--text-color-1)" href="#">Domain</a></li>
+                                <li><a class="c-hover hover:text-(--text-color-1)" href="#">Email doanh nghiệp</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -256,8 +298,8 @@ final class Hook {
 
     public function _construct_footer_credit(): void {
         ?>
-        <div id="footer-credit" class="c-light-bg py-4">
-            <div class="container px-3 mx-auto text-center p-fs-clamp-[12,14] md:flex md:flex-wrap md:justify-between md:items-center md:gap-3">
+        <div id="footer-credit" class="c-light-bg py-4 mb-8">
+            <div class="u-container text-center p-fs-clamp-[12,14] md:flex md:flex-wrap md:justify-between md:items-center md:gap-3">
                 <?php
 
                 $footer_credit = \HD_Helper::getThemeMod( 'footer_credit_setting' );
@@ -267,11 +309,11 @@ final class Hook {
                         'location'    => 'policy-nav',
                         'depth'       => 1,
                         'extra_class' => 'flex flex-wrap justify-center gap-3 md:gap-6',
-                        'link_class'  => 'flex flex-wrap gap-1 flex-row-reverse hover:text-(--text-color-1)',
+                        'link_class'  => 'flex gap-1 flex-row-reverse p-hover hover:text-(--text-color-1)',
                 ] );
 
                 ?>
-                <p class="copyright"><?php echo apply_filters( 'hd_footer_credit_filter', $footer_credit ); ?></p>
+                <p class="copyright lining-nums"><?php echo apply_filters( 'hd_footer_credit_filter', $footer_credit ); ?></p>
             </div>
         </div>
         <?php

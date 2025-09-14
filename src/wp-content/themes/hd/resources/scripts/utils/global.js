@@ -25,7 +25,7 @@
 
     // MutationObserver
     const observer = new MutationObserver(() => {
-        document.querySelectorAll('ul.sub-menu[role="menubar"]').forEach(menu => {
+        document.querySelectorAll('ul.submenu[role="menubar"]').forEach(menu => {
             menu.setAttribute('role', 'menu');
         });
 

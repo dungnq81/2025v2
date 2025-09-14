@@ -10,11 +10,9 @@ export function stickyBar (selector = '#masthead') {
     let lastScrollTop = 0;
     let ticking = false;
 
-    const getScrollTop = () =>
-        window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
-
-    // Initial state
+    const getScrollTop = () => document.scrollingElement?.scrollTop ?? window.scrollY ?? window.pageYOffset ?? 0;
     const top = getScrollTop();
+
     if (top < 1) {
         navbar.classList.remove("sticky");
         body.classList.remove("b-sticky");

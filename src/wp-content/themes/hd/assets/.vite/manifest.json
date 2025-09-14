@@ -1,9 +1,9 @@
 {
-  "_vendor.DDIt37A5.js": {
-    "file": "js/vendor.DDIt37A5.js",
+  "_vendor.C-TuldtG.js": {
+    "file": "js/vendor.C-TuldtG.js",
     "name": "vendor",
     "css": [
-      "css/vendor.QQvgBG1s.css"
+      "css/vendor.DgVPMnmw.css"
     ],
     "assets": [
       "fonts/SVN-Poppins-Light.woff2",
@@ -20,9 +20,9 @@
       "fonts/SVN-Poppins-BoldItalic.otf"
     ]
   },
-  "_vendor.QQvgBG1s.css": {
-    "file": "css/vendor.QQvgBG1s.css",
-    "src": "_vendor.QQvgBG1s.css"
+  "_vendor.DgVPMnmw.css": {
+    "file": "css/vendor.DgVPMnmw.css",
+    "src": "_vendor.DgVPMnmw.css"
   },
   "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/OTF/SVN-Poppins-Bold.otf": {
     "file": "fonts/SVN-Poppins-Bold.otf",
@@ -91,21 +91,21 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/components/social-share.js": {
-    "file": "js/social-share.D2xRxkYp.js",
+    "file": "js/social-share.BBYW29j4.js",
     "name": "social-share",
     "src": "src/wp-content/themes/hd/resources/scripts/components/social-share.js",
     "isEntry": true,
     "imports": [
-      "_vendor.DDIt37A5.js"
+      "_vendor.C-TuldtG.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/swiper.js": {
-    "file": "js/swiper.kzya1rtX.js",
+    "file": "js/swiper.BnK0Ez3W.js",
     "name": "swiper",
     "src": "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
     "isEntry": true,
     "imports": [
-      "_vendor.DDIt37A5.js"
+      "_vendor.C-TuldtG.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/woocommerce.js": {
@@ -115,12 +115,12 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/index.js": {
-    "file": "js/index.Q4SJwU-c.js",
+    "file": "js/index.BiHXI16Z.js",
     "name": "index",
     "src": "src/wp-content/themes/hd/resources/scripts/index.js",
     "isEntry": true,
     "imports": [
-      "_vendor.DDIt37A5.js",
+      "_vendor.C-TuldtG.js",
       "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
       "src/wp-content/themes/hd/resources/scripts/components/social-share.js"
     ]
@@ -142,7 +142,7 @@
     ]
   },
   "src/wp-content/themes/hd/resources/styles/index.scss": {
-    "file": "css/index.DG1CWKZf.css",
+    "file": "css/index.413YhluO.css",
     "src": "src/wp-content/themes/hd/resources/styles/index.scss",
     "isEntry": true,
     "names": [

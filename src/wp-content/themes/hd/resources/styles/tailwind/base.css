@@ -2,15 +2,11 @@
 
 @layer base {
     body {
-        @apply antialiased font-light text-(length:--global-fs) bg-(--bg-color) text-(--text-color) leading-(--global-line-height);
+        @apply font-light text-(length:--global-fs) bg-(--bg-color) text-(--text-color) leading-(--global-line-height);
     }
 
     :is([type='submit']:not(:disabled), [type='reset']:not(:disabled), [type='button']:not(:disabled), [role="button"]:not(:disabled)) {
         cursor: pointer;
-    }
-
-    *:hover {
-        transition: all .2s ease-in-out;
     }
 
     *:disabled {
@@ -18,7 +14,7 @@
     }
 
     :is(h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6) {
-        @apply font-(family-name:--font-header) text-(--header-text-color) leading-(--header-line-height);
+        @apply antialiased font-(family-name:--font-header) text-(--header-text-color) leading-(--header-line-height);
         font-weight: inherit;
     }
 
@@ -27,7 +23,7 @@
     }
 
     :is(h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6) p {
-        @apply text-current mb-0;
+        @apply text-current;
         line-height: inherit;
     }
 
@@ -72,10 +68,6 @@
         &:last-child {
             @apply mb-0;
         }
-    }
-
-    :is(span, label) > a:hover {
-        @apply no-underline;
     }
 
     a:hover {

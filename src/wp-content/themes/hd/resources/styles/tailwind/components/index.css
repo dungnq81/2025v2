@@ -16,4 +16,12 @@
         -webkit-appearance: none;
         margin: 0;
     }
+
+    .c-hover {
+        @apply transition ease-in-out;
+    }
+
+    .c-wpcf7-form {
+        @apply flex flex-col gap-4 sm:flex-row lg:flex-col lg:items-start;
+    }
 }

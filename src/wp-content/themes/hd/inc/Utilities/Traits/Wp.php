@@ -1554,7 +1554,7 @@ trait Wp {
 			$custom_logo_attr['alt'] = $image_alt;
 
 			$logo_title = self::getThemeMod( 'logo_title_setting' );
-			$logo_title = $logo_title ? '<span>' . $logo_title . '</span>' : '';
+			$logo_title = $logo_title ? '<span class="logo-title">' . $logo_title . '</span>' : '';
 
 			/**
 			 * If the alt attribute is not empty, there's no need to explicitly pass it
@@ -1892,7 +1892,7 @@ trait Wp {
 			printf(
 			/* translators: 1: SVG icon. 2: posted in a label, only visible to screen readers. 3: list of tags. */
 				'<div class="hashtag-links links">%1$s<span class="sr-only">%2$s</span>%3$s</div>',
-				'<span class="icon-[flowbite--tag-outline]"></span>',
+				'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M18.045 3.007L12.31 3a1.97 1.97 0 0 0-1.4.585l-7.33 7.394a2 2 0 0 0 0 2.805l6.573 6.631a1.96 1.96 0 0 0 1.4.585a1.97 1.97 0 0 0 1.4-.585l7.409-7.477A2 2 0 0 0 21 11.479v-5.5a2.97 2.97 0 0 0-2.955-2.972m-2.452 6.438a1 1 0 1 1 0-2a1 1 0 0 1 0 2"/></svg>',
 				__( 'Từ khóa', TEXT_DOMAIN ),
 				$hashtag_list
 			);
@@ -2777,8 +2777,8 @@ trait Wp {
 			'end_size'  => 1,
 			'mid_size'  => 2,
 			'prev_next' => true,
-			'prev_text' => '<span class="icon-[flowbite--chevron-left-outline]"></span>',
-			'next_text' => '<span class="icon-[flowbite--chevron-right-outline]"></span>',
+			'prev_text' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14 8l-4 4l4 4"/></svg>',
+			'next_text' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 16l4-4l-4-4"/></svg>',
 			'type'      => 'list',
 		] );
 

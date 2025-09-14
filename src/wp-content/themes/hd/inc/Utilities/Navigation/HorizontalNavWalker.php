@@ -21,7 +21,7 @@ class HorizontalNavWalker extends \Walker_Nav_Menu {
 		$indent = str_repeat( $t, $depth );
 
 		// Default class.
-		$classes = [ 'sub-menu', 'vertical', 'menu' ];
+		$classes = [ 'submenu', 'vertical', 'menu' ];
 
 		/**
 		 * Filters the CSS class(es) applied to a menu list element.

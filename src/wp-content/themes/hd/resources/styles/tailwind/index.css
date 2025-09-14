@@ -8,10 +8,12 @@
 @import "./components/index.css";
 @import "./utilities/index.css";
 
-@source "../../../../hd/**/*.{html,js,php,scss,json}";
+@source "../../../../hd/*.php";
+@source "../../../../hd/{inc,parts,templates,woocommerce}/**/*.php";
+@source "../../../../hd/resources/scripts/**/*.js";
+
+@source not "../../../../hd/node_modules/**";
 @source not "../../../../hd/vendor/**";
+@source not "../../../../hd/assets/**";
 
 @plugin "./plugins/index.js";
-@plugin "@iconify/tailwind4" {
-    scale: 1.2;
-}

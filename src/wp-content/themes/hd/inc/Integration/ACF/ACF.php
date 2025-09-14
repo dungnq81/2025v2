@@ -139,7 +139,7 @@ final class ACF {
 
 				if ( $menu_image ) {
 					$item->classes[] = 'menu-thumb';
-					$title           = \HD_Helper::attachmentImageHTML( $menu_image, 'thumbnail', [ 'alt' => $item?->title ], true ) . $title;
+					$title           = \HD_Helper::attachmentImageHTML( $menu_image, 'thumbnail', [ 'loading' => 'lazy', 'alt' => $item?->title ], true ) . $title;
 				}
 
 				if ( $menu_label_text ) {

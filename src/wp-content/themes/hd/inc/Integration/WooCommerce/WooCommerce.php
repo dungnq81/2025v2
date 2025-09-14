@@ -187,7 +187,7 @@ final class WooCommerce {
 
         ob_start(); ?>
         <div class="mini-cart-dropdown">
-            <?php woocommerce_mini_cart(); ?>
+            <?php \woocommerce_mini_cart(); ?>
         </div>
         <?php
         $fragments['div.mini-cart-dropdown'] = ob_get_clean();
@@ -226,10 +226,10 @@ final class WooCommerce {
             return false;
         }
 
-        $cart_item_key = wc_clean( $_POST['cart_item_key'] ?? '' );
+        $cart_item_key = \wc_clean( $_POST['cart_item_key'] ?? '' );
         $quantity      = max( 0, (int) ( $_POST['quantity'] ?? 0 ) );
 
-        if ( ! $cart_item_key || ! WC()->cart->get_cart_item( $cart_item_key ) ) {
+        if ( ! $cart_item_key || ! \WC()->cart->get_cart_item( $cart_item_key ) ) {
             wp_send_json_error( [ 'message' => 'Invalid cart item.' ] );
         }
 
@@ -288,14 +288,14 @@ final class WooCommerce {
 
             if ( $validation_errors ) {
                 foreach ( $validation_errors as $message ) {
-                    wc_add_notice( '<strong>' . __( 'Error:', 'woocommerce' ) . '</strong> ' . $message, 'error' );
+                    \wc_add_notice( '<strong>' . __( 'Error:', 'woocommerce' ) . '</strong> ' . $message, 'error' );
                 }
                 throw new \Exception();
             }
 
             if ( false === $hash ) {
                 $this->_load_otp_form( [
-                        'action'   => esc_url( add_query_arg( 'action', self::ACTION_VALIDATE, wc_get_page_permalink( 'myaccount' ) ) ),
+                        'action'   => esc_url( add_query_arg( 'action', self::ACTION_VALIDATE, \wc_get_page_permalink( 'myaccount' ) ) ),
                         'template' => 'myaccount/page-otp-login.php',
                         'uid'      => $customer_id,
                         'send_at'  => (int) get_user_meta( $customer_id, self::META_LASTSEND, true ),
@@ -316,7 +316,7 @@ final class WooCommerce {
                 }
 
                 $this->_load_otp_form( [
-                        'action'   => esc_url( add_query_arg( 'action', self::ACTION_VALIDATE, wc_get_page_permalink( 'myaccount' ) ) ),
+                        'action'   => esc_url( add_query_arg( 'action', self::ACTION_VALIDATE, \wc_get_page_permalink( 'myaccount' ) ) ),
                         'template' => 'myaccount/page-otp-login.php',
                         'uid'      => $customer_id,
                         'send_at'  => (int) get_user_meta( $customer_id, self::META_LASTSEND, true ),
@@ -325,15 +325,15 @@ final class WooCommerce {
             }
 
             // Success → log the user in and redirect
-            wc_set_customer_auth_cookie( $customer_id );
+            \wc_set_customer_auth_cookie( $customer_id );
 
-            $redirect = ! empty( $_POST['redirect_to'] ) ? $_POST['redirect_to'] : wc_get_page_permalink( 'myaccount' );
+            $redirect = ! empty( $_POST['redirect_to'] ) ? $_POST['redirect_to'] : \wc_get_page_permalink( 'myaccount' );
             wp_safe_redirect( esc_url_raw( wp_unslash( $redirect ) ) );
             exit;
 
         } catch ( \Exception $e ) {
             if ( $e->getMessage() ) {
-                wc_add_notice( '<strong>' . __( 'Error:', 'woocommerce' ) . '</strong> ' . $e->getMessage(), 'error' );
+                \wc_add_notice( '<strong>' . __( 'Error:', 'woocommerce' ) . '</strong> ' . $e->getMessage(), 'error' );
             }
         }
     }
@@ -365,12 +365,12 @@ final class WooCommerce {
 
             if ( $validation_errors ) {
                 foreach ( $validation_errors as $message ) {
-                    wc_add_notice( '<strong>' . __( 'Error:', 'woocommerce' ) . '</strong> ' . $message, 'error' );
+                    \wc_add_notice( '<strong>' . __( 'Error:', 'woocommerce' ) . '</strong> ' . $message, 'error' );
                 }
                 throw new \Exception();
             }
 
-            $new_customer = $this->_wc_create_new_customer( sanitize_email( $email ), wc_clean( $username ), $password );
+            $new_customer = $this->_wc_create_new_customer( sanitize_email( $email ), \wc_clean( $username ), $password );
 
             if ( is_wp_error( $new_customer ) ) {
                 throw new \Exception( $new_customer->get_error_message() );
@@ -385,7 +385,7 @@ final class WooCommerce {
 
             // Show an OTP form
             $this->_load_otp_form( [
-                    'action'   => esc_url( add_query_arg( 'action', self::ACTION_VALIDATE, wc_get_page_permalink( 'myaccount' ) ) ),
+                    'action'   => esc_url( add_query_arg( 'action', self::ACTION_VALIDATE, \wc_get_page_permalink( 'myaccount' ) ) ),
                     'template' => 'myaccount/page-otp-login.php',
                     'uid'      => $new_customer,
                     'send_at'  => (int) get_user_meta( $new_customer, self::META_LASTSEND, true ),
@@ -393,7 +393,7 @@ final class WooCommerce {
 
         } catch ( \Exception $e ) {
             if ( $e->getMessage() ) {
-                wc_add_notice( '<strong>' . __( 'Error:', 'woocommerce' ) . '</strong> ' . $e->getMessage(), 'error' );
+                \wc_add_notice( '<strong>' . __( 'Error:', 'woocommerce' ) . '</strong> ' . $e->getMessage(), 'error' );
             }
         }
     }
@@ -413,14 +413,14 @@ final class WooCommerce {
         $args = array_merge( $args, [
                 'otp_digits'      => self::OTP_DIGITS,
                 'resend_interval' => self::RESEND_INTERVAL,
-                'redirect_to'     => wc_get_page_permalink( 'myaccount' ),
+                'redirect_to'     => \wc_get_page_permalink( 'myaccount' ),
         ] );
 
         if ( ! empty( $args['error'] ) ) {
-            wc_add_notice( '<strong>' . __( 'Error:', 'woocommerce' ) . '</strong> ' . $args['error'], 'error' );
+            \wc_add_notice( '<strong>' . __( 'Error:', 'woocommerce' ) . '</strong> ' . $args['error'], 'error' );
         }
 
-        wc_get_template( $args['template'], $args );
+        \wc_get_template( $args['template'], $args );
         exit();
     }
 
@@ -499,7 +499,7 @@ final class WooCommerce {
         // ----------------------------------
 
         if ( empty( $username ) ) {
-            $username = wc_create_new_customer_username( $email, $args );
+            $username = \wc_create_new_customer_username( $email, $args );
         }
 
         $username = sanitize_user( $username );
@@ -515,7 +515,7 @@ final class WooCommerce {
         $password_generated = false;
 
         if ( empty( $password ) ) {
-            $password           = wp_generate_password();
+            $password           = \wp_generate_password();
             $password_generated = true;
         }
 

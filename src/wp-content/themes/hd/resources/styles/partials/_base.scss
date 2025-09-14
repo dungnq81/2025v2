@@ -1,0 +1,42 @@
+/* partials/_base.scss */
+
+@use '../utils/variables' as vars;
+@use '../utils/functions' as func;
+@use '../utils/mixins' as mixin;
+
+//
+// Base styles.
+
+// social-menu
+.menu.social-menu {
+    & > li {
+        & > a {
+            display: block;
+            color: #fff;
+            transition: 0.15s ease-in-out;
+
+            svg {
+                @include mixin.box(21);
+            }
+
+            &:hover {
+                opacity: 0.8;
+                color: #c9c9c9;
+            }
+        }
+    }
+}
+
+// .wpcf7-form
+.wpcf7-form {
+    .wpcf7-form-control-wrap {
+        position: relative;
+
+        .wpcf7-not-valid-tip {
+            color: var(--text-color-1);
+            font-size: 12px;
+            text-align: center;
+            padding-top: 8px;
+        }
+    }
+}

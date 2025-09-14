@@ -13,16 +13,16 @@ export const sharedConfig = {
     base: './',
     plugins: [
         tailwindcss(),
-        ...(isProduction ? [
+        ...( isProduction ? [
             viteImagemin({
                 plugins: {
-                    jpg: imageminMozjpeg({quality: 80}),
-                    png: imageminPngquant({strip: true, quality: [0.8, 0.9], dithering: 0.1}),
+                    jpg: imageminMozjpeg({ quality: 80 }),
+                    png: imageminPngquant({ strip: true, quality: [ 0.8, 0.9 ], dithering: 0.1 }),
                     svg: imageminSVGO(),
-                    gif: imageminGifsicle({optimizationLevel: 3, interlaced: true}),
+                    gif: imageminGifsicle({ optimizationLevel: 3, interlaced: true }),
                 },
             })
-        ] : [])
+        ] : [] )
     ],
     css: {
         preprocessorOptions: {
@@ -43,15 +43,14 @@ export const sharedConfig = {
     build: {
         sourcemap: !isProduction,
         //target: 'modules',
-        //modulePreload: {polyfill: false},
         manifest: true,
         minify: isProduction ? 'terser' : false,
-        watch: isProduction ? false : {exclude: 'node_modules/**'},
+        watch: isProduction ? false : { exclude: 'node_modules/**' },
         cssCodeSplit: true,
         emptyOutDir: true,
         terserOptions: {
-            compress: {drop_console: true, drop_debugger: true, toplevel: true, passes: 2},
-            format: {comments: false},
+            compress: { drop_console: true, drop_debugger: true, toplevel: true, passes: 2 },
+            format: { comments: false },
         },
     },
 };

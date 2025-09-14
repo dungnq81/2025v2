@@ -1,0 +1,99 @@
+/* index.scss */
+/* utils/_variables.scss */
+/* utils/_functions.scss */
+/** $string - svg */
+/** add unique id image url */
+/** https://webdesign.tutsplus.com/tutorials/an-introduction-to-error-handling-in-sass--cms-19996 */
+/** font size */
+/* index.scss */
+/* utils/_mixins.scss */
+/* partials/_index.scss */
+/* index.scss */
+/* partials/_base.scss */
+.menu.social-menu > li > a {
+  display: block;
+  color: #fff;
+  transition: 0.15s ease-in-out;
+}
+.menu.social-menu > li > a svg {
+  width: 1.3125rem;
+  height: 1.3125rem;
+}
+.menu.social-menu > li > a:hover {
+  opacity: 0.8;
+  color: #c9c9c9;
+}
+
+.wpcf7-form .wpcf7-form-control-wrap {
+  position: relative;
+}
+.wpcf7-form .wpcf7-form-control-wrap .wpcf7-not-valid-tip {
+  color: var(--text-color-1);
+  font-size: 12px;
+  text-align: center;
+  padding-top: 8px;
+}
+
+/* index.scss */
+/* partials/_header.scss */
+/* index.scss */
+/* partials/_footer.scss */
+.newsletter-footer .wpcf7-form .c-wpcf7-form-submit {
+  align-items: center;
+  gap: 12px;
+  display: flex;
+}
+.newsletter-footer .wpcf7-form .c-wpcf7-form > label {
+  display: block;
+}
+.newsletter-footer .wpcf7-form .c-wpcf7-form > label .wpcf7-form-control-wrap input {
+  width: 100%;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 340282000000000000000000000000000000000px;
+  font-size: 15px;
+  background: var(--bg-light-color);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.02);
+  transition: 0.15s ease-in-out;
+}
+.newsletter-footer .wpcf7-form .c-wpcf7-form > label .wpcf7-form-control-wrap input:focus, .newsletter-footer .wpcf7-form .c-wpcf7-form > label .wpcf7-form-control-wrap input:hover {
+  box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.32);
+}
+.newsletter-footer .wpcf7-form .c-wpcf7-form > label .wpcf7-form-control-wrap .wpcf7-not-valid-tip {
+  padding-top: 8px;
+}
+.newsletter-footer .wpcf7-form .c-wpcf7-form .c-wpcf7-form-submit .wpcf7-submit {
+  padding: 8px 32px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 340282000000000000000000000000000000000px;
+  transition: 0.15s ease-in-out;
+  background-color: var(--text-color-1);
+  color: #fff;
+  cursor: pointer;
+  font-family: var(--font-header);
+}
+.newsletter-footer .wpcf7-form .c-wpcf7-form .c-wpcf7-form-submit .wpcf7-submit:hover {
+  background-color: var(--text-color-2);
+}
+.newsletter-footer .wpcf7-form .c-wpcf7-form .c-wpcf7-form-submit .wpcf7-spinner {
+  margin: 0;
+  background-color: rgba(201, 201, 201, 0.4);
+}
+.newsletter-footer .wpcf7-form .wpcf7-response-output {
+  border: none;
+  padding: 0;
+  margin: 24px 0 0 0;
+  font-size: 14px;
+  color: #fff;
+}
+
+.policy-nav .menu-thumb > a {
+  align-items: center;
+}
+.policy-nav .menu-thumb > a > img {
+  display: block;
+  width: 28px;
+}

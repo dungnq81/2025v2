@@ -60,10 +60,22 @@ $gutters: (
 ) !default;
 
 //
+// Colors
+
+$bg-color: #161616 !default;
+$bg-light-color: rgba(29, 29, 29, 0.7) !default;
+
+$text-color: #C9C9C9 !default;
+$header-text-color: #ffffff !default;
+
+$text-color-1: #FD5341 !default;
+$text-color-2: #0C8D39 !default;
+
+//
 // Fonts
 
-$header-font: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Arial, cursive, sans-serif !default;
-$body-font: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Arial, cursive, sans-serif !default;
-$awesome-font: 'Font Awesome 6 Pro', 'Font Awesome 6 Brands', sans-serif !default;
-$awesome-sharp-font: 'Font Awesome 6 Sharp', 'Font Awesome 6 Brands', sans-serif !default;
-$monospace-font: Consolas, 'Liberation Mono', 'Courier New', monospace !default;
+$font-header: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Arial, cursive, sans-serif !default;
+$font-body: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Arial, cursive, sans-serif !default;
+$font-awesome: 'Font Awesome 6 Pro', 'Font Awesome 6 Brands', sans-serif !default;
+$font-awesome-sharp: 'Font Awesome 6 Sharp', 'Font Awesome 6 Brands', sans-serif !default;
+$font-mono: Consolas, 'Liberation Mono', 'Courier New', monospace !default;
