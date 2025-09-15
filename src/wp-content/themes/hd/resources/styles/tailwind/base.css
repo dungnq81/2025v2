@@ -6,7 +6,7 @@
     }
 
     :is([type='submit']:not(:disabled), [type='reset']:not(:disabled), [type='button']:not(:disabled), [role="button"]:not(:disabled)) {
-        cursor: pointer;
+        @apply cursor-pointer;
     }
 
     *:disabled {
@@ -16,15 +16,14 @@
     :is(h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6) {
         @apply antialiased font-(family-name:--font-header) text-(--header-text-color) leading-(--header-line-height);
         font-weight: inherit;
-    }
 
-    :is(h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6) a {
-        @apply no-underline inline-block text-current;
-    }
+        a {
+            @apply no-underline inline-block text-current;
+        }
 
-    :is(h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6) p {
-        @apply text-current;
-        line-height: inherit;
+        p {
+            @apply text-current leading-[inherit];
+        }
     }
 
     :is(h1, .h1) {
@@ -58,8 +57,7 @@
     }
 
     * > p {
-        @apply wrap-break-word mt-0;
-        line-height: inherit;
+        @apply wrap-break-word mt-0 leading-[inherit];
 
         &:not(:last-child) {
             @apply mb-4;
@@ -80,38 +78,38 @@
 
     img {
         @apply pointer-events-none select-none;
-    }
 
-    img:not([src]) {
-        @apply invisible;
-    }
+        &:not([src]) {
+            @apply invisible;
+        }
 
-    img:where(.aligncenter, .align-center) {
-        @apply mx-auto;
+        &:where(.aligncenter, .align-center) {
+            @apply mx-auto;
+        }
     }
 
     picture {
         @apply block pointer-events-none select-none;
-    }
 
-    picture img {
-        display: block;
+        img {
+            @apply block;
+        }
     }
 
     figure {
-        max-width: 100% !important;
-    }
+        @apply !max-w-full;
 
-    figure:where(.wp-caption, .caption) {
-        display: block;
-    }
+        &:where(.wp-caption, .caption) {
+            @apply block;
+        }
 
-    figure:where(.aligncenter, .align-center) {
-        @apply mx-auto text-center mb-4;
-    }
+        &:where(.aligncenter, .align-center) {
+            @apply mx-auto text-center mb-4;
+        }
 
-    figure:where(.wp-caption-text, .caption-text) {
-        @apply pt-3 text-(--header-text-color);
+        &:where(.wp-caption-text, .caption-text) {
+            @apply pt-3 text-(--header-text-color);
+        }
     }
 
     [data-fa]::before {
@@ -120,6 +118,14 @@
 
     [data-fa-after]::after {
         @apply content-[attr(data-fa-after)] font-(family-name:--font-awesome);
+    }
+
+    [data-content]::before {
+        @apply content-[attr(data-content)];
+    }
+
+    [data-content-after]::after {
+        @apply content-[attr(data-content-after)];
     }
 
     input:-webkit-autofill {

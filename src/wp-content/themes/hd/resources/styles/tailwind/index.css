@@ -11,6 +11,7 @@
 @source "../../../../hd/*.php";
 @source "../../../../hd/{inc,parts,templates,woocommerce}/**/*.php";
 @source "../../../../hd/resources/scripts/**/*.js";
+@source "../../../../hd/resources/styles/tailwind/**/*.css";
 
 @source not "../../../../hd/node_modules/**";
 @source not "../../../../hd/vendor/**";

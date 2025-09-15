@@ -59,6 +59,7 @@
     --spacing: .25rem;
     --container-md: 28rem;
     --text-sm: .875rem;
+    --text-sm--line-height: calc(1.25 / .875);
     --font-weight-light: 300;
     --font-weight-bold: 700;
     --ease-in: cubic-bezier(.4, 0, 1, 1);
@@ -71,12 +72,13 @@
     --font-header: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Arial, cursive, sans-serif;
     --font-body: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Arial, cursive, sans-serif;
     --font-awesome: "Font Awesome 6 Pro", "Font Awesome 6 Brands", sans-serif;
-    --bg-color: #161616;
-    --bg-light-color: #1d1d1db3;
     --text-color: #c9c9c9;
     --header-text-color: #fff;
     --text-color-1: #fd5341;
     --text-color-2: #0c8d39;
+    --white-color: #fff;
+    --bg-color: #161616;
+    --bg-light-color: #1d1d1db3;
     --global-line-height: 1.618;
     --header-line-height: 1.3;
     --global-fs: 1rem;
@@ -365,8 +367,9 @@
   }
 
   :is(h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6) p {
-    color: currentColor;
+    --tw-leading: inherit;
     line-height: inherit;
+    color: currentColor;
   }
 
   :is(h1, .h1) {
@@ -401,8 +404,9 @@
 
   * > p {
     margin-top: calc(var(--spacing) * 0);
-    overflow-wrap: break-word;
+    --tw-leading: inherit;
     line-height: inherit;
+    overflow-wrap: break-word;
   }
 
   * > p:not(:last-child) {
@@ -477,6 +481,16 @@
     content: var(--tw-content);
   }
 
+  [data-content]:before {
+    --tw-content: attr(data-content);
+    content: var(--tw-content);
+  }
+
+  [data-content-after]:after {
+    --tw-content: attr(data-content-after);
+    content: var(--tw-content);
+  }
+
   input:-webkit-autofill {
     -webkit-text-fill-color: #ffffff80 !important;
     -webkit-transition: background-color 5000s ease-in-out !important;
@@ -510,23 +524,25 @@
     transition-timing-function: var(--ease-in-out);
   }
 
-  .c-wpcf7-form {
-    gap: calc(var(--spacing) * 4);
-    flex-direction: column;
+  .c-back-to-top {
+    z-index: 999;
+    border-style: var(--tw-border-style);
+    opacity: 0;
+    transition-property: opacity;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+    --tw-duration: .3s;
+    border-width: 1px;
+    border-radius: .25rem;
+    justify-content: center;
+    align-items: center;
+    transition-duration: .3s;
     display: flex;
+    position: fixed;
   }
 
-  @media (min-width: 40rem) {
-    .c-wpcf7-form {
-      flex-direction: row;
-    }
-  }
-
-  @media (min-width: 64rem) {
-    .c-wpcf7-form {
-      flex-direction: column;
-      align-items: flex-start;
-    }
+  .c-back-to-top[data-show="true"] {
+    opacity: 1;
   }
 }
 
@@ -796,6 +812,10 @@
     height: calc(var(--spacing) * 7);
   }
 
+  .h-auto {
+    height: auto;
+  }
+
   .\!w-200 {
     width: calc(var(--spacing) * 200) !important;
   }
@@ -810,6 +830,10 @@
 
   .w-7 {
     width: calc(var(--spacing) * 7);
+  }
+
+  .max-w-full {
+    max-width: 100%;
   }
 
   .max-w-md {
@@ -862,6 +886,14 @@
 
   .items-baseline {
     align-items: baseline;
+  }
+
+  .items-center {
+    align-items: center;
+  }
+
+  .justify-between {
+    justify-content: space-between;
   }
 
   .justify-center {
@@ -941,12 +973,20 @@
     padding-inline: calc(var(--spacing) * 3);
   }
 
+  .py-2 {
+    padding-block: calc(var(--spacing) * 2);
+  }
+
   .py-4 {
     padding-block: calc(var(--spacing) * 4);
   }
 
   .py-10 {
     padding-block: calc(var(--spacing) * 10);
+  }
+
+  .pt-10 {
+    padding-top: calc(var(--spacing) * 10);
   }
 
   .text-center {
@@ -968,6 +1008,11 @@
     color: var(--header-text-color);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  .text-sm {
+    font-size: var(--text-sm);
+    line-height: var(--tw-leading, var(--text-sm--line-height));
   }
 
   .text-sm\/6 {
@@ -1189,8 +1234,8 @@
   }
 
   @media (hover: hover) {
-    .hover\:text-\(--text-color-1\):hover {
-      color: var(--text-color-1);
+    .hover\:text-\(--white-color\):hover {
+      color: var(--white-color);
     }
   }
 
@@ -1201,10 +1246,6 @@
   @media (min-width: 40rem) {
     .sm\:grid-cols-2 {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .sm\:justify-start {
-      justify-content: flex-start;
     }
 
     .sm\:p-4 {
@@ -1237,8 +1278,16 @@
       gap: calc(var(--spacing) * 6);
     }
 
+    .md\:py-3 {
+      padding-block: calc(var(--spacing) * 3);
+    }
+
     .md\:py-15 {
       padding-block: calc(var(--spacing) * 15);
+    }
+
+    .md\:pt-15 {
+      padding-top: calc(var(--spacing) * 15);
     }
   }
 
@@ -1255,8 +1304,12 @@
       padding-block: calc(var(--spacing) * 20);
     }
 
-    .lg\:pl-8 {
-      padding-left: calc(var(--spacing) * 8);
+    .lg\:pt-20 {
+      padding-top: calc(var(--spacing) * 20);
+    }
+
+    .lg\:pl-12 {
+      padding-left: calc(var(--spacing) * 12);
     }
   }
 
@@ -2475,26 +2528,26 @@ button.swiper-pagination-bullet {
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url("../fonts/SVN-Poppins-Light.woff2?v=uaqafsp") format("woff2"), url("../fonts/SVN-Poppins-Light.ttf?v=uaqafsp") format("truetype"), url("../fonts/SVN-Poppins-Light.otf?v=uaqafsp") format("opentype");
+  src: url("../fonts/SVN-Poppins-Light.woff2?v=upzpslt") format("woff2"), url("../fonts/SVN-Poppins-Light.ttf?v=upzpslt") format("truetype"), url("../fonts/SVN-Poppins-Light.otf?v=upzpslt") format("opentype");
 }
 @font-face {
   font-family: "Poppins";
   font-style: italic;
   font-weight: 300;
   font-display: swap;
-  src: url("../fonts/SVN-Poppins-LightItalic.woff2?v=uaqafsz") format("woff2"), url("../fonts/SVN-Poppins-LightItalic.ttf?v=uaqafsz") format("truetype"), url("../fonts/SVN-Poppins-LightItalic.otf?v=uaqafsz") format("opentype");
+  src: url("../fonts/SVN-Poppins-LightItalic.woff2?v=upzpsm2") format("woff2"), url("../fonts/SVN-Poppins-LightItalic.ttf?v=upzpsm2") format("truetype"), url("../fonts/SVN-Poppins-LightItalic.otf?v=upzpsm2") format("opentype");
 }
 @font-face {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("../fonts/SVN-Poppins-Bold.woff2?v=uaqaftm") format("woff2"), url("../fonts/SVN-Poppins-Bold.ttf?v=uaqaftm") format("truetype"), url("../fonts/SVN-Poppins-Bold.otf?v=uaqaftm") format("opentype");
+  src: url("../fonts/SVN-Poppins-Bold.woff2?v=upzpsm8") format("woff2"), url("../fonts/SVN-Poppins-Bold.ttf?v=upzpsm8") format("truetype"), url("../fonts/SVN-Poppins-Bold.otf?v=upzpsm8") format("opentype");
 }
 @font-face {
   font-family: "Poppins";
   font-style: italic;
   font-weight: 700;
   font-display: swap;
-  src: url("../fonts/SVN-Poppins-BoldItalic.woff2?v=uaqafu4") format("woff2"), url("../fonts/SVN-Poppins-BoldItalic.ttf?v=uaqafu4") format("truetype"), url("../fonts/SVN-Poppins-BoldItalic.otf?v=uaqafu4") format("opentype");
+  src: url("../fonts/SVN-Poppins-BoldItalic.woff2?v=upzpsmf") format("woff2"), url("../fonts/SVN-Poppins-BoldItalic.ttf?v=upzpsmf") format("truetype"), url("../fonts/SVN-Poppins-BoldItalic.otf?v=upzpsmf") format("opentype");
 }

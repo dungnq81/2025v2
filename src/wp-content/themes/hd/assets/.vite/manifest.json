@@ -1,9 +1,13 @@
 {
-  "_vendor.C-TuldtG.js": {
-    "file": "js/vendor.C-TuldtG.js",
+  "_vendor.DvdxHN0B.css": {
+    "file": "css/vendor.DvdxHN0B.css",
+    "src": "_vendor.DvdxHN0B.css"
+  },
+  "_vendor.DzHX60-V.js": {
+    "file": "js/vendor.DzHX60-V.js",
     "name": "vendor",
     "css": [
-      "css/vendor.DgVPMnmw.css"
+      "css/vendor.DvdxHN0B.css"
     ],
     "assets": [
       "fonts/SVN-Poppins-Light.woff2",
@@ -19,10 +23,6 @@
       "fonts/SVN-Poppins-BoldItalic.ttf",
       "fonts/SVN-Poppins-BoldItalic.otf"
     ]
-  },
-  "_vendor.DgVPMnmw.css": {
-    "file": "css/vendor.DgVPMnmw.css",
-    "src": "_vendor.DgVPMnmw.css"
   },
   "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/OTF/SVN-Poppins-Bold.otf": {
     "file": "fonts/SVN-Poppins-Bold.otf",
@@ -91,21 +91,21 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/components/social-share.js": {
-    "file": "js/social-share.BBYW29j4.js",
+    "file": "js/social-share.Q1_1Xaqs.js",
     "name": "social-share",
     "src": "src/wp-content/themes/hd/resources/scripts/components/social-share.js",
     "isEntry": true,
     "imports": [
-      "_vendor.C-TuldtG.js"
+      "_vendor.DzHX60-V.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/swiper.js": {
-    "file": "js/swiper.BnK0Ez3W.js",
+    "file": "js/swiper.BHhTq5PG.js",
     "name": "swiper",
     "src": "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
     "isEntry": true,
     "imports": [
-      "_vendor.C-TuldtG.js"
+      "_vendor.DzHX60-V.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/woocommerce.js": {
@@ -115,12 +115,12 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/index.js": {
-    "file": "js/index.BiHXI16Z.js",
+    "file": "js/index.BdHawTGc.js",
     "name": "index",
     "src": "src/wp-content/themes/hd/resources/scripts/index.js",
     "isEntry": true,
     "imports": [
-      "_vendor.C-TuldtG.js",
+      "_vendor.DzHX60-V.js",
       "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
       "src/wp-content/themes/hd/resources/scripts/components/social-share.js"
     ]
@@ -142,7 +142,7 @@
     ]
   },
   "src/wp-content/themes/hd/resources/styles/index.scss": {
-    "file": "css/index.413YhluO.css",
+    "file": "css/index._hpbrMG_.css",
     "src": "src/wp-content/themes/hd/resources/styles/index.scss",
     "isEntry": true,
     "names": [

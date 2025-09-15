@@ -6,6 +6,6 @@
 
 @layer utilities {
     .u-container {
-        @apply container px-3 mx-auto
+        @apply container px-3 mx-auto;
     }
 }

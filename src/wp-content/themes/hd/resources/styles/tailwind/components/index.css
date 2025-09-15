@@ -21,7 +21,7 @@
         @apply transition ease-in-out;
     }
 
-    .c-wpcf7-form {
-        @apply flex flex-col gap-4 sm:flex-row lg:flex-col lg:items-start;
+    .c-back-to-top {
+        @apply flex items-center justify-center fixed z-[999] border rounded opacity-0 transition-opacity duration-300 data-[show=true]:opacity-100;
     }
 }

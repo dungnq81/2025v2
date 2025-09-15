@@ -7,12 +7,18 @@
     --font-awesome: 'Font Awesome 6 Pro', 'Font Awesome 6 Brands', sans-serif;
     --font-awesome-sharp: 'Font Awesome 6 Sharp', 'Font Awesome 6 Brands', sans-serif;
 
-    --bg-color: #161616;
-    --bg-light-color: rgba(29, 29, 29, 0.7);
     --text-color: #C9C9C9;
     --header-text-color: #ffffff;
     --text-color-1: #FD5341;
     --text-color-2: #0C8D39;
+
+    --white-color: #ffffff;
+    --black-color: #000000;
+
+    --bg-color: #161616;
+    --bg-light-color: rgba(29, 29, 29, 0.7);
+    --bg-right-gradient-1: linear-gradient(270deg, var(--text-color-1) 0%, var(--bg-color) 88.88%);
+    --bg-right-gradient-2: linear-gradient(270deg, var(--text-color-2) 0%, var(--bg-color) 88.88%);
 
     --global-line-height: 1.618;
     --header-line-height: 1.3;

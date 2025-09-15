@@ -4,8 +4,54 @@
 @use '../utils/functions' as func;
 @use '../utils/mixins' as mixin;
 
+//
 // Footer styles.
 
+.footer-logo {
+    margin-bottom: 20px;
+
+    a {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    img {
+        max-height: 40px;
+    }
+
+    .logo-title {
+        line-height: 1;
+        color: var(--header-text-color);
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 28px;
+        letter-spacing: -0.1px;
+    }
+}
+
+/** */
+.seo-footer {
+    .footer-address {
+        a {
+            &:hover {
+                color: var(--white-color);
+            }
+        }
+    }
+}
+
+.footer-menu {
+    ul.menu {
+        a {
+            &:hover {
+                color: var(--white-color);
+            }
+        }
+    }
+}
+
+/** */
 .newsletter-footer {
     .wpcf7-form {
         .c-wpcf7-form-submit {
@@ -15,6 +61,10 @@
         }
 
         .c-wpcf7-form {
+            gap: calc(var(--spacing) * 4);
+            flex-direction: column;
+            display: flex;
+
             & > label {
                 display: block;
 
@@ -23,7 +73,7 @@
                         width: 100%;
                         color: #fff;
                         padding: 12px 24px;
-                        border-radius: 3.40282e38px;
+                        border-radius: 9999px;
                         font-size: 15px;
                         background: var(--bg-light-color);
                         border: 1px solid rgba(255, 255, 255, 0.16);
@@ -31,8 +81,8 @@
                         transition: 0.15s ease-in-out;
 
                         &:focus, &:hover {
-                            box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.08);
-                            border-color: rgba(255, 255, 255, 0.32);
+                            box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.1);
+                            border-color: rgba(255, 255, 255, 0.5);
                         }
                     }
 
@@ -47,7 +97,7 @@
                     padding: 8px 32px;
                     font-size: 15px;
                     font-weight: 700;
-                    border-radius: 3.40282e38px;
+                    border-radius: 9999px;
                     transition: 0.15s ease-in-out;
                     background-color: var(--text-color-1);
                     color: #fff;
