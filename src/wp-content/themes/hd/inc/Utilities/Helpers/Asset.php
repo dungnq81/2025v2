@@ -56,6 +56,39 @@ final class Asset {
 
 	/**
 	 * @param string|null $entry
+	 * @param string $handle_prefix
+	 *
+	 * @return void
+	 * @throws \JsonException
+	 */
+	public static function preload( ?string $entry = null, string $handle_prefix = '' ): void {
+		if ( ! $entry ) {
+			return;
+		}
+
+		$imports = [ 'vendor.js' ];
+		$tmp     = Helper::manifestResolve( $entry, $handle_prefix );
+		if ( ! empty( $tmp['imports'] ) ) {
+			$imports = array_merge( $imports, (array) $tmp['imports'] );
+		}
+
+		$links = '';
+		$imports = array_unique( $imports );
+
+		foreach ( $imports as $import ) {
+			$resolve = Helper::manifestResolve( $import );
+			if ( ! empty( $resolve['src'] ) ) {
+				$links .= '<link rel="modulepreload" as="script" href="' . esc_url( $resolve['src'] ) . '" crossorigin>';
+			}
+		}
+
+		echo $links;
+	}
+
+	// ----------------------------------------
+
+	/**
+	 * @param string|null $entry
 	 * @param array $deps
 	 * @param string|bool|null $ver
 	 * @param string $media

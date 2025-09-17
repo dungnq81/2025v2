@@ -7,4 +7,21 @@
 //
 // Header styles.
 
+.top-header {
+    a {
+        &:hover {
+            color: var(--white-color);
+        }
+    }
+}
 
+/** */
+.masthead {
+    .site-logo {
+        img.custom-logo {
+            width: auto;
+            display: block;
+            @include mixin.media-css(max-height, 60);
+        }
+    }
+}

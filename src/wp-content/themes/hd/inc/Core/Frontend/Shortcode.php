@@ -245,12 +245,12 @@ final class Shortcode {
 
         ?>
         <button class="menu-lines" type="button" data-open="offCanvasMenu" aria-label="button">
-            <span class="menu-txt"><?= $title ?></span>
             <span class="line">
 				<span class="line-1"></span>
 				<span class="line-2"></span>
 				<span class="line-3"></span>
 			</span>
+            <span class="menu-txt"><?= $title ?></span>
         </button>
         <?php
         return '<div class="off-canvas-content' . $class . '" data-off-canvas-content>' . ob_get_clean() . '</div>';

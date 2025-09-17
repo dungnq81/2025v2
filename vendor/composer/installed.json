@@ -1014,17 +1014,17 @@
         },
         {
             "name": "marc-mabe/php-enum",
-            "version": "v4.7.1",
-            "version_normalized": "4.7.1.0",
+            "version": "v4.7.2",
+            "version_normalized": "4.7.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/marc-mabe/php-enum.git",
-                "reference": "7159809e5cfa041dca28e61f7f7ae58063aae8ed"
+                "reference": "bb426fcdd65c60fb3638ef741e8782508fda7eef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/marc-mabe/php-enum/zipball/7159809e5cfa041dca28e61f7f7ae58063aae8ed",
-                "reference": "7159809e5cfa041dca28e61f7f7ae58063aae8ed",
+                "url": "https://api.github.com/repos/marc-mabe/php-enum/zipball/bb426fcdd65c60fb3638ef741e8782508fda7eef",
+                "reference": "bb426fcdd65c60fb3638ef741e8782508fda7eef",
                 "shasum": ""
             },
             "require": {
@@ -1037,7 +1037,7 @@
                 "phpunit/phpunit": "^7.5.20 | ^8.5.22 | ^9.5.11",
                 "vimeo/psalm": "^4.17.0 | ^5.26.1"
             },
-            "time": "2024-11-28T04:54:44+00:00",
+            "time": "2025-09-14T11:18:39+00:00",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -1084,7 +1084,7 @@
             ],
             "support": {
                 "issues": "https://github.com/marc-mabe/php-enum/issues",
-                "source": "https://github.com/marc-mabe/php-enum/tree/v4.7.1"
+                "source": "https://github.com/marc-mabe/php-enum/tree/v4.7.2"
             },
             "install-path": "../marc-mabe/php-enum"
         },
@@ -1572,12 +1572,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "9e809d3a8829a5b870ae1c2f57706f46bb181093"
+                "reference": "662d5ecfaab913d8ce0de4521fc40ce92aa14e75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/9e809d3a8829a5b870ae1c2f57706f46bb181093",
-                "reference": "9e809d3a8829a5b870ae1c2f57706f46bb181093",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/662d5ecfaab913d8ce0de4521fc40ce92aa14e75",
+                "reference": "662d5ecfaab913d8ce0de4521fc40ce92aa14e75",
                 "shasum": ""
             },
             "conflict": {
@@ -1966,6 +1966,7 @@
                 "laravel/socialite": ">=1,<2.0.10",
                 "latte/latte": "<2.10.8",
                 "lavalite/cms": "<=9|==10.1",
+                "lavitto/typo3-form-to-database": "<2.2.5|>=3,<3.2.2|>=4,<4.2.3|>=5,<5.0.2",
                 "lcobucci/jwt": ">=3.4,<3.4.6|>=4,<4.0.4|>=4.1,<4.1.5",
                 "league/commonmark": "<2.7",
                 "league/flysystem": "<1.1.4|>=2,<2.1.1",
@@ -2498,7 +2499,7 @@
                 "zfr/zfr-oauth2-server-module": "<0.1.2",
                 "zoujingli/thinkadmin": "<=6.1.53"
             },
-            "time": "2025-09-11T17:05:04+00:00",
+            "time": "2025-09-16T20:05:44+00:00",
             "default-branch": true,
             "type": "metapackage",
             "notification-url": "https://packagist.org/downloads/",
@@ -4556,21 +4557,21 @@
         },
         {
             "name": "wp-cli/entity-command",
-            "version": "v2.8.4",
-            "version_normalized": "2.8.4.0",
+            "version": "v2.8.5",
+            "version_normalized": "2.8.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/entity-command.git",
-                "reference": "213611f8ab619ca137d983e9b987f7fbf1ac21d4"
+                "reference": "896b7fb5ed51fe556017b2c71126947db5cd2b68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/entity-command/zipball/213611f8ab619ca137d983e9b987f7fbf1ac21d4",
-                "reference": "213611f8ab619ca137d983e9b987f7fbf1ac21d4",
+                "url": "https://api.github.com/repos/wp-cli/entity-command/zipball/896b7fb5ed51fe556017b2c71126947db5cd2b68",
+                "reference": "896b7fb5ed51fe556017b2c71126947db5cd2b68",
                 "shasum": ""
             },
             "require": {
-                "wp-cli/wp-cli": "^2.12"
+                "wp-cli/wp-cli": "^2.13"
             },
             "require-dev": {
                 "wp-cli/cache-command": "^1 || ^2",
@@ -4578,9 +4579,9 @@
                 "wp-cli/extension-command": "^1.2 || ^2",
                 "wp-cli/media-command": "^1.1 || ^2",
                 "wp-cli/super-admin-command": "^1 || ^2",
-                "wp-cli/wp-cli-tests": "^4"
+                "wp-cli/wp-cli-tests": "^5"
             },
-            "time": "2025-05-06T16:12:49+00:00",
+            "time": "2025-09-12T10:52:53+00:00",
             "type": "wp-cli-package",
             "extra": {
                 "bundled": true,
@@ -4790,7 +4791,7 @@
             "homepage": "https://github.com/wp-cli/entity-command",
             "support": {
                 "issues": "https://github.com/wp-cli/entity-command/issues",
-                "source": "https://github.com/wp-cli/entity-command/tree/v2.8.4"
+                "source": "https://github.com/wp-cli/entity-command/tree/v2.8.5"
             },
             "install-path": "../wp-cli/entity-command"
         },

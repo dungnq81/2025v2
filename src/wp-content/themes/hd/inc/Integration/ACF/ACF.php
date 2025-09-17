@@ -87,7 +87,7 @@ final class ACF {
 			'link',
 			'unlink',
 			'forecolor',
-			//'blockquote',
+			'blockquote',
 			'table',
 			'codesample',
 			'subscript',
@@ -111,7 +111,6 @@ final class ACF {
 
 			if ( $ACF ) {
 				$menu_mega             = $ACF->menu_mega ?? false;
-				$menu_glyph            = $ACF->menu_glyph ?? '';
 				$menu_link_class       = $ACF->menu_link_class ?? '';
 				$menu_svg              = $ACF->menu_svg ?? '';
 				$menu_image            = $ACF->menu_image ?? '';
@@ -120,12 +119,7 @@ final class ACF {
 				$menu_label_background = $ACF->menu_label_background ?? '';
 
 				if ( $menu_mega ) {
-					$item->classes[] = 'menu-mega menu-masonry';
-				}
-
-				if ( $menu_glyph ) {
-					$item->classes[] = 'menu-glyph';
-					$title           = '<span data-fa="' . \HD_Helper::escAttr( $menu_glyph ) . '">' . $title . '</span>';
+					$item->classes[] = 'menu-mega';
 				}
 
 				if ( $menu_link_class ) {

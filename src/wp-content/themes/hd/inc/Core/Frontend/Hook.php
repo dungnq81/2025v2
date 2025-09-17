@@ -22,7 +22,7 @@ final class Hook {
         // wp_head
         // -----------------------------------------------
         add_action( 'wp_head', [ $this, 'wp_head_action' ], 1 );
-        add_action( 'wp_head', [ $this, 'other_head_action' ], 9 );
+        add_action( 'wp_head', [ $this, 'other_head_action' ], 98 );
         add_action( 'wp_head', [ $this, 'external_fonts_action' ], 99 );
 
         // -----------------------------------------------
@@ -110,8 +110,12 @@ final class Hook {
 
     // -----------------------------------------------
 
+    /**
+     * @return void
+     * @throws \JsonException
+     */
     public function other_head_action(): void {
-        // manifest.json
+        // Manifest
         if ( file_exists( ABSPATH . 'manifest.json' ) ) {
             printf( '<link rel="manifest" href="%s" />', esc_url( home_url( 'manifest.json' ) ) );
         }
@@ -121,23 +125,26 @@ final class Hook {
         if ( $theme_color ) {
             printf( '<meta name="theme-color" content="%s" />', \HD_Helper::escAttr( $theme_color ) );
         }
+
+        // Preload JS
+        \HD_Asset::preload( 'index.js' );
     }
 
     // -----------------------------------------------
 
     public function external_fonts_action(): void {
-        echo <<<HTML
+        ?>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-        HTML;
+        <?php
     }
 
     // -----------------------------------------------
 
     public function skip_to_content_link_action(): void {
         printf(
-                '<a class="screen-reader-text skip-link" href="#site-content" title="%1$s">%2$s</a>',
+                '<a class="sr-only skip-link" href="#site-content" title="%1$s">%2$s</a>',
                 esc_attr__( 'Skip to content', TEXT_DOMAIN ),
                 esc_html__( 'Skip to content', TEXT_DOMAIN )
         );
@@ -165,9 +172,34 @@ final class Hook {
 
     public function _masthead_top_header(): void {
         ?>
-        <div class="top-header">
-            <div class="u-container flex justify-between items-center py-2 md:py-3 text-sm">
-
+        <div class="top-header c-light-bg border-t-[0]">
+            <div class="u-container p-fs-clamp-[12,13] u-flex-x justify-between items-center gap-y-1 py-3">
+                <div class="top-items hidden md:block">
+                    <div class="flex gap-2 items-center">
+                        <span class="label rounded-sm font-bold px-2 text-(--white-color) bg-(--text-color-2)">Hot</span>
+                        <span class="content flex items-center gap-1">
+                            Earn Money with Onidel Cloud! Affiliate Program Details -
+                            <a class="flex items-center gap-1" href="#" title="Xem chi tiết">
+                                <span class="text-(--white-color)">Chi tiết</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 16l4-4l-4-4"/></svg>
+                            </a>
+                        </span>
+                    </div>
+                </div>
+                <ul class="menu u-flex-x items-center gap-3 lg:gap-6 w-full justify-end md:w-max top-nav">
+                    <li>
+                        <a class="js-popup flex items-center gap-1" href="#" title="User">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8a4 4 0 0 0 0-8m-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4z" clip-rule="evenodd"/></svg>
+                            <span class="leading-none">Tài khoản</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="js-popup flex items-center gap-1" href="#" title="Hỗ trợ">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M4 3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h1v2a1 1 0 0 0 1.707.707L9.414 13H15a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1z"/><path d="M8.023 17.215q.05-.046.098-.094L10.243 15H15a3 3 0 0 0 3-3V8h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-1v2a1 1 0 0 1-1.707.707L14.586 18H9a1 1 0 0 1-.977-.785"/></g></svg>
+                            <span class="leading-none">Hỗ trợ</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
         <?php
@@ -177,11 +209,26 @@ final class Hook {
 
     public function _masthead_header(): void {
         ?>
-        <div id="masthead" class="masthead">
-            <div class="container gap fluid flex flex-x">
-                <?php echo \HD_Helper::siteTitleOrLogo(); ?>
-                <div class="masthead-content">
-                    <?php \HD_Helper::blockTemplate( 'parts/blocks/language-menu', [], true ); ?>
+        <div id="masthead" class="masthead py-4">
+            <div class="u-container flex items-center justify-between">
+                <div class="masthead-logo flex-initial"><?= \HD_Helper::siteTitleOrLogo() ?></div>
+                <div class="masthead-content flex-initial flex items-center gap-6">
+                    <nav class="nav" id="main-nav">
+                        <?= \HD_Helper::doShortcode( 'horizontal_menu', [
+                                'location'         => 'main-nav',
+                                'extra_class'      => 'u-flex-x gap-6 min-h-[44px]',
+                                'li_class'         => '',
+                                'li_depth_class'   => '',
+                                'link_class'       => 'flex items-center h-full font-bold text-[15px] hover:text-(--white-color)',
+                                'link_depth_class' => 'text-[15px] hover:text-(--white-color)',
+                        ] ) ?>
+                    </nav>
+                    <div class="hotline">
+                        <a class="c-hotline" href="tel:0938002776" title="0938 002 776">
+                            <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M7.978 4a2.55 2.55 0 0 0-1.926.877C4.233 6.7 3.699 8.751 4.153 10.814c.44 1.995 1.778 3.893 3.456 5.572c1.68 1.679 3.577 3.018 5.57 3.459c2.062.456 4.115-.073 5.94-1.885a2.556 2.556 0 0 0 .001-3.861l-1.21-1.21a2.69 2.69 0 0 0-3.802 0l-.617.618a.806.806 0 0 1-1.14 0l-1.854-1.855a.807.807 0 0 1 0-1.14l.618-.62a2.69 2.69 0 0 0 0-3.803l-1.21-1.211A2.56 2.56 0 0 0 7.978 4"/></svg>
+                            <span>0938 002 776</span>
+                        </a>
+                    </div>
                     <?= \HD_Helper::doShortcode( 'off_canvas_button', [ 'hide_if_desktop' => 0 ] ) ?>
                 </div>
             </div>
@@ -246,7 +293,6 @@ final class Hook {
                     <div class="footer-info grid grid-cols-1 gap-8 sm:grid-cols-2">
                         <div class="seo-footer">
                             <?= \HD_Helper::siteLogo( 'alt', 'footer-logo' ) ?>
-
                             <ul class="footer-address">
                                 <li class="flex items-baseline gap-1">
                                     <svg class="relative top-[6px]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M7 2a2 2 0 0 0-2 2v1a1 1 0 0 0 0 2v1a1 1 0 0 0 0 2v1a1 1 0 1 0 0 2v1a1 1 0 1 0 0 2v1a1 1 0 1 0 0 2v1a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm3 8a3 3 0 1 1 6 0a3 3 0 0 1-6 0m-1 7a3 3 0 0 1 3-3h2a3 3 0 0 1 3 3a1 1 0 0 1-1 1h-6a1 1 0 0 1-1-1" clip-rule="evenodd" /></svg>
@@ -254,11 +300,11 @@ final class Hook {
                                 </li>
                                 <li class="flex items-baseline gap-1">
                                     <svg class="relative top-[6px]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M7.978 4a2.55 2.55 0 0 0-1.926.877C4.233 6.7 3.699 8.751 4.153 10.814c.44 1.995 1.778 3.893 3.456 5.572c1.68 1.679 3.577 3.018 5.57 3.459c2.062.456 4.115-.073 5.94-1.885a2.556 2.556 0 0 0 .001-3.861l-1.21-1.21a2.69 2.69 0 0 0-3.802 0l-.617.618a.806.806 0 0 1-1.14 0l-1.854-1.855a.807.807 0 0 1 0-1.14l.618-.62a2.69 2.69 0 0 0 0-3.803l-1.21-1.211A2.56 2.56 0 0 0 7.978 4" /></svg>
-                                    <a class="c-hover lining-nums" href="tel:0938002776">0938 002 776</a>
+                                    <a class="lining-nums" href="tel:0938002776">0938 002 776</a>
                                 </li>
                                 <li class="flex items-baseline gap-1">
                                     <svg class="relative top-[6px]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="currentColor"><path d="M2.038 5.61A2 2 0 0 0 2 6v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6q0-.18-.03-.352l-.866.65l-7.89 6.032a2 2 0 0 1-2.429 0L2.884 6.288l-.846-.677Z"/><path d="M20.677 4.117A2 2 0 0 0 20 4H4q-.338.002-.642.105l.758.607L12 10.742L19.9 4.7z"/></g></svg>
-                                    <?= \HD_Helper::safeMailTo( 'info@webhd.vn', '', [ 'class' => 'c-hover', 'title' => 'Email' ] ) ?>
+                                    <?= \HD_Helper::safeMailTo( 'info@webhd.vn', '', [ 'title' => 'Email' ] ) ?>
                                 </li>
                             </ul>
                             <div class="social-links">
@@ -279,25 +325,25 @@ final class Hook {
                         </div>
                     </div>
                     <div class="footer-menu grid grid-cols-1 gap-8 sm:grid-cols-2">
-                        <div class="text-left lg:pl-12">
+                        <div class="text-left xl:pl-12">
                             <p class="footer-title font-bold uppercase u-heading lg:mb-8">Về chúng tôi</p>
                             <ul class="menu text-[15px] space-y-3">
-                                <li><a class="c-hover" href="#">Giới thiệu</a></li>
-                                <li><a class="c-hover" href="#">Blog</a></li>
-                                <li><a class="c-hover" href="#">Affiliate</a></li>
-                                <li><a class="c-hover" href="#">Liên hệ</a></li>
+                                <li><a href="#">Giới thiệu</a></li>
+                                <li><a href="#">Blog</a></li>
+                                <li><a href="#">Affiliate</a></li>
+                                <li><a href="#">Liên hệ</a></li>
                             </ul>
                         </div>
                         <div class="text-left">
                             <p class="footer-title font-bold uppercase u-heading lg:mb-8">Dịch vụ</p>
                             <ul class="menu text-[15px] space-y-3">
-                                <li><a class="c-hover" href="#">Thiết kế Website</a></li>
-                                <li><a class="c-hover" href="#">SEO từ khóa Google</a></li>
-                                <li><a class="c-hover" href="#">Google Ads</a></li>
-                                <li><a class="c-hover" href="#">Facebook Ads</a></li>
-                                <li><a class="c-hover" href="#">Hosting</a></li>
-                                <li><a class="c-hover" href="#">Domain</a></li>
-                                <li><a class="c-hover" href="#">Email doanh nghiệp</a></li>
+                                <li><a href="#">Thiết kế Website</a></li>
+                                <li><a href="#">SEO từ khóa Google</a></li>
+                                <li><a href="#">Google Ads</a></li>
+                                <li><a href="#">Facebook Ads</a></li>
+                                <li><a href="#">Hosting</a></li>
+                                <li><a href="#">Domain</a></li>
+                                <li><a href="#">Email doanh nghiệp</a></li>
                             </ul>
                         </div>
                     </div>
@@ -312,9 +358,8 @@ final class Hook {
     public function _construct_footer_credit(): void {
         ?>
         <div id="footer-credit" class="c-light-bg py-4 mb-8">
-            <div class="u-container text-center p-fs-clamp-[12,14] md:flex md:flex-wrap md:justify-between md:items-center md:gap-3">
+            <div class="u-container text-center p-fs-clamp-[12,13] md:flex md:flex-wrap md:justify-between md:items-center md:gap-3">
                 <?php
-
                 $footer_credit = \HD_Helper::getThemeMod( 'footer_credit_setting' );
                 $footer_credit = ! empty( $footer_credit ) ? esc_html( $footer_credit ) : '&copy; ' . date( 'Y' ) . ' ' . get_bloginfo( 'name' ) . '. ' . esc_html__( 'All rights reserved.', TEXT_DOMAIN );
 
@@ -324,9 +369,11 @@ final class Hook {
                         'extra_class' => 'flex flex-wrap justify-center gap-3 md:gap-6',
                         'link_class'  => 'flex gap-1 flex-row-reverse p-hover hover:text-(--white-color)',
                 ] );
-
                 ?>
-                <p class="copyright lining-nums"><?php echo apply_filters( 'hd_footer_credit_filter', $footer_credit ); ?></p>
+                <p class="copyright lining-nums u-flex-center gap-2">
+                    <?php echo apply_filters( 'hd_footer_credit_filter', $footer_credit ); ?>
+                    <a href="//www.dmca.com/Protection/Status.aspx?ID=23298db8-074d-41f7-abe1-c8dfd6eff269" title="DMCA.com Protection Status" class="dmca dmca-badge" target="_blank"> <img src ="https://images.dmca.com/Badges/dmca-badge-w100-5x1-05.png?ID=23298db8-074d-41f7-abe1-c8dfd6eff269"  alt="DMCA.com Protection Status" /></a>
+                </p>
             </div>
         </div>
         <?php

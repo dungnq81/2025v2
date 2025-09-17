@@ -9,14 +9,15 @@
 
     --text-color: #C9C9C9;
     --header-text-color: #ffffff;
-    --text-color-1: #FD5341;
-    --text-color-2: #0C8D39;
+    --text-color-1: #FE5242;
+    --text-color-2: #0C8E39;
 
     --white-color: #ffffff;
     --black-color: #000000;
 
     --bg-color: #161616;
     --bg-light-color: rgba(29, 29, 29, 0.7);
+
     --bg-right-gradient-1: linear-gradient(270deg, var(--text-color-1) 0%, var(--bg-color) 88.88%);
     --bg-right-gradient-2: linear-gradient(270deg, var(--text-color-2) 0%, var(--bg-color) 88.88%);
 

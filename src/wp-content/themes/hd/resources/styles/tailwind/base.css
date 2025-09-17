@@ -56,6 +56,10 @@
         outline: none;
     }
 
+    :is(a, button, [role="button"]) {
+        @apply transition ease-in-out;
+    }
+
     * > p {
         @apply wrap-break-word mt-0 leading-[inherit];
 

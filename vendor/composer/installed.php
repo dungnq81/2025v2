@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '562356f5549525b66a01a255a26dec662dbbaf2a',
+        'reference' => '3484c53b4da774aff4021468121f411fd8e70909',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '562356f5549525b66a01a255a26dec662dbbaf2a',
+            'reference' => '3484c53b4da774aff4021468121f411fd8e70909',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -137,9 +137,9 @@
             'dev_requirement' => true,
         ),
         'marc-mabe/php-enum' => array(
-            'pretty_version' => 'v4.7.1',
-            'version' => '4.7.1.0',
-            'reference' => '7159809e5cfa041dca28e61f7f7ae58063aae8ed',
+            'pretty_version' => 'v4.7.2',
+            'version' => '4.7.2.0',
+            'reference' => 'bb426fcdd65c60fb3638ef741e8782508fda7eef',
             'type' => 'library',
             'install_path' => __DIR__ . '/../marc-mabe/php-enum',
             'aliases' => array(),
@@ -226,7 +226,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => '9e809d3a8829a5b870ae1c2f57706f46bb181093',
+            'reference' => '662d5ecfaab913d8ce0de4521fc40ce92aa14e75',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(
@@ -475,9 +475,9 @@
             'dev_requirement' => true,
         ),
         'wp-cli/entity-command' => array(
-            'pretty_version' => 'v2.8.4',
-            'version' => '2.8.4.0',
-            'reference' => '213611f8ab619ca137d983e9b987f7fbf1ac21d4',
+            'pretty_version' => 'v2.8.5',
+            'version' => '2.8.5.0',
+            'reference' => '896b7fb5ed51fe556017b2c71126947db5cd2b68',
             'type' => 'wp-cli-package',
             'install_path' => __DIR__ . '/../wp-cli/entity-command',
             'aliases' => array(),

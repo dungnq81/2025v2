@@ -263,13 +263,13 @@ function nav_menu_link_attributes_callback( $atts, $menu_item, $args, $depth ): 
 
 	// menu_link_class
 	if ( ! empty( $menu_item->menu_link_class ) ) {
-		//		if ( ! empty( $atts['class'] ) ) {
-		//			$atts['class'] .= ' ' . esc_attr( $menu_item->menu_link_class );
-		//		} else {
-		//			$atts['class'] = esc_attr( $menu_item->menu_link_class );
-		//		}
+		if ( ! empty( $atts['class'] ) ) {
+			$atts['class'] .= ' ' . esc_attr( $menu_item->menu_link_class );
+		} else {
+			$atts['class'] = esc_attr( $menu_item->menu_link_class );
+		}
 
-		$atts['class'] = esc_attr( $menu_item->menu_link_class );
+		//$atts['class'] = esc_attr( $menu_item->menu_link_class );
 	}
 
 	return $atts;

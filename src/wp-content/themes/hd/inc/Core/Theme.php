@@ -135,7 +135,7 @@ final class Theme {
 		\HD_Asset::enqueueCSS( 'index.scss', [ \HD_Asset::handle( 'vendor.css' ) ], $version );
 
 		/** JS */
-		\HD_Asset::enqueueJS( 'components/preload-polyfill.js', [], $version, false, [ 'module', 'async' ] );
+		\HD_Asset::enqueueJS( 'components/preflight.js', [], $version, false );
 		\HD_Asset::enqueueJS( 'index.js', [ 'jquery-core' ], $version, true, [ 'module', 'defer' ] );
 
 		/** Comments */

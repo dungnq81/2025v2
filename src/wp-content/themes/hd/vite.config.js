@@ -28,7 +28,7 @@ const sassFiles = [
 const jsFiles = [
     // (components)
     'components/home',
-    'components/preload-polyfill',
+    'components/preflight',
     'components/social-share',
     'components/swiper',
     'components/woocommerce',

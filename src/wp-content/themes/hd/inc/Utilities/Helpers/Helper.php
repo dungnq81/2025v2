@@ -718,7 +718,7 @@ final class Helper {
 				continue;
 			}
 
-			$keepFields            = [ 'file', 'name', 'src', 'css', 'isEntry' ];
+			$keepFields            = [ 'file', 'name', 'src', 'css', 'isEntry', 'imports' ];
 			$filtered[ $entryKey ] = array_intersect_key( $entry, array_flip( $keepFields ) );
 		}
 
@@ -863,9 +863,10 @@ final class Helper {
 
 			if ( ! empty( $found['file'] ) ) {
 				return [
-					'handle' => $handle,
-					'src'    => THEME_URL . 'assets/' . $found['file'],
-					'file'   => $found['src'] ?? '',
+					'handle'  => $handle,
+					'src'     => THEME_URL . 'assets/' . $found['file'],
+					'file'    => $found['src'] ?? '',
+					'imports' => $found['imports'] ?? [],
 				];
 			}
 		}
