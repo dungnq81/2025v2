@@ -1,4 +1,4 @@
-import { n as nanoid, a as Swiper } from "./vendor.C9Ss1wiL.js";
+import { n as nanoid, a as Swiper } from "./vendor.DXNsTXvA.js";
 function isEmpty(value) {
   if (value == null) return true;
   if (Array.isArray(value) || typeof value === "string") return value.length === 0;
@@ -283,4 +283,4 @@ const spgSwipers = () => {
 };
 document.addEventListener("DOMContentLoaded", initializeSwipers);
 document.addEventListener("DOMContentLoaded", spgSwipers);
-//# sourceMappingURL=swiper.DVNevYyh.js.map
+//# sourceMappingURL=swiper.C7qslRJ_.js.map

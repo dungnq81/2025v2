@@ -157,18 +157,27 @@
                         height: 2px;
                         width: calc(var(--spacing) * 3);
                         background-color: var(--text-color);
+                        transition: .15s ease-in-out;
+                        rotate: 0deg;
                         @include mixin.absolute-center-self(12, 2);
                     }
 
-                    &::after {
-                        transform-origin: center;
-                        rotate: -90deg;
+                    &[aria-expanded="false"] {
+                        &::after {
+                            transform-origin: center;
+                            rotate: -90deg;
+                        }
                     }
 
                     .submenu-toggle-text {
                         @include mixin.hidden-text;
                     }
                 }
+            }
+
+            .menu.submenu {
+                padding-right: 0;
+                font-size: 15px;
             }
         }
     }
@@ -203,6 +212,10 @@
             }
         }
     }
+}
+
+.is-off-canvas-open {
+    overflow: hidden;
 }
 
 .js-off-canvas-overlay {

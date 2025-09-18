@@ -282,9 +282,7 @@ trait Wp {
 				$_link_title = $label;
 			}
 
-			return ! empty( $class ) ?
-				'<span class="' . $class . '">' . $_link_title . $extra_title . '</span>' :
-				$_link_title . $extra_title;
+			return ! empty( $class ) ? '<span class="' . $class . '">' . $_link_title . $extra_title . '</span>' : $_link_title . $extra_title;
 		}
 
 		return '';

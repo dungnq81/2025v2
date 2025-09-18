@@ -17,7 +17,7 @@
     "devDependencies": {
         "@tailwindcss/vite": "^4.1.13",
         "@vheemstra/vite-plugin-imagemin": "^2.2.1",
-        "@wordpress/browserslist-config": "^6.30.0",
+        "@wordpress/browserslist-config": "^6.31.0",
         "autoprefixer": "^10.4.21",
         "concurrently": "^9.2.1",
         "cross-env": "^10.0.0",

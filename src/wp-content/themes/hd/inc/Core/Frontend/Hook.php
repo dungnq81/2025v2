@@ -171,35 +171,48 @@ final class Hook {
     // -----------------------------------------------
 
     public function _masthead_top_header(): void {
+        $notices  = \HD_Helper::getField( 'notices', 'option' );
+        $post     = get_post( $notices );
+        $acf_post = ! empty( $post->ID ) ? \HD_Helper::getFields( $post->ID ) : [];
+
+        $_css = '';
+        if ( ! empty( $acf_post['text_color'] ) ) {
+            $_css .= 'color:' . $acf_post['text_color'] . ';';
+        }
+        if ( ! empty( $acf_post['bg_color'] ) ) {
+            $_css .= 'background-color:' . $acf_post['bg_color'] . ';';
+        }
+
+        $acf_style = $_css ? ' style="' . \HD_Helper::CSSMinify( $_css, true ) . '"' : '';
+        $acf_title = $acf_post['title'] ?? '';
+
         ?>
         <div class="top-header c-light-bg border-t-[0]">
             <div class="u-container p-fs-clamp-[12,13] u-flex-x justify-between items-center gap-y-1 py-3">
+                <?php if ( $post ) : ?>
                 <div class="top-items hidden md:block">
                     <div class="flex gap-2 items-center">
-                        <span class="label rounded-sm font-bold px-2 text-(--white-color) bg-(--text-color-2)">Hot</span>
+
+                        <?= $acf_title ? '<span class="label rounded-sm px-2"' . $acf_style . '>' . $acf_title . '</span>' : '' ?>
+
                         <span class="content flex items-center gap-1">
-                            Earn Money with Onidel Cloud! Affiliate Program Details -
-                            <a class="flex items-center gap-1" href="#" title="Xem chi tiết">
+                            <?= get_the_title( $post->ID ) ?> -
+                            <a class="flex items-center gap-1" href="<?= get_permalink( $post->ID ) ?>" title="Xem chi tiết">
                                 <span class="text-(--white-color)">Chi tiết</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 16l4-4l-4-4"/></svg>
                             </a>
                         </span>
                     </div>
                 </div>
-                <ul class="menu u-flex-x items-center gap-3 lg:gap-6 w-full justify-end md:w-max top-nav">
-                    <li>
-                        <a class="js-popup flex items-center gap-1" href="#" title="User">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8a4 4 0 0 0 0-8m-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4z" clip-rule="evenodd"/></svg>
-                            <span class="leading-none">Tài khoản</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="js-popup flex items-center gap-1" href="#" title="Hỗ trợ">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M4 3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h1v2a1 1 0 0 0 1.707.707L9.414 13H15a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1z"/><path d="M8.023 17.215q.05-.046.098-.094L10.243 15H15a3 3 0 0 0 3-3V8h2a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-1v2a1 1 0 0 1-1.707.707L14.586 18H9a1 1 0 0 1-.977-.785"/></g></svg>
-                            <span class="leading-none">Hỗ trợ</span>
-                        </a>
-                    </li>
-                </ul>
+                <?php endif; ?>
+
+                <?= \HD_Helper::doShortcode( 'horizontal_menu', [
+                        'depth'       => 1,
+                        'location'    => 'header-nav',
+                        'extra_class' => 'u-flex-x items-center gap-3 lg:gap-6 w-full justify-end md:w-max top-nav',
+                        'link_class'  => 'js-popup flex items-center gap-1',
+                ] ) ?>
+
             </div>
         </div>
         <?php
@@ -208,6 +221,8 @@ final class Hook {
     // -----------------------------------------------
 
     public function _masthead_header(): void {
+        $hotline = \HD_Helper::getField( 'hotline', 'option' );
+
         ?>
         <div id="masthead" class="masthead py-4">
             <div class="u-container flex items-center justify-between">
@@ -217,18 +232,19 @@ final class Hook {
                         <?= \HD_Helper::doShortcode( 'horizontal_menu', [
                                 'location'         => 'main-nav',
                                 'extra_class'      => 'u-flex-x gap-6 min-h-[44px]',
-                                'li_class'         => '',
-                                'li_depth_class'   => '',
                                 'link_class'       => 'flex items-center h-full font-bold text-[15px] hover:text-(--white-color)',
                                 'link_depth_class' => 'text-[15px] hover:text-(--white-color)',
                         ] ) ?>
                     </nav>
+                    <?php if ( $hotline ) : ?>
                     <div class="hotline">
-                        <a class="c-hotline" href="tel:0938002776" title="0938 002 776">
+                        <?= \HD_Helper::ACFLinkOpen( $hotline, 'c-hotline' ) ?>
                             <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M7.978 4a2.55 2.55 0 0 0-1.926.877C4.233 6.7 3.699 8.751 4.153 10.814c.44 1.995 1.778 3.893 3.456 5.572c1.68 1.679 3.577 3.018 5.57 3.459c2.062.456 4.115-.073 5.94-1.885a2.556 2.556 0 0 0 .001-3.861l-1.21-1.21a2.69 2.69 0 0 0-3.802 0l-.617.618a.806.806 0 0 1-1.14 0l-1.854-1.855a.807.807 0 0 1 0-1.14l.618-.62a2.69 2.69 0 0 0 0-3.803l-1.21-1.211A2.56 2.56 0 0 0 7.978 4"/></svg>
-                            <span>0938 002 776</span>
-                        </a>
+                            <span><?= \HD_Helper::ACFLinkLabel( $hotline ) ?></span>
+                        <?= \HD_Helper::ACFLinkClose( $hotline ) ?>
                     </div>
+                    <?php endif ?>
+
                     <?= \HD_Helper::doShortcode( 'off_canvas_button', [ 'hide_if_desktop' => 0 ] ) ?>
                 </div>
             </div>
@@ -275,19 +291,24 @@ final class Hook {
     // -----------------------------------------------
 
     public function _construct_footer_columns(): void {
-        $footer_content = \HD_Helper::getField( 'footer_content', 'option' );
-        $lg             = \HD_Helper::currentLanguage();
+        $footer_cta    = \HD_Helper::getField( 'footer_cta', 'option' );
+        $contact_form  = \HD_Helper::getField( 'contact_form', 'option' );
+        $footer_menu_1 = \HD_Helper::getField( 'menu_1', 'option' );
+        $footer_menu_2 = \HD_Helper::getField( 'menu_2', 'option' );
 
-        $footer_menu_1    = $footer_content[ 'footer_menu_1_' . $lg ] ?? [];
-        $footer_menu_2    = $footer_content[ 'footer_menu_2_' . $lg ] ?? [];
+        $img_desktop = $footer_cta['img_desktop'] ?: false;
+        $img_mobile  = $footer_cta['img_mobile'] ?: false;
+        $link        = $footer_cta['link'] ?: false;
 
         ?>
         <div id="footer-columns" class="footer-columns">
+            <?php if ( $img_desktop || $img_mobile ) : ?>
             <div class="footer-cta u-container flex justify-center pt-10 md:pt-15 lg:pt-20">
-                <a class="block" href="#" target="_blank" rel="nofollow">
-                    <img src="<?= ASSETS_URL . 'img/cta-banner.png' ?>" alt="CTA Banner" class="block max-w-full h-auto" />
-                </a>
+                <?= \HD_Helper::ACFLinkOpen( $link, 'block' ) ?>
+                <?= \HD_Helper::pictureHTML( 'block max-w-full h-auto', $img_desktop, $img_mobile, 'widescreen' ) ?>
+                <?= \HD_Helper::ACFLinkClose( $link ) ?>
             </div>
+            <?php endif; ?>
             <div class="u-container py-10 md:py-15 lg:py-20">
                 <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
                     <div class="footer-info grid grid-cols-1 gap-8 sm:grid-cols-2">
@@ -308,43 +329,35 @@ final class Hook {
                                 </li>
                             </ul>
                             <div class="social-links">
-                                <?= \HD_Helper::doShortcode( 'social_menu', [
-                                        'class' => 'social-menu flex gap-4 mt-6 md:gap-6',
-                                ] ) ?>
+                                <?= \HD_Helper::doShortcode( 'social_menu', [ 'class' => 'social-menu flex gap-4 mt-6 md:gap-6' ] ) ?>
                             </div>
                         </div>
                         <div class="newsletter-footer">
-                            <p class="footer-title font-bold uppercase u-heading lg:mb-8">Liên hệ</p>
+                            <?= $contact_form['title'] ? '<p class="footer-title font-bold uppercase u-heading lg:mb-8">' . esc_html( $contact_form['title'] ) . '</p>' : '' ?>
                             <div class="max-w-md">
-                                <p class="text-(--text-color) text-sm/6">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Earum id, iure consectetur et error hic!</p>
-                                <?= \HD_Helper::doShortcode( 'contact-form-7', [
-                                        'id'    => "09313bd",
-                                        'title' => "Gọi lại tôi"
-                                ] ) ?>
+                                <?= $contact_form['desc'] ? '<p class="text-(--text-color) text-sm/6">' . esc_html( $contact_form['desc'] ) . '</p>' : '' ?>
+                                <?= \HD_Helper::doShortcode( 'contact-form-7', [ 'id' => $contact_form['form'] ] ) ?>
                             </div>
                         </div>
                     </div>
                     <div class="footer-menu grid grid-cols-1 gap-8 sm:grid-cols-2">
                         <div class="text-left xl:pl-12">
-                            <p class="footer-title font-bold uppercase u-heading lg:mb-8">Về chúng tôi</p>
-                            <ul class="menu text-[15px] space-y-3">
-                                <li><a href="#">Giới thiệu</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a href="#">Affiliate</a></li>
-                                <li><a href="#">Liên hệ</a></li>
-                            </ul>
+                            <?= $footer_menu_1['title'] ? '<p class="footer-title font-bold uppercase u-heading lg:mb-8">' . esc_html( $footer_menu_1['title'] ) . '</p>' : '' ?>
+                            <?= $footer_menu_1['menu'] ? wp_nav_menu( [
+                                    'container'  => false,
+                                    'menu'       => $footer_menu_1['menu'],
+                                    'menu_class' => 'menu text-[15px] space-y-3',
+                                    'echo'       => false
+                            ] ) : '' ?>
                         </div>
                         <div class="text-left">
-                            <p class="footer-title font-bold uppercase u-heading lg:mb-8">Dịch vụ</p>
-                            <ul class="menu text-[15px] space-y-3">
-                                <li><a href="#">Thiết kế Website</a></li>
-                                <li><a href="#">SEO từ khóa Google</a></li>
-                                <li><a href="#">Google Ads</a></li>
-                                <li><a href="#">Facebook Ads</a></li>
-                                <li><a href="#">Hosting</a></li>
-                                <li><a href="#">Domain</a></li>
-                                <li><a href="#">Email doanh nghiệp</a></li>
-                            </ul>
+                            <?= $footer_menu_2['title'] ? '<p class="footer-title font-bold uppercase u-heading lg:mb-8">' . esc_html( $footer_menu_2['title'] ) . '</p>' : '' ?>
+                            <?= $footer_menu_2['menu'] ? wp_nav_menu( [
+                                    'container'  => false,
+                                    'menu'       => $footer_menu_2['menu'],
+                                    'menu_class' => 'menu text-[15px] space-y-3',
+                                    'echo'       => false
+                            ] ) : '' ?>
                         </div>
                     </div>
                 </div>

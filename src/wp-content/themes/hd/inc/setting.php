@@ -8,28 +8,24 @@
 \defined( 'ABSPATH' ) || die;
 
 // --------------------------------------------------
-// Menu location
+// Action Menu location
 // --------------------------------------------------
-
 add_action( 'after_setup_theme', 'register_nav_menu_callback', 11 );
-
 function register_nav_menu_callback(): void {
 	register_nav_menus(
 		[
 			'main-nav'   => __( 'Primary Menu', TEXT_DOMAIN ),
-			//'second-nav' => __( 'Second Menu', TEXT_DOMAIN ),
-			'mobile-nav' => __( 'Handheld Menu', TEXT_DOMAIN ),
+			'header-nav' => __( 'Header Menu', TEXT_DOMAIN ),
+			'mobile-nav' => __( 'Mobile Menu', TEXT_DOMAIN ),
 			'policy-nav' => __( 'Term Menu', TEXT_DOMAIN ),
 		]
 	);
 }
 
 // --------------------------------------------------
-// Hook widgets_init
+// Action widgets_init
 // --------------------------------------------------
-
 add_action( 'widgets_init', 'register_sidebar_callback' );
-
 function register_sidebar_callback(): void {
 
 	//----------------------------------------------------------
@@ -116,11 +112,9 @@ function register_sidebar_callback(): void {
 }
 
 // --------------------------------------------------
-// Hook default scripts
+// Action default scripts
 // --------------------------------------------------
-
 add_action( 'wp_default_scripts', 'wp_default_scripts_callback', 11, 1 );
-
 function wp_default_scripts_callback( $scripts ): void {
 	if ( isset( $scripts->registered['jquery'] ) && ! is_admin() ) {
 		$script = $scripts->registered['jquery'];
@@ -135,11 +129,9 @@ function wp_default_scripts_callback( $scripts ): void {
 }
 
 // --------------------------------------------------
-// Hook body_class
+// Filter body_class
 // --------------------------------------------------
-
 add_filter( 'body_class', 'body_class_callback', 11, 1 );
-
 function body_class_callback( array $classes ): array {
 	// Check whether we're in the customizer preview.
 	if ( is_customize_preview() ) {
@@ -169,11 +161,9 @@ function body_class_callback( array $classes ): array {
 }
 
 // --------------------------------------------------
-// Hook post_class
+// Filter post_class
 // --------------------------------------------------
-
 add_filter( 'post_class', 'post_class_callback', 11, 1 );
-
 function post_class_callback( array $classes ): array {
 	// remove_sticky_class
 	if ( in_array( 'sticky', $classes, false ) ) {
@@ -197,9 +187,7 @@ function post_class_callback( array $classes ): array {
 // --------------------------------------------------
 // Filter nav_menu_css_class
 // --------------------------------------------------
-
 add_filter( 'nav_menu_css_class', 'nav_menu_css_class_callback', 999, 4 );
-
 function nav_menu_css_class_callback( $classes, $menu_item, $args, $depth ): array {
 	if ( ! is_array( $classes ) ) {
 		$classes = [];
@@ -246,9 +234,7 @@ function nav_menu_css_class_callback( $classes, $menu_item, $args, $depth ): arr
 // --------------------------------------------------
 // Filter nav_menu_link_attributes
 // --------------------------------------------------
-
 add_filter( 'nav_menu_link_attributes', 'nav_menu_link_attributes_callback', 999, 4 );
-
 function nav_menu_link_attributes_callback( $atts, $menu_item, $args, $depth ): array {
 	// link_class
 	// link_depth_class
@@ -268,8 +254,6 @@ function nav_menu_link_attributes_callback( $atts, $menu_item, $args, $depth ): 
 		} else {
 			$atts['class'] = esc_attr( $menu_item->menu_link_class );
 		}
-
-		//$atts['class'] = esc_attr( $menu_item->menu_link_class );
 	}
 
 	return $atts;
@@ -278,23 +262,50 @@ function nav_menu_link_attributes_callback( $atts, $menu_item, $args, $depth ): 
 // --------------------------------------------------
 // Filter nav_menu_item_title
 // --------------------------------------------------
-
 add_filter( 'nav_menu_item_title', 'nav_menu_item_title_callback', 999, 4 );
-
 function nav_menu_item_title_callback( $title, $item, $args, $depth ) {
-	//	if ($args->theme_location === 'main-nav') {
-	//		$title = '<span>' . $title . '</span>';
-	//	}
+
+	// Label <sup>
+	if ( ! empty( $item->menu_label_text ) ) {
+		$_css = '';
+
+		if ( ! empty( $item->menu_label_color ) ) {
+			$_css .= 'color:' . $item->menu_label_color . ';';
+		}
+		if ( ! empty( $item->menu_label_background ) ) {
+			$_css .= 'background-color:' . $item->menu_label_background . ';';
+		}
+
+		$_style = $_css ? ' style="' . \HD_Helper::CSSMinify( $_css, true ) . '"' : '';
+		$title  .= '<sup' . $_style . '>' . esc_html( $item->menu_label_text ) . '</sup>';
+	}
+
+	// span + span css
+	if ( ! empty( $item->menu_span ) ) {
+		$span_open = ! empty( $item->menu_span_css ) ? '<span class="' . esc_attr( $item->menu_span_css ) . '">' : '<span>';
+		$title = $span_open . $title . '</span>';
+	}
+
+	// SVG inline
+	if ( ! empty( $item->menu_svg ) ) {
+		$title = $item->menu_svg . $title;
+	}
+
+	// IMG
+	if ( ! empty( $item->menu_image ) ) {
+		$img   = \HD_Helper::attachmentImageHTML( $item->menu_image, 'thumbnail', [ 'loading' => 'lazy', 'alt' => wp_strip_all_tags( $item->title ?? '' ) ], true );
+		$title = $img . $title;
+	}
 
 	return $title;
 }
 
-// --------------------------------------------------
-// query_vars
-// --------------------------------------------------
 
+
+// --------------------------------------------------
+// Filter query_vars
+// --------------------------------------------------
 add_filter( 'query_vars', 'query_vars_callback', 99, 1 );
-
 function query_vars_callback( $vars ): array {
 	$vars[] = 'page';
 	$vars[] = 'paged';
@@ -303,11 +314,9 @@ function query_vars_callback( $vars ): array {
 }
 
 // --------------------------------------------------
-// custom filter
+// Filter `hd settings`
 // --------------------------------------------------
-
 add_filter( 'hd_settings_filter', 'hd_settings_filter_callback', 99, 1 );
-
 function hd_settings_filter_callback( array $arr ): array {
 	static $setting_filter_cache = [];
 
@@ -420,6 +429,7 @@ function hd_settings_filter_callback( array $arr ): array {
 			// ACF attributes in `menu` locations.
 			'acf_menu_items_locations' => [
 				'main-nav',
+				'header-nav',
 				'policy-nav',
 			],
 

@@ -22,6 +22,7 @@ final class ACF {
 			add_filter( 'acf/settings/show_admin', '__return_false' );
 		}
 
+		add_filter( 'wp_kses_allowed_html', [ $this, 'wp_kses_allowed_html' ], 11, 2 );
 		add_filter( 'acf/format_value/type=textarea', [ \HD_Helper::class, 'removeInlineJsCss' ], 11 );
 		add_filter( 'acf/fields/wysiwyg/toolbars', [ $this, 'wysiwygToolbars' ], 98, 1 );
 
@@ -32,6 +33,25 @@ final class ACF {
 		$fields_dir = __DIR__ . DIRECTORY_SEPARATOR . 'fields';
 		\HD_Helper::createDirectory( $fields_dir );
 		\HD_Helper::FQNLoad( $fields_dir, true );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param $tags
+	 * @param $context
+	 *
+	 * @return mixed
+	 */
+	public function wp_kses_allowed_html( $tags, $context ): mixed {
+		if ( $context === 'acf' ) {
+			$allow = \HD_Helper::ksesSVG();
+			foreach ( $allow as $tag => $attrs ) {
+				$tags[ $tag ] = isset( $tags[ $tag ] ) ? array_merge( $tags[ $tag ], $attrs ) : $attrs;
+			}
+		}
+
+		return $tags;
 	}
 
 	// -------------------------------------------------------------
@@ -106,53 +126,39 @@ final class ACF {
 	 */
 	public function navMenuObjects( $items, $args ): mixed {
 		foreach ( $items as $item ) {
-			$title = $item?->title;
-			$ACF   = \HD_Helper::getFields( $item, true );
+			$ACF = \HD_Helper::getFields( $item, true );
+			if ( ! $ACF ) {
+				continue;
+			}
 
-			if ( $ACF ) {
-				$menu_mega             = $ACF->menu_mega ?? false;
-				$menu_link_class       = $ACF->menu_link_class ?? '';
-				$menu_svg              = $ACF->menu_svg ?? '';
-				$menu_image            = $ACF->menu_image ?? '';
-				$menu_label_text       = $ACF->menu_label_text ?? '';
-				$menu_label_color      = $ACF->menu_label_color ?? '';
-				$menu_label_background = $ACF->menu_label_background ?? '';
+			$item->menu_mega             = $ACF->menu_mega ?? false;
+			$item->menu_link_class       = $ACF->menu_link_class ?? '';
+			$item->menu_span             = $ACF->menu_span ?? '';
+			$item->menu_span_css         = $ACF->menu_span_css ?? '';
+			$item->menu_svg              = $ACF->menu_svg ?? '';
+			$item->menu_image            = $ACF->menu_image ?? 0;
+			$item->menu_label_text       = $ACF->menu_label_text ?? '';
+			$item->menu_label_color      = $ACF->menu_label_color ?? '';
+			$item->menu_label_background = $ACF->menu_label_background ?? '';
 
-				if ( $menu_mega ) {
-					$item->classes[] = 'menu-mega';
-				}
+			// Mega menu
+			if ( $item->menu_mega )         {
+				$item->classes[] = 'menu-mega';
+			}
 
-				if ( $menu_link_class ) {
-					$item->menu_link_class = $menu_link_class;
-				}
+			// Svg
+			if ( $item->menu_svg ) {
+				$item->classes[] = 'menu-svg';
+			}
 
-				if ( $menu_svg ) {
-					$item->classes[] = 'menu-svg';
-					$title           = $menu_svg . $title;
-				}
+			// Thumb
+			if ( $item->menu_image ) {
+				$item->classes[] = 'menu-thumb';
+			}
 
-				if ( $menu_image ) {
-					$item->classes[] = 'menu-thumb';
-					$title           = \HD_Helper::attachmentImageHTML( $menu_image, 'thumbnail', [ 'loading' => 'lazy', 'alt' => $item?->title ], true ) . $title;
-				}
-
-				if ( $menu_label_text ) {
-					$item->classes[] = 'menu-label';
-
-					$_css = '';
-					if ( $menu_label_color ) {
-						$_css .= 'color:' . $menu_label_color . ';';
-					}
-					if ( $menu_label_background ) {
-						$_css .= 'background-color:' . $menu_label_background . ';';
-					}
-
-					$_style = $_css ? ' style="' . \HD_Helper::CSSMinify( $_css, true ) . '"' : '';
-					$title  .= '<sup' . $_style . '>' . $menu_label_text . '</sup>';
-				}
-
-				$item->title = $title;
-				unset( $ACF );
+			// Label
+			if ( $item->menu_label_text ) {
+				$item->classes[] = 'menu-label';
 			}
 		}
 

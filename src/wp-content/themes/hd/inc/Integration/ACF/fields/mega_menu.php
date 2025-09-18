@@ -28,7 +28,7 @@ add_action( 'acf/include_fields', static function () {
 		'fields'                => [
 			[
 				'key'               => 'field_64c8be6c6147a',
-				'label'             => 'Mega menu',
+				'label'             => 'Mega menu (optional)',
 				'name'              => 'menu_mega',
 				'aria-label'        => '',
 				'type'              => 'true_false',
@@ -40,7 +40,7 @@ add_action( 'acf/include_fields', static function () {
 					'class' => 'checkbox',
 					'id'    => '',
 				],
-				'message'           => 'Mega menu (optional)',
+				'message'           => 'Mega menu',
 				'default_value'     => 0,
 				'ui'                => 0,
 				'ui_on_text'        => '',

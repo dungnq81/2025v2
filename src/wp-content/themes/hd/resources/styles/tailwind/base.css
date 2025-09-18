@@ -96,7 +96,7 @@
         @apply block pointer-events-none select-none;
 
         img {
-            @apply block;
+            @apply block w-full;
         }
     }
 

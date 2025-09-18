@@ -27,7 +27,7 @@ else :
 endif;
 
 $position = \HD_Helper::getThemeMod( 'offcanvas_menu_setting' );
-if ( ! in_array( $position, [ 'left', 'right', 'top', 'bottom' ], false ) ) {
+if ( ! in_array( $position, [ 'left', 'right', 'top', 'bottom' ], true ) ) {
 	$position = 'left';
 }
 

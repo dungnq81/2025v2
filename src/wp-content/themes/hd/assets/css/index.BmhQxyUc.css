@@ -148,6 +148,8 @@
   height: 2px;
   width: calc(var(--spacing) * 3);
   background-color: var(--text-color);
+  transition: 0.15s ease-in-out;
+  rotate: 0deg;
 }
 .off-canvas .menu.vertical li.is-accordion-submenu-parent .submenu-toggle::after, .off-canvas .menu.vertical li.is-accordion-submenu-parent .submenu-toggle::before {
   position: absolute;
@@ -158,7 +160,7 @@
   width: 0.75rem;
   height: 0.125rem;
 }
-.off-canvas .menu.vertical li.is-accordion-submenu-parent .submenu-toggle::after {
+.off-canvas .menu.vertical li.is-accordion-submenu-parent .submenu-toggle[aria-expanded=false]::after {
   transform-origin: center;
   rotate: -90deg;
 }
@@ -174,6 +176,10 @@
   position: absolute !important;
   overflow-wrap: normal !important;
   white-space: nowrap;
+}
+.off-canvas .menu.vertical li .menu.submenu {
+  padding-right: 0;
+  font-size: 15px;
 }
 .off-canvas.is-transition-overlap {
   z-index: 1000001;
@@ -198,6 +204,10 @@
 .off-canvas.is-open .menu-lines .line.line-2 {
   transition-delay: 0.3s;
   rotate: 45deg;
+}
+
+.is-off-canvas-open {
+  overflow: hidden;
 }
 
 .js-off-canvas-overlay {
