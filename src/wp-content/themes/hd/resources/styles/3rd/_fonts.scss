@@ -12,5 +12,8 @@ $font_base: '../../fonts/SVN-Poppins';
 @include mixin.font-face( Poppins, normal, 300, SVN-Poppins-Light, $font_base );
 @include mixin.font-face( Poppins, italic, 300, SVN-Poppins-LightItalic, $font_base );
 
+@include mixin.font-face( Poppins, normal, 500, SVN-Poppins-Medium, $font_base );
+@include mixin.font-face( Poppins, italic, 500, SVN-Poppins-MediumItalic, $font_base );
+
 @include mixin.font-face( Poppins, normal, 700, SVN-Poppins-Bold, $font_base );
 @include mixin.font-face( Poppins, italic, 700, SVN-Poppins-BoldItalic, $font_base );

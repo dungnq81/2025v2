@@ -7,6 +7,13 @@
 //
 // Base styles.
 
+body {
+    background-image: url("../../img/bg.png");
+    background-position: center top 40px;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+}
+
 // .off-canvas
 .position-left {
     top: 0;
@@ -64,7 +71,7 @@
 
         &:hover {
             .line {
-                background-color: var(--white-color);
+                background-color: var(--color-white);
             }
         }
     }
@@ -112,7 +119,7 @@
                 color: var(--text-color);
 
                 &:hover {
-                    color: var(--white-color);
+                    color: var(--color-white);
                 }
             }
         }
@@ -132,7 +139,7 @@
             display: inline-block;
 
             &:hover {
-                color: var(--white-color);
+                color: var(--color-white);
             }
         }
 
@@ -331,7 +338,7 @@
 
     &:hover {
         & > a {
-            color: var(--white-color);
+            color: var(--color-white);
         }
     }
 }
@@ -546,7 +553,7 @@
         }
 
         &:hover {
-            color: var(--white-color);
+            color: var(--color-white);
 
             .line {
                 & > span {

@@ -14,7 +14,7 @@
     }
 
     :is(h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6) {
-        @apply antialiased font-(family-name:--font-header) text-(--header-text-color) leading-(--header-line-height);
+        @apply antialiased font-(family-name:--font-header) leading-(--header-line-height);
         font-weight: inherit;
 
         a {
@@ -76,7 +76,7 @@
         @apply no-underline;
     }
 
-    a :where(h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6) {
+    a :where(h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6) {
         @apply text-current;
     }
 

@@ -8,18 +8,16 @@
     --font-awesome-sharp: 'Font Awesome 6 Sharp', 'Font Awesome 6 Brands', sans-serif;
 
     --text-color: #C9C9C9;
-    --header-text-color: #ffffff;
+    --header-text-color: #C9C9C9;
     --text-color-1: #FE5242;
     --text-color-2: #0C8E39;
 
-    --white-color: #ffffff;
-    --black-color: #000000;
-
     --bg-color: #161616;
-    --bg-light-color: rgba(29, 29, 29, 0.7);
+    --bg-light-color: #1D1D1DB2;
 
-    --bg-right-gradient-1: linear-gradient(270deg, var(--text-color-1) 0%, var(--bg-color) 88.88%);
-    --bg-right-gradient-2: linear-gradient(270deg, var(--text-color-2) 0%, var(--bg-color) 88.88%);
+    --bg-right-gradient: linear-gradient(90deg, var(--text-color-2) 0%, var(--text-color-1) 88.88%);
+    --bg-right-gradient-1: linear-gradient(90deg, var(--bg-color) 0%, var(--text-color-1) 88.88%);
+    --bg-right-gradient-2: linear-gradient(90deg, var(--bg-color) 0%, var(--text-color-2) 88.88%);
 
     --global-line-height: 1.618;
     --header-line-height: 1.3;

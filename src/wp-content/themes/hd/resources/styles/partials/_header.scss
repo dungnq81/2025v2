@@ -10,7 +10,7 @@
 .top-header {
     a {
         &:hover {
-            color: var(--white-color);
+            color: var(--color-white);
         }
     }
 }
@@ -18,10 +18,19 @@
 /** */
 .masthead {
     .site-logo {
+        transition: .15s ease-in-out;
+
         img.custom-logo {
             width: auto;
             display: block;
-            @include mixin.media-css(max-height, 60);
+            filter: brightness(0) invert(1) brightness(0.81) saturate(0);
+            @include mixin.media-css(max-height, 64);
+        }
+
+        &:hover {
+            img {
+                filter: inherit;
+            }
         }
     }
 }
