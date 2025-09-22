@@ -965,7 +965,7 @@ trait Wp {
 						$wc_args['stock_status'] = 'instock';
 					}
 
-					$ids = \wc_get_products( $wc_args );
+					$ids = wc_get_products( $wc_args );
 				}
 			} else { /* not product */
 
