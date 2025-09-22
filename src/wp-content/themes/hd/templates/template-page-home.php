@@ -19,14 +19,14 @@ if ( have_posts() ) {
 $ACF                   = \HD_Helper::getFields( get_the_ID() );
 $home_flexible_content = ! empty( $ACF['home_flexible_content'] ) ? (array) $ACF['home_flexible_content'] : false;
 if ( $home_flexible_content ) {
-	foreach ( $home_flexible_content as $i => $section ) {
-		$section['id'] = $i;
-		$acf_fc_layout = ! empty( $section['acf_fc_layout'] ) ? $section['acf_fc_layout'] : '';
+    foreach ( $home_flexible_content as $i => $section ) {
+        $section['id'] = $i;
+        $acf_fc_layout = ! empty( $section['acf_fc_layout'] ) ? $section['acf_fc_layout'] : '';
 
-		if ( $acf_fc_layout ) {
-			\HD_Helper::blockTemplate( 'parts/home/' . $acf_fc_layout, $section, [], true );
-		}
-	}
+        if ( $acf_fc_layout ) {
+            \HD_Helper::blockTemplate( 'parts/home/' . str_replace( '_', '-', $acf_fc_layout ), $section );
+        }
+    }
 }
 
 ?>
@@ -131,7 +131,7 @@ if ( $home_flexible_content ) {
                 </a>
             </div>
         </div>
-        <a href="#" class="relative left-[50%] translate-x-[-50%] mt-10 c-light-button inline-flex items-center justify-center px-6 py-3.5 text-[15px] text-white rounded-md c-hover hover:shadow-[0px_4px_29px_-9px_#1D1D1DB2]">Xem thêm</a>
+        <a href="#" class="relative left-[50%] translate-x-[-50%] mt-10 c-light-button inline-flex items-center justify-center px-6 py-3.5 text-[15px] rounded-md c-hover hover:text-white hover:shadow-[0px_4px_29px_-9px_#1D1D1DB2]">Xem thêm</a>
     </div>
 </section>
 <?php

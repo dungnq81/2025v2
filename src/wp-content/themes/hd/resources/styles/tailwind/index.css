@@ -1,6 +1,6 @@
 /* tailwind/index.css */
 
-@import "tailwindcss";
+@import "tailwindcss" source(none);
 
 @import "./properties.css";
 @import "./themes.css";
@@ -8,13 +8,13 @@
 @import "./components/index.css";
 @import "./utilities/index.css";
 
-@source "../../../../hd/*.php";
-@source "../../../../hd/{inc,parts,templates,woocommerce}/**/*.php";
-@source "../../../../hd/resources/scripts/**/*.js";
-@source "../../../../hd/resources/styles/tailwind/**/*.css";
+/* theme `hd` */
+@source "../../../*.php";
+@source "../../../{inc,parts,templates,woocommerce}/**/*.php";
+@source "../../../resources/scripts/**/*.js";
+@source "../../../resources/styles/tailwind/**/*.css";
 
-@source not "../../../../hd/node_modules/**";
-@source not "../../../../hd/vendor/**";
-@source not "../../../../hd/assets/**";
+@source not "../../../vendor/**";
+@source not "../../../assets/**";
 
 @plugin "./plugins/index.js";

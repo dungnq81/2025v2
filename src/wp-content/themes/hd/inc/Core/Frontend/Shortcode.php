@@ -244,13 +244,13 @@ final class Shortcode {
         ob_start();
 
         ?>
-        <button class="menu-lines" type="button" data-open="offCanvasMenu" aria-label="button">
-            <span class="line">
-				<span class="line-1"></span>
-				<span class="line-2"></span>
-				<span class="line-3"></span>
+        <button class="menu-lines c-hover flex items-center gap-3 hover:text-(--color-white)" type="button" data-open="offCanvasMenu" aria-label="button">
+            <span class="line w-[26px] h-[18px] flex flex-col flex-nowrap justify-between">
+				<span class="line-1 relative w-full"></span>
+				<span class="line-2 relative w-full"></span>
+				<span class="line-3 relative w-full"></span>
 			</span>
-            <span class="menu-txt"><?= $title ?></span>
+            <span class="menu-txt text-[15px] font-light order-1 hidden md:block"><?= $title ?></span>
         </button>
         <?php
         return '<div class="off-canvas-content' . $class . '" data-off-canvas-content>' . ob_get_clean() . '</div>';
@@ -334,8 +334,8 @@ final class Shortcode {
         );
 
         $location         = $atts['location'] ? \HD_Helper::escAttr( $atts['location'] ) : 'mobile-nav';
-        $class            = $atts['class'] ? \HD_Helper::escAttr( $atts['class'] ) : '';
-        $extra_class      = $atts['extra_class'] ? \HD_Helper::escAttr( $atts['extra_class'] ) : $location;
+        $class            = $atts['class'] ? \HD_Helper::escAttr( $atts['class'] ) . ' ' . $location : $location;
+        $extra_class      = $atts['extra_class'] ? \HD_Helper::escAttr( $atts['extra_class'] ) : '';
         $depth            = $atts['depth'] ? absint( $atts['depth'] ) : 1;
         $id               = $atts['id'] ?: \HD_Helper::escAttr( $id );
         $li_class         = ! empty( $atts['li_class'] ) ? \HD_Helper::escAttr( $atts['li_class'] ) : '';

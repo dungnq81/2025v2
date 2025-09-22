@@ -42,6 +42,165 @@ final class Helper {
 	// -------------------------------------------------------------
 
 	/**
+	 * @param string $version
+	 * @param string $recaptcha_response
+	 *
+	 * @return false|mixed
+	 */
+	public static function reCaptchaVerify( string $version, string $recaptcha_response ): mixed {
+		$recaptcha_options = self::getOption( 'recaptcha__options' );
+		if ( ! $recaptcha_options ) {
+			return false;
+		}
+
+		// reCaptcha v2
+		if ( 'v2' === $version ) {
+			$secretKey = $recaptcha_options['recaptcha_v2_secret_key'] ?? '';
+			$verifyUrl = 'https://www.google.com/recaptcha/api/siteverify';
+
+			// Prepare the data for verification
+			$response = wp_remote_post( $verifyUrl, [
+				'body' => [
+					'secret'   => $secretKey,
+					'response' => $recaptcha_response,
+				],
+			] );
+
+			if ( is_wp_error( $response ) ) {
+				error_log( '[recaptcha] HTTP error: ' . $response->get_error_message() );
+
+				return false;
+			}
+
+			$body = wp_remote_retrieve_body( $response );
+			if ( empty( $body ) ) {
+				return false;
+			}
+
+			try {
+				return json_decode( $body, false, 512, JSON_THROW_ON_ERROR );
+			} catch ( \JsonException $e ) {
+				error_log( '[recaptcha] JSON decode error: ' . $e->getMessage() );
+
+				return false;
+			}
+		}
+
+		// reCaptcha v3
+		if ( 'v3' === $version ) {
+			$secretKey = $recaptcha_options['recaptcha_v3_secret_key'] ?? '';
+			$score     = $recaptcha_options['recaptcha_v3_score'] ?? 0.5;
+
+			return false;
+		}
+
+		return false;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * Conditionally adds an HTML attribute based on array membership.
+	 *
+	 * @param array $checked_arr
+	 * @param $current
+	 * @param bool $display
+	 * @param string $type
+	 *
+	 * @return string|null
+	 */
+	public static function inArrayChecked( array $checked_arr, $current, bool $display = true, string $type = 'checked' ): ?string {
+		$type   = preg_match( '/^[a-zA-Z0-9\-]+$/', $type ) ? $type : 'checked';
+		$result = in_array( $current, $checked_arr, false ) ? " $type='$type'" : '';
+
+		// Echo or return the result
+		if ( $display ) {
+			echo $result;
+
+			return null;
+		}
+
+		return $result;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param string $name
+	 * @param $value
+	 * @param int $minute
+	 * @param bool $httponly
+	 *
+	 * @return bool
+	 */
+	public static function addCookie( string $name, $value, int $minute = 720, bool $httponly = true ): bool {
+		if ( is_scalar( $value ) ) {
+			setcookie( $name, $value, time() + $minute * MINUTE_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), $httponly );
+
+			return true;
+		}
+
+		return false;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param string $name
+	 * @param bool $httponly
+	 *
+	 * @return void
+	 */
+	public static function removeCookie( string $name, bool $httponly = true ): void {
+		setcookie( $name, '', time() - 3600, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), $httponly );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param $file
+	 *
+	 * @return mixed
+	 */
+	public static function sanitizeImage( $file ): mixed {
+		$mimes = [
+			'jpg|jpeg|jpe' => 'image/jpeg',
+			'gif'          => 'image/gif',
+			'png'          => 'image/png',
+			'bmp'          => 'image/bmp',
+			'webp'         => 'image/webp',
+			'tif|tiff'     => 'image/tiff',
+			'ico'          => 'image/x-icon',
+			'svg'          => 'image/svg+xml',
+		];
+
+		// check a file type from the file name
+		$file_ext = wp_check_filetype( $file, $mimes );
+
+		// if a file has a valid mime type, return it, otherwise return default
+		return $file_ext['ext'] ? $file : '';
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param $phone
+	 *
+	 * @return bool
+	 */
+	public static function isValidPhone( $phone ): bool {
+		if ( ! is_string( $phone ) || trim( $phone ) === '' ) {
+			return false;
+		}
+
+		$pattern = '/^\(?\+?(0|84)\)?[\s.\-]?(3[2-9]|5[689]|7[06-9]|(?:8[0-689]|87)|9[0-4|6-9])(\d{7}|\d[\s.\-]?\d{3}[\s.\-]?\d{3})$/';
+
+		return preg_match( $pattern, $phone ) === 1;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
 	 * @return array
 	 */
 	public static function ksesSVG(): array {

@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '3484c53b4da774aff4021468121f411fd8e70909',
+        'reference' => 'c17c42b9c75104bac55733a193d9768e482ad702',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '3484c53b4da774aff4021468121f411fd8e70909',
+            'reference' => 'c17c42b9c75104bac55733a193d9768e482ad702',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -38,9 +38,9 @@
             'dev_requirement' => true,
         ),
         'composer/composer' => array(
-            'pretty_version' => '2.8.11',
-            'version' => '2.8.11.0',
-            'reference' => '00e1a3396eea67033775c4a49c772376f45acd73',
+            'pretty_version' => '2.8.12',
+            'version' => '2.8.12.0',
+            'reference' => '3e38919bc9a2c3c026f2151b5e56d04084ce8f0b',
             'type' => 'library',
             'install_path' => __DIR__ . '/./composer',
             'aliases' => array(),
@@ -226,7 +226,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => '662d5ecfaab913d8ce0de4521fc40ce92aa14e75',
+            'reference' => 'f48b3e601515b060334744b4b495f0d6b3cc2e6b',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(

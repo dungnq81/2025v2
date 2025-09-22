@@ -13,6 +13,7 @@ $social_follows_links = \Addons\Helper::filterSettingOptions( 'social_follows_li
 	if ( empty( $social_follows_links ) ) {
 		echo '<h3>' . __( 'No data available or configuration for this feature has not initialized yet', ADDONS_TEXTDOMAIN ) . '</h3>';
 		echo '</div>';
+
 		return;
 	}
 

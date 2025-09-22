@@ -688,10 +688,12 @@ table {
 
 .acf-flexible-content .layout {
     border: 1px solid #2271b1;
-}
 
-.acf-flexible-content .layout .acf-fc-layout-handle {
-    border-bottom: 1px solid #2271b1;
+    .acf-fc-layout-handle {
+        .acf-fc-layout-title {
+            font-weight: 700;
+        }
+    }
 }
 
 .acf-settings-wrap {
