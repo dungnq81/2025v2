@@ -536,3 +536,63 @@ body {
         }
     }
 }
+
+// .accordion
+.accordion {
+    .accordion-item {
+        border: 1px solid transparent;
+
+        .accordion-title {
+            svg {
+                right: 0;
+                top: 50%;
+                translate: 0 -50%;
+                color: var(--text-color-2);
+
+                &.minus {
+                    display: none;
+                }
+
+                &.plus {
+                    display: block;
+                }
+            }
+        }
+
+        .accordion-content {
+            display: none;
+        }
+
+        &.is-active {
+            .accordion-title {
+                svg {
+                    &.minus {
+                        display: block;
+                    }
+
+                    &.plus {
+                        display: none;
+                    }
+                }
+            }
+        }
+
+        &.is-active, &:hover {
+            background-color: #1d1d1d;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.04);
+
+            .accordion-title {
+                svg {
+                    color: var(--text-color-1);
+                }
+            }
+        }
+    }
+
+    &[disabled] {
+        .accordion-title {
+            cursor: not-allowed;
+        }
+    }
+}

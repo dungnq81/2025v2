@@ -77,8 +77,8 @@ $id       = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                     'alt' => 'Hero ' . $bg,
             ] ) ?>
 
-			<div class="absolute bottom-14 left-8 w-32 h-32 bg-white rounded-full mix-blend-soft-light filter blur-xl opacity-30"></div>
-			<div class="absolute top-20 right-8 w-32 h-32 bg-white rounded-full mix-blend-soft-light filter blur-xl opacity-30"></div>
+			<span class="c-hero-dot-1"></span>
+			<span class="c-hero-dot-2"></span>
 		</div>
         <?php endif; ?>
 	</div>

@@ -1,78 +1,69 @@
 // utils/cookie.js
 
-/**
- * CookieService: Provides methods to get, set, and delete browser cookies.
- * Uses the native Cookie Store API if available, with fallback to document.cookie.
- */
 export default class CookieService {
-    /**
-     * Get the value of a cookie by name.
-     *
-     * @param name
-     * @returns {Promise<string|string|*>}
-     */
+    static _normalizeSameSiteForCookieStore (val = 'Lax') {
+        const v = String(val).toLowerCase();
+        return v === 'lax' || v === 'strict' || v === 'none' ? v : 'lax';
+    }
+
+    static _normalizeSameSiteForHeader (val = 'Lax') {
+        const v = String(val).toLowerCase();
+        if (v === 'lax') return 'Lax';
+        if (v === 'strict') return 'Strict';
+        if (v === 'none') return 'None';
+        return 'Lax';
+    }
+
     static async get (name) {
         if (window.cookieStore) {
             const entry = await window.cookieStore.get(name);
             return entry?.value || '';
         }
 
-        // Fallback document.cookie
-        const pattern = new RegExp(
-            `(^|;)\\s*${encodeURIComponent(name)}\\s*=\\s*([^;]+)`
-        );
+        const pattern = new RegExp(`(^|;)\\s*${encodeURIComponent(name)}\\s*=\\s*([^;]+)`);
         const match = document.cookie.match(pattern);
         return match ? decodeURIComponent(match[2]) : '';
     }
 
-    /**
-     * Set a cookie with the specified name and value.
-     *
-     * @param name
-     * @param value
-     * @param days
-     * @param path
-     * @param secure
-     * @param sameSite
-     * @returns {Promise<*>}
-     */
-    static async set (name, value, { days = 365, path = '/', secure = true, sameSite = 'Lax' } = {}) {
+    static async set (
+        name,
+        value,
+        { days = 365, path = '/', secure = true, sameSite = 'Lax' } = {}
+    ) {
         if (window.cookieStore) {
-            const opts = { name, value, path, sameSite };
-            if (days) {
-                const expires = new Date(Date.now() + days * 864e5);
-                opts.expires = expires;
-            }
-            if (secure) opts.secure = true;
+            const opts = {
+                name,
+                value,
+                path,
+                secure: !!secure,
+                sameSite: CookieService._normalizeSameSiteForCookieStore(sameSite),
+            };
+            if (days) opts.expires = new Date(Date.now() + days * 864e5);
             return window.cookieStore.set(opts);
         }
 
-        // Fallback document.cookie
-        let cookieStr = `${encodeURIComponent(name)}=${encodeURIComponent(value)};path=${path};SameSite=${sameSite}`;
+        // Fallback
+        const ss = CookieService._normalizeSameSiteForHeader(sameSite);
+        let cookieStr =
+            `${encodeURIComponent(name)}=${encodeURIComponent(value)}` +
+            `;path=${path}` +
+            `;SameSite=${ss}`;
         if (days) {
             const expires = new Date(Date.now() + days * 864e5).toUTCString();
             cookieStr += `;expires=${expires}`;
         }
-        if (secure) {
-            cookieStr += ';secure';
-        }
+        if (secure) cookieStr += ';Secure';
         document.cookie = cookieStr;
     }
 
-    /**
-     * Delete a cookie by name.
-     *
-     * @param name
-     * @param path
-     * @param sameSite
-     * @returns {Promise<*>}
-     */
-    static async delete (name, { path = '/', sameSite = 'Lax' } = {}) {
+    static async delete (name, { path = '/' } = {}) {
         if (window.cookieStore) {
-            return window.cookieStore.delete(name, { path, sameSite });
+
+            return window.cookieStore.delete(name, { path });
         }
 
-        // Set an expiration date in the past to remove the cookie
-        document.cookie = `${encodeURIComponent(name)}=;path=${path};expires=Thu, 01 Jan 1970 00:00:00 GMT;SameSite=${sameSite}`;
+        // Fallback
+        document.cookie =
+            `${encodeURIComponent(name)}=;path=${path};expires=Thu, 01 Jan 1970 00:00:00 GMT`;
     }
 }

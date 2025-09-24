@@ -63,4 +63,12 @@
     .c-swiper-button {
         @apply flex items-center justify-center rounded-md !text-(--text-color) hover:border-(--text-color-1) hover:!text-(--text-color-1);
     }
+
+    .c-hero-dot-1 {
+        @apply absolute bottom-14 left-8 w-32 h-32 bg-white rounded-full mix-blend-soft-light filter blur-xl opacity-30;
+    }
+
+    .c-hero-dot-2 {
+        @apply absolute top-20 right-8 w-32 h-32 bg-white rounded-full mix-blend-soft-light filter blur-xl opacity-30;
+    }
 }
