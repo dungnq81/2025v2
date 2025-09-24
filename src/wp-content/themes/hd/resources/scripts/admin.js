@@ -5,13 +5,13 @@ jQuery(function ($) {
     //---------------------------------------------
 
     let selectedTemplate = $('#page_template');
-    let $editorWrapper = $('#postdivrich');
+    let editorWrapper = $('#postdivrich');
 
     function toggleEditor () {
         if (selectedTemplate.val() === 'templates/template-page-home.php') {
-            $editorWrapper.hide();
+            editorWrapper.hide();
         } else {
-            $editorWrapper.show();
+            editorWrapper.show();
 
             // Force WordPress to re-init editor
             setTimeout(function () {

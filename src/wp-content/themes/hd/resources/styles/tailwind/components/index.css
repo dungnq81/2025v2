@@ -42,7 +42,6 @@
                 margin: 0;
             }
         }
-
     }
 
     .c-hover {
@@ -59,5 +58,9 @@
 
     .c-text-gradient {
         @apply text-transparent bg-clip-text bg-(image:--bg-right-gradient);
+    }
+
+    .c-swiper-button {
+        @apply flex items-center justify-center rounded-md !text-(--text-color) hover:border-(--text-color-1) hover:!text-(--text-color-1);
     }
 }

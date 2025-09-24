@@ -1578,7 +1578,7 @@ trait Wp {
 	 *
 	 * @return string|null
 	 */
-	public static function loopExcerpt( mixed $post = null, ?string $class = 'excerpt', ?string $default_tag = 'div' ): ?string {
+	public static function loopExcerpt( mixed $post = null, ?string $class = 'excerpt', ?string $default_tag = 'p' ): ?string {
 		$excerpt = get_the_excerpt( $post );
 		if ( ! self::stripSpace( $excerpt ) ) {
 			return null;
@@ -1848,18 +1848,20 @@ trait Wp {
 	/**
 	 * @param mixed|null $post
 	 * @param string $taxonomy
+	 * @param string|null $class
 	 * @param string|null $wrapper_open
 	 * @param string|null $wrapper_close
 	 *
 	 * @return string|null
 	 */
-	public static function getPrimaryTerm( mixed $post = null, string $taxonomy = '', ?string $wrapper_open = '<div class="terms">', ?string $wrapper_close = '</div>' ): ?string {
+	public static function getPrimaryTerm( mixed $post = null, string $taxonomy = '', ?string $class = '', ?string $wrapper_open = '<div class="terms">', ?string $wrapper_close = '</div>' ): ?string {
 		$term = self::primaryTerm( $post, $taxonomy );
 		if ( ! $term || is_wp_error( $term ) ) {
 			return null;
 		}
 
-		$link = '<a href="' . esc_url( get_term_link( $term, $taxonomy ) ) . '" title="' . esc_attr( $term->name ) . '">' . $term->name . '</a>';
+		$class = ! empty( $class ) ? ' class="' . $class . '"' : '';
+		$link = '<a' . $class . ' href="' . esc_url( get_term_link( $term, $taxonomy ) ) . '" title="' . esc_attr( $term->name ) . '">' . $term->name . '</a>';
 		if ( $wrapper_open && $wrapper_close ) {
 			$link = $wrapper_open . $link . $wrapper_close;
 		}
@@ -2397,8 +2399,8 @@ trait Wp {
 		$option    = ! empty( $option ) ? $option : 'aspect_ratio__options';
 
 		$aspect_ratio_options = self::getOption( $option );
-		$width                = $aspect_ratio_options[ 'ar-' . $post_type . '-width' ] ?? '';
-		$height               = $aspect_ratio_options[ 'ar-' . $post_type . '-height' ] ?? '';
+		$width                = $aspect_ratio_options[ 'as-' . $post_type . '-width' ] ?? '';
+		$height               = $aspect_ratio_options[ 'as-' . $post_type . '-height' ] ?? '';
 
 		return ( $width && $height ) ? [ $width, $height ] : '';
 	}
@@ -2411,7 +2413,7 @@ trait Wp {
 	 *
 	 * @return string
 	 */
-	public static function aspectRatioClass( string $post_type = 'post', string $default = 'ar-3-2' ): string {
+	public static function aspectRatioClass( string $post_type = 'post', string $default = 'as-3-2' ): string {
 		$ratio = self::getAspectRatioOption( $post_type );
 
 		$ratio_x = $ratio[0] ?? '';
@@ -2420,7 +2422,7 @@ trait Wp {
 			return $default;
 		}
 
-		return 'ar-' . $ratio_x . '-' . $ratio_y;
+		return 'as-' . $ratio_x . '-' . $ratio_y;
 	}
 
 	// -------------------------------------------------------------
@@ -2432,7 +2434,7 @@ trait Wp {
 	 *
 	 * @return object
 	 */
-	public static function getAspectRatio( string $post_type = 'post', ?string $option = '', string $default = 'ar-3-2' ): object {
+	public static function getAspectRatio( string $post_type = 'post', ?string $option = '', string $default = 'as-3-2' ): object {
 		$ratio = self::getAspectRatioOption( $post_type, $option );
 
 		$ratio_x = $ratio[0] ?? '';
@@ -2443,7 +2445,7 @@ trait Wp {
 			$ratio_class = $default;
 		} else {
 
-			$ratio_class             = 'ar-' . $ratio_x . '-' . $ratio_y;
+			$ratio_class             = 'as-' . $ratio_x . '-' . $ratio_y;
 			$ar_aspect_ratio_default = self::filterSettingOptions( 'aspect_ratio_default', [] );
 
 			if ( is_array( $ar_aspect_ratio_default ) && ! in_array( $ratio_x . '-' . $ratio_y, $ar_aspect_ratio_default, false ) ) {

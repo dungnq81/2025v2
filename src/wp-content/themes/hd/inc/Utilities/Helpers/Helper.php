@@ -777,18 +777,21 @@ final class Helper {
 	// --------------------------------------------------
 
 	/**
+	 * @param string $class
 	 * @param bool $img_wrap
 	 * @param bool $thumb
 	 *
 	 * @return string
 	 */
-	public static function placeholderSrc( bool $img_wrap = true, bool $thumb = true ): string {
+	public static function placeholderSrc( string $class = '', bool $img_wrap = true, bool $thumb = true ): string {
 		$src = ASSETS_URL . 'img/placeholder.png';
 		if ( $thumb ) {
 			$src = ASSETS_URL . 'img/placeholder-320x320.png';
 		}
+
 		if ( $img_wrap ) {
-			$src = "<img loading=\"lazy\" src=\"{$src}\" alt=\"place-holder\" class=\"wp-placeholder\">";
+			$class = ! empty( $class ) ? ' ' . $class : '';
+			$src   = '<img loading="lazy" src="' . $src . '" alt="place-holder" class="wp-placeholder' . $class . '">';
 		}
 
 		return $src;

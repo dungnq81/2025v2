@@ -47,7 +47,7 @@ final class AspectRatio {
 	 *
 	 * @return object
 	 */
-	private function _get_aspect_ratio( string $post_type = 'post', string $option = '', string $default = 'ar-3-2' ): object {
+	private function _get_aspect_ratio( string $post_type = 'post', string $option = '', string $default = 'as-3-2' ): object {
 		$ratio   = $this->_aspect_ratio_option( $post_type, $option );
 		$ratio_x = $ratio[0] ?? '';
 		$ratio_y = $ratio[1] ?? '';
@@ -60,7 +60,7 @@ final class AspectRatio {
 		}
 
 		$ratio_style             = '';
-		$ratio_class             = 'ar-' . $ratio_x . '-' . $ratio_y;
+		$ratio_class             = 'as-' . $ratio_x . '-' . $ratio_y;
 		$aspect_ratio_settings   = \Addons\Helper::filterSettingOptions( 'aspect_ratio', [] );
 		$ar_aspect_ratio_default = $aspect_ratio_settings['aspect_ratio_default'] ?? [];
 
@@ -93,8 +93,8 @@ final class AspectRatio {
 		$post_type            = $post_type ?: 'post';
 		$option               = $option ?: 'aspect_ratio__options';
 		$aspect_ratio_options = \Addons\Helper::getOption( $option );
-		$width                = $aspect_ratio_options[ 'ar-' . $post_type . '-width' ] ?? '';
-		$height               = $aspect_ratio_options[ 'ar-' . $post_type . '-height' ] ?? '';
+		$width                = $aspect_ratio_options[ 'as-' . $post_type . '-width' ] ?? '';
+		$height               = $aspect_ratio_options[ 'as-' . $post_type . '-height' ] ?? '';
 
 		return ( $width && $height ) ? [ $width, $height ] : '';
 	}

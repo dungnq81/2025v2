@@ -1,13 +1,13 @@
 {
-  "_vendor.Ch6Ii2CW.css": {
-    "file": "css/vendor.Ch6Ii2CW.css",
-    "src": "_vendor.Ch6Ii2CW.css"
+  "_vendor.BRn5n0Yg.css": {
+    "file": "css/vendor.BRn5n0Yg.css",
+    "src": "_vendor.BRn5n0Yg.css"
   },
-  "_vendor.hXoxVSYJ.js": {
-    "file": "js/vendor.hXoxVSYJ.js",
+  "_vendor.Cvx4Zm7f.js": {
+    "file": "js/vendor.Cvx4Zm7f.js",
     "name": "vendor",
     "css": [
-      "css/vendor.Ch6Ii2CW.css"
+      "css/vendor.BRn5n0Yg.css"
     ],
     "assets": [
       "fonts/SVN-Poppins-Light.woff2",
@@ -107,7 +107,7 @@
     "src": "src/wp-content/themes/hd/resources/img/bg.png"
   },
   "src/wp-content/themes/hd/resources/scripts/admin.js": {
-    "file": "js/admin.M1817Md5.js",
+    "file": "js/admin.DBEDgl5O.js",
     "name": "admin",
     "src": "src/wp-content/themes/hd/resources/scripts/admin.js",
     "isEntry": true
@@ -125,21 +125,21 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/components/social-share.js": {
-    "file": "js/social-share.BVyp_Let.js",
+    "file": "js/social-share.CIZQHJwW.js",
     "name": "social-share",
     "src": "src/wp-content/themes/hd/resources/scripts/components/social-share.js",
     "isEntry": true,
     "imports": [
-      "_vendor.hXoxVSYJ.js"
+      "_vendor.Cvx4Zm7f.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/swiper.js": {
-    "file": "js/swiper.RqZszyts.js",
+    "file": "js/swiper.q8BuS-oM.js",
     "name": "swiper",
     "src": "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
     "isEntry": true,
     "imports": [
-      "_vendor.hXoxVSYJ.js"
+      "_vendor.Cvx4Zm7f.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/woocommerce.js": {
@@ -149,12 +149,12 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/index.js": {
-    "file": "js/index.BVTllyYO.js",
+    "file": "js/index.DLh_QArb.js",
     "name": "index",
     "src": "src/wp-content/themes/hd/resources/scripts/index.js",
     "isEntry": true,
     "imports": [
-      "_vendor.hXoxVSYJ.js",
+      "_vendor.Cvx4Zm7f.js",
       "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
       "src/wp-content/themes/hd/resources/scripts/components/social-share.js"
     ]
@@ -176,7 +176,7 @@
     ]
   },
   "src/wp-content/themes/hd/resources/styles/index.scss": {
-    "file": "css/index.XuwyL5sS.css",
+    "file": "css/index.DE0gfYCC.css",
     "src": "src/wp-content/themes/hd/resources/styles/index.scss",
     "isEntry": true,
     "names": [
@@ -184,7 +184,7 @@
     ]
   },
   "src/wp-content/themes/hd/resources/styles/partials/home.scss": {
-    "file": "css/home.BBYyEIVR.css",
+    "file": "css/home.FRfYDuqw.css",
     "src": "src/wp-content/themes/hd/resources/styles/partials/home.scss",
     "isEntry": true,
     "names": [

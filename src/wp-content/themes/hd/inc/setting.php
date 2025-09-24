@@ -370,11 +370,9 @@ function hd_settings_filter_callback( array $arr ): array {
 			],
 			'aspect_ratio_default' => [
 				'1-1',
-				'2-1',
 				'3-2',
 				'4-3',
 				'16-9',
-				'21-9',
 			],
 		],
 

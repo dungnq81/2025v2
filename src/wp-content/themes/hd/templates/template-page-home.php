@@ -13,7 +13,7 @@
 get_header( 'home' );
 
 if ( have_posts() ) {
-	the_post();
+    the_post();
 }
 
 $ACF                   = \HD_Helper::getFields( get_the_ID() );
@@ -30,108 +30,180 @@ if ( $home_flexible_content ) {
 }
 
 ?>
-<section class="section section-hero py-24">
-    <div class="u-container grid pt-6 lg:gap-12 xl:gap-0 lg:grid-cols-12">
-        <div class="mr-auto place-self-center lg:col-span-7">
-            <h1 class="max-w-3xl font-bold mb-6 p-fs-clamp-[32,56] leading-[1.2]">
-                Discover new <span class="text-(--text-color-1)">product</span> and best possibilities
-            </h1>
-            <p class="max-w-2xl mb-9 p-fs-clamp-[16,18]">
-                Streamline your global payment systems from checkout to tax compliance with our all-in-one solution. Save time and reduce complexity.
-            </p>
-            <div class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
-                <a href="#" class="inline-flex items-center justify-center px-6 py-3.5 text-[15px] font-medium text-white bg-(--text-color-1) rounded-md c-hover hover:shadow-[0px_4px_29px_-9px_#FE5242]">
-                    Get started
-                    <svg class="w-5 h-5 ml-2 -mr-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0l-4 4m4-4l-4-4"/></svg>
-                </a>
-                <a href="#" class="c-light-button inline-flex items-center justify-center px-6 py-3.5 text-[15px] font-medium text-white rounded-md c-hover hover:shadow-[0px_4px_29px_-9px_#1D1D1DB2]">
-                    <svg class="w-5 h-5 mr-2 -ml-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M4.37 7.657c2.063.528 2.396 2.806 3.202 3.87c1.07 1.413 2.075 1.228 3.192 2.644c1.805 2.289 1.312 5.705 1.312 6.705M20 15h-1a4 4 0 0 0-4 4v1M8.587 3.992c0 .822.112 1.886 1.515 2.58c1.402.693 2.918.351 2.918 2.334c0 .276 0 2.008 1.972 2.008c2.026.031 2.026-1.678 2.026-2.008c0-.65.527-.9 1.177-.9H20M21 12a9 9 0 1 1-18 0a9 9 0 0 1 18 0Z"/></svg>
-                    Watch Demo
-                </a>
-            </div>
-            <div class="flex flex-wrap items-center mt-8 gap-3">
-                <div class="flex -space-x-2">
-                    <img class="w-10 h-10 rounded-full border border-(--text-color-1)" src="https://randomuser.me/api/portraits/women/12.jpg" alt="User">
-                    <img class="w-10 h-10 rounded-full border border-(--text-color-1)" src="https://randomuser.me/api/portraits/men/32.jpg" alt="User">
-                    <img class="w-10 h-10 rounded-full border border-(--text-color-1)" src="https://randomuser.me/api/portraits/women/44.jpg" alt="User">
+<section class="section section-feedback py-24">
+    <div class="u-container">
+        <div class="closest-swiper u-flex-center gap-y-8 lg:gap-y-0 flex-wrap lg:flex-nowrap lg:flex-row lg:justify-between lg:gap-x-8">
+            <?php
+            $data = [
+                    'loop'       => true,
+                    'autoview'   => true,
+                    'gap'        => true,
+                    'navigation' => true,
+                    'autoplay'   => true,
+            ];
+
+            $swiper_data = wp_json_encode( $data, JSON_THROW_ON_ERROR | JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE );
+            if ( ! $swiper_data ) {
+                $swiper_data = '';
+            }
+
+            ?>
+            <div class="w-full lg:w-2/5">
+                <span class="font-medium mb-4 block text-center lg:text-left">Testimonial</span>
+                <h2 class="font-bold text-center lg:text-left">
+                    23k+ Customers gave their <span class="text-(--text-color-1)">Feedback</span>
+                </h2>
+                <div class="swiper-controls u-flex-center lg:justify-start gap-10">
+                    <button class="swiper-button swiper-button-prev c-swiper-button c-light-button !mt-8 !relative !w-11 !h-11">
+                        <svg class="!h-6 !w-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l4-4m-4 4l4 4"/></svg>
+                    </button>
+                    <button class="swiper-button swiper-button-next c-swiper-button c-light-button !mt-8 !relative !w-11 !h-11">
+                        <svg class="!h-6 !w-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0l-4 4m4-4l-4-4"/></svg>
+                    </button>
                 </div>
-                <div class="flex items-center">
-                    <svg class="w-4 h-4 mr-1 text-(--text-color-1)" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
-                    <span class="font-bold">4.9</span>
-                    <span class="mx-1">/</span>
-                    <span>5.0 from 500+ reviews</span>
+            </div>
+            <div class="w-full lg:w-3/5">
+                <div class="swiper w-swiper">
+                    <div class="swiper-wrapper" data-options='<?= $swiper_data ?>'>
+                        <div class="swiper-slide">
+                            <div class="bg-[#ffffff1a] border border-solid border-[#ffffff26] c-hover hover:border-(--text-color-1) rounded-md max-sm:max-w-sm max-sm:mx-auto p-6">
+                                <div class="flex items-center gap-5 mb-5 sm:mb-9">
+                                    <img class="rounded-full object-cover w-16 h-16" src="https://randomuser.me/api/portraits/men/33.jpg" alt="avatar">
+                                    <div class="grid gap-1">
+                                        <h5 class="text-white font-bold">Jane D</h5>
+                                        <span class="text-sm leading-6 text-(--text-color)">CEO </span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center mb-5 sm:mb-9 gap-2 text-amber-500">
+                                    <svg class="w-5 h-5" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.10326 1.31699C8.47008 0.57374 9.52992 0.57374 9.89674 1.31699L11.7063 4.98347C11.8519 5.27862 12.1335 5.48319 12.4592 5.53051L16.5054 6.11846C17.3256 6.23765 17.6531 7.24562 17.0596 7.82416L14.1318 10.6781C13.8961 10.9079 13.7885 11.2389 13.8442 11.5632L14.5353 15.5931C14.6754 16.41 13.818 17.033 13.0844 16.6473L9.46534 14.7446C9.17402 14.5915 8.82598 14.5915 8.53466 14.7446L4.91562 16.6473C4.18199 17.033 3.32456 16.41 3.46467 15.5931L4.15585 11.5632C4.21148 11.2389 4.10393 10.9079 3.86825 10.6781L0.940384 7.82416C0.346867 7.24562 0.674378 6.23765 1.4946 6.11846L5.54081 5.53051C5.86652 5.48319 6.14808 5.27862 6.29374 4.98347L8.10326 1.31699Z" fill="currentColor"></path></svg>
+                                    <svg class="w-5 h-5" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.10326 1.31699C8.47008 0.57374 9.52992 0.57374 9.89674 1.31699L11.7063 4.98347C11.8519 5.27862 12.1335 5.48319 12.4592 5.53051L16.5054 6.11846C17.3256 6.23765 17.6531 7.24562 17.0596 7.82416L14.1318 10.6781C13.8961 10.9079 13.7885 11.2389 13.8442 11.5632L14.5353 15.5931C14.6754 16.41 13.818 17.033 13.0844 16.6473L9.46534 14.7446C9.17402 14.5915 8.82598 14.5915 8.53466 14.7446L4.91562 16.6473C4.18199 17.033 3.32456 16.41 3.46467 15.5931L4.15585 11.5632C4.21148 11.2389 4.10393 10.9079 3.86825 10.6781L0.940384 7.82416C0.346867 7.24562 0.674378 6.23765 1.4946 6.11846L5.54081 5.53051C5.86652 5.48319 6.14808 5.27862 6.29374 4.98347L8.10326 1.31699Z" fill="currentColor"></path></svg>
+                                    <svg class="w-5 h-5" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.10326 1.31699C8.47008 0.57374 9.52992 0.57374 9.89674 1.31699L11.7063 4.98347C11.8519 5.27862 12.1335 5.48319 12.4592 5.53051L16.5054 6.11846C17.3256 6.23765 17.6531 7.24562 17.0596 7.82416L14.1318 10.6781C13.8961 10.9079 13.7885 11.2389 13.8442 11.5632L14.5353 15.5931C14.6754 16.41 13.818 17.033 13.0844 16.6473L9.46534 14.7446C9.17402 14.5915 8.82598 14.5915 8.53466 14.7446L4.91562 16.6473C4.18199 17.033 3.32456 16.41 3.46467 15.5931L4.15585 11.5632C4.21148 11.2389 4.10393 10.9079 3.86825 10.6781L0.940384 7.82416C0.346867 7.24562 0.674378 6.23765 1.4946 6.11846L5.54081 5.53051C5.86652 5.48319 6.14808 5.27862 6.29374 4.98347L8.10326 1.31699Z" fill="currentColor"></path></svg>
+                                    <svg class="w-5 h-5" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.10326 1.31699C8.47008 0.57374 9.52992 0.57374 9.89674 1.31699L11.7063 4.98347C11.8519 5.27862 12.1335 5.48319 12.4592 5.53051L16.5054 6.11846C17.3256 6.23765 17.6531 7.24562 17.0596 7.82416L14.1318 10.6781C13.8961 10.9079 13.7885 11.2389 13.8442 11.5632L14.5353 15.5931C14.6754 16.41 13.818 17.033 13.0844 16.6473L9.46534 14.7446C9.17402 14.5915 8.82598 14.5915 8.53466 14.7446L4.91562 16.6473C4.18199 17.033 3.32456 16.41 3.46467 15.5931L4.15585 11.5632C4.21148 11.2389 4.10393 10.9079 3.86825 10.6781L0.940384 7.82416C0.346867 7.24562 0.674378 6.23765 1.4946 6.11846L5.54081 5.53051C5.86652 5.48319 6.14808 5.27862 6.29374 4.98347L8.10326 1.31699Z" fill="currentColor"></path></svg>
+                                    <svg class="w-5 h-5" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.10326 1.31699C8.47008 0.57374 9.52992 0.57374 9.89674 1.31699L11.7063 4.98347C11.8519 5.27862 12.1335 5.48319 12.4592 5.53051L16.5054 6.11846C17.3256 6.23765 17.6531 7.24562 17.0596 7.82416L14.1318 10.6781C13.8961 10.9079 13.7885 11.2389 13.8442 11.5632L14.5353 15.5931C14.6754 16.41 13.818 17.033 13.0844 16.6473L9.46534 14.7446C9.17402 14.5915 8.82598 14.5915 8.53466 14.7446L4.91562 16.6473C4.18199 17.033 3.32456 16.41 3.46467 15.5931L4.15585 11.5632C4.21148 11.2389 4.10393 10.9079 3.86825 10.6781L0.940384 7.82416C0.346867 7.24562 0.674378 6.23765 1.4946 6.11846L5.54081 5.53051C5.86652 5.48319 6.14808 5.27862 6.29374 4.98347L8.10326 1.31699Z" fill="currentColor"></path></svg>
+                                </div>
+                                <p class="text-(--text-color) leading-6 min-h-24">
+                                    The user interface of this pagedone is so intuitive, I was able to start using it without any guidance.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="bg-[#ffffff1a] border border-solid border-[#ffffff26] c-hover hover:border-(--text-color-1) rounded-md max-sm:max-w-sm max-sm:mx-auto p-6">
+                                <div class="flex items-center gap-5 mb-5 sm:mb-9">
+                                    <img class="rounded-full object-cover w-16 h-16" src="https://randomuser.me/api/portraits/men/33.jpg" alt="avatar">
+                                    <div class="grid gap-1">
+                                        <h5 class="text-white font-bold">Jane D</h5>
+                                        <span class="text-sm leading-6 text-(--text-color)">CEO </span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center mb-5 sm:mb-9 gap-2 text-amber-500">
+                                    <svg class="w-5 h-5" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.10326 1.31699C8.47008 0.57374 9.52992 0.57374 9.89674 1.31699L11.7063 4.98347C11.8519 5.27862 12.1335 5.48319 12.4592 5.53051L16.5054 6.11846C17.3256 6.23765 17.6531 7.24562 17.0596 7.82416L14.1318 10.6781C13.8961 10.9079 13.7885 11.2389 13.8442 11.5632L14.5353 15.5931C14.6754 16.41 13.818 17.033 13.0844 16.6473L9.46534 14.7446C9.17402 14.5915 8.82598 14.5915 8.53466 14.7446L4.91562 16.6473C4.18199 17.033 3.32456 16.41 3.46467 15.5931L4.15585 11.5632C4.21148 11.2389 4.10393 10.9079 3.86825 10.6781L0.940384 7.82416C0.346867 7.24562 0.674378 6.23765 1.4946 6.11846L5.54081 5.53051C5.86652 5.48319 6.14808 5.27862 6.29374 4.98347L8.10326 1.31699Z" fill="currentColor"></path></svg>
+                                    <svg class="w-5 h-5" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.10326 1.31699C8.47008 0.57374 9.52992 0.57374 9.89674 1.31699L11.7063 4.98347C11.8519 5.27862 12.1335 5.48319 12.4592 5.53051L16.5054 6.11846C17.3256 6.23765 17.6531 7.24562 17.0596 7.82416L14.1318 10.6781C13.8961 10.9079 13.7885 11.2389 13.8442 11.5632L14.5353 15.5931C14.6754 16.41 13.818 17.033 13.0844 16.6473L9.46534 14.7446C9.17402 14.5915 8.82598 14.5915 8.53466 14.7446L4.91562 16.6473C4.18199 17.033 3.32456 16.41 3.46467 15.5931L4.15585 11.5632C4.21148 11.2389 4.10393 10.9079 3.86825 10.6781L0.940384 7.82416C0.346867 7.24562 0.674378 6.23765 1.4946 6.11846L5.54081 5.53051C5.86652 5.48319 6.14808 5.27862 6.29374 4.98347L8.10326 1.31699Z" fill="currentColor"></path></svg>
+                                    <svg class="w-5 h-5" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.10326 1.31699C8.47008 0.57374 9.52992 0.57374 9.89674 1.31699L11.7063 4.98347C11.8519 5.27862 12.1335 5.48319 12.4592 5.53051L16.5054 6.11846C17.3256 6.23765 17.6531 7.24562 17.0596 7.82416L14.1318 10.6781C13.8961 10.9079 13.7885 11.2389 13.8442 11.5632L14.5353 15.5931C14.6754 16.41 13.818 17.033 13.0844 16.6473L9.46534 14.7446C9.17402 14.5915 8.82598 14.5915 8.53466 14.7446L4.91562 16.6473C4.18199 17.033 3.32456 16.41 3.46467 15.5931L4.15585 11.5632C4.21148 11.2389 4.10393 10.9079 3.86825 10.6781L0.940384 7.82416C0.346867 7.24562 0.674378 6.23765 1.4946 6.11846L5.54081 5.53051C5.86652 5.48319 6.14808 5.27862 6.29374 4.98347L8.10326 1.31699Z" fill="currentColor"></path></svg>
+                                    <svg class="w-5 h-5" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.10326 1.31699C8.47008 0.57374 9.52992 0.57374 9.89674 1.31699L11.7063 4.98347C11.8519 5.27862 12.1335 5.48319 12.4592 5.53051L16.5054 6.11846C17.3256 6.23765 17.6531 7.24562 17.0596 7.82416L14.1318 10.6781C13.8961 10.9079 13.7885 11.2389 13.8442 11.5632L14.5353 15.5931C14.6754 16.41 13.818 17.033 13.0844 16.6473L9.46534 14.7446C9.17402 14.5915 8.82598 14.5915 8.53466 14.7446L4.91562 16.6473C4.18199 17.033 3.32456 16.41 3.46467 15.5931L4.15585 11.5632C4.21148 11.2389 4.10393 10.9079 3.86825 10.6781L0.940384 7.82416C0.346867 7.24562 0.674378 6.23765 1.4946 6.11846L5.54081 5.53051C5.86652 5.48319 6.14808 5.27862 6.29374 4.98347L8.10326 1.31699Z" fill="currentColor"></path></svg>
+                                    <svg class="w-5 h-5" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.10326 1.31699C8.47008 0.57374 9.52992 0.57374 9.89674 1.31699L11.7063 4.98347C11.8519 5.27862 12.1335 5.48319 12.4592 5.53051L16.5054 6.11846C17.3256 6.23765 17.6531 7.24562 17.0596 7.82416L14.1318 10.6781C13.8961 10.9079 13.7885 11.2389 13.8442 11.5632L14.5353 15.5931C14.6754 16.41 13.818 17.033 13.0844 16.6473L9.46534 14.7446C9.17402 14.5915 8.82598 14.5915 8.53466 14.7446L4.91562 16.6473C4.18199 17.033 3.32456 16.41 3.46467 15.5931L4.15585 11.5632C4.21148 11.2389 4.10393 10.9079 3.86825 10.6781L0.940384 7.82416C0.346867 7.24562 0.674378 6.23765 1.4946 6.11846L5.54081 5.53051C5.86652 5.48319 6.14808 5.27862 6.29374 4.98347L8.10326 1.31699Z" fill="currentColor"></path></svg>
+                                </div>
+                                <p class="text-(--text-color) leading-6 min-h-24">
+                                    The user interface of this pagedone is so intuitive, I was able to start using it without any guidance.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="bg-[#ffffff1a] border border-solid border-[#ffffff26] c-hover hover:border-(--text-color-1) rounded-md max-sm:max-w-sm max-sm:mx-auto p-6">
+                                <div class="flex items-center gap-5 mb-5 sm:mb-9">
+                                    <img class="rounded-full object-cover w-16 h-16" src="https://randomuser.me/api/portraits/men/33.jpg" alt="avatar">
+                                    <div class="grid gap-1">
+                                        <h5 class="text-white font-bold">Jane D</h5>
+                                        <span class="text-sm leading-6 text-(--text-color)">CEO </span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center mb-5 sm:mb-9 gap-2 text-amber-500">
+                                    <svg class="w-5 h-5" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.10326 1.31699C8.47008 0.57374 9.52992 0.57374 9.89674 1.31699L11.7063 4.98347C11.8519 5.27862 12.1335 5.48319 12.4592 5.53051L16.5054 6.11846C17.3256 6.23765 17.6531 7.24562 17.0596 7.82416L14.1318 10.6781C13.8961 10.9079 13.7885 11.2389 13.8442 11.5632L14.5353 15.5931C14.6754 16.41 13.818 17.033 13.0844 16.6473L9.46534 14.7446C9.17402 14.5915 8.82598 14.5915 8.53466 14.7446L4.91562 16.6473C4.18199 17.033 3.32456 16.41 3.46467 15.5931L4.15585 11.5632C4.21148 11.2389 4.10393 10.9079 3.86825 10.6781L0.940384 7.82416C0.346867 7.24562 0.674378 6.23765 1.4946 6.11846L5.54081 5.53051C5.86652 5.48319 6.14808 5.27862 6.29374 4.98347L8.10326 1.31699Z" fill="currentColor"></path></svg>
+                                    <svg class="w-5 h-5" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.10326 1.31699C8.47008 0.57374 9.52992 0.57374 9.89674 1.31699L11.7063 4.98347C11.8519 5.27862 12.1335 5.48319 12.4592 5.53051L16.5054 6.11846C17.3256 6.23765 17.6531 7.24562 17.0596 7.82416L14.1318 10.6781C13.8961 10.9079 13.7885 11.2389 13.8442 11.5632L14.5353 15.5931C14.6754 16.41 13.818 17.033 13.0844 16.6473L9.46534 14.7446C9.17402 14.5915 8.82598 14.5915 8.53466 14.7446L4.91562 16.6473C4.18199 17.033 3.32456 16.41 3.46467 15.5931L4.15585 11.5632C4.21148 11.2389 4.10393 10.9079 3.86825 10.6781L0.940384 7.82416C0.346867 7.24562 0.674378 6.23765 1.4946 6.11846L5.54081 5.53051C5.86652 5.48319 6.14808 5.27862 6.29374 4.98347L8.10326 1.31699Z" fill="currentColor"></path></svg>
+                                    <svg class="w-5 h-5" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.10326 1.31699C8.47008 0.57374 9.52992 0.57374 9.89674 1.31699L11.7063 4.98347C11.8519 5.27862 12.1335 5.48319 12.4592 5.53051L16.5054 6.11846C17.3256 6.23765 17.6531 7.24562 17.0596 7.82416L14.1318 10.6781C13.8961 10.9079 13.7885 11.2389 13.8442 11.5632L14.5353 15.5931C14.6754 16.41 13.818 17.033 13.0844 16.6473L9.46534 14.7446C9.17402 14.5915 8.82598 14.5915 8.53466 14.7446L4.91562 16.6473C4.18199 17.033 3.32456 16.41 3.46467 15.5931L4.15585 11.5632C4.21148 11.2389 4.10393 10.9079 3.86825 10.6781L0.940384 7.82416C0.346867 7.24562 0.674378 6.23765 1.4946 6.11846L5.54081 5.53051C5.86652 5.48319 6.14808 5.27862 6.29374 4.98347L8.10326 1.31699Z" fill="currentColor"></path></svg>
+                                    <svg class="w-5 h-5" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.10326 1.31699C8.47008 0.57374 9.52992 0.57374 9.89674 1.31699L11.7063 4.98347C11.8519 5.27862 12.1335 5.48319 12.4592 5.53051L16.5054 6.11846C17.3256 6.23765 17.6531 7.24562 17.0596 7.82416L14.1318 10.6781C13.8961 10.9079 13.7885 11.2389 13.8442 11.5632L14.5353 15.5931C14.6754 16.41 13.818 17.033 13.0844 16.6473L9.46534 14.7446C9.17402 14.5915 8.82598 14.5915 8.53466 14.7446L4.91562 16.6473C4.18199 17.033 3.32456 16.41 3.46467 15.5931L4.15585 11.5632C4.21148 11.2389 4.10393 10.9079 3.86825 10.6781L0.940384 7.82416C0.346867 7.24562 0.674378 6.23765 1.4946 6.11846L5.54081 5.53051C5.86652 5.48319 6.14808 5.27862 6.29374 4.98347L8.10326 1.31699Z" fill="currentColor"></path></svg>
+                                    <svg class="w-5 h-5" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.10326 1.31699C8.47008 0.57374 9.52992 0.57374 9.89674 1.31699L11.7063 4.98347C11.8519 5.27862 12.1335 5.48319 12.4592 5.53051L16.5054 6.11846C17.3256 6.23765 17.6531 7.24562 17.0596 7.82416L14.1318 10.6781C13.8961 10.9079 13.7885 11.2389 13.8442 11.5632L14.5353 15.5931C14.6754 16.41 13.818 17.033 13.0844 16.6473L9.46534 14.7446C9.17402 14.5915 8.82598 14.5915 8.53466 14.7446L4.91562 16.6473C4.18199 17.033 3.32456 16.41 3.46467 15.5931L4.15585 11.5632C4.21148 11.2389 4.10393 10.9079 3.86825 10.6781L0.940384 7.82416C0.346867 7.24562 0.674378 6.23765 1.4946 6.11846L5.54081 5.53051C5.86652 5.48319 6.14808 5.27862 6.29374 4.98347L8.10326 1.31699Z" fill="currentColor"></path></svg>
+                                </div>
+                                <p class="text-(--text-color) leading-6 min-h-24">
+                                    The user interface of this pagedone is so intuitive, I was able to start using it without any guidance.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="lg:mt-0 lg:col-span-5 flex relative">
-            <img src="https://themedevhub-images.netlify.app/components/images/hero-monitor-computer.png" alt="mockup" class="w-full h-auto max-w-lg mx-auto">
-            <div class="absolute bottom-14 left-8 w-32 h-32 bg-white rounded-full mix-blend-soft-light filter blur-xl opacity-30"></div>
-            <div class="absolute top-20 right-8 w-32 h-32 bg-white rounded-full mix-blend-soft-light filter blur-xl opacity-30"></div>
         </div>
     </div>
 </section>
+<section class="section section-press py-20">
+    <div class="u-container closest-swiper">
+        <h2 class="font-bold text-center">Báo chí nói gì về <span class="hover:text-(--text-color-1) c-hover">HD</span> <span class="hover:text-(--text-color-2) c-hover">AGENCY</span></h2>
+        <p class="max-w-2xl mb-9 p-fs-clamp-[16,18] text-center mx-auto pt-2">HD AGENCY tự hào về những điều đạt được trong thời gian qua</p>
+        <div class="swiper-container px-16">
+            <?php
+            $data = [
+                    'loop'       => true,
+                    'autoview'   => true,
+                    'gap'        => true,
+                    'navigation' => true,
+                    'autoplay'   => true,
+            ];
 
-<section class="section section-recent-posts c-light-bg py-20">
-    <div class="u-container">
-        <h2 class="font-bold">Recent blog posts</h2>
-        <div class="p-news-list mt-9 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 md:gap-6">
-            <div class="item flex flex-col items-start gap-4">
-                <div class="c-cover rounded-md">
-                    <a class="block w-full c-scale-effect" href="#">
-                        <img src="https://themedevhub-images.netlify.app/components/images/about-1.jpg" alt="placeholder" class="w-full aspect-3/2 object-cover">
-                    </a>
+            $swiper_data = wp_json_encode( $data, JSON_THROW_ON_ERROR | JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE );
+            if ( ! $swiper_data ) {
+                $swiper_data = '';
+            }
+
+            ?>
+            <div class="w-full swiper w-swiper">
+                <div class="swiper-wrapper" data-options='<?= $swiper_data ?>'>
+                    <div class="swiper-slide">
+                        <a class="u-flex-center c-hover h-full p-8 c-light-button rounded-md" rel="nofollow" href="#" title="">
+                            <img loading="lazy" width="300" height="44" src="https://webhd.vn/wp-content/uploads/2025/02/logo-baolongan_3_11zon.png" class="attachment-thumbnail size-thumbnail object-contain w-full h-full" alt="" decoding="async">
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a class="u-flex-center c-hover h-full p-8 c-light-button rounded-md" rel="nofollow" href="#" title="">
+                            <img loading="lazy" width="300" height="93" src="https://webhd.vn/wp-content/uploads/2025/02/logo-baodongnai_2_11zon.png" class="attachment-thumbnail size-thumbnail object-contain" alt="" decoding="async">
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a class="u-flex-center c-hover h-full p-8 c-light-button rounded-md" rel="nofollow" href="#" title="">
+                            <img loading="lazy" width="300" height="55" src="https://webhd.vn/wp-content/uploads/2025/02/logo-baothainguyen_1_11zon.png" class="attachment-thumbnail size-thumbnail object-contain" alt="" decoding="async">
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a class="u-flex-center c-hover h-full p-8 c-light-button rounded-md" rel="nofollow" href="#" title="">
+                            <img loading="lazy" width="300" height="82" src="https://webhd.vn/wp-content/uploads/2025/02/bao-quang-ngai_4_11zon-300x82.png" class="attachment-thumbnail size-thumbnail object-contain" alt="" decoding="async" srcset="https://webhd.vn/wp-content/uploads/2025/02/bao-quang-ngai_4_11zon-300x82.png 300w, https://webhd.vn/wp-content/uploads/2025/02/bao-quang-ngai_4_11zon.png 398w" sizes="(max-width: 300px) 100vw, 300px">
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a class="u-flex-center c-hover h-full p-8 c-light-button rounded-md" rel="nofollow" href="#" title="">
+                            <img loading="lazy" width="300" height="108" src="https://webhd.vn/wp-content/uploads/2025/02/bao-thai-binh_5_11zon.png" class="attachment-thumbnail size-thumbnail object-contain" alt="" decoding="async">
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a class="u-flex-center c-hover h-full p-8 c-light-button rounded-md" rel="nofollow" href="#" title="">
+                            <img loading="lazy" width="300" height="68" src="https://webhd.vn/wp-content/uploads/2025/02/bao-phu-tho_6_11zon-300x68.png" class="attachment-thumbnail size-thumbnail object-contain" alt="" decoding="async" srcset="https://webhd.vn/wp-content/uploads/2025/02/bao-phu-tho_6_11zon-300x68.png 300w, https://webhd.vn/wp-content/uploads/2025/02/bao-phu-tho_6_11zon.png 750w" sizes="(max-width: 300px) 100vw, 300px">
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a class="u-flex-center c-hover h-full p-8 c-light-button rounded-md" rel="nofollow" href="#" title="">
+                            <img loading="lazy" width="300" height="78" src="https://webhd.vn/wp-content/uploads/2025/02/bao-ha-giang_7_11zon-300x78.png" class="attachment-thumbnail size-thumbnail object-contain" alt="" decoding="async" srcset="https://webhd.vn/wp-content/uploads/2025/02/bao-ha-giang_7_11zon-300x78.png 300w, https://webhd.vn/wp-content/uploads/2025/02/bao-ha-giang_7_11zon.png 476w" sizes="(max-width: 300px) 100vw, 300px">
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a class="u-flex-center c-hover h-full p-8 c-light-button rounded-md" rel="nofollow" href="#" title="">
+                            <img loading="lazy" width="300" height="67" src="https://webhd.vn/wp-content/uploads/2025/02/bao-da-nang_8_11zon-300x67.png" class="attachment-thumbnail size-thumbnail object-contain" alt="" decoding="async" srcset="https://webhd.vn/wp-content/uploads/2025/02/bao-da-nang_8_11zon-300x67.png 300w, https://webhd.vn/wp-content/uploads/2025/02/bao-da-nang_8_11zon-768x171.png 768w, https://webhd.vn/wp-content/uploads/2025/02/bao-da-nang_8_11zon.png 900w" sizes="(max-width: 300px) 100vw, 300px">
+                        </a>
+                    </div>
+                    <div class="swiper-slide">
+                        <a class="u-flex-center c-hover c-hover h-full p-8 c-light-button rounded-md" rel="nofollow" href="#" title="">
+                            <img loading="lazy" width="300" height="71" src="https://webhd.vn/wp-content/uploads/2025/02/bao-dong-khoi_9_11zon-300x71.png" class="attachment-thumbnail size-thumbnail object-contain" alt="" decoding="async" srcset="https://webhd.vn/wp-content/uploads/2025/02/bao-dong-khoi_9_11zon-300x71.png 300w, https://webhd.vn/wp-content/uploads/2025/02/bao-dong-khoi_9_11zon.png 369w" sizes="(max-width: 300px) 100vw, 300px">
+                        </a>
+                    </div>
                 </div>
-                <div class="meta flex flex-wrap items-center gap-2">
-                    <a href="#" class="inline-flex items-center justify-center rounded-md px-3 py-2 text-xs font-medium c-light-button hover:text-white">Business</a>
-                    <a href="#" class="inline-flex items-center justify-center rounded-md px-3 py-2 text-xs font-medium c-light-button hover:text-white">Business</a>
-                </div>
-                <a href="#" class="text-(--text-color) hover:text-white">
-                    <h3 class="text-balance font-bold p-fs-clamp-[18,22]">Strategies for Effective Business Growth in 2025</h3>
-                </a>
-                <p class="text-[15px] mb-0">Learn proven strategies to grow your business and stay competitive in the ever-evolving market landscape.</p>
-                <a href="#" class="flex items-center text-[14px] mt-2 hover:text-white">
-                    Chi tiết
-                    <svg class="w-5 h-5 ml-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0l-4 4m4-4l-4-4"/></svg>
-                </a>
-            </div>
-            <div class="item flex flex-col items-start gap-4">
-                <div class="c-cover rounded-md">
-                    <a class="block w-full c-scale-effect" href="#">
-                        <img src="https://themedevhub-images.netlify.app/components/images/about-1.jpg" alt="placeholder" class="w-full aspect-3/2 object-cover">
-                    </a>
-                </div>
-                <div class="meta">
-                    <a href="#" class="inline-flex items-center justify-center rounded-md px-3 py-2 text-xs font-medium c-light-button hover:text-white">Business</a>
-                </div>
-                <a href="#" class="text-(--text-color) hover:text-white">
-                    <h3 class="text-balance font-bold p-fs-clamp-[18,22]">Top Wellness Trends to Improve Your Health in 2025</h3>
-                </a>
-                <p class="text-[15px] mb-0">Explore the top wellness trends that can help you achieve a healthier and more balanced lifestyle.</p>
-                <a href="#" class="flex items-center text-[14px] mt-2 hover:text-white">
-                    Chi tiết
-                    <svg class="w-5 h-5 ml-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0l-4 4m4-4l-4-4"/></svg>
-                </a>
-            </div>
-            <div class="item flex flex-col items-start gap-4">
-                <div class="c-cover rounded-md">
-                    <a class="block w-full c-scale-effect" href="#">
-                        <img src="https://themedevhub-images.netlify.app/components/images/about-1.jpg" alt="placeholder" class="w-full aspect-3/2 object-cover">
-                    </a>
-                </div>
-                <div class="meta">
-                    <a href="#" class="inline-flex items-center justify-center rounded-md px-3 py-2 text-xs font-medium c-light-button hover:text-white">Business</a>
-                </div>
-                <a href="#" class="text-(--text-color) hover:text-white">
-                    <h3 class="text-balance font-bold p-fs-clamp-[18,22]">Boosting Productivity with Smart Tools and Techniques</h3>
-                </a>
-                <p class="text-[15px] mb-0">Find out how to enhance your productivity using the latest tools and techniques for better time management.</p>
-                <a href="#" class="flex items-center text-[14px] mt-2 hover:text-white">
-                    Chi tiết
-                    <svg class="w-5 h-5 ml-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0l-4 4m4-4l-4-4"/></svg>
-                </a>
             </div>
         </div>
-        <a href="#" class="relative left-[50%] translate-x-[-50%] mt-10 c-light-button inline-flex items-center justify-center px-6 py-3.5 text-[15px] rounded-md c-hover hover:text-white hover:shadow-[0px_4px_29px_-9px_#1D1D1DB2]">Xem thêm</a>
     </div>
 </section>
 <?php

@@ -20688,4 +20688,4 @@ export {
   Swiper as a,
   nanoid as n
 };
-//# sourceMappingURL=vendor.hXoxVSYJ.js.map
+//# sourceMappingURL=vendor.Cvx4Zm7f.js.map

@@ -39,15 +39,14 @@ final class LoginSecurity {
 	 */
 	public function loginEnqueueAssets(): void {
 		$version = Helper::version();
-
 		Asset::enqueueCSS( 'login.scss', [], $version );
 		Asset::enqueueJS( 'login.js', [ 'jquery' ], $version, true, [ 'module', 'defer' ] );
 
-		$default_logo = '';
-		$default_bg   = '';
+		//$default_logo = '';
+		//$default_bg   = '';
 
-		//$default_logo = ADDONS_URL . 'assets/img/logo.png';
-		//$default_bg   = ADDONS_URL . 'assets/img/login-bg.jpg';
+		$default_logo = ADDONS_URL . 'assets/img/logo.png';
+		$default_bg   = ADDONS_URL . 'assets/img/login-bg.jpg';
 
 		// scripts / styles
 		$logo     = esc_url_raw( Helper::getThemeMod( 'login_page_logo_setting' ) ?: $default_logo );

@@ -10,7 +10,7 @@ function isEmpty (value) {
 
 // Initialize Swiper instances
 const initializeSwiper = (el, swiper_class, options) => {
-    if (!( el instanceof Element )) {
+    if (!( el instanceof Element ) || !options) {
         console.error('Error: The provided element is not a DOM element.');
         return;
     }
@@ -32,7 +32,7 @@ const initializeSwiper = (el, swiper_class, options) => {
 
 // Generate unique class names
 const generateClasses = () => {
-    const rand = nanoid(9);
+    const rand = nanoid(10);
     return {
         rand: rand,
         swiperClass: 'swiper-' + rand,
@@ -68,7 +68,7 @@ const initializeSwipers = () => {
         const classes = generateClasses();
         el.classList.add(classes.swiperClass);
 
-        let controls = el.closest('.swiper-section')?.querySelector('.swiper-controls');
+        let controls = el.closest('.closest-swiper')?.querySelector('.swiper-controls');
         if (!controls) {
             controls = document.createElement('div');
             controls.classList.add('swiper-controls');
@@ -76,27 +76,22 @@ const initializeSwipers = () => {
         }
 
         const swiperWrapper = el?.querySelector('.swiper-wrapper');
-        let options = JSON.parse(swiperWrapper.dataset.options) || {};
-
-        if (isEmpty(options)) {
-            options = {
-                autoview: !0,
-                autoplay: !0,
-                navigation: !0,
-            };
+        if (!swiperWrapper.dataset.options) {
+            return;
         }
 
+        let options = JSON.parse(swiperWrapper.dataset.options);
         let swiperOptions = { ...getDefaultOptions() };
 
         if (options.autoview) {
             swiperOptions.slidesPerView = 'auto';
             if (options.gap) {
-                swiperOptions.spaceBetween = 10;
+                swiperOptions.spaceBetween = 12;
                 swiperOptions.breakpoints = {
-                    768: { spaceBetween: 20 },
+                    768: { spaceBetween: 24 },
                 };
-            } else if (options.smallgap) {
-                swiperOptions.spaceBetween = parseInt(options.smallgap);
+            } else if (options._gap) {
+                swiperOptions.spaceBetween = parseInt(options._gap);
             }
         } else {
             if (options.spaceBetween) {
@@ -145,9 +140,8 @@ const initializeSwipers = () => {
 
         // Navigation
         if (options.navigation) {
-            const section = el.closest('.swiper-section');
-            let btnPrev = section?.querySelector('.swiper-button-prev');
-            let btnNext = section?.querySelector('.swiper-button-next');
+            let btnPrev = controls?.querySelector('.swiper-button-prev');
+            let btnNext = controls?.querySelector('.swiper-button-next');
 
             if (btnPrev && btnNext) {
                 btnPrev.classList.add(classes.prevClass);
@@ -159,8 +153,11 @@ const initializeSwipers = () => {
                 btnNext.classList.add('swiper-button', 'swiper-button-next', classes.nextClass);
                 controls.append(btnPrev, btnNext);
 
-                btnPrev.setAttribute('data-fa', '');
-                btnNext.setAttribute('data-fa', '');
+                const iconLeft  = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l4-4m-4 4l4 4"></path></svg>`;
+                const iconRight = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0l-4 4m4-4l-4-4"></path></svg>`;
+
+                btnPrev.innerHTML = iconLeft;
+                btnNext.innerHTML = iconRight;
             }
 
             swiperOptions.navigation = {
@@ -171,8 +168,7 @@ const initializeSwipers = () => {
 
         // Pagination
         if (options.pagination) {
-            const section = el.closest('.swiper-section');
-            let pagination = section?.querySelector('.swiper-pagination');
+            let pagination = controls?.querySelector('.swiper-pagination');
             if (pagination) {
                 pagination.classList.add(classes.paginationClass);
             } else {
@@ -196,8 +192,7 @@ const initializeSwipers = () => {
 
         // Scrollbar
         if (options.scrollbar) {
-            const section = el.closest('.swiper-section');
-            let scrollbar = section?.querySelector('.swiper-scrollbar');
+            let scrollbar = controls?.querySelector('.swiper-scrollbar');
             if (scrollbar) {
                 scrollbar.classList.add(classes.scrollbarClass);
             } else {
@@ -239,124 +234,4 @@ const initializeSwipers = () => {
     });
 };
 
-//
-// Products slides
-//
-const spgSwipers = () => {
-    const swiperElements = document.querySelectorAll('.swiper-product-gallery');
-
-    swiperElements.forEach((el, index) => {
-        const classes = generateClasses();
-        el.classList.add(classes.swiperClass);
-
-        const w_images = el?.querySelector('.swiper-images');
-        const w_thumbs = el?.querySelector('.swiper-thumbs');
-
-        let swiper_images = false;
-        let swiper_thumbs = false;
-
-        /** wpg thumbs */
-        if (w_thumbs) {
-            w_thumbs?.querySelector('.swiper-button-prev').classList.add('prev-thumbs-' + classes.rand);
-            w_thumbs?.querySelector('.swiper-button-next').classList.add('next-thumbs-' + classes.rand);
-            w_thumbs.classList.add('thumbs-' + classes.rand);
-
-            let thumbs_options = { ...getDefaultOptions() };
-            thumbs_options.breakpoints = {
-                0: {
-                    spaceBetween: 5,
-                    slidesPerView: 4,
-                },
-                768: {
-                    spaceBetween: 10,
-                    slidesPerView: 5,
-                },
-                1024: {
-                    spaceBetween: 10,
-                    slidesPerView: 6,
-                },
-            };
-
-            thumbs_options.navigation = {
-                prevEl: '.prev-thumbs-' + classes.rand,
-                nextEl: '.next-thumbs-' + classes.rand,
-            };
-
-            swiper_thumbs = initializeSwiper(w_thumbs, '.thumbs-' + classes.rand, thumbs_options);
-        }
-
-        /** wpg images */
-        if (w_images) {
-            w_images?.querySelector('.swiper-button-prev').classList.add('prev-images-' + classes.rand);
-            w_images?.querySelector('.swiper-button-next').classList.add('next-images-' + classes.rand);
-            w_images.classList.add('images-' + classes.rand);
-
-            let images_options = { ...getDefaultOptions() };
-            images_options.slidesPerView = 'auto';
-            images_options.spaceBetween = 10;
-            images_options.watchSlidesProgress = !0;
-
-            images_options.navigation = {
-                prevEl: '.prev-images-' + classes.rand,
-                nextEl: '.next-images-' + classes.rand,
-            };
-
-            if (swiper_thumbs) {
-                images_options.thumbs = {
-                    swiper: swiper_thumbs,
-                };
-            }
-
-            swiper_images = initializeSwiper(w_images, '.images-' + classes.rand, images_options);
-        }
-
-        /** Variation image */
-        let firstImage = w_images?.querySelector('.swiper-images-first img');
-        firstImage.removeAttribute('srcset');
-
-        let firstImageSrc = firstImage.getAttribute('src');
-        let imagePopupSrc = w_images?.querySelector('.swiper-images-first .image-popup');
-
-        /** */
-        let firstThumb = false;
-        let firstThumbSrc = false;
-        let dataLargeImage = false;
-
-        if (swiper_thumbs) {
-            firstThumb = w_thumbs?.querySelector('.swiper-thumbs-first img');
-            firstThumb.removeAttribute('srcset');
-
-            firstThumbSrc = firstThumb.getAttribute('src');
-            dataLargeImage = firstThumb.getAttribute('data-large_image');
-        }
-
-        /** WC event */
-        const variations_form = jQuery('form.variations_form');
-        if (variations_form) {
-            variations_form.on('found_variation', function (event, variation) {
-                if (variation.image.src) {
-                    firstImage.setAttribute('src', variation.image.src);
-                    imagePopupSrc.setAttribute('data-src', variation.image.full_src);
-                    if (swiper_thumbs) {
-                        firstThumb.setAttribute('src', variation.image.gallery_thumbnail_src);
-                    }
-
-                    swiper_images.slideTo(0);
-                }
-            });
-
-            variations_form.on('reset_image', function () {
-                firstImage.setAttribute('src', firstImageSrc);
-                imagePopupSrc.setAttribute('data-src', dataLargeImage);
-                if (swiper_thumbs) {
-                    firstThumb.setAttribute('src', firstThumbSrc);
-                }
-
-                swiper_images.slideTo(0);
-            });
-        }
-    });
-};
-
 document.addEventListener('DOMContentLoaded', initializeSwipers);
-document.addEventListener('DOMContentLoaded', spgSwipers);

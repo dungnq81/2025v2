@@ -7,7 +7,7 @@ if ( ! $acf_fc_layout ) {
     return;
 }
 
-$title_tag        = ! empty( $args['title_tag'] ) ? $args['title_tag'] : 'h2';
+$title_tag        = ! empty( $args['title_tag'] ) ? $args['title_tag'] : 'h3';
 $title            = ! empty( $args['title'] ) ? $args['title'] : '';
 $limit            = ! empty( $args['limit'] ) ? (int) $args['limit'] : 0;
 $categories       = ! empty( $args['categories'] ) ? (array) $args['categories'] : [];
@@ -23,13 +23,17 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
         <?php if ( $post_query ) : ?>
         <div class="p-news-list mt-9 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 md:gap-6">
             <?php
-            foreach ( $post_query as $id ) :
+            foreach ( $post_query as $post ) :
                 \HD_Helper::blockTemplate( 'parts/post/loop', [
                         'title_tag' => $title_tag,
-                        'id' => $id
+                        'id'        => $post
                 ] );
             endforeach; ?>
         </div>
         <?php endif; ?>
+        <?= \HD_Helper::ACFLink(
+                $view_more_button,
+                'relative left-[50%] translate-x-[-50%] mt-10 c-light-button inline-flex items-center justify-center px-6 py-3.5 text-[15px] rounded-md c-hover hover:text-white hover:border-(--text-color-1)',
+        ) ?>
     </div>
 </section>

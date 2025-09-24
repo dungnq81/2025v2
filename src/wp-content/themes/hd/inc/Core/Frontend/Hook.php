@@ -52,6 +52,7 @@ final class Hook {
         // -----------------------------------------------
         // wp_footer
         // -----------------------------------------------
+        add_action( 'wp_footer', [ $this, 'add_cookie_consent' ], 31 );
         add_action( 'wp_footer', [ $this, 'wp_footer_action' ], 32 );
         add_action( 'wp_footer', [ $this, 'wp_footer_custom_js_action' ], 99 );
 
@@ -259,6 +260,12 @@ final class Hook {
     // -----------------------------------------------
 
     public function _masthead_custom(): void {}
+
+    // -----------------------------------------------
+
+    public function add_cookie_consent(): void {
+        \HD_Helper::blockTemplate( 'parts/blocks/cookie-consent', [], false );
+    }
 
     // -----------------------------------------------
 

@@ -14,6 +14,23 @@ body {
     background-size: 100% auto;
 }
 
+// aspect-ratio.
+.as-1-1 {
+    aspect-ratio: 1 / 1;
+}
+
+.as-3-2 {
+    aspect-ratio: 3 / 2;
+}
+
+.as-4-3 {
+    aspect-ratio: 4 / 3;
+}
+
+.as-16-9 {
+    aspect-ratio: 16 / 9;
+}
+
 // .off-canvas
 .position-left {
     top: 0;
@@ -59,6 +76,18 @@ body {
 
     .title-bar-title {
         transform: translateZ(3px);
+
+        .mobile-logo-link {
+            img {
+                filter: brightness(0) invert(1) brightness(0.81) saturate(0);
+            }
+
+            &:hover {
+                img {
+                    filter: inherit;
+                }
+            }
+        }
     }
 
     .inline-search {
