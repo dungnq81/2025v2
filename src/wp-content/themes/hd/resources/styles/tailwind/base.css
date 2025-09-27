@@ -26,27 +26,51 @@
         }
     }
 
-    :is(h1, .h1) {
+    h1 {
         @apply p-fs-clamp-h1;
     }
 
-    :is(h2, .h2) {
+    h2 {
         @apply p-fs-clamp-h2;
     }
 
-    :is(h3, .h3) {
+    h3 {
         @apply p-fs-clamp-h3;
     }
 
-    :is(h4, .h4) {
+    h4 {
         @apply p-fs-clamp-h4;
     }
 
-    :is(h5, .h5) {
+    h5 {
         @apply p-fs-clamp-h5;
     }
 
-    :is(h6, .h6) {
+    h6 {
+        @apply p-fs-clamp-h6;
+    }
+
+    .h1 {
+        @apply p-fs-clamp-h1;
+    }
+
+    .h2 {
+        @apply p-fs-clamp-h2;
+    }
+
+    .h3 {
+        @apply p-fs-clamp-h3;
+    }
+
+    .h4 {
+        @apply p-fs-clamp-h4;
+    }
+
+    .h5 {
+        @apply p-fs-clamp-h5;
+    }
+
+    .h6 {
         @apply p-fs-clamp-h6;
     }
 
@@ -137,5 +161,9 @@
         box-shadow: 0 0 0 1000px transparent inset !important;
         -webkit-text-fill-color: rgba(255, 255, 255, 0.5) !important;
         transition: background-color 5000s ease-in-out 0s !important;
+    }
+
+    b, strong {
+        font-weight: 700;
     }
 }

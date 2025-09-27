@@ -1,4 +1,4 @@
-import { n as nanoid, a as Swiper } from "./vendor.DyarFzp3.js";
+import { n as nanoid, a as Swiper } from "./vendor.Cu7k5cta.js";
 const initializeSwiper = (el, swiper_class, options) => {
   if (!(el instanceof Element) || !options) {
     console.error("Error: The provided element is not a DOM element.");
@@ -114,8 +114,8 @@ const initializeSwipers = () => {
         btnPrev.classList.add("swiper-button", "swiper-button-prev", classes.prevClass);
         btnNext.classList.add("swiper-button", "swiper-button-next", classes.nextClass);
         controls.append(btnPrev, btnNext);
-        const iconLeft = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l4-4m-4 4l4 4"></path></svg>`;
-        const iconRight = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0l-4 4m4-4l-4-4"></path></svg>`;
+        const iconLeft = `<svg aria-hidden="true"><use href="#icon-arrow-left"></use></svg>`;
+        const iconRight = `<svg aria-hidden="true"><use href="#icon-arrow-right"></use></svg>`;
         btnPrev.innerHTML = iconLeft;
         btnNext.innerHTML = iconRight;
       }
@@ -182,4 +182,4 @@ const initializeSwipers = () => {
   });
 };
 document.addEventListener("DOMContentLoaded", initializeSwipers);
-//# sourceMappingURL=swiper.KqnkzZpb.js.map
+//# sourceMappingURL=swiper.BMUUJLat.js.map

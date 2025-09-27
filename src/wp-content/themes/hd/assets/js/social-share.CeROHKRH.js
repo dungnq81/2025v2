@@ -1,4 +1,4 @@
-import { S as SocialShare } from "./vendor.DyarFzp3.js";
+import { S as SocialShare } from "./vendor.Cu7k5cta.js";
 const DEFAULT_OPTIONS = {
   layout: "h",
   intents: [
@@ -60,4 +60,4 @@ function observePrintButton() {
 export {
   initSocialShare as i
 };
-//# sourceMappingURL=social-share.BnDjeBoD.js.map
+//# sourceMappingURL=social-share.CeROHKRH.js.map

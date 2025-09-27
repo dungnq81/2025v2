@@ -469,6 +469,13 @@ body {
   cursor: not-allowed;
 }
 
+.tabs-content .tabs-panel {
+  display: none;
+}
+.tabs-content .tabs-panel.is-active {
+  display: block;
+}
+
 /* index.scss */
 /* partials/_header.scss */
 .top-header a:hover {

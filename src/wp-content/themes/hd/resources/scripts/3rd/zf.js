@@ -58,6 +58,7 @@ import { OffCanvas } from 'foundation-sites/js/foundation.offcanvas';
 //import { Equalizer } from 'foundation-sites/js/foundation.equalizer';
 //import { Interchange } from 'foundation-sites/js/foundation.interchange';
 //import { Abide } from 'foundation-sites/js/foundation.abide';
+import { Tabs } from 'foundation-sites/js/foundation.tabs';
 
 const plugins = [
     { plugin: Dropdown, name: 'Dropdown' },
@@ -76,6 +77,7 @@ const plugins = [
     //{ plugin: Equalizer, name: 'Equalizer' },
     //{ plugin: Interchange, name: 'Interchange' },
     //{ plugin: Abide, name: 'Abide' },
+    { plugin: Tabs, name: 'Tabs' },
 ];
 
 plugins.forEach(({ plugin, name }) => {

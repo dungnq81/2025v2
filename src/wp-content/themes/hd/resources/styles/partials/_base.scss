@@ -596,3 +596,14 @@ body {
         }
     }
 }
+
+// tabs
+.tabs-content {
+    .tabs-panel {
+        display: none;
+
+        &.is-active {
+            display: block;
+        }
+    }
+}
