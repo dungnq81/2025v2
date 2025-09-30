@@ -1,4 +1,4 @@
-import { n as nanoid, a as Swiper } from "./vendor.Cu7k5cta.js";
+import { n as nanoid, a as Swiper } from "./vendor.DUNZ_2BU.js";
 const initializeSwiper = (el, swiper_class, options) => {
   if (!(el instanceof Element) || !options) {
     console.error("Error: The provided element is not a DOM element.");
@@ -54,23 +54,27 @@ const initializeSwipers = () => {
     }
     let options = JSON.parse(swiperWrapper.dataset.options);
     let swiperOptions = { ...getDefaultOptions() };
+    if (options.spaceBetween) {
+      swiperOptions.spaceBetween = parseInt(options.spaceBetween);
+    }
+    if (options.slidesPerView === "auto") {
+      swiperOptions.slidesPerView = "auto";
+    } else if (options.slidesPerView) {
+      swiperOptions.slidesPerView = parseInt(options.slidesPerView);
+    }
     if (options.autoview) {
       swiperOptions.slidesPerView = "auto";
       if (options.gap) {
         swiperOptions.spaceBetween = 12;
         swiperOptions.breakpoints = {
-          768: { spaceBetween: 24 }
+          640: { spaceBetween: 24 }
         };
-      } else if (options._gap) {
-        swiperOptions.spaceBetween = parseInt(options._gap);
       }
     } else {
-      if (options.spaceBetween) {
-        swiperOptions.spaceBetween = parseInt(options.spaceBetween);
-      }
       swiperOptions.breakpoints = {
         0: options.mobile || {},
-        768: options.tablet || {},
+        640: options.tablet || {},
+        768: options.tablet_l || {},
         1024: options.desktop || {}
       };
     }
@@ -182,4 +186,4 @@ const initializeSwipers = () => {
   });
 };
 document.addEventListener("DOMContentLoaded", initializeSwipers);
-//# sourceMappingURL=swiper.BMUUJLat.js.map
+//# sourceMappingURL=swiper.Bi-MoGbt.js.map

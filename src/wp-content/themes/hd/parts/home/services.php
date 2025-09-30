@@ -7,15 +7,18 @@ if ( ! $acf_fc_layout ) {
 	return;
 }
 
+$id = $args['id'] ?? 0;
+$id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
+
 ?>
-<section class="section section-services py-20">
+<section id="section-<?= $id ?>" class="section section-services py-20">
 	<div class="u-container">
 		<h2 class="font-bold text-center">Dịch vụ của chúng tôi</h2>
-		<p class="max-w-3xl mb-0 p-fs-clamp-[16,18] text-center mx-auto pt-2">
-			XÂY DỰNG WEBSITE <strong class="text-(--text-color-1)">CHUYÊN NGHIỆP</strong> & ĐƯA RA CÁC GIẢI PHÁP CHUYÊN SÂU VỀ LĨNH VỰC <strong class="text-(--text-color-1)">DIGITAL MARKETING</strong>
+		<p class="max-w-3xl mb-0 p-fs-clamp-[15,17] text-center mx-auto pt-4">
+			XÂY DỰNG WEBSITE <strong class="text-1">CHUYÊN NGHIỆP</strong> & ĐƯA RA CÁC GIẢI PHÁP CHUYÊN SÂU VỀ LĨNH VỰC <strong class="text-1">DIGITAL MARKETING</strong>
 			<i class="block text-sm text-center mt-3">Thiết kế WEBSITE, SEO, Sáng tạo nội dung website & Fanpage, Google Ads, Facebook Ads …</i>
 		</p>
-		<ul class="tabs flex justify-center gap-4 mt-16 lg:px-24 lg:mb-8 lg:gap-8" data-tabs id="services-tabs">
+		<ul class="tabs flex justify-center gap-4 mt-16 lg:px-24 lg:mb-8 lg:gap-8" data-tabs id="services-tabs-<?=$id?>">
 			<li class="tabs-title is-active">
                 <a class="p-6 h-full flex items-center gap-4 c-light-button c-hover rounded-md hover:text-white" href="#thiet-ke-website" aria-selected="true" title="Thiết kế website">
                     <svg class="w-10 h-10 relative" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 13.74a2 2 0 0 1-2 0L2.5 8.87a1 1 0 0 1 0-1.74L11 2.26a2 2 0 0 1 2 0l8.5 4.87a1 1 0 0 1 0 1.74z"/><path d="m20 14.285 1.5.845a1 1 0 0 1 0 1.74L13 21.74a2 2 0 0 1-2 0l-8.5-4.87a1 1 0 0 1 0-1.74l1.5-.845"/></svg>
@@ -35,7 +38,7 @@ if ( ! $acf_fc_layout ) {
                 </a>
             </li>
 		</ul>
-		<div class="tabs-content py-24 lg:px-24" data-tabs-content="services-tabs">
+		<div class="tabs-content pt-24 pb-12 lg:px-24" data-tabs-content="services-tabs-<?=$id?>">
 			<div class="tabs-panel is-active" id="thiet-ke-website">
                 <div class="flex gap-20 items-center">
                     <div class="w-full lg:w-1/3 max-w-2xl text-center">
@@ -48,23 +51,23 @@ if ( ! $acf_fc_layout ) {
                         </p>
                         <ul class="flex flex-col gap-5 mt-8">
                             <li class="flex items-baseline gap-4 group">
-                                <svg class="top-[7px] c-hover relative w-6 h-6 text-(--text-color-2) group-hover:text-(--text-color-1)" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
+                                <svg class="top-[7px] c-hover relative w-6 h-6 text-2 group-hover:text-1" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
                                 <a class="uppercase font-bold text-[14px] hover:text-white" href="#" title="Website theo yêu cầu">Website theo yêu cầu</a>
                             </li>
                             <li class="flex items-baseline gap-4 group">
-                                <svg class="top-[7px] c-hover relative w-6 h-6 text-(--text-color-2) group-hover:text-(--text-color-1)" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
+                                <svg class="top-[7px] c-hover relative w-6 h-6 text-2 group-hover:text-1" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
                                 <a class="uppercase font-bold text-[14px] hover:text-white" href="#" title="Website doanh nghiệp">Website doanh nghiệp</a>
                             </li>
                             <li class="flex items-baseline gap-4 group">
-                                <svg class="top-[7px] c-hover relative w-6 h-6 text-(--text-color-2) group-hover:text-(--text-color-1)" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
+                                <svg class="top-[7px] c-hover relative w-6 h-6 text-2 group-hover:text-1" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
                                 <a class="uppercase font-bold text-[14px] hover:text-white" href="#" title="Website bán hàng">Website bán hàng</a>
                             </li>
                             <li class="flex items-baseline gap-4 group">
-                                <svg class="top-[7px] c-hover relative w-6 h-6 text-(--text-color-2) group-hover:text-(--text-color-1)" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
+                                <svg class="top-[7px] c-hover relative w-6 h-6 text-2 group-hover:text-1" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
                                 <a class="uppercase font-bold text-[14px] hover:text-white" href="#" title="Website bất động sản">Website bất động sản</a>
                             </li>
                         </ul>
-                        <a class="text-sm pt-12 inline-flex items-center gap-2 text-(--text-color-1)" href="#" title="Xem thêm">
+                        <a class="text-sm pt-12 inline-flex items-center gap-2 text-1" href="#" title="Xem thêm">
                             Xem thêm
                             <svg class="w-5 h-5" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
                         </a>
@@ -83,23 +86,23 @@ if ( ! $acf_fc_layout ) {
                         </p>
                         <ul class="flex flex-col gap-5 mt-8">
                             <li class="flex items-baseline gap-4 group">
-                                <svg class="top-[7px] c-hover relative w-6 h-6 text-(--text-color-2) group-hover:text-(--text-color-1)" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
+                                <svg class="top-[7px] c-hover relative w-6 h-6 text-2 group-hover:text-1" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
                                 <a class="uppercase font-bold text-[14px] hover:text-white" href="#" title="Website theo yêu cầu">Dịch vụ SEO tổng thể</a>
                             </li>
                             <li class="flex items-baseline gap-4 group">
-                                <svg class="top-[7px] c-hover relative w-6 h-6 text-(--text-color-2) group-hover:text-(--text-color-1)" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
+                                <svg class="top-[7px] c-hover relative w-6 h-6 text-2 group-hover:text-1" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
                                 <a class="uppercase font-bold text-[14px] hover:text-white" href="#" title="Website doanh nghiệp">ADS GOOGLE - FACEBOOK</a>
                             </li>
                             <li class="flex items-baseline gap-4 group">
-                                <svg class="top-[7px] c-hover relative w-6 h-6 text-(--text-color-2) group-hover:text-(--text-color-1)" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
+                                <svg class="top-[7px] c-hover relative w-6 h-6 text-2 group-hover:text-1" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
                                 <a class="uppercase font-bold text-[14px] hover:text-white" href="#" title="Website bán hàng">CHĂM SÓC WEBSITE - FANPAGE</a>
                             </li>
                             <li class="flex items-baseline gap-4 group">
-                                <svg class="top-[7px] c-hover relative w-6 h-6 text-(--text-color-2) group-hover:text-(--text-color-1)" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
+                                <svg class="top-[7px] c-hover relative w-6 h-6 text-2 group-hover:text-1" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
                                 <a class="uppercase font-bold text-[14px] hover:text-white" href="#" title="Website bất động sản">SÁNG TẠO NỘI DUNG CHUẨN SEO</a>
                             </li>
                         </ul>
-                        <a class="text-sm pt-12 inline-flex items-center gap-2 text-(--text-color-1)" href="#" title="Xem thêm">
+                        <a class="text-sm pt-12 inline-flex items-center gap-2 text-1" href="#" title="Xem thêm">
                             Xem thêm
                             <svg class="w-5 h-5" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
                         </a>
@@ -118,23 +121,23 @@ if ( ! $acf_fc_layout ) {
                         </p>
                         <ul class="flex flex-col gap-5 mt-8">
                             <li class="flex items-baseline gap-4 group">
-                                <svg class="top-[7px] c-hover relative w-6 h-6 text-(--text-color-2) group-hover:text-(--text-color-1)" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
+                                <svg class="top-[7px] c-hover relative w-6 h-6 text-2 group-hover:text-1" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
                                 <a class="uppercase font-bold text-[14px] hover:text-white" href="#" title="Website theo yêu cầu">THIẾT KẾ LOGO</a>
                             </li>
                             <li class="flex items-baseline gap-4 group">
-                                <svg class="top-[7px] c-hover relative w-6 h-6 text-(--text-color-2) group-hover:text-(--text-color-1)" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
+                                <svg class="top-[7px] c-hover relative w-6 h-6 text-2 group-hover:text-1" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
                                 <a class="uppercase font-bold text-[14px] hover:text-white" href="#" title="Website doanh nghiệp">THIẾT KẾ NAME CARD</a>
                             </li>
                             <li class="flex items-baseline gap-4 group">
-                                <svg class="top-[7px] c-hover relative w-6 h-6 text-(--text-color-2) group-hover:text-(--text-color-1)" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
+                                <svg class="top-[7px] c-hover relative w-6 h-6 text-2 group-hover:text-1" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
                                 <a class="uppercase font-bold text-[14px] hover:text-white" href="#" title="Website bán hàng">CATELOGUE</a>
                             </li>
                             <li class="flex items-baseline gap-4 group">
-                                <svg class="top-[7px] c-hover relative w-6 h-6 text-(--text-color-2) group-hover:text-(--text-color-1)" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
+                                <svg class="top-[7px] c-hover relative w-6 h-6 text-2 group-hover:text-1" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
                                 <a class="uppercase font-bold text-[14px] hover:text-white" href="#" title="Website bất động sản">PROFILE</a>
                             </li>
                         </ul>
-                        <a class="text-sm pt-12 inline-flex items-center gap-2 text-(--text-color-1)" href="#" title="Xem thêm">
+                        <a class="text-sm pt-12 inline-flex items-center gap-2 text-1" href="#" title="Xem thêm">
                             Xem thêm
                             <svg class="w-5 h-5" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
                         </a>

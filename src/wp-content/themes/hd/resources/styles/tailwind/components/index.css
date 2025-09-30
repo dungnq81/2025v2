@@ -61,7 +61,7 @@
     }
 
     .c-swiper-button {
-        @apply flex items-center justify-center rounded-md !text-(--text-color) hover:border-(--text-color-1) hover:!text-(--text-color-1);
+        @apply flex items-center justify-center rounded-md !text-(--text-color) hover:border-(--text-color-1) hover:!text-1;
     }
 
     .c-hero-dot-1 {

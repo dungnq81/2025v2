@@ -7,8 +7,11 @@ if ( ! $acf_fc_layout ) {
 	return;
 }
 
+$id = $args['id'] ?? 0;
+$id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
+
 ?>
-<section class="section section-feedback py-24">
+<section id="section-<?= $id ?>" class="section section-feedback py-24">
 	<div class="u-container">
 		<div class="closest-swiper u-flex-center gap-y-8 lg:gap-y-0 flex-wrap lg:flex-nowrap lg:flex-row lg:justify-between lg:gap-x-8">
 			<?php
@@ -29,7 +32,7 @@ if ( ! $acf_fc_layout ) {
 			<div class="w-full lg:w-2/5">
 				<span class="font-medium mb-4 block text-center lg:text-left">Đánh giá</span>
 				<h2 class="font-bold text-center lg:text-left text-balance">
-					Khách hàng đánh giá về <span class="text-(--text-color-1)">DỊCH VỤ</span> của chúng tôi
+					Khách hàng đánh giá về <span class="text-1">DỊCH VỤ</span> của chúng tôi
 				</h2>
                 <p class="max-w-3xl mb-0 text-[15px] mx-auto pt-3">
                     4.5 out of 5 based on <strong>Trustpilot</strong> reviews

@@ -13,6 +13,7 @@ const DEFAULTS = {
     sameSite: 'Lax',
     secure: true,
     path: '/',
+    removeOnHide: true,
 };
 
 let _inited = false;
@@ -34,6 +35,26 @@ function _hide (el) {
 function _show (el) {
     if (!el) return;
     el.style.display = 'flex';
+    el.classList.remove('hidden');
+}
+
+function _hideAndRemove (el) {
+    if (!el) return;
+
+    el.style.transition = el.style.transition || 'opacity .25s ease';
+    el.style.opacity = '0';
+    el.style.pointerEvents = 'none';
+
+    const onEnd = () => {
+        el.removeEventListener('transitionend', onEnd);
+        if (el.isConnected) el.remove();
+    };
+    el.addEventListener('transitionend', onEnd, { once: true });
+
+    // Fallback
+    setTimeout(() => {
+        if (el && el.isConnected) el.remove();
+    }, 350);
 }
 
 async function _initNow (opts) {
@@ -42,10 +63,17 @@ async function _initNow (opts) {
     const btnClose = document.querySelector(opts.closeSelector);
     if (!banner || !btnAccept || !btnClose) return false;
 
-    const consent = await CookieService.get(opts.consentCookie);
-    const dismissed = await CookieService.get(opts.dismissCookie);
-    if (consent === 'accepted' || dismissed === '1') _hide(banner);
-    else _show(banner);
+    const [ consent, dismissed ] = await Promise.all([
+        CookieService.get(opts.consentCookie),
+        CookieService.get(opts.dismissCookie),
+    ]);
+
+    if (consent === 'accepted' || dismissed === '1') {
+        if (opts.removeOnHide) _hideAndRemove(banner);
+        else _hide(banner);
+    } else {
+        _show(banner);
+    }
 
     // Accept all
     btnAccept.addEventListener('click', async () => {
@@ -53,7 +81,9 @@ async function _initNow (opts) {
             days: opts.consentDays, path: opts.path, sameSite: opts.sameSite, secure: opts.secure,
         });
         await CookieService.delete(opts.dismissCookie, { path: opts.path });
-        _hide(banner);
+
+        if (opts.removeOnHide) _hideAndRemove(banner);
+        else _hide(banner);
     }, { once: true });
 
     // Close
@@ -61,7 +91,9 @@ async function _initNow (opts) {
         await CookieService.set(opts.dismissCookie, '1', {
             days: opts.dismissDays, path: opts.path, sameSite: opts.sameSite, secure: opts.secure,
         });
-        _hide(banner);
+
+        if (opts.removeOnHide) _hideAndRemove(banner);
+        else _hide(banner);
     }, { once: true });
 
     return true;
@@ -72,7 +104,7 @@ export async function setupCookieConsent (userOptions = {}) {
 
     const opts = { ...DEFAULTS, ...userOptions };
     const ok = await _initNow(opts);
-    
+
     if (ok) {
         _inited = true;
         if (_mo) {

@@ -1,6 +1,6 @@
-import "./vendor.Cu7k5cta.js";
-import "./swiper.BMUUJLat.js";
-import { i as initSocialShare } from "./social-share.CeROHKRH.js";
+import "./vendor.DUNZ_2BU.js";
+import "./swiper.Bi-MoGbt.js";
+import { i as initSocialShare } from "./social-share.DoyB7sqf.js";
 class BackToTop {
   constructor(selector = ".js-back-to-top", smoothScrollEnabled = true, defaultScrollSpeed = 400) {
     this.buttonSelector = selector;
@@ -248,7 +248,8 @@ const DEFAULTS = {
   dismissCookie: "cookie_consent_dismissed",
   sameSite: "Lax",
   secure: true,
-  path: "/"
+  path: "/",
+  removeOnHide: true
 };
 let _inited = false;
 let _mo = null;
@@ -266,16 +267,37 @@ function _hide(el) {
 function _show(el) {
   if (!el) return;
   el.style.display = "flex";
+  el.classList.remove("hidden");
+}
+function _hideAndRemove(el) {
+  if (!el) return;
+  el.style.transition = el.style.transition || "opacity .25s ease";
+  el.style.opacity = "0";
+  el.style.pointerEvents = "none";
+  const onEnd = () => {
+    el.removeEventListener("transitionend", onEnd);
+    if (el.isConnected) el.remove();
+  };
+  el.addEventListener("transitionend", onEnd, { once: true });
+  setTimeout(() => {
+    if (el && el.isConnected) el.remove();
+  }, 350);
 }
 async function _initNow(opts) {
   const banner = _getBanner(opts);
   const btnAccept = document.querySelector(opts.acceptSelector);
   const btnClose = document.querySelector(opts.closeSelector);
   if (!banner || !btnAccept || !btnClose) return false;
-  const consent = await CookieService.get(opts.consentCookie);
-  const dismissed = await CookieService.get(opts.dismissCookie);
-  if (consent === "accepted" || dismissed === "1") _hide(banner);
-  else _show(banner);
+  const [consent, dismissed] = await Promise.all([
+    CookieService.get(opts.consentCookie),
+    CookieService.get(opts.dismissCookie)
+  ]);
+  if (consent === "accepted" || dismissed === "1") {
+    if (opts.removeOnHide) _hideAndRemove(banner);
+    else _hide(banner);
+  } else {
+    _show(banner);
+  }
   btnAccept.addEventListener("click", async () => {
     await CookieService.set(opts.consentCookie, "accepted", {
       days: opts.consentDays,
@@ -284,7 +306,8 @@ async function _initNow(opts) {
       secure: opts.secure
     });
     await CookieService.delete(opts.dismissCookie, { path: opts.path });
-    _hide(banner);
+    if (opts.removeOnHide) _hideAndRemove(banner);
+    else _hide(banner);
   }, { once: true });
   btnClose.addEventListener("click", async () => {
     await CookieService.set(opts.dismissCookie, "1", {
@@ -293,7 +316,8 @@ async function _initNow(opts) {
       sameSite: opts.sameSite,
       secure: opts.secure
     });
-    _hide(banner);
+    if (opts.removeOnHide) _hideAndRemove(banner);
+    else _hide(banner);
   }, { once: true });
   return true;
 }
@@ -333,4 +357,4 @@ async function run() {
   });
 }
 document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", run, { once: true }) : run();
-//# sourceMappingURL=index.CpzEoqra.js.map
+//# sourceMappingURL=index.BvWCU33u.js.map

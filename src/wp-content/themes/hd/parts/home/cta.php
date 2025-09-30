@@ -7,8 +7,11 @@ if ( ! $acf_fc_layout ) {
 	return;
 }
 
+$id = $args['id'] ?? 0;
+$id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
+
 ?>
-<section class="section section-cta bg-(image:--bg-right-gradient-1) py-20">
+<section id="section-<?= $id ?>" class="section section-cta bg-(image:--bg-right-gradient-1) py-20">
 	<div class="u-container">
 		<div class="flex items-center justify-between gap-6">
 			<div class="w-full lg:w-1/2 max-w-2xl">
