@@ -50,11 +50,11 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 				<div class="swiper w-swiper">
 					<div class="swiper-wrapper" data-options='<?= $swiper_data ?>'>
 						<div class="swiper-slide">
-							<div class="bg-[#ffffff1a] border border-solid border-[#ffffff26] c-hover hover:border-(--text-color-1) rounded-md max-sm:max-w-sm max-sm:mx-auto p-6">
+							<div class="bg-[#00000014] dark:bg-[#ffffff1a] border border-solid border-[#00000026] dark:border-[#ffffff26] c-hover hover:border-(--text-color-1) rounded-md max-sm:max-w-sm max-sm:mx-auto p-6">
 								<div class="flex items-center gap-5 mb-5 sm:mb-9">
 									<img class="rounded-full object-cover w-16 h-16" src="https://randomuser.me/api/portraits/men/33.jpg" alt="avatar">
 									<div class="grid gap-1">
-										<h5 class="text-white font-bold">Jane D</h5>
+										<h5 class="text-[#000] dark:text-white font-bold">Jane D</h5>
 										<span class="text-sm leading-6 text-(--text-color)">CEO </span>
 									</div>
 								</div>
@@ -71,11 +71,11 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 							</div>
 						</div>
 						<div class="swiper-slide">
-							<div class="bg-[#ffffff1a] border border-solid border-[#ffffff26] c-hover hover:border-(--text-color-1) rounded-md max-sm:max-w-sm max-sm:mx-auto p-6">
+                            <div class="bg-[#00000014] dark:bg-[#ffffff1a] border border-solid border-[#00000026] dark:border-[#ffffff26] c-hover hover:border-(--text-color-1) rounded-md max-sm:max-w-sm max-sm:mx-auto p-6">
 								<div class="flex items-center gap-5 mb-5 sm:mb-9">
 									<img class="rounded-full object-cover w-16 h-16" src="https://randomuser.me/api/portraits/men/33.jpg" alt="avatar">
 									<div class="grid gap-1">
-										<h5 class="text-white font-bold">Jane D</h5>
+										<h5 class="text-[#000] dark:text-white font-bold">Jane D</h5>
 										<span class="text-sm leading-6 text-(--text-color)">CEO </span>
 									</div>
 								</div>
@@ -92,11 +92,11 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 							</div>
 						</div>
 						<div class="swiper-slide">
-							<div class="bg-[#ffffff1a] border border-solid border-[#ffffff26] c-hover hover:border-(--text-color-1) rounded-md max-sm:max-w-sm max-sm:mx-auto p-6">
+                            <div class="bg-[#00000014] dark:bg-[#ffffff1a] border border-solid border-[#00000026] dark:border-[#ffffff26] c-hover hover:border-(--text-color-1) rounded-md max-sm:max-w-sm max-sm:mx-auto p-6">
 								<div class="flex items-center gap-5 mb-5 sm:mb-9">
 									<img class="rounded-full object-cover w-16 h-16" src="https://randomuser.me/api/portraits/men/33.jpg" alt="avatar">
 									<div class="grid gap-1">
-										<h5 class="text-white font-bold">Jane D</h5>
+										<h5 class="text-[#000] dark:text-white font-bold">Jane D</h5>
 										<span class="text-sm leading-6 text-(--text-color)">CEO </span>
 									</div>
 								</div>

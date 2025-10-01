@@ -1,4 +1,4 @@
-import { n as nanoid, a as Swiper } from "./vendor.DUNZ_2BU.js";
+import { n as nanoid, a as Swiper } from "./vendor.BeAzQFVb.js";
 const initializeSwiper = (el, swiper_class, options) => {
   if (!(el instanceof Element) || !options) {
     console.error("Error: The provided element is not a DOM element.");
@@ -186,4 +186,4 @@ const initializeSwipers = () => {
   });
 };
 document.addEventListener("DOMContentLoaded", initializeSwipers);
-//# sourceMappingURL=swiper.Bi-MoGbt.js.map
+//# sourceMappingURL=swiper.BSr-YWpl.js.map

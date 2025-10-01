@@ -1,1 +1,1 @@
-{"version":3,"file":"woocommerce.CWgBRUes.js","sources":["../../resources/scripts/components/woocommerce.js"],"sourcesContent":["jQuery(function ($) {\n    //...\n});\n"],"names":[],"mappings":"AAAA,OAAO,SAAU,GAAG;AAEpB,CAAC;"}
+{"version":3,"file":"woocommerce.CWgBRUes.js","sources":["../../resources/scripts/components/woocommerce.js"],"sourcesContent":["// components/woocommerce.js\n\njQuery(function ($) {\n    //...\n});\n"],"names":[],"mappings":"AAEA,OAAO,SAAU,GAAG;AAEpB,CAAC;"}

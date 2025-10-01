@@ -23,6 +23,21 @@ $id       = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
             <?= $title ? '<h2 class="max-w-3xl font-bold mb-6 p-fs-clamp-[32,56] leading-[1.2]">' . $title . '</h2>' : '' ?>
             <?= $desc ? '<p class="max-w-2xl mb-9 p-fs-clamp-[15,17]">' . $desc . '</p>' : '' ?>
 
+            <ul class="flex flex-row mb-8 space-x-6">
+                <li class="flex items-center group">
+                    <svg class="text-2 w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917L9.724 16.5L19 7.5"/></svg>
+                    <span class="ml-2 text-sm c-hover group-hover:text-white">No credit card required</span>
+                </li>
+                <li class="flex items-center group">
+                    <svg class="text-2 w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917L9.724 16.5L19 7.5"/></svg>
+                    <span class="ml-2 text-sm c-hover group-hover:text-white">Free 14-day trial</span>
+                </li>
+                <li class="flex items-center group">
+                    <svg class="text-2 w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917L9.724 16.5L19 7.5"/></svg>
+                    <span class="ml-2 text-sm c-hover group-hover:text-white">Cancel anytime</span>
+                </li>
+            </ul>
+
             <?php if ( $button_1 || $button_2 ) :
 
                 $content_1 = \HD_Helper::ACFLinkLabel( $button_1 );
@@ -41,7 +56,7 @@ $id       = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                 <?= \HD_Helper::ACFLinkWrap(
                         $content_2,
                         $button_2,
-                        'c-light-button inline-flex items-center justify-center px-6 py-3.5 text-[15px] font-medium text-white rounded-md c-hover hover:shadow-[0px_4px_29px_-9px_#1D1D1DB2]',
+                        'c-light-button inline-flex items-center justify-center px-6 py-3.5 text-[15px] font-medium text-(-text-color) dark:text-white rounded-md c-hover hover:shadow-[0px_4px_29px_-9px_#1D1D1DB2]',
                 ) ?>
 
 			</div>

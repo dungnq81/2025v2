@@ -1,6 +1,6 @@
-import "./vendor.DUNZ_2BU.js";
-import "./swiper.Bi-MoGbt.js";
-import { i as initSocialShare } from "./social-share.DoyB7sqf.js";
+import "./vendor.BeAzQFVb.js";
+import "./swiper.BSr-YWpl.js";
+import { i as initSocialShare } from "./social-share.BTF2OPRs.js";
 class BackToTop {
   constructor(selector = ".js-back-to-top", smoothScrollEnabled = true, defaultScrollSpeed = 400) {
     this.buttonSelector = selector;
@@ -64,7 +64,7 @@ class BackToTop {
 setTimeout(() => {
   new BackToTop();
 }, 100);
-(function() {
+(() => {
   const run2 = () => {
     document.querySelectorAll('a._blank, a.blank, a[target="_blank"]').forEach((el) => {
       if (!el.hasAttribute("target") || el.getAttribute("target") !== "_blank") {
@@ -130,59 +130,94 @@ const scriptLoader = (timeout = 3e3, scriptSelector = 'script[data-type="lazy"]'
   }
 };
 scriptLoader();
-function stickyBar(selector = "#masthead") {
-  const navbar = document.querySelector(selector);
-  if (!navbar) return;
+function stickyBar({ navbar = "#masthead", header = "#header", topBar = ".top-header" } = {}) {
+  const navbarEl = document.querySelector(navbar);
+  if (!navbarEl) return;
   const body = document.body;
-  const distance = navbar.offsetTop;
-  const navbarHeight = navbar.offsetHeight;
+  const headerEl = document.querySelector(header);
+  const topBarEl = document.querySelector(topBar);
+  const placeholder = document.createElement("div");
+  placeholder.className = "masthead-placeholder";
+  placeholder.style.display = "none";
+  navbarEl.parentNode.insertBefore(placeholder, navbarEl);
+  let navbarHeight = navbarEl.offsetHeight;
+  let markerHeight = 0;
   let lastScrollTop = 0;
   let ticking = false;
+  let resizeTimeout;
   const getScrollTop = () => document.scrollingElement?.scrollTop ?? window.scrollY ?? window.pageYOffset ?? 0;
-  const top = getScrollTop();
-  if (top < 1) {
-    navbar.classList.remove("sticky");
-    body.classList.remove("b-sticky");
-  } else {
-    navbar.classList.add("sticky");
-    body.classList.add("b-sticky");
+  function updateHeights() {
+    const markerElement = topBarEl || headerEl;
+    markerHeight = markerElement ? markerElement.offsetHeight : 0;
+    navbarHeight = navbarEl.offsetHeight;
+    placeholder.style.height = `${navbarHeight}px`;
   }
+  updateHeights();
+  const initialScroll = getScrollTop();
+  if (initialScroll > markerHeight) {
+    body.classList.add("scrolled-past-marker");
+  }
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      updateHeights();
+      const currentScroll = getScrollTop();
+      if (currentScroll <= markerHeight) {
+        navbarEl.classList.remove("show");
+        placeholder.style.display = "none";
+        body.classList.remove("navbar-visible");
+      } else if (body.classList.contains("navbar-visible")) {
+        placeholder.style.height = `${navbarHeight}px`;
+      }
+    }, 150);
+  });
   document.addEventListener("scroll", () => {
-    const scrollTop = getScrollTop();
     if (!ticking) {
       window.requestAnimationFrame(() => {
-        handleScroll(scrollTop);
+        handleScroll();
         ticking = false;
       });
       ticking = true;
     }
   });
-  function handleScroll(scrollTop) {
+  function handleScroll() {
+    const scrollTop = getScrollTop();
     const atBottom = scrollTop + window.innerHeight >= document.documentElement.scrollHeight - 5;
-    if (scrollTop > distance) {
-      navbar.classList.add("sticky");
-      body.classList.add("b-sticky");
-    } else if (scrollTop < 1) {
-      navbar.classList.remove("sticky", "scroll");
-      body.classList.remove("b-sticky", "b-scroll");
-    }
-    if (scrollTop > lastScrollTop && scrollTop > navbarHeight) {
-      navbar.classList.add("sticky");
-      body.classList.add("b-sticky", "b-scroll");
-    } else if (scrollTop < lastScrollTop && scrollTop > navbarHeight) {
-      navbar.classList.remove("scroll");
-      body.classList.remove("b-scroll");
-    }
-    if (body.classList.contains("lock-scroll")) {
-      navbar.classList.remove("scroll", "bottom");
-      body.classList.remove("b-scroll", "b-bottom");
+    if (scrollTop > lastScrollTop) {
+      body.classList.add("scrolling-down");
+      body.classList.remove("scrolling-up");
+    } else if (scrollTop < lastScrollTop) {
+      body.classList.add("scrolling-up");
+      body.classList.remove("scrolling-down");
     }
     if (atBottom) {
-      navbar.classList.add("bottom");
-      body.classList.add("b-bottom");
+      body.classList.add("at-bottom");
     } else {
-      navbar.classList.remove("bottom");
-      body.classList.remove("b-bottom");
+      body.classList.remove("at-bottom");
+    }
+    if (scrollTop > markerHeight) {
+      body.classList.add("scrolled-past-marker");
+    } else {
+      body.classList.remove("scrolled-past-marker");
+    }
+    if (scrollTop < lastScrollTop && scrollTop > markerHeight) {
+      navbarEl.classList.add("show");
+      placeholder.style.display = "block";
+      body.classList.add("navbar-visible");
+    } else if (scrollTop > lastScrollTop && scrollTop > markerHeight + navbarHeight) {
+      navbarEl.classList.remove("show");
+      placeholder.style.display = "none";
+      body.classList.remove("navbar-visible");
+    }
+    if (scrollTop <= markerHeight) {
+      navbarEl.classList.remove("show");
+      placeholder.style.display = "none";
+      body.classList.remove("navbar-visible");
+    }
+    if (body.classList.contains("lock-scroll")) {
+      navbarEl.classList.remove("show");
+      placeholder.style.display = "none";
+      body.classList.remove("navbar-visible", "scrolling-up", "scrolling-down");
     }
     lastScrollTop = scrollTop;
   }
@@ -347,7 +382,7 @@ async function setupCookieConsent(userOptions = {}) {
   _mo.observe(document.body, { childList: true, subtree: true });
 }
 async function run() {
-  stickyBar("#masthead");
+  stickyBar();
   initSocialShare("[data-social-share]", {
     intents: ["facebook", "x", "print", "send-email", "copy-link", "web-share"]
   });
@@ -357,4 +392,4 @@ async function run() {
   });
 }
 document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", run, { once: true }) : run();
-//# sourceMappingURL=index.BvWCU33u.js.map
+//# sourceMappingURL=index.BVKPz264.js.map

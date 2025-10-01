@@ -32,7 +32,7 @@ if ( ! in_array( $position, [ 'left', 'right', 'top', 'bottom' ], true ) ) {
 }
 
 ?>
-<div class="off-canvas z-12 backface-hidden fixed bg-[#1d1d1d] position-<?= $position ?>" id="offCanvasMenu" data-off-canvas data-content-scroll="false">
+<div class="off-canvas z-12 backface-hidden fixed bg-[#f1f1f1] dark:bg-[#1d1d1d] position-<?= $position ?>" id="offCanvasMenu" data-off-canvas data-content-scroll="false">
 	<div class="menu-heading-outer">
 		<button class="menu-lines absolute top-4 right-4 block opacity-0 p-0 w-6 h-6" aria-label="Close" type="button" data-close>
 			<span class="line line-1 block w-6 h-[2px] rounded-none"></span>
@@ -43,7 +43,7 @@ if ( ! in_array( $position, [ 'left', 'right', 'top', 'bottom' ], true ) ) {
 	<div class="menu-outer">
 		<?php
 		echo \HD_Helper::doShortcode( 'inline_search', [ 'class' => 'p-4' ] );
-		echo \HD_Helper::doShortcode( 'vertical_menu', [ 'extra_class' => 'relative h-full overflow-hidden p-4 gap-4 flex flex-col flex-nowrap' ] );
+		echo \HD_Helper::doShortcode( 'vertical_menu', [ 'extra_class' => 'relative h-full overflow-hidden p-4 gap-4 flex flex-col flex-nowrap', ] );
 		?>
 	</div>
 </div>

@@ -1,3 +1,5 @@
+// components/swiper.js
+
 import { nanoid } from 'nanoid';
 import Swiper from 'swiper/bundle';
 

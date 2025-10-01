@@ -28,7 +28,6 @@ final class Hook {
         // -----------------------------------------------
         // hd_header_before_action
         // -----------------------------------------------
-        add_action( 'hd_header_before_action', [ $this, 'skip_to_content_link_action' ], 2 );
         add_action( 'hd_header_before_action', [ $this, 'off_canvas_menu_action' ], 11 );
 
         // -----------------------------------------------
@@ -143,16 +142,6 @@ final class Hook {
 
     // -----------------------------------------------
 
-    public function skip_to_content_link_action(): void {
-        printf(
-                '<a class="sr-only skip-link" href="#site-content" title="%1$s">%2$s</a>',
-                esc_attr__( 'Skip to content', TEXT_DOMAIN ),
-                esc_html__( 'Skip to content', TEXT_DOMAIN )
-        );
-    }
-
-    // -----------------------------------------------
-
     public function off_canvas_menu_action(): void {
         \HD_Helper::blockTemplate( 'parts/blocks/off-canvas', [], true );
     }
@@ -199,7 +188,7 @@ final class Hook {
                         <span class="content flex items-center gap-1">
                             <?= get_the_title( $post->ID ) ?> -
                             <a class="flex items-center gap-1" href="<?= get_permalink( $post->ID ) ?>" title="Xem chi tiết">
-                                <span class="text-(--color-white)">Chi tiết</span>
+                                <span class="dark:text-(--color-white) font-medium">Chi tiết</span>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 16l4-4l-4-4"/></svg>
                             </a>
                         </span>
@@ -223,7 +212,6 @@ final class Hook {
 
     public function _masthead_header(): void {
         $hotline = \HD_Helper::getField( 'hotline', 'option' );
-
         ?>
         <div id="masthead" class="masthead py-4">
             <div class="u-container flex items-center justify-between">
@@ -233,8 +221,8 @@ final class Hook {
                         <?= \HD_Helper::doShortcode( 'horizontal_menu', [
                                 'location'         => 'main-nav',
                                 'extra_class'      => 'u-flex-x gap-6 min-h-[44px]',
-                                'link_class'       => 'flex items-center h-full font-bold text-[15px] hover:text-(--color-white)',
-                                'link_depth_class' => 'text-[15px] hover:text-(--color-white)',
+                                'link_class'       => 'flex items-center h-full font-bold text-[15px] hover:text-(--text-color-1) dark:hover:text-(--color-white)',
+                                'link_depth_class' => 'text-[15px] hover:text-(--text-color-1) dark:hover:text-(--color-white)',
                         ] ) ?>
                     </nav>
                     <?php if ( $hotline ) : ?>
@@ -245,6 +233,10 @@ final class Hook {
                         <?= \HD_Helper::ACFLinkClose( $hotline ) ?>
                     </div>
                     <?php endif ?>
+
+                    <button class="dark-mode" type="button" aria-label="Dark mode">
+                        <svg class="w-6 h-6 u-flex-center" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><!-- // empty --></svg>
+                    </button>
 
                     <?= \HD_Helper::doShortcode( 'off_canvas_button', [ 'hide_if_desktop' => 0 ] ) ?>
                 </div>

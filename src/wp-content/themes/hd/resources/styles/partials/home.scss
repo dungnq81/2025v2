@@ -57,9 +57,9 @@
         }
 
         .swiper-button {
-            background-color: #1d1d1d;
-            border: 1px solid #ffffff0f;
-            box-shadow: inset 0 0 12px #ffffff0a;
+            background-color: #fefefe;
+            border: 1px solid #00000014;
+            box-shadow: inset 0 0 12px #0000000d;
             border-radius: var(--radius-md);
             color: var(--text-color);
 
@@ -101,6 +101,15 @@
                     box-shadow: 0 4px 29px -9px var(--text-color-1);
                 }
             }
+
+            &.is-active {
+                & > a {
+                    background-color: var(--text-color-1);
+                    color: var(--color-white);
+                    border-color: var(--text-color-1);
+                    box-shadow: 0 4px 29px -9px var(--text-color-1);
+                }
+            }
         }
     }
 }
@@ -110,7 +119,6 @@
         .tabs-title {
             & > a {
                 &:hover {
-                    color: var(--color-white);
                     border-color: var(--text-color-1);
                 }
             }
@@ -125,8 +133,6 @@
             }
         }
     }
-
-    .tabs-content {}
 }
 
 .section.section-projects {
@@ -148,7 +154,7 @@
 
                 .p-link {
                     transition: height 0.2s;
-                    background-color: rgb(22 22 22 / 70%);
+                    background-color: rgba(0, 0, 0, 0.3);
                     height: 0;
                     left: 0;
                     top: 0;
@@ -159,29 +165,28 @@
                         opacity: 0;
                         transition: opacity 0.3s;
                         border-radius: var(--radius-md);
-                        border: 1px solid rgba(254, 82, 66, 0.5);
-                        background-color: rgba(254, 82, 66, 0.5);
+                        border: 1px solid rgba(254, 82, 66, 0.7);
+                        background-color: rgba(254, 82, 66, 0.7);
                         backdrop-filter: blur(2px);
                         padding-block: 16px;
                         padding-inline: 16px;
                         font-weight: 700;
-                        color: var(--text-color);
+                        color: var(--color-white);
 
                         &:hover {
                             box-shadow: 0 4px 29px -9px rgba(12, 142, 57, 0.5);
-                            border: 1px solid rgba(12, 142, 57, 0.5);
-                            background-color: rgba(12, 142, 57, 0.5);
-                            color: var(--color-white);
+                            border: 1px solid rgba(12, 142, 57, 0.7);
+                            background-color: rgba(12, 142, 57, 0.7);
                         }
 
                         &:not(:last-child) {
-                            border: 1px solid rgba(12, 142, 57, 0.5);
-                            background-color: rgba(12, 142, 57, 0.5);
+                            border: 1px solid rgba(12, 142, 57, 0.7);
+                            background-color: rgba(12, 142, 57, 0.7);
 
                             &:hover {
                                 box-shadow: 0 4px 29px -9px rgba(254, 82, 66, 0.5);
-                                border: 1px solid rgba(254, 82, 66, 0.5);
-                                background-color: rgba(254, 82, 66, 0.5);
+                                border: 1px solid rgba(254, 82, 66, 0.7);
+                                background-color: rgba(254, 82, 66, 0.7);
                             }
                         }
                     }
@@ -202,6 +207,31 @@
                         }
                     }
                 }
+            }
+        }
+    }
+}
+
+/** dark mode */
+:where(.dark, .dark *) {
+    .section.section-projects {
+        .swiper {
+            .swiper-slide {
+                .p-thumb {
+                    .p-link {
+                        background-color: rgb(22 22 22 / 70%);
+                    }
+                }
+            }
+        }
+    }
+
+    .section.section-press {
+        .swiper-controls {
+            .swiper-button {
+                background-color: #1d1d1d;
+                border: 1px solid #ffffff0f;
+                box-shadow: inset 0 0 12px #ffffff0a;
             }
         }
     }

@@ -1,3 +1,5 @@
+// components/social-share.js
+
 import { SocialShare } from 'ensemble-social-share';
 
 const DEFAULT_OPTIONS = {

@@ -77,7 +77,7 @@ $id         = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                                         </a>
                                     </div>
                                 </div>
-                                <a class="text-(--text-color) hover:text-white" href="#" title="">
+                                <a class="text-(--text-color) hover:text-[#000] dark:hover:text-white" href="#" title="">
                                     <h3 class="text-balance font-bold p-fs-clamp-[18,22]">Dự án TMA FARMS</h3>
                                 </a>
                                 <p class="text-[15px] mb-4 line-clamp-2">Website do HD Agency thiết kế cho TMA Farms đã nhận được nhiều phản hồi tích cực từ khách hàng, nhờ vào giao diện chuyên nghiệp, dễ sử dụng và trải nghiệm mua sắm trực tuyến thuận tiện.</p>
@@ -100,7 +100,7 @@ $id         = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                                         </a>
                                     </div>
                                 </div>
-                                <a class="text-(--text-color) hover:text-white" href="#" title="">
+                                <a class="text-(--text-color) hover:text-[#000] dark:hover:text-white" href="#" title="">
                                     <h3 class="text-balance font-bold p-fs-clamp-[18,22]">Dự án BẢO TÍN HOME</h3>
                                 </a>
                                 <p class="text-[15px] mb-4 line-clamp-2">Website không chỉ nâng tầm hình ảnh thương hiệu mà còn góp phần gia tăng hiệu quả kinh doanh cho Bảo Tín Home trên nền tảng số.</p>
@@ -123,7 +123,7 @@ $id         = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                                         </a>
                                     </div>
                                 </div>
-                                <a class="text-(--text-color) hover:text-white" href="#" title="">
+                                <a class="text-(--text-color) hover:text-[#000] dark:hover:text-white" href="#" title="">
                                     <h3 class="text-balance font-bold p-fs-clamp-[18,22]">Dự án TRUNG THÀNH PRINT</h3>
                                 </a>
                                 <p class="text-[15px] mb-4 line-clamp-2">Website giúp Trung Thành Print nâng cao hình ảnh chuyên nghiệp, cải thiện trải nghiệm khách hàng và tối ưu hiệu quả tư vấn – báo giá online.</p>
@@ -146,7 +146,7 @@ $id         = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                                         </a>
                                     </div>
                                 </div>
-                                <a class="text-(--text-color) hover:text-white" href="#" title="">
+                                <a class="text-(--text-color) hover:text-[#000] dark:hover:text-white" href="#" title="">
                                     <h3 class="text-balance font-bold p-fs-clamp-[18,22]">Dự án TESLA EDUCATION GROUP</h3>
                                 </a>
                                 <p class="text-[15px] line-clamp-2 mb-4">HD AGENCY hợp tác với Tesla Education Group thiết kế website mới, nâng cao tương tác với phụ huynh và học sinh. Website hiện đại, thân thiện, cung cấp thông tin đầy đủ về chương trình học và sự kiện. Sự hợp tác này góp phần xây dựng hình ảnh chuyên nghiệp cho Tesla trong lĩnh vực giáo dục.</p>

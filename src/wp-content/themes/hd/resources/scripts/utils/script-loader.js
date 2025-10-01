@@ -1,4 +1,4 @@
-// script-loader.js
+// utils/script-loader.js
 
 const scriptLoader = (timeout = 3000, scriptSelector = 'script[data-type="lazy"]') => {
     const userInteractionEvents = [ 'mouseover', 'keydown', 'touchstart', 'touchmove', 'wheel' ];

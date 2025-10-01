@@ -1,3 +1,5 @@
+// index.js
+
 import $ from 'jquery';
 import device from 'current-device';
 import { nanoid } from 'nanoid';
@@ -25,7 +27,7 @@ async function run () {
     //
     // init
     //
-    stickyBar('#masthead');
+    stickyBar();
     initSocialShare('[data-social-share]', {
         intents: [ 'facebook', 'x', 'print', 'send-email', 'copy-link', 'web-share' ]
     });

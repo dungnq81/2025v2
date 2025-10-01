@@ -166,4 +166,7 @@
     b, strong {
         font-weight: 700;
     }
+
+    /** Dark mode */
+    :where(.dark, .dark *) {}
 }

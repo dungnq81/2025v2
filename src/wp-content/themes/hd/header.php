@@ -39,7 +39,6 @@
     /**
      * HOOK: hd_header_before_action
      *
-     * @see Hook::skip_to_content_link_action() - 2
      * @see Hook::off_canvas_menu_action() - 11
      */
     do_action( 'hd_header_before_action' );

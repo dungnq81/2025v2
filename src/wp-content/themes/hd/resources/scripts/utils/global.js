@@ -1,6 +1,6 @@
-// global.js (IIFE)
+// utils/global.js (IIFE)
 
-( function () {
+( () => {
     const run = () => {
         // update rel
         document.querySelectorAll('a._blank, a.blank, a[target="_blank"]').forEach((el) => {

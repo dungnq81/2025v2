@@ -1,4 +1,4 @@
-// back-to-top.js
+// utils/back-to-top.js
 
 class BackToTop {
     constructor (selector = '.js-back-to-top', smoothScrollEnabled = true, defaultScrollSpeed = 400) {

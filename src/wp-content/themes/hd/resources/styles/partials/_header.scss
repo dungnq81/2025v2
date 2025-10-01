@@ -7,15 +7,6 @@
 //
 // Header styles.
 
-.top-header {
-    a {
-        &:hover {
-            color: var(--color-white);
-        }
-    }
-}
-
-/** */
 .masthead {
     .site-logo {
         transition: .15s ease-in-out;
@@ -23,13 +14,31 @@
         img.custom-logo {
             width: auto;
             display: block;
-            filter: brightness(0) invert(1) brightness(0.81) saturate(0);
             @include mixin.media-css(max-height, 64);
         }
+    }
+}
 
-        &:hover {
-            img {
-                filter: inherit;
+/** dark mode */
+:where(.dark, .dark *) {
+    .top-header {
+        a {
+            &:hover {
+                color: var(--color-white);
+            }
+        }
+    }
+
+    .masthead {
+        .site-logo {
+            img.custom-logo {
+                filter: brightness(0) invert(1) brightness(0.81) saturate(0);
+            }
+
+            &:hover {
+                img {
+                    filter: inherit;
+                }
             }
         }
     }

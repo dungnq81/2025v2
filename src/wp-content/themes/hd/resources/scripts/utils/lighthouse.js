@@ -1,4 +1,4 @@
-// lighthouse.js (IIFE)
+// utils/lighthouse.js (IIFE)
 
 ( async () => {
     const DETECTION_CLASS = 'is-lighthouse';

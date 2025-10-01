@@ -60,7 +60,7 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
         <?php endif; ?>
         <?= \HD_Helper::ACFLink(
                 $view_more_button,
-                'relative left-[50%] translate-x-[-50%] mt-10 c-light-button inline-flex items-center justify-center px-6 py-3.5 text-[15px] rounded-md c-hover hover:text-white hover:border-(--text-color-1)',
+                'relative left-[50%] translate-x-[-50%] mt-10 c-light-button c-swiper-button inline-flex items-center justify-center px-6 py-3.5 text-[15px] rounded-md c-hover',
         ) ?>
     </div>
 </section>

@@ -8,6 +8,8 @@
 @import "./components/index.css";
 @import "./utilities/index.css";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* theme `hd` */
 @source "../../../*.php";
 @source "../../../{inc,parts,templates,woocommerce}/**/*.php";

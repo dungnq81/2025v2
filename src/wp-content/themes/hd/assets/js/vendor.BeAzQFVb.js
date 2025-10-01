@@ -21085,4 +21085,4 @@ export {
   Swiper as a,
   nanoid as n
 };
-//# sourceMappingURL=vendor.DUNZ_2BU.js.map
+//# sourceMappingURL=vendor.BeAzQFVb.js.map

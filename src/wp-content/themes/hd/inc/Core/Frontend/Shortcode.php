@@ -135,13 +135,9 @@ final class Shortcode {
         ?>
         <form action="<?= \HD_Helper::home() ?>" class="frm-search" method="get" accept-charset="UTF-8">
             <label for="<?= $id ?>" class="sr-only"><?= $title_for ?></label>
-            <input id="<?= $id ?>" required pattern="^(.*\S+.*)$" type="search" autocomplete="off" name="s"
-                   value="<?= get_search_query() ?>" placeholder="<?= $placeholder_title; ?>">
+            <input id="<?= $id ?>" required pattern="^(.*\S+.*)$" type="search" autocomplete="off" name="s" value="<?= get_search_query() ?>" placeholder="<?= $placeholder_title; ?>">
             <button type="submit" aria-label="Search">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"
-                          d="m21 21l-3.5-3.5M17 10a7 7 0 1 1-14 0a7 7 0 0 1 14 0Z"/>
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21l-3.5-3.5M17 10a7 7 0 1 1-14 0a7 7 0 0 1 14 0Z"/></svg>
                 <?= $title ? '<span>' . $title . '</span>' : '' ?>
             </button>
             <?php echo \HD_Helper::isWoocommerceActive() ? '<input type="hidden" name="post_type" value="product">' : ''; ?>
@@ -244,7 +240,7 @@ final class Shortcode {
         ob_start();
 
         ?>
-        <button class="menu-lines c-hover flex items-center gap-3 hover:text-(--color-white)" type="button" data-open="offCanvasMenu" aria-label="button">
+        <button class="menu-lines c-hover flex items-center gap-3 hover:text-[#000] dark:hover:text-(--color-white)" type="button" data-open="offCanvasMenu" aria-label="button">
             <span class="line w-[26px] h-[18px] flex flex-col flex-nowrap justify-between">
 				<span class="line-1 relative w-full"></span>
 				<span class="line-2 relative w-full"></span>

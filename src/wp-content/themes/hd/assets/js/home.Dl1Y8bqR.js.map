@@ -1,1 +1,1 @@
-{"version":3,"file":"home.Dl1Y8bqR.js","sources":["../../resources/scripts/components/home.js"],"sourcesContent":["document.addEventListener('DOMContentLoaded', () => {\n    //...\n});\n"],"names":[],"mappings":"AAAA,SAAS,iBAAiB,oBAAoB,MAAM;AAEpD,CAAC;"}
+{"version":3,"file":"home.Dl1Y8bqR.js","sources":["../../resources/scripts/components/home.js"],"sourcesContent":["// components/home.js\n\ndocument.addEventListener('DOMContentLoaded', () => {\n    //...\n});\n"],"names":[],"mappings":"AAEA,SAAS,iBAAiB,oBAAoB,MAAM;AAEpD,CAAC;"}
