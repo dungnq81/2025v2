@@ -17,7 +17,13 @@
     }
 
     img {
-        max-height: 40px;
+        height: 40px;
+        flex: 0 0 auto;
+        width: auto;
+
+        @include mixin.mq-min(lg) {
+            height: 50px;
+        }
     }
 
     .logo-title {
@@ -27,20 +33,18 @@
         font-weight: 600;
         font-size: 28px;
         letter-spacing: -0.1px;
-
-        &:hover {
-            color: var(--color-white);
-        }
     }
 }
 
 /** */
 .seo-footer {
     .footer-address {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: 4px;
+
         a {
-            &:hover {
-                color: var(--color-white);
-            }
+            font-weight: 500;
         }
     }
 }
@@ -133,6 +137,27 @@
             margin: 24px 0 0 0;
             font-size: 14px;
             color: var(--text-color);
+        }
+    }
+}
+
+/** dark mode */
+:where(.dark, .dark *) {
+    .footer-logo {
+        .logo-title {
+            &:hover {
+                color: var(--color-white);
+            }
+        }
+    }
+
+    .seo-footer {
+        .footer-address {
+            a {
+                &:hover {
+                    color: var(--color-white);
+                }
+            }
         }
     }
 }

@@ -1,9 +1,13 @@
 {
-  "_vendor.BeAzQFVb.js": {
-    "file": "js/vendor.BeAzQFVb.js",
+  "_vendor.BeadUWlm.css": {
+    "file": "css/vendor.BeadUWlm.css",
+    "src": "_vendor.BeadUWlm.css"
+  },
+  "_vendor.CPjrxvt6.js": {
+    "file": "js/vendor.CPjrxvt6.js",
     "name": "vendor",
     "css": [
-      "css/vendor.CRcXoV_l.css"
+      "css/vendor.BeadUWlm.css"
     ],
     "assets": [
       "fonts/SVN-Poppins-Light.woff2",
@@ -25,10 +29,6 @@
       "fonts/SVN-Poppins-BoldItalic.ttf",
       "fonts/SVN-Poppins-BoldItalic.otf"
     ]
-  },
-  "_vendor.CRcXoV_l.css": {
-    "file": "css/vendor.CRcXoV_l.css",
-    "src": "_vendor.CRcXoV_l.css"
   },
   "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/OTF/SVN-Poppins-Bold.otf": {
     "file": "fonts/SVN-Poppins-Bold.otf",
@@ -107,68 +107,69 @@
     "src": "src/wp-content/themes/hd/resources/img/bg.png"
   },
   "src/wp-content/themes/hd/resources/scripts/admin.js": {
-    "file": "js/admin.DBEDgl5O.js",
+    "file": "js/admin.Be7W0Rfh.js",
     "name": "admin",
     "src": "src/wp-content/themes/hd/resources/scripts/admin.js",
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/components/home.js": {
-    "file": "js/home.Dl1Y8bqR.js",
+    "file": "js/home.AMHuOZMk.js",
     "name": "home",
     "src": "src/wp-content/themes/hd/resources/scripts/components/home.js",
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/components/preflight.js": {
-    "file": "js/preflight.BFlmLG4e.js",
+    "file": "js/preflight.wfiy01i-.js",
     "name": "preflight",
     "src": "src/wp-content/themes/hd/resources/scripts/components/preflight.js",
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/components/social-share.js": {
-    "file": "js/social-share.BTF2OPRs.js",
+    "file": "js/social-share.Bm3FQAgq.js",
     "name": "social-share",
     "src": "src/wp-content/themes/hd/resources/scripts/components/social-share.js",
     "isEntry": true,
     "imports": [
-      "_vendor.BeAzQFVb.js"
+      "_vendor.CPjrxvt6.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/swiper.js": {
-    "file": "js/swiper.BSr-YWpl.js",
+    "file": "js/swiper.yqEzvP31.js",
     "name": "swiper",
     "src": "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
     "isEntry": true,
     "imports": [
-      "_vendor.BeAzQFVb.js"
+      "_vendor.CPjrxvt6.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/woocommerce.js": {
-    "file": "js/woocommerce.CWgBRUes.js",
+    "file": "js/woocommerce.-OQfU3SQ.js",
     "name": "woocommerce",
     "src": "src/wp-content/themes/hd/resources/scripts/components/woocommerce.js",
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/index.js": {
-    "file": "js/index.BVKPz264.js",
+    "file": "js/index.CQQDFfg6.js",
     "name": "index",
     "src": "src/wp-content/themes/hd/resources/scripts/index.js",
     "isEntry": true,
     "imports": [
-      "_vendor.BeAzQFVb.js",
+      "_vendor.CPjrxvt6.js",
       "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
       "src/wp-content/themes/hd/resources/scripts/components/social-share.js"
     ]
   },
   "src/wp-content/themes/hd/resources/styles/admin.scss": {
-    "file": "css/admin.BHRu2XEi.css",
-    "src": "src/wp-content/themes/hd/resources/styles/admin.scss",
+    "file": "css/woocommerce.tn0RQdqM.css",
+    "src": "src/wp-content/themes/hd/resources/styles/partials/woocommerce.scss",
     "isEntry": true,
     "names": [
+      "woocommerce.css",
       "admin.css"
     ]
   },
   "src/wp-content/themes/hd/resources/styles/editor-style.scss": {
-    "file": "css/editor-style.BjRVVF8f.css",
+    "file": "css/editor-style.BfYyBe_C.css",
     "src": "src/wp-content/themes/hd/resources/styles/editor-style.scss",
     "isEntry": true,
     "names": [
@@ -176,7 +177,7 @@
     ]
   },
   "src/wp-content/themes/hd/resources/styles/index.scss": {
-    "file": "css/index.BWOcdj0Z.css",
+    "file": "css/index.j2pJHGCF.css",
     "src": "src/wp-content/themes/hd/resources/styles/index.scss",
     "isEntry": true,
     "names": [
@@ -184,7 +185,7 @@
     ]
   },
   "src/wp-content/themes/hd/resources/styles/partials/home.scss": {
-    "file": "css/home.DFzEKyPj.css",
+    "file": "css/home.DiQsGLYZ.css",
     "src": "src/wp-content/themes/hd/resources/styles/partials/home.scss",
     "isEntry": true,
     "names": [
@@ -192,11 +193,12 @@
     ]
   },
   "src/wp-content/themes/hd/resources/styles/partials/woocommerce.scss": {
-    "file": "css/woocommerce.DyU21hq1.css",
+    "file": "css/woocommerce.tn0RQdqM.css",
     "src": "src/wp-content/themes/hd/resources/styles/partials/woocommerce.scss",
     "isEntry": true,
     "names": [
-      "woocommerce.css"
+      "woocommerce.css",
+      "admin.css"
     ]
   }
 }
