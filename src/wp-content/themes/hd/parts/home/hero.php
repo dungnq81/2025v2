@@ -7,8 +7,6 @@ if ( ! $acf_fc_layout ) {
 	return;
 }
 
-$title    = ! empty( $args['title'] ) ? $args['title'] : '';
-$desc     = ! empty( $args['desc'] ) ? $args['desc'] : '';
 $button_1 = ! empty( $args['button_1'] ) ? (array) $args['button_1'] : [];
 $button_2 = ! empty( $args['button_2'] ) ? (array) $args['button_2'] : [];
 $avatars  = ! empty( $args['avatars'] ) ? (array) $args['avatars'] : [];
@@ -20,8 +18,12 @@ $id       = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 <section id="section-<?= $id ?>" class="section section-hero py-24">
 	<div class="u-container grid pt-6 lg:gap-12 xl:gap-0 lg:grid-cols-12">
 		<div class="mr-auto place-self-center lg:col-span-7">
-            <?= $title ? '<h2 class="max-w-3xl font-bold mb-6 p-fs-clamp-[32,56] leading-[1.2]">' . $title . '</h2>' : '' ?>
-            <?= $desc ? '<p class="max-w-2xl mb-9 p-fs-clamp-[15,17]">' . $desc . '</p>' : '' ?>
+            <h2 class="max-w-3xl font-bold mb-6 p-fs-clamp-[32,56] leading-[1.2]">
+                Discover new <span class="text-1">product</span> and best possibilities
+            </h2>
+            <p class="max-w-2xl mb-9 p-fs-clamp-[15,17]">
+                Streamline your global payment systems from checkout to tax compliance with our all-in-one solution. Save time and reduce complexity.
+            </p>
 
             <ul class="flex flex-row mb-8 space-x-6">
                 <li class="flex items-center group">

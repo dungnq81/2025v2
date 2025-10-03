@@ -334,6 +334,7 @@ function hd_settings_filter_callback( array $arr ): array {
 			'term_row_actions'                => [
 				'category',
 				'post_tag',
+				'danh-muc-du-an',
 			],
 
 			// Add ID to the admin post-page.
@@ -341,6 +342,7 @@ function hd_settings_filter_callback( array $arr ): array {
 				'user',
 				'post',
 				'page',
+				'du-an'
 			],
 
 			// Terms thumbnail (term_thumb).
@@ -359,6 +361,7 @@ function hd_settings_filter_callback( array $arr ): array {
 		//
 		'post_type_terms'      => [
 			'post' => 'category',
+			'du-an' => 'danh-muc-du-an',
 		],
 
 		//
@@ -367,6 +370,7 @@ function hd_settings_filter_callback( array $arr ): array {
 		'aspect_ratio'         => [
 			'post_type_term'       => [
 				'post',
+				'du-an',
 			],
 			'aspect_ratio_default' => [
 				'1-1',

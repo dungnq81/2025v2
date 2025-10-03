@@ -1,10 +1,6 @@
 // utils/sticky-bar.js
 
-export function stickyBar ({
-                               navbar = '#masthead',
-                               header = '#header',
-                               topBar = '.top-header'
-                           } = {}) {
+export function stickyBar ({ navbar = '#masthead', header = '#header', topBar = '.top-header' } = {}) {
     const navbarEl = document.querySelector(navbar);
     if (!navbarEl) return;
 
@@ -23,7 +19,7 @@ export function stickyBar ({
     // Create placeholder element to maintain layout when navbar becomes fixed
     const placeholder = document.createElement('div');
     placeholder.className = 'masthead-placeholder';
-    placeholder.style.display = 'none';
+    //placeholder.style.display = 'none';
     navbarEl.parentNode.insertBefore(placeholder, navbarEl);
 
     // Calculate marker height: topBar if exists, otherwise header
@@ -36,23 +32,28 @@ export function stickyBar ({
 
     const getScrollTop = () => document.scrollingElement?.scrollTop ?? window.scrollY ?? window.pageYOffset ?? 0;
 
-    // Update heights on resize
+    // Update heights and CSS variables
     function updateHeights () {
         const markerEl = topBarEl || headerEl;
         markerHeight = markerEl ? markerEl.offsetHeight : 0;
         navbarHeight = navbarEl.offsetHeight;
-        placeholder.style.height = `${navbarHeight}px`;
+
+        // Set CSS variables on body
+        const topBarHeight = topBarEl ? topBarEl.offsetHeight : 0;
+        body.style.setProperty('--sticky-top', `${topBarHeight}px`);
+        body.style.setProperty('--navbar-height', `${navbarHeight}px`);
     }
 
     updateHeights();
 
     // Initial check
     const top = getScrollTop();
-    if (top < 1) {
+    if (top <= markerHeight) {
         navbarEl.classList.remove('is-sticky');
-        placeholder.style.display = 'none';
-    } else if (top > markerHeight) {
-        body.classList.add('scrolled-marker');
+        body.classList.remove('scrolling-up', 'scrolling-down');
+        //placeholder.style.display = 'none';
+    } else {
+        navbarEl.classList.add('is-sticky');
     }
 
     // Handle resize
@@ -76,27 +77,27 @@ export function stickyBar ({
     });
 
     function handleScroll (scrollTop) {
-        const atBottom = scrollTop + window.innerHeight >= document.documentElement.scrollHeight - 5;
+        const atBottom = scrollTop + window.innerHeight >= document.documentElement.scrollHeight - 4;
 
         // Show/hide navbar based on scroll position relative to marker
         if (scrollTop > markerHeight) {
             navbarEl.classList.add('is-sticky');
-            placeholder.style.display = 'block';
-        } else if (scrollTop < 1) {
-            navbarEl.classList.remove('is-sticky');
-            placeholder.style.display = 'none';
-            body.classList.remove('scrolling-up', 'scrolling-down');
-        }
+            //placeholder.style.display = 'block';
 
-        // Scroll direction handling
-        if (scrollTop > lastScrollTop && scrollTop > markerHeight) {
-            // Scrolling down
-            body.classList.add('scrolling-down');
-            body.classList.remove('scrolling-up');
-        } else if (scrollTop < lastScrollTop && scrollTop > markerHeight) {
-            // Scrolling up
-            body.classList.remove('scrolling-down');
-            body.classList.add('scrolling-up');
+            // Scroll direction handling - only when sticky
+            if (scrollTop > lastScrollTop) {
+                // Scrolling down
+                body.classList.remove('scrolling-up');
+                body.classList.add('scrolling-down');
+            } else if (scrollTop < lastScrollTop) {
+                // Scrolling up
+                body.classList.remove('scrolling-down');
+                body.classList.add('scrolling-up');
+            }
+        } else if (scrollTop <= markerHeight) {
+            navbarEl.classList.remove('is-sticky');
+            //placeholder.style.display = 'none';
+            body.classList.remove('scrolling-up', 'scrolling-down');
         }
 
         // Bottom detection

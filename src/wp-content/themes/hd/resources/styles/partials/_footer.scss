@@ -49,16 +49,6 @@
     }
 }
 
-.footer-menu {
-    ul.menu {
-        a {
-            &:hover {
-                color: var(--color-white);
-            }
-        }
-    }
-}
-
 /** */
 .newsletter-footer {
     .wpcf7-form {
@@ -79,14 +69,14 @@
                 .wpcf7-form-control-wrap {
                     input {
                         width: 100%;
-                        color: #fff;
+                        color: #000;
                         padding-block: 12px;
                         padding-inline: 16px;
                         border-radius: var(--radius-md);
                         font-size: 15px;
                         background: var(--bg-light-color);
-                        border: 1px solid rgba(255, 255, 255, 0.16);
-                        box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.02);
+                        border: 1px solid rgba(0, 0, 0, 0.2);
+                        box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.02);
                         transition: 0.15s ease-in-out;
 
                         @include mixin.mq-min(lg) {
@@ -94,8 +84,8 @@
                         }
 
                         &:focus, &:hover {
-                            box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.1);
-                            border-color: rgba(255, 255, 255, 0.5);
+                            box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.1);
+                            border-color: rgba(0, 0, 0, 0.6);
                         }
                     }
 
@@ -115,18 +105,18 @@
                     border: 1px solid var(--text-color-1);
                     color: var(--text-color);
                     cursor: pointer;
-                    box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.04);
+                    box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.04);
                     font-family: var(--font-header);
 
                     &:hover {
                         border-color: var(--text-color-2);
-                        color: #fff;
+                        color: #000;
                     }
                 }
 
                 .wpcf7-spinner {
                     margin: 0;
-                    background-color: rgba(201, 201, 201, 0.4);
+                    background-color: rgba(0, 0, 0, 0.3);
                 }
             }
         }
@@ -141,7 +131,10 @@
     }
 }
 
+//
 /** dark mode */
+//
+
 :where(.dark, .dark *) {
     .footer-logo {
         .logo-title {
@@ -156,6 +149,51 @@
             a {
                 &:hover {
                     color: var(--color-white);
+                }
+            }
+        }
+    }
+
+    .footer-menu {
+        ul.menu {
+            a {
+                &:hover {
+                    color: var(--color-white);
+                }
+            }
+        }
+    }
+
+    .newsletter-footer {
+        .wpcf7-form {
+            .c-wpcf7-form {
+                & > label {
+                    .wpcf7-form-control-wrap {
+                        input {
+                            color: #fff;
+                            border: 1px solid rgba(255, 255, 255, 0.16);
+                            box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.02);
+
+                            &:focus, &:hover {
+                                box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.1);
+                                border-color: rgba(255, 255, 255, 0.5);
+                            }
+                        }
+                    }
+                }
+
+                .c-wpcf7-form-submit {
+                    .wpcf7-submit {
+                        box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.04);
+
+                        &:hover {
+                            color: #fff;
+                        }
+                    }
+
+                    .wpcf7-spinner {
+                        background-color: rgba(201, 201, 201, 0.4);
+                    }
                 }
             }
         }

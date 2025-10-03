@@ -7,8 +7,9 @@ if ( ! $acf_fc_layout ) {
 	return;
 }
 
-$id = $args['id'] ?? 0;
-$id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
+$background_image = ! empty( $args['background_image'] ) ? (array) $args['background_image'] : [];
+$id               = $args['id'] ?? 0;
+$id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 
 ?>
 <section id="section-<?= $id ?>" class="section section-services py-20">
@@ -41,9 +42,18 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 		<div class="tabs-content pt-24 pb-12 lg:px-24" data-tabs-content="services-tabs-<?=$id?>">
 			<div class="tabs-panel is-active" id="thiet-ke-website">
                 <div class="flex gap-20 items-center">
+                    <?php
+                    $bg00 = $background_image[0] ?? '';
+                    if ( ! empty( $bg00['img'] ) ) :
+                    ?>
                     <div class="w-full lg:w-1/3 max-w-2xl text-center">
-                        <img class="inline-block" src="https://onidel.com/wp-content/themes/blocksy-child/images/hero-image.png" alt="">
+                        <?= \HD_Helper::attachmentImageHTML( $bg00['img'], 'medium', [
+                                'class' => 'inline-block',
+                                'loading' => 'lazy',
+                                'alt' => 'Thiết kế website',
+                        ] ) ?>
                     </div>
+                    <?php endif; ?>
                     <div class="w-full lg:w-2/3 max-w-2xl">
                         <p class="h3 text-balance font-bold mb-6 text-[--text-color] dark:text-white">Thiết kế website</p>
                         <p class="text-[15px]">
@@ -76,9 +86,18 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 			</div>
 			<div class="tabs-panel" id="marketing-online">
                 <div class="flex gap-20 items-center">
+                    <?php
+                    $bg01 = $background_image[1] ?? '';
+                    if ( ! empty( $bg01['img'] ) ) :
+                    ?>
                     <div class="w-full lg:w-1/3 max-w-2xl text-center">
-                        <img class="inline-block" src="https://onidel.com/wp-content/themes/blocksy-child/images/hero-image.png" alt="">
+                        <?= \HD_Helper::attachmentImageHTML( $bg01['img'], 'medium', [
+                                'class' => 'inline-block',
+                                'loading' => 'lazy',
+                                'alt' => 'Marketing Online',
+                        ] ) ?>
                     </div>
+                    <?php endif; ?>
                     <div class="w-full lg:w-2/3 max-w-2xl">
                         <p class="h3 text-balance font-bold mb-6 text-[--text-color] dark:text-white">Marketing Online</p>
                         <p class="text-[15px]">
@@ -87,19 +106,19 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                         <ul class="flex flex-col gap-5 mt-8">
                             <li class="flex items-baseline gap-4 group">
                                 <svg class="top-[7px] c-hover relative w-6 h-6 text-2 group-hover:text-1" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
-                                <a class="uppercase font-bold text-[14px] hover:text-[#000] dark:hover:text-white" href="#" title="Website theo yêu cầu">Dịch vụ SEO tổng thể</a>
+                                <a href="#" class="uppercase font-bold text-[14px] hover:text-[#000] dark:hover:text-white" title="Website theo yêu cầu">Dịch vụ SEO tổng thể</a>
                             </li>
                             <li class="flex items-baseline gap-4 group">
                                 <svg class="top-[7px] c-hover relative w-6 h-6 text-2 group-hover:text-1" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
-                                <a class="uppercase font-bold text-[14px] hover:text-[#000] dark:hover:text-white" href="#" title="Website doanh nghiệp">ADS GOOGLE - FACEBOOK</a>
+                                <a href="#" class="uppercase font-bold text-[14px] hover:text-[#000] dark:hover:text-white" title="Website doanh nghiệp">ADS GOOGLE - FACEBOOK</a>
                             </li>
                             <li class="flex items-baseline gap-4 group">
                                 <svg class="top-[7px] c-hover relative w-6 h-6 text-2 group-hover:text-1" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
-                                <a class="uppercase font-bold text-[14px] hover:text-[#000] dark:hover:text-white" href="#" title="Website bán hàng">CHĂM SÓC WEBSITE - FANPAGE</a>
+                                <a href="#" class="uppercase font-bold text-[14px] hover:text-[#000] dark:hover:text-white" title="Website bán hàng">CHĂM SÓC WEBSITE - FANPAGE</a>
                             </li>
                             <li class="flex items-baseline gap-4 group">
                                 <svg class="top-[7px] c-hover relative w-6 h-6 text-2 group-hover:text-1" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
-                                <a class="uppercase font-bold text-[14px] hover:text-[#000] dark:hover:text-white" href="#" title="Website bất động sản">SÁNG TẠO NỘI DUNG CHUẨN SEO</a>
+                                <a href="#" class="uppercase font-bold text-[14px] hover:text-[#000] dark:hover:text-white" title="Website bất động sản">SÁNG TẠO NỘI DUNG CHUẨN SEO</a>
                             </li>
                         </ul>
                         <a class="text-sm pt-12 inline-flex items-center gap-2 text-1" href="#" title="Xem thêm">
@@ -111,9 +130,18 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 			</div>
 			<div class="tabs-panel" id="nhan-dang-thuong-hieu">
                 <div class="flex gap-20 items-center">
+                    <?php
+                    $bg02 = $background_image[2] ?? '';
+                    if ( ! empty( $bg02['img'] ) ) :
+                    ?>
                     <div class="w-full lg:w-1/3 max-w-2xl text-center">
-                        <img class="inline-block" src="https://onidel.com/wp-content/themes/blocksy-child/images/hero-image.png" alt="">
+                        <?= \HD_Helper::attachmentImageHTML( $bg02['img'], 'medium', [
+                                'class' => 'inline-block',
+                                'loading' => 'lazy',
+                                'alt' => 'Nhận dạng thương hiệu',
+                        ] ) ?>
                     </div>
+                    <?php endif; ?>
                     <div class="w-full lg:w-2/3 max-w-2xl">
                         <p class="h3 text-balance font-bold mb-6 text-[--text-color] dark:text-white">Nhận dạng thương hiệu</p>
                         <p class="text-[15px]">

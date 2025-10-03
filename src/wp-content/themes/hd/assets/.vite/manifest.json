@@ -1,13 +1,13 @@
 {
-  "_vendor.BeadUWlm.css": {
-    "file": "css/vendor.BeadUWlm.css",
-    "src": "_vendor.BeadUWlm.css"
+  "_vendor.BSxUt0P_.css": {
+    "file": "css/vendor.BSxUt0P_.css",
+    "src": "_vendor.BSxUt0P_.css"
   },
-  "_vendor.CPjrxvt6.js": {
-    "file": "js/vendor.CPjrxvt6.js",
+  "_vendor.hiBWJXdq.js": {
+    "file": "js/vendor.hiBWJXdq.js",
     "name": "vendor",
     "css": [
-      "css/vendor.BeadUWlm.css"
+      "css/vendor.BSxUt0P_.css"
     ],
     "assets": [
       "fonts/SVN-Poppins-Light.woff2",
@@ -107,69 +107,68 @@
     "src": "src/wp-content/themes/hd/resources/img/bg.png"
   },
   "src/wp-content/themes/hd/resources/scripts/admin.js": {
-    "file": "js/admin.Be7W0Rfh.js",
+    "file": "js/admin.DBEDgl5O.js",
     "name": "admin",
     "src": "src/wp-content/themes/hd/resources/scripts/admin.js",
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/components/home.js": {
-    "file": "js/home.AMHuOZMk.js",
+    "file": "js/home.Dl1Y8bqR.js",
     "name": "home",
     "src": "src/wp-content/themes/hd/resources/scripts/components/home.js",
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/components/preflight.js": {
-    "file": "js/preflight.wfiy01i-.js",
+    "file": "js/preflight.BFlmLG4e.js",
     "name": "preflight",
     "src": "src/wp-content/themes/hd/resources/scripts/components/preflight.js",
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/components/social-share.js": {
-    "file": "js/social-share.Bm3FQAgq.js",
+    "file": "js/social-share.ewA159Hk.js",
     "name": "social-share",
     "src": "src/wp-content/themes/hd/resources/scripts/components/social-share.js",
     "isEntry": true,
     "imports": [
-      "_vendor.CPjrxvt6.js"
+      "_vendor.hiBWJXdq.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/swiper.js": {
-    "file": "js/swiper.yqEzvP31.js",
+    "file": "js/swiper.TgjoNgzV.js",
     "name": "swiper",
     "src": "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
     "isEntry": true,
     "imports": [
-      "_vendor.CPjrxvt6.js"
+      "_vendor.hiBWJXdq.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/woocommerce.js": {
-    "file": "js/woocommerce.-OQfU3SQ.js",
+    "file": "js/woocommerce.CWgBRUes.js",
     "name": "woocommerce",
     "src": "src/wp-content/themes/hd/resources/scripts/components/woocommerce.js",
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/index.js": {
-    "file": "js/index.CQQDFfg6.js",
+    "file": "js/index.CYHqQ6nM.js",
     "name": "index",
     "src": "src/wp-content/themes/hd/resources/scripts/index.js",
     "isEntry": true,
     "imports": [
-      "_vendor.CPjrxvt6.js",
+      "_vendor.hiBWJXdq.js",
       "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
       "src/wp-content/themes/hd/resources/scripts/components/social-share.js"
     ]
   },
   "src/wp-content/themes/hd/resources/styles/admin.scss": {
-    "file": "css/woocommerce.tn0RQdqM.css",
-    "src": "src/wp-content/themes/hd/resources/styles/partials/woocommerce.scss",
+    "file": "css/admin.BHRu2XEi.css",
+    "src": "src/wp-content/themes/hd/resources/styles/admin.scss",
     "isEntry": true,
     "names": [
-      "woocommerce.css",
       "admin.css"
     ]
   },
   "src/wp-content/themes/hd/resources/styles/editor-style.scss": {
-    "file": "css/editor-style.BfYyBe_C.css",
+    "file": "css/editor-style.BjRVVF8f.css",
     "src": "src/wp-content/themes/hd/resources/styles/editor-style.scss",
     "isEntry": true,
     "names": [
@@ -177,7 +176,7 @@
     ]
   },
   "src/wp-content/themes/hd/resources/styles/index.scss": {
-    "file": "css/index.j2pJHGCF.css",
+    "file": "css/index.YOy1hDJV.css",
     "src": "src/wp-content/themes/hd/resources/styles/index.scss",
     "isEntry": true,
     "names": [
@@ -185,7 +184,7 @@
     ]
   },
   "src/wp-content/themes/hd/resources/styles/partials/home.scss": {
-    "file": "css/home.DiQsGLYZ.css",
+    "file": "css/home.DFzEKyPj.css",
     "src": "src/wp-content/themes/hd/resources/styles/partials/home.scss",
     "isEntry": true,
     "names": [
@@ -193,12 +192,11 @@
     ]
   },
   "src/wp-content/themes/hd/resources/styles/partials/woocommerce.scss": {
-    "file": "css/woocommerce.tn0RQdqM.css",
+    "file": "css/woocommerce.DyU21hq1.css",
     "src": "src/wp-content/themes/hd/resources/styles/partials/woocommerce.scss",
     "isEntry": true,
     "names": [
-      "woocommerce.css",
-      "admin.css"
+      "woocommerce.css"
     ]
   }
 }

@@ -1948,6 +1948,10 @@ trait Wp {
 			$post_id = null;
 		}
 
+		if ( empty( $attr ) ) {
+			$attr = [ 'loading' => 'lazy' ];
+		}
+
 		$html = get_the_post_thumbnail( $post_id, $size, $attr );
 
 		return $filter ? apply_filters( 'hd_post_image_html_filter', $html, $post_id, $size, $attr ) : $html;
@@ -1966,6 +1970,10 @@ trait Wp {
 	public static function attachmentImageHTML( mixed $attachment_id, string $size = 'thumbnail', string|array $attr = '', bool $filter = true ): string {
 		if ( ! $attachment_id ) {
 			return '';
+		}
+
+		if ( empty( $attr ) ) {
+			$attr = [ 'loading' => 'lazy' ];
 		}
 
 		$attachment_id = (int) $attachment_id;
@@ -2105,7 +2113,7 @@ trait Wp {
 			$html .= '<source srcset="' . self::attachmentImageSrc( $attachment_mobile_id ?: $attachment_id, 'medium' ) . '" media="(min-width: 480px)">';
 		}
 
-		$html .= self::iconImageHTML( $attachment_mobile_id ?: $attachment_id, 'thumbnail', [ 'class' => 'lazy' ], false );
+		$html .= self::iconImageHTML( $attachment_mobile_id ?: $attachment_id, 'thumbnail', [ 'class' => 'lazy', 'loading' => 'lazy' ], false );
 		$html .= '</picture>';
 
 		return $filter ? apply_filters( 'hd_picture_html_filter', $html, $class, $attachment_id, $attachment_mobile_id ) : $html;

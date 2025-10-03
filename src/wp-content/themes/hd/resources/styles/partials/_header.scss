@@ -8,6 +8,19 @@
 // Header styles.
 
 .masthead {
+    position: absolute;
+    top: var(--sticky-top, 0);
+    left: 0;
+    right: 0;
+    z-index: 999;
+
+    &.is-sticky {
+        top: 0;
+        position: fixed;
+        background-color: var(--bg-color);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
     .site-logo {
         transition: .15s ease-in-out;
 
@@ -19,7 +32,18 @@
     }
 }
 
+.site-header {
+    position: relative;
+}
+
+.masthead-placeholder {
+    height: var(--navbar-height, 0);
+}
+
+//
 /** dark mode */
+//
+
 :where(.dark, .dark *) {
     .top-header {
         a {
@@ -40,6 +64,12 @@
                     filter: inherit;
                 }
             }
+        }
+    }
+
+    .masthead {
+        &.is-sticky {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
     }
 }

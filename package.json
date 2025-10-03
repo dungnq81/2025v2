@@ -15,9 +15,9 @@
         "extends @wordpress/browserslist-config"
     ],
     "devDependencies": {
-        "@tailwindcss/vite": "^4.1.13",
+        "@tailwindcss/vite": "^4.1.14",
         "@vheemstra/vite-plugin-imagemin": "^2.2.1",
-        "@wordpress/browserslist-config": "^6.31.0",
+        "@wordpress/browserslist-config": "^6.32.0",
         "autoprefixer": "^10.4.21",
         "concurrently": "^9.2.1",
         "cross-env": "^10.1.0",
@@ -44,7 +44,7 @@
         "select2": "4.1.0-rc.0",
         "sweetalert2": "^11.23.0",
         "swiper": "^11.2.10",
-        "tailwindcss": "^4.1.13",
+        "tailwindcss": "^4.1.14",
         "vanilla-lazyload": "^19.1.3"
     }
 }

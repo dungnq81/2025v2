@@ -213,7 +213,7 @@ final class Hook {
     public function _masthead_header(): void {
         $hotline = \HD_Helper::getField( 'hotline', 'option' );
         ?>
-        <div id="masthead" class="masthead py-4">
+        <div id="masthead" class="masthead py-3">
             <div class="u-container flex items-center justify-between">
                 <div class="masthead-logo flex-initial"><?= \HD_Helper::siteTitleOrLogo() ?></div>
                 <div class="masthead-content flex-initial flex items-center gap-6">
@@ -328,11 +328,11 @@ final class Hook {
                                 </li>
                             </ul>
                             <div class="social-links">
-                                <?= \HD_Helper::doShortcode( 'social_menu', [ 'class' => 'social-menu flex gap-4 mt-6 md:gap-6' ] ) ?>
+                                <?= \HD_Helper::doShortcode( 'social_menu', [ 'class' => 'social-menu flex gap-4 mt-8 md:gap-6' ] ) ?>
                             </div>
                         </div>
                         <div class="newsletter-footer">
-                            <?= $contact_form['title'] ? '<p class="footer-title font-bold uppercase u-heading lg:mb-8 text-(--color-white)">' . esc_html( $contact_form['title'] ) . '</p>' : '' ?>
+                            <?= $contact_form['title'] ? '<p class="footer-title p-fs-clamp-[16,18] font-bold uppercase u-heading lg:mb-8 text-(--text-color)">' . esc_html( $contact_form['title'] ) . '</p>' : '' ?>
                             <div class="max-w-md">
                                 <?= $contact_form['desc'] ? '<p class="text-(--text-color) text-sm/6">' . esc_html( $contact_form['desc'] ) . '</p>' : '' ?>
                                 <?= \HD_Helper::doShortcode( 'contact-form-7', [ 'id' => $contact_form['form'] ] ) ?>
@@ -341,7 +341,7 @@ final class Hook {
                     </div>
                     <div class="footer-menu grid grid-cols-1 gap-8 sm:grid-cols-2">
                         <div class="text-left xl:pl-12">
-                            <?= $footer_menu_1['title'] ? '<p class="footer-title font-bold uppercase u-heading lg:mb-8 text-(--color-white)">' . esc_html( $footer_menu_1['title'] ) . '</p>' : '' ?>
+                            <?= $footer_menu_1['title'] ? '<p class="footer-title p-fs-clamp-[16,18] font-bold uppercase u-heading lg:mb-8 text-(--text-color)">' . esc_html( $footer_menu_1['title'] ) . '</p>' : '' ?>
                             <?= $footer_menu_1['menu'] ? wp_nav_menu( [
                                     'container'  => false,
                                     'menu'       => $footer_menu_1['menu'],
@@ -350,7 +350,7 @@ final class Hook {
                             ] ) : '' ?>
                         </div>
                         <div class="text-left">
-                            <?= $footer_menu_2['title'] ? '<p class="footer-title font-bold uppercase u-heading lg:mb-8 text-(--color-white)">' . esc_html( $footer_menu_2['title'] ) . '</p>' : '' ?>
+                            <?= $footer_menu_2['title'] ? '<p class="footer-title p-fs-clamp-[16,18] font-bold uppercase u-heading lg:mb-8 text-(--text-color)">' . esc_html( $footer_menu_2['title'] ) . '</p>' : '' ?>
                             <?= $footer_menu_2['menu'] ? wp_nav_menu( [
                                     'container'  => false,
                                     'menu'       => $footer_menu_2['menu'],
@@ -379,7 +379,7 @@ final class Hook {
                         'location'    => 'policy-nav',
                         'depth'       => 1,
                         'extra_class' => 'flex flex-wrap justify-center gap-3 md:gap-6',
-                        'link_class'  => 'flex gap-1 flex-row-reverse p-hover hover:text-(--color-white)',
+                        'link_class'  => 'flex gap-1 flex-row-reverse p-hover dark:hover:text-(--color-white)',
                 ] );
                 ?>
                 <p class="copyright lining-nums u-flex-center gap-2">
