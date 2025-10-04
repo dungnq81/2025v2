@@ -22,8 +22,8 @@ $no_data_message       = __( 'No data available or configuration for this featur
 		}
 
 		$aspect_ratio_options = \Addons\Helper::getOption( 'aspect_ratio__options' );
-		$width                = $aspect_ratio_options[ 'ar-' . $ar . '-width' ] ?? '';
-		$height               = $aspect_ratio_options[ 'ar-' . $ar . '-height' ] ?? '';
+		$width                = $aspect_ratio_options[ 'as-' . $ar . '-width' ] ?? '';
+		$height               = $aspect_ratio_options[ 'as-' . $ar . '-height' ] ?? '';
 
 		$title = get_post_type_object( $ar )->labels->singular_name ?? '';
 		$title = ! empty( $title ) ? $title : ( get_taxonomy( $ar )->labels->singular_name ?? '' );

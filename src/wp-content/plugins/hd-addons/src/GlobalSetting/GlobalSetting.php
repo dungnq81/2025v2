@@ -135,8 +135,8 @@ final class GlobalSetting {
 
             foreach ( $aspect_ratio_settings['post_type_term'] ?? [] as $ar ) {
                 if ( isset( $data[ $ar . '-width' ], $data[ $ar . '-height' ] ) ) {
-                    $aspect_ratio_options[ 'ar-' . $ar . '-width' ]  = sanitize_text_field( $data[ $ar . '-width' ] );
-                    $aspect_ratio_options[ 'ar-' . $ar . '-height' ] = sanitize_text_field( $data[ $ar . '-height' ] );
+                    $aspect_ratio_options[ 'as-' . $ar . '-width' ]  = sanitize_text_field( $data[ $ar . '-width' ] );
+                    $aspect_ratio_options[ 'as-' . $ar . '-height' ] = sanitize_text_field( $data[ $ar . '-height' ] );
                 }
             }
 

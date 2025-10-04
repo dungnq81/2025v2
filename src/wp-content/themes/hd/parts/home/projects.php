@@ -7,10 +7,12 @@ if ( ! $acf_fc_layout ) {
     return;
 }
 
+$title_tag        = ! empty( $args['title_tag'] ) ? $args['title_tag'] : 'h3';
+$title            = ! empty( $args['title'] ) ? $args['title'] : '';
+$desc             = ! empty( $args['desc'] ) ? $args['desc'] : '';
 $max_number       = ! empty( $args['max_number'] ) ? (int) $args['max_number'] : 4;
 $view_more_button = ! empty( $args['view_more_button'] ) ? $args['view_more_button'] : [];
 $post_query       = \HD_Helper::queryByLatestPosts( 'du-an', $max_number, false );
-$loop             = $args['loop'] ?? false;
 $pagination       = $args['pagination'] ?? false;
 $navigation       = $args['navigation'] ?? false;
 $id               = $args['id'] ?? 0;
@@ -19,10 +21,10 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 ?>
 <section id="section-<?= $id ?>" class="section section-projects c-light-bg py-20">
     <div class="u-container">
-        <h2 class="font-bold">Dự án tiêu biểu</h2>
-        <p class="max-w-3xl mb-0 p-fs-clamp-[16,18] pt-4 text-2 font-bold">
-            Hơn 1000+ dự án đã được chúng tôi triển khai thành công, mang lại giá trị thiết thực cho khách hàng.
-        </p>
+
+        <?= $title ? '<h2 class="font-bold">' . $title . '</h2>' : '' ?>
+        <?= $desc ? '<p class="max-w-3xl mb-0 p-fs-clamp-[16,18] pt-4 text-2 font-bold">' . $desc . '</p>' : '' ?>
+
         <?php if ( $post_query ) : ?>
         <div class="p-projects-list mt-9">
             <div class="swiper-container">
@@ -64,35 +66,21 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                 ?>
                 <div class="swiper w-swiper">
                     <div class="swiper-wrapper" data-options='<?= $swiper_data ?>'>
-                        <?php  foreach ( $post_query as $post ) : ?>
-                        <div class="swiper-slide">
-                            <div class="item flex flex-col items-start gap-4">
-                                <div class="p-thumb c-cover rounded-md">
-                                    <span class="block w-full">
-                                        <img class="w-full object-cover as-16-9 block" src="https://webhd.vn/wp-content/uploads/2025/04/DU-AN-TMA-FARMS.jpg" alt="">
-                                    </span>
-                                    <div class="p-link u-flex-center flex-wrap w-full gap-4 lg:gap-6">
-                                        <a class="c-hover flex items-center gap-3 uppercase" href="#" title>
-                                            <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 14v7M5 4.971v9.541c5.6-5.538 8.4 2.64 14-.086v-9.54C13.4 7.61 10.6-.568 5 4.97Z"/></svg>
-                                            Nông nghiệp công nghệ cao
-                                        </a>
-                                        <a class="c-hover flex items-center gap-3 uppercase" href="#" title="Trải nghiệm ngay">
-                                            <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M4.37 7.657c2.063.528 2.396 2.806 3.202 3.87c1.07 1.413 2.075 1.228 3.192 2.644c1.805 2.289 1.312 5.705 1.312 6.705M20 15h-1a4 4 0 0 0-4 4v1M8.587 3.992c0 .822.112 1.886 1.515 2.58c1.402.693 2.918.351 2.918 2.334c0 .276 0 2.008 1.972 2.008c2.026.031 2.026-1.678 2.026-2.008c0-.65.527-.9 1.177-.9H20M21 12a9 9 0 1 1-18 0a9 9 0 0 1 18 0Z"/></svg>
-                                            Trải nghiệm
-                                        </a>
-                                    </div>
-                                </div>
-                                <a class="text-(--text-color) hover:text-[#000] dark:hover:text-white" href="#" title="">
-                                    <h3 class="text-balance font-bold p-fs-clamp-[18,22]">Dự án TMA FARMS</h3>
-                                </a>
-                                <p class="text-[15px] mb-4 line-clamp-2">Website do HD Agency thiết kế cho TMA Farms đã nhận được nhiều phản hồi tích cực từ khách hàng, nhờ vào giao diện chuyên nghiệp, dễ sử dụng và trải nghiệm mua sắm trực tuyến thuận tiện.</p>
-                            </div>
-                        </div>
-                        <?php endforeach; ?>
+                        <?php
+                        foreach ( $post_query as $post ) :
+                            echo '<div class="swiper-slide">';
+                            \HD_Helper::blockTemplate( 'parts/du-an/loop', [
+                                    'title_tag' => $title_tag,
+                                    'id'        => $post
+                            ] );
+                            echo '</div>';
+                        endforeach;
+                        ?>
                     </div>
                 </div>
             </div>
         </div>
+
         <?= \HD_Helper::ACFLink(
                 $view_more_button,
                 'relative left-[50%] translate-x-[-50%] mt-10 c-light-button c-swiper-button inline-flex items-center justify-center px-6 py-3.5 text-[15px] rounded-md c-hover',

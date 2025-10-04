@@ -1854,14 +1854,14 @@ trait Wp {
 	 *
 	 * @return string|null
 	 */
-	public static function getPrimaryTerm( mixed $post = null, string $taxonomy = '', ?string $class = '', ?string $wrapper_open = '<div class="terms">', ?string $wrapper_close = '</div>' ): ?string {
+	public static function getPrimaryTerm( mixed $post = null, string $taxonomy = '', ?string $class = '', ?string $extra_title = null, ?string $wrapper_open = '<div class="terms">', ?string $wrapper_close = '</div>' ): ?string {
 		$term = self::primaryTerm( $post, $taxonomy );
 		if ( ! $term || is_wp_error( $term ) ) {
 			return null;
 		}
 
 		$class = ! empty( $class ) ? ' class="' . $class . '"' : '';
-		$link = '<a' . $class . ' href="' . esc_url( get_term_link( $term, $taxonomy ) ) . '" title="' . esc_attr( $term->name ) . '">' . $term->name . '</a>';
+		$link = '<a' . $class . ' href="' . esc_url( get_term_link( $term, $taxonomy ) ) . '" title="' . esc_attr( $term->name ) . '">' . $term->name . $extra_title . '</a>';
 		if ( $wrapper_open && $wrapper_close ) {
 			$link = $wrapper_open . $link . $wrapper_close;
 		}
