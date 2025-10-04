@@ -2,7 +2,7 @@
 /**
  * Plugin Name: HDMU
  * Description: mu-plugins for HD theme
- * Version: 1.9.0
+ * Version: 1.10.0
  * Requires PHP: 8.2
  * Author: Gaudev
  * License: MIT
