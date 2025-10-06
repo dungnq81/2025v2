@@ -3283,40 +3283,40 @@ button.swiper-pagination-bullet {
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url("../fonts/SVN-Poppins-Light.woff2?v=u96g1n5") format("woff2"), url("../fonts/SVN-Poppins-Light.ttf?v=u96g1n5") format("truetype"), url("../fonts/SVN-Poppins-Light.otf?v=u96g1n5") format("opentype");
+  src: url("../fonts/SVN-Poppins-Light.woff2?v=ubbwr6v") format("woff2"), url("../fonts/SVN-Poppins-Light.ttf?v=ubbwr6v") format("truetype"), url("../fonts/SVN-Poppins-Light.otf?v=ubbwr6v") format("opentype");
 }
 @font-face {
   font-family: "Poppins";
   font-style: italic;
   font-weight: 300;
   font-display: swap;
-  src: url("../fonts/SVN-Poppins-LightItalic.woff2?v=u96g1nb") format("woff2"), url("../fonts/SVN-Poppins-LightItalic.ttf?v=u96g1nb") format("truetype"), url("../fonts/SVN-Poppins-LightItalic.otf?v=u96g1nb") format("opentype");
+  src: url("../fonts/SVN-Poppins-LightItalic.woff2?v=ubbwr7s") format("woff2"), url("../fonts/SVN-Poppins-LightItalic.ttf?v=ubbwr7s") format("truetype"), url("../fonts/SVN-Poppins-LightItalic.otf?v=ubbwr7s") format("opentype");
 }
 @font-face {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("../fonts/SVN-Poppins-Medium.woff2?v=u96g1nz") format("woff2"), url("../fonts/SVN-Poppins-Medium.ttf?v=u96g1nz") format("truetype"), url("../fonts/SVN-Poppins-Medium.otf?v=u96g1nz") format("opentype");
+  src: url("../fonts/SVN-Poppins-Medium.woff2?v=ubbwr85") format("woff2"), url("../fonts/SVN-Poppins-Medium.ttf?v=ubbwr85") format("truetype"), url("../fonts/SVN-Poppins-Medium.otf?v=ubbwr85") format("opentype");
 }
 @font-face {
   font-family: "Poppins";
   font-style: italic;
   font-weight: 500;
   font-display: swap;
-  src: url("../fonts/SVN-Poppins-MediumItalic.woff2?v=u96g1oh") format("woff2"), url("../fonts/SVN-Poppins-MediumItalic.ttf?v=u96g1oh") format("truetype"), url("../fonts/SVN-Poppins-MediumItalic.otf?v=u96g1oh") format("opentype");
+  src: url("../fonts/SVN-Poppins-MediumItalic.woff2?v=ubbwr91") format("woff2"), url("../fonts/SVN-Poppins-MediumItalic.ttf?v=ubbwr91") format("truetype"), url("../fonts/SVN-Poppins-MediumItalic.otf?v=ubbwr91") format("opentype");
 }
 @font-face {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("../fonts/SVN-Poppins-Bold.woff2?v=u96g1p3") format("woff2"), url("../fonts/SVN-Poppins-Bold.ttf?v=u96g1p3") format("truetype"), url("../fonts/SVN-Poppins-Bold.otf?v=u96g1p3") format("opentype");
+  src: url("../fonts/SVN-Poppins-Bold.woff2?v=ubbwr9q") format("woff2"), url("../fonts/SVN-Poppins-Bold.ttf?v=ubbwr9q") format("truetype"), url("../fonts/SVN-Poppins-Bold.otf?v=ubbwr9q") format("opentype");
 }
 @font-face {
   font-family: "Poppins";
   font-style: italic;
   font-weight: 700;
   font-display: swap;
-  src: url("../fonts/SVN-Poppins-BoldItalic.woff2?v=u96g1pd") format("woff2"), url("../fonts/SVN-Poppins-BoldItalic.ttf?v=u96g1pd") format("truetype"), url("../fonts/SVN-Poppins-BoldItalic.otf?v=u96g1pd") format("opentype");
+  src: url("../fonts/SVN-Poppins-BoldItalic.woff2?v=ubbwraf") format("woff2"), url("../fonts/SVN-Poppins-BoldItalic.ttf?v=ubbwraf") format("truetype"), url("../fonts/SVN-Poppins-BoldItalic.otf?v=ubbwraf") format("opentype");
 }

@@ -1,4 +1,4 @@
-import { n as nanoid, a as Swiper } from "./vendor.DpYC9LDC.js";
+import { n as nanoid, a as Swiper } from "./vendor.kmnlcIVx.js";
 const initializeSwiper = (el, swiper_class, options) => {
   if (!(el instanceof Element) || !options) {
     console.error("Error: The provided element is not a DOM element.");
@@ -194,5 +194,5 @@ const initializeSwipers = () => {
     initializeSwiper(el, "." + classes.swiperClass, swiperOptions);
   });
 };
-document.addEventListener("DOMContentLoaded", initializeSwipers);
-//# sourceMappingURL=swiper.CTdxSAbT.js.map
+document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", initializeSwipers, { once: true }) : initializeSwipers();
+//# sourceMappingURL=swiper.Dioea7uL.js.map

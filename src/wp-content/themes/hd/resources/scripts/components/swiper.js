@@ -247,4 +247,6 @@ const initializeSwipers = () => {
     });
 };
 
-document.addEventListener('DOMContentLoaded', initializeSwipers);
+( document.readyState === 'loading' )
+    ? document.addEventListener('DOMContentLoaded', initializeSwipers, { once: true })
+    : initializeSwipers();
