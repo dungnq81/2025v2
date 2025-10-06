@@ -31,5 +31,7 @@ composer.lock
 
 # WP
 .env
+database/**
+!database/.gitkeep
 **/uploads/**
 !**/uploads/.gitkeep
