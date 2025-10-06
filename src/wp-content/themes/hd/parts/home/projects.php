@@ -34,7 +34,7 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                         'spaceBetween'  => 12,
                         'autoplay'      => true,
                         'rows'          => 1,
-                        'tablet'        => [
+                        'sm'        => [
                                 'slidesPerView' => 2,
                                 'spaceBetween'  => 24,
                                 'grid'          => [
@@ -42,7 +42,7 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                                         'fill' => 'row',
                                 ],
                         ],
-                        'desktop'       => [
+                        'lg'       => [
                                 'slidesPerView' => 2,
                                 'spaceBetween'  => 24,
                                 'grid'          => [
@@ -52,12 +52,8 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                         ],
                 ];
 
-                if ( $navigation ) {
-                    $data['navigation'] = true;
-                }
-                if ( $pagination ) {
-                    $data['pagination'] = 'bullets';
-                }
+                if ( $navigation ) { $data['navigation'] = true; }
+                if ( $pagination ) { $data['pagination'] = 'bullets'; }
 
                 $swiper_data = wp_json_encode( $data, JSON_THROW_ON_ERROR | JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE );
                 if ( ! $swiper_data ) {

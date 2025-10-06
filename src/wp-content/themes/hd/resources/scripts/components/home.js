@@ -1,5 +1,7 @@
 // components/home.js
 
-document.addEventListener('DOMContentLoaded', () => {
-    //...
-});
+const run = async () => {};
+
+(document.readyState === 'loading')
+    ? document.addEventListener('DOMContentLoaded', run, { once: true })
+    : run();

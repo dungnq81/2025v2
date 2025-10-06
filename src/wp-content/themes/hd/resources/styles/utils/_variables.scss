@@ -5,6 +5,7 @@
 // Define the minimum dimensions at which your layout will change,
 // adapting to different screen sizes, for use in media queries.
 
+$xs: 0 !default;
 $sm: 640px !default;
 $md: 768px !default;
 $lg: 1024px !default;
@@ -12,6 +13,7 @@ $xl: 1280px !default;
 $xxl: 1536px !default;
 
 $mq-breakpoints: (
+        xs: $xs,
         sm: $sm,
         md: $md,
         lg: $lg,
@@ -20,6 +22,7 @@ $mq-breakpoints: (
 ) !default;
 
 $mq-containers: (
+        xs: $xs,
         sm: $sm,
         md: $md,
         lg: $lg,

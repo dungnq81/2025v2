@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'c17c42b9c75104bac55733a193d9768e482ad702',
+        'reference' => '37f58dfe884345bdbe8c65404907f8cca1e290f4',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'c17c42b9c75104bac55733a193d9768e482ad702',
+            'reference' => '37f58dfe884345bdbe8c65404907f8cca1e290f4',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -226,7 +226,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => 'f48b3e601515b060334744b4b495f0d6b3cc2e6b',
+            'reference' => '60ac6a710b7b0527786041ba96200bd49aa8de7e',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(
@@ -271,9 +271,9 @@
             'dev_requirement' => true,
         ),
         'symfony/console' => array(
-            'pretty_version' => 'v6.4.25',
-            'version' => '6.4.25.0',
-            'reference' => '273fd29ff30ba0a88ca5fb83f7cf1ab69306adae',
+            'pretty_version' => 'v6.4.26',
+            'version' => '6.4.26.0',
+            'reference' => '492de6dfd93910d7d7a729c5a04ddcd2b9e99c4f',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/console',
             'aliases' => array(),
@@ -385,9 +385,9 @@
             'dev_requirement' => true,
         ),
         'symfony/string' => array(
-            'pretty_version' => 'v7.3.3',
-            'version' => '7.3.3.0',
-            'reference' => '17a426cce5fd1f0901fefa9b2a490d0038fd3c9c',
+            'pretty_version' => 'v7.3.4',
+            'version' => '7.3.4.0',
+            'reference' => 'f96476035142921000338bad71e5247fbc138872',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/string',
             'aliases' => array(),
@@ -666,7 +666,7 @@
         'wp-cli/wp-cli' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '4d0741eb1050b4b939808410a44812127d680fce',
+            'reference' => '04f9932abfa2ed71dd16e88964f6ac6cd64c37dd',
             'type' => 'library',
             'install_path' => __DIR__ . '/../wp-cli/wp-cli',
             'aliases' => array(

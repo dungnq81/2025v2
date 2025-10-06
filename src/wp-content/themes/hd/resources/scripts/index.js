@@ -1,6 +1,5 @@
 // index.js
 
-import $ from 'jquery';
 import device from 'current-device';
 import { nanoid } from 'nanoid';
 import Foundation from './3rd/zf.js';
@@ -23,7 +22,7 @@ import '../styles/3rd/_index.scss';
 //import AOS from 'aos';
 //import 'aos/dist/aos.css';
 
-async function run () {
+const run = async () => {
     //
     // init
     //

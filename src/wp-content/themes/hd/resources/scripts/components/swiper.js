@@ -3,13 +3,6 @@
 import { nanoid } from 'nanoid';
 import Swiper from 'swiper/bundle';
 
-function isEmpty (value) {
-    if (value == null) return true;
-    if (Array.isArray(value) || typeof value === 'string') return value.length === 0;
-    if (typeof value === 'object') return Object.keys(value).length === 0;
-    return false;
-}
-
 // Initialize Swiper instances
 const initializeSwiper = (el, swiper_class, options) => {
     if (!( el instanceof Element ) || !options) {
@@ -57,6 +50,16 @@ const getDefaultOptions = () => ( {
     slideActiveClass: 'swiper-slide-active',
 } );
 
+// Utility to get breakpoints from options
+const getBreakpoints = (options) => ( {
+    ...( options.xs && { 0: options.xs } ),
+    ...( options.sm && { 640: options.sm } ),
+    ...( options.md && { 768: options.md } ),
+    ...( options.lg && { 1024: options.lg } ),
+    ...( options.xl && { 1280: options.xl } ),
+    ...( options.xxl && { 1536: options.xxl } ),
+} );
+
 // Utility to generate random integers
 const random = (min, max) => Math.floor(Math.random() * ( max - min + 1 )) + min;
 
@@ -78,12 +81,19 @@ const initializeSwipers = () => {
         }
 
         const swiperWrapper = el?.querySelector('.swiper-wrapper');
-        if (!swiperWrapper.dataset.options) {
+        if (!swiperWrapper || !swiperWrapper.dataset.options) {
             return;
         }
 
-        let options = JSON.parse(swiperWrapper.dataset.options);
         let swiperOptions = { ...getDefaultOptions() };
+        let options = {};
+
+        try {
+            options = JSON.parse(swiperWrapper.dataset.options);
+        } catch (err) {
+            console.error('Invalid Swiper options JSON:', err);
+            return;
+        }
 
         if (options.spaceBetween) {
             swiperOptions.spaceBetween = parseInt(options.spaceBetween);
@@ -104,12 +114,7 @@ const initializeSwipers = () => {
                 };
             }
         } else {
-            swiperOptions.breakpoints = {
-                0: options.mobile || {},
-                640: options.tablet || {},
-                768: options.tablet_l || {},
-                1024: options.desktop || {},
-            };
+            swiperOptions.breakpoints = getBreakpoints(options);
         }
 
         if (options.observer) {

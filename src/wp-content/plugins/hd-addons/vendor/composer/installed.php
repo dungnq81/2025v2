@@ -3,7 +3,7 @@
         'name' => 'plugins/hd-addons',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '562356f5549525b66a01a255a26dec662dbbaf2a',
+        'reference' => '37f58dfe884345bdbe8c65404907f8cca1e290f4',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -40,7 +40,7 @@
         'plugins/hd-addons' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '562356f5549525b66a01a255a26dec662dbbaf2a',
+            'reference' => '37f58dfe884345bdbe8c65404907f8cca1e290f4',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -49,7 +49,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => '9e809d3a8829a5b870ae1c2f57706f46bb181093',
+            'reference' => '60ac6a710b7b0527786041ba96200bd49aa8de7e',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(
