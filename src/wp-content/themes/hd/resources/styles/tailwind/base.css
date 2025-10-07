@@ -132,11 +132,7 @@
         }
 
         &:where(.aligncenter, .align-center) {
-            @apply mx-auto text-center mb-4;
-        }
-
-        &:where(.wp-caption-text, .caption-text) {
-            @apply pt-3 text-(--header-text-color);
+            @apply mx-auto text-center mb-6;
         }
     }
 
@@ -172,5 +168,6 @@
     }
 
     /** Dark mode */
-    :where(.dark, .dark *) {}
+    :where(.dark, .dark *) {
+    }
 }

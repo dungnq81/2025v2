@@ -45,7 +45,7 @@ if ( ! $thumbnail ) {
         <?= '<a class="block" href="' . get_permalink( $id ) . '" title="' . \HD_Helper::escAttr( $title ) . '"><' . $title_tag . ' class="text-balance font-bold p-fs-clamp-[18,22]">' . $title . '</' . $title_tag . '></a>' ?>
         <?= \HD_Helper::loopExcerpt( $id, 'text-[15px] mb-0 line-clamp-2' ) ?>
 
-        <a href="<?= get_permalink( $id ) ?>" class="flex items-center text-[14px] mt-2 hover:text-1" title="<?= esc_attr__( 'Xem chi tiết', TEXT_DOMAIN ) ?>">
+        <a href="<?= get_permalink( $id ) ?>" class="view-more flex items-center text-[14px] mt-2 hover:text-1" title="<?= esc_attr__( 'Xem chi tiết', TEXT_DOMAIN ) ?>">
             <?= __( 'Chi tiết', TEXT_DOMAIN ) ?>
             <svg class="w-5 h-5 ml-2" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
         </a>

@@ -12,17 +12,31 @@
 :root {
     --swiper-navigation-size: 44px;
     --swiper-navigation-sides-offset: 12px;
-    --swiper-navigation-color: #000000;
-    --swiper-pagination-color: #000000;
+    --swiper-navigation-color: #FE5242;
+    --swiper-pagination-color: #FE5242;
+    --swiper-pagination-bullet-inactive-color: #FE5242;
     --swiper-pagination-bottom: 16px;
     --swiper-pagination-top: auto;
 
-    --Primary-01: #000000;
+    --Primary-01: #FE5242;
+    --Primary-02: #0C8E39;
 }
 
 .swiper-container {
     position: relative;
     z-index: 1;
+
+    &:not(.swiper-image) {
+        .swiper-controls {
+            position: relative;
+            top: 24px;
+
+            .swiper-pagination {
+                position: relative;
+                bottom: 0;
+            }
+        }
+    }
 }
 
 .swiper-marquee {

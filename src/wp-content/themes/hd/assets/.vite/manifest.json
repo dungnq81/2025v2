@@ -1,13 +1,13 @@
 {
-  "_vendor.5zhZvG-h.css": {
-    "file": "css/vendor.5zhZvG-h.css",
-    "src": "_vendor.5zhZvG-h.css"
+  "_vendor.BFe56REl.css": {
+    "file": "css/vendor.BFe56REl.css",
+    "src": "_vendor.BFe56REl.css"
   },
-  "_vendor.B7Pezefp.js": {
-    "file": "js/vendor.B7Pezefp.js",
+  "_vendor.CESpskzk.js": {
+    "file": "js/vendor.CESpskzk.js",
     "name": "vendor",
     "css": [
-      "css/vendor.5zhZvG-h.css"
+      "css/vendor.BFe56REl.css"
     ],
     "assets": [
       "fonts/SVN-Poppins-Light.woff2",
@@ -125,21 +125,21 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/components/social-share.js": {
-    "file": "js/social-share.BsFBXTFY.js",
+    "file": "js/social-share.D8S96vl4.js",
     "name": "social-share",
     "src": "src/wp-content/themes/hd/resources/scripts/components/social-share.js",
     "isEntry": true,
     "imports": [
-      "_vendor.B7Pezefp.js"
+      "_vendor.CESpskzk.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/swiper.js": {
-    "file": "js/swiper.CCESP1Ey.js",
+    "file": "js/swiper.DIi7lGDB.js",
     "name": "swiper",
     "src": "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
     "isEntry": true,
     "imports": [
-      "_vendor.B7Pezefp.js"
+      "_vendor.CESpskzk.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/woocommerce.js": {
@@ -149,12 +149,12 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/index.js": {
-    "file": "js/index.HblScHdV.js",
+    "file": "js/index.q3ejtIuI.js",
     "name": "index",
     "src": "src/wp-content/themes/hd/resources/scripts/index.js",
     "isEntry": true,
     "imports": [
-      "_vendor.B7Pezefp.js",
+      "_vendor.CESpskzk.js",
       "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
       "src/wp-content/themes/hd/resources/scripts/components/social-share.js"
     ]
@@ -177,7 +177,7 @@
     ]
   },
   "src/wp-content/themes/hd/resources/styles/index.scss": {
-    "file": "css/index.YmrNy9h5.css",
+    "file": "css/index.CsP2pxfl.css",
     "src": "src/wp-content/themes/hd/resources/styles/index.scss",
     "isEntry": true,
     "names": [

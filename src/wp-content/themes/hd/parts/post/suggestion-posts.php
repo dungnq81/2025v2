@@ -21,7 +21,7 @@ if ( ! $suggestion_list ) {
         ?>
         <li>
             <a title="<?= \HD_Helper::escAttr( $post_title ) ?>" class="title" href="<?php the_permalink( $suggestion_id ); ?>"><?php echo $post_title; ?></a>
-            <span class="date"><?php echo \HD_Helper::humanizeTime( $suggestion_id ); ?></span>
+            <span class="date sr-only"><?php echo \HD_Helper::humanizeTime( $suggestion_id ); ?></span>
         </li>
         <?php endforeach; ?>
     </ul>
