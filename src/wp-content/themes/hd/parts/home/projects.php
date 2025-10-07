@@ -20,7 +20,7 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 
 ?>
 <section id="section-<?= $id ?>" class="section section-projects c-light-bg py-20">
-    <div class="u-container">
+    <div class="u-container closest-swiper">
 
         <?= $title ? '<h2 class="font-bold">' . $title . '</h2>' : '' ?>
         <?= $desc ? '<p class="max-w-3xl mb-0 p-fs-clamp-[16,18] pt-4 text-2 font-bold">' . $desc . '</p>' : '' ?>
@@ -65,10 +65,7 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                         <?php
                         foreach ( $post_query as $post ) :
                             echo '<div class="swiper-slide">';
-                            \HD_Helper::blockTemplate( 'parts/du-an/loop', [
-                                    'title_tag' => $title_tag,
-                                    'id'        => $post
-                            ] );
+                            \HD_Helper::blockTemplate( 'parts/du-an/loop', [ 'title_tag' => $title_tag, 'id' => $post ] );
                             echo '</div>';
                         endforeach;
                         ?>

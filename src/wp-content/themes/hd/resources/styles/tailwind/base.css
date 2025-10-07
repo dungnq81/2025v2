@@ -167,6 +167,10 @@
         font-weight: 700;
     }
 
+    i {
+        font-style: normal;
+    }
+
     /** Dark mode */
     :where(.dark, .dark *) {}
 }

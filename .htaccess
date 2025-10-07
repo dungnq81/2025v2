@@ -3,32 +3,34 @@ SetEnv HTACCESS on
 Options -Indexes
 
 <IfModule mod_headers.c>
-#    Header always set X-Content-Type-Options "nosniff"
-#    Header set X-XSS-Protection "1; mode=block"
-#    Header set X-Frame-Options "SAMEORIGIN"
-#    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set X-Content-Type-Options "nosniff"
+    Header set X-XSS-Protection "1; mode=block"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
 
-# Redirect HTTP to HTTPS
 <IfModule mod_rewrite.c>
-#    RewriteEngine On
-#    RewriteCond %{HTTPS} !=on
-#    RewriteCond %{HTTP:X-Forwarded-Proto} !https
-#    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-</IfModule>
+    RewriteEngine On
 
-# Redirect URLs without trailing slash to URLs with trailing slash
-<IfModule mod_rewrite.c>
-#    RewriteEngine On
-#    RewriteCond %{REQUEST_FILENAME} !-f
-#    RewriteCond %{REQUEST_FILENAME} !-d
-#    RewriteCond %{REQUEST_URI} !^/wp-json/ [NC]
-#    RewriteCond %{REQUEST_URI} !\.php [NC]
-#    RewriteCond %{REQUEST_URI} !\.[a-zA-Z0-9]{2,4}$ [NC]
-#    RewriteCond %{REQUEST_URI} !^/$
-#    RewriteRule ^(.+[^/])$ https://%{HTTP_HOST}/$1/ [L,R=301]
-</IfModule>
+    # Block Amazon bots
+    RewriteCond %{HTTP_USER_AGENT} amazonbot [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} amazon-route53-health-check [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} (alexa|aws) [NC]
+    RewriteRule .* - [F,L]
 
+    # Block other known bots
+    RewriteCond %{HTTP_USER_AGENT} (ahrefs|semrush|mj12|dotbot|megaindex) [NC]
+    RewriteRule .* - [F,L]
+
+    # RATE LIMIT BOTS
+    RewriteCond %{HTTP_USER_AGENT} (bot|crawler|spider) [NC]
+    RewriteRule .* - [E=THROTTLE:5/60]
+
+    # Redirect HTTP to HTTPS
+    RewriteCond %{HTTPS} !=on
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
 # END Theme
 
 # BEGIN WordPress

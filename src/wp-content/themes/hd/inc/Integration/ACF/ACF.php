@@ -142,7 +142,7 @@ final class ACF {
 			$item->menu_label_background = $ACF->menu_label_background ?? '';
 
 			// Mega menu
-			if ( $item->menu_mega )         {
+			if ( $item->menu_mega ) {
 				$item->classes[] = 'menu-mega';
 			}
 

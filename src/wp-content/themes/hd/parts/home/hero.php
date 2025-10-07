@@ -28,15 +28,15 @@ $id       = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
             <ul class="flex flex-row mb-8 space-x-6">
                 <li class="flex items-center group">
                     <svg class="text-2 w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917L9.724 16.5L19 7.5"/></svg>
-                    <span class="ml-2 text-sm c-hover group-hover:text-white">No credit card required</span>
+                    <span class="ml-2 text-sm c-hover dark:group-hover:text-white">No credit card required</span>
                 </li>
                 <li class="flex items-center group">
                     <svg class="text-2 w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917L9.724 16.5L19 7.5"/></svg>
-                    <span class="ml-2 text-sm c-hover group-hover:text-white">Free 14-day trial</span>
+                    <span class="ml-2 text-sm c-hover dark:group-hover:text-white">Free 14-day trial</span>
                 </li>
                 <li class="flex items-center group">
                     <svg class="text-2 w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917L9.724 16.5L19 7.5"/></svg>
-                    <span class="ml-2 text-sm c-hover group-hover:text-white">Cancel anytime</span>
+                    <span class="ml-2 text-sm c-hover dark:group-hover:text-white">Cancel anytime</span>
                 </li>
             </ul>
 

@@ -120,7 +120,8 @@ function wp_default_scripts_callback( $scripts ): void {
 		$script = $scripts->registered['jquery'];
 		if ( $script->deps ) {
 
-			// Check whether the script has any dependencies
+			//
+			// Check whether the script has any dependencies.
 
 			// remove jquery-migrate
 			$script->deps = array_diff( $script->deps, [ 'jquery-migrate' ] );
@@ -283,7 +284,7 @@ function nav_menu_item_title_callback( $title, $item, $args, $depth ) {
 	// span + span css
 	if ( ! empty( $item->menu_span ) ) {
 		$span_open = ! empty( $item->menu_span_css ) ? '<span class="' . esc_attr( $item->menu_span_css ) . '">' : '<span>';
-		$title = $span_open . $title . '</span>';
+		$title     = $span_open . $title . '</span>';
 	}
 
 	// SVG inline
@@ -299,7 +300,6 @@ function nav_menu_item_title_callback( $title, $item, $args, $depth ) {
 
 	return $title;
 }
-
 
 
 // --------------------------------------------------
@@ -360,7 +360,7 @@ function hd_settings_filter_callback( array $arr ): array {
 		// Custom post-type and taxonomy.
 		//
 		'post_type_terms'      => [
-			'post' => 'category',
+			'post'  => 'category',
 			'du-an' => 'danh-muc-du-an',
 		],
 

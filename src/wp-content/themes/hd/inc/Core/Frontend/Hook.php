@@ -407,10 +407,10 @@ final class Hook {
         if ( is_single() && $ID = get_the_ID() ) :
         ?>
         <script>
-            document.addEventListener('DOMContentLoaded', async () => {
+            const run = async () => {
                 let postID = <?= $ID ?>;
-                const dateEl = document.querySelector('section.singular .meta>.date');
-                const viewsEl = document.querySelector('section.singular .meta>.views');
+                const dateEl = document.querySelector('section.section-post .meta .date');
+                const viewsEl = document.querySelector('section.section-post .meta .views');
 
                 if (!postID || !dateEl || !viewsEl) {
                     return;
@@ -435,7 +435,10 @@ final class Hook {
                         }
                     } catch (err) {}
                 }
-            });
+            }
+            document.readyState === 'loading'
+                ? document.addEventListener('DOMContentLoaded', run, { once: true })
+                : run();
         </script>
         <?php endif;
 

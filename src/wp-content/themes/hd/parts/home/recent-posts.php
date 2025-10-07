@@ -21,7 +21,7 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 
 ?>
 <section id="section-<?= $id ?>" class="section section-recent-posts py-20">
-    <div class="u-container">
+    <div class="u-container closest-swiper">
         <?= $title ? '<h2 class="font-bold">' . $title . '</h2>' : '' ?>
         <?php if ( $post_query ) : ?>
         <div class="p-news-list mt-9">
@@ -47,10 +47,7 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                         <?php
                         foreach ( $post_query as $post ) :
                             echo '<div class="swiper-slide">';
-                            \HD_Helper::blockTemplate( 'parts/post/loop', [
-                                    'title_tag' => $title_tag,
-                                    'id'        => $post
-                            ] );
+                            \HD_Helper::blockTemplate( 'parts/post/loop', [ 'title_tag' => $title_tag, 'id' => $post ] );
                             echo '</div>';
                         endforeach;
                         ?>

@@ -1604,7 +1604,7 @@ trait Wp {
 	 *
 	 * @return string|null
 	 */
-	public static function postExcerpt( mixed $post = null, ?string $class = 'excerpt', ?string $default_tag = 'div', ?string $fa_glyph = '' ): ?string {
+	public static function postExcerpt( mixed $post = null, ?string $class = 'excerpt', ?string $default_tag = 'div', ?string $fa_glyph = '' ): ?string {
 		$post = get_post( $post );
 		if ( ! $post || ! self::stripSpace( $post->post_excerpt ) ) {
 			return null;
@@ -1861,7 +1861,7 @@ trait Wp {
 		}
 
 		$class = ! empty( $class ) ? ' class="' . $class . '"' : '';
-		$link = '<a' . $class . ' href="' . esc_url( get_term_link( $term, $taxonomy ) ) . '" title="' . esc_attr( $term->name ) . '">' . $term->name . $extra_title . '</a>';
+		$link  = '<a' . $class . ' href="' . esc_url( get_term_link( $term, $taxonomy ) ) . '" title="' . esc_attr( $term->name ) . '">' . $term->name . $extra_title . '</a>';
 		if ( $wrapper_open && $wrapper_close ) {
 			$link = $wrapper_open . $link . $wrapper_close;
 		}
@@ -1888,16 +1888,13 @@ trait Wp {
 
 		// We don't want to output if it is empty, so make sure it's not.
 		if ( $hashtag_list ) {
-			echo '<div class="hashtags">';
 			printf(
 			/* translators: 1: SVG icon. 2: posted in a label, only visible to screen readers. 3: list of tags. */
-				'<div class="hashtag-links links">%1$s<span class="sr-only">%2$s</span>%3$s</div>',
+				'<div class="hashtag-links links flex items-center flex-wrap gap-3">%1$s<span class="sr-only">%2$s</span>%3$s</div>',
 				'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M18.045 3.007L12.31 3a1.97 1.97 0 0 0-1.4.585l-7.33 7.394a2 2 0 0 0 0 2.805l6.573 6.631a1.96 1.96 0 0 0 1.4.585a1.97 1.97 0 0 0 1.4-.585l7.409-7.477A2 2 0 0 0 21 11.479v-5.5a2.97 2.97 0 0 0-2.955-2.972m-2.452 6.438a1 1 0 1 1 0-2a1 1 0 0 1 0 2"/></svg>',
 				__( 'Từ khóa', TEXT_DOMAIN ),
 				$hashtag_list
 			);
-
-			echo '</div>';
 		}
 	}
 
@@ -2113,7 +2110,9 @@ trait Wp {
 			$html .= '<source srcset="' . self::attachmentImageSrc( $attachment_mobile_id ?: $attachment_id, 'medium' ) . '" media="(min-width: 480px)">';
 		}
 
-		$html .= self::iconImageHTML( $attachment_mobile_id ?: $attachment_id, 'thumbnail', [ 'class' => 'lazy', 'loading' => 'lazy' ], false );
+		$html .= self::iconImageHTML( $attachment_mobile_id ?: $attachment_id, 'thumbnail', [ 'class'   => 'lazy',
+		                                                                                      'loading' => 'lazy'
+		], false );
 		$html .= '</picture>';
 
 		return $filter ? apply_filters( 'hd_picture_html_filter', $html, $class, $attachment_id, $attachment_mobile_id ) : $html;
@@ -2189,6 +2188,39 @@ trait Wp {
 
 		return null;
 	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param mixed $attachment_id
+	 * @param string $size
+	 * @param int $cache_in_hours
+	 *
+	 * @return string
+	 */
+	public static function breadCrumbBanner( mixed $attachment_id, string $size = 'widescreen', int $cache_in_hours = 12 ): string {
+		if ( ! empty( $attachment_id ) ) {
+			return '<div class="breadcrumbs-bg dark:opacity-[0.7]">' . \HD_Helper::attachmentImageHTML( $attachment_id, $size, [ 'class' => 'w-full block', 'loading' => 'lazy' ] ) . '</div>';
+		}
+
+		$breadcrumb_bg = \HD_Helper::getThemeMod( 'breadcrumb_bg_setting' );
+		if ( empty( $breadcrumb_bg ) ) {
+			return '';
+		}
+
+		$cache_key = 'breadcrumb_bg_id_' . md5( $breadcrumb_bg );
+		$cached_id = get_transient( $cache_key );
+
+		if ( false === $cached_id ) {
+			$cached_id = attachment_url_to_postid( $breadcrumb_bg );
+			set_transient( $cache_key, $cached_id, $cache_in_hours * HOUR_IN_SECONDS );
+		}
+
+		return ! empty( $cached_id )
+			? '<div class="breadcrumbs-bg dark:opacity-[0.7]">' . \HD_Helper::attachmentImageHTML( $cached_id, $size, [ 'class' => 'w-full block', 'loading' => 'lazy' ] ) . '</div>'
+			: '';
+	}
+
 
 	// -------------------------------------------------------------
 
@@ -2310,7 +2342,7 @@ trait Wp {
 		}
 
 		// Display Breadcrumbs.
-		echo '<ul id="breadcrumbs" class="breadcrumbs" aria-label="Breadcrumbs">';
+		echo '<ul id="breadcrumbs" class="breadcrumbs flex flex-row flex-wrap space-x-4" aria-label="Breadcrumbs">';
 		echo implode( '', $breadcrumbs );
 		echo '</ul>';
 
@@ -2795,13 +2827,13 @@ trait Wp {
 				"<ul class='page-numbers'>",
 				'<li><span class="page-numbers dots">&hellip;</span></li>',
 				'<li><span aria-current="page" class="page-numbers current">',
-				'</span></li>',
+				'<li>',
 			],
 			[
-				'<ul class="pagination page-numbers">',
-				'<li class="ellipsis"></li>',
-				'<li class="current"><span aria-current="page" class="sr-only">You\'re on page </span>',
-				'</li>',
+				'<ul class="pagination page-numbers u-flex-center flex-row flex-wrap space-x-2 mt-6 lg:mt-8">',
+				'<li class="w-9 h-9"><span class="page-numbers dots ellipsis"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="3" d="M6 12h.01m6 0h.01m5.99 0h.01"/></svg></span></li>',
+				'<li class="w-9 h-9"><span aria-current="page" class="sr-only">You\'re on page </span><span aria-current="page" class="page-numbers current">',
+				'<li class="w-9 h-9">',
 			],
 			$paginate_links
 		);

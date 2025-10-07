@@ -102,7 +102,7 @@
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
+        translate: -50% -50%;
     }
 }
 
@@ -117,21 +117,15 @@
 
 @mixin absolute-full {
     & {
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
         position: absolute;
+        inset: 0;
     }
 }
 
 @mixin fixed-full {
     & {
-        left: 0;
-        top: 0;
-        right: 0;
-        bottom: 0;
         position: fixed;
+        inset: 0;
     }
 }
 

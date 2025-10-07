@@ -91,6 +91,8 @@ final class Helper {
 			$secretKey = $recaptcha_options['recaptcha_v3_secret_key'] ?? '';
 			$score     = $recaptcha_options['recaptcha_v3_score'] ?? 0.5;
 
+			// ?
+
 			return false;
 		}
 

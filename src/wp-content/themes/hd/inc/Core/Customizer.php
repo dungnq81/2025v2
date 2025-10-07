@@ -82,7 +82,7 @@ final class Customizer {
 
 		$wp_customize->add_setting( 'login_page_bgimage_setting', [
 			'capability'        => 'edit_theme_options',
-			'sanitize_callback' => '_sanitize_image',
+			'sanitize_callback' => [ \HD_Helper::class, 'sanitizeImage' ],
 		] );
 
 		$wp_customize->add_control(
@@ -100,7 +100,7 @@ final class Customizer {
 
 		$wp_customize->add_setting( 'login_page_logo_setting', [
 			'capability'        => 'edit_theme_options',
-			'sanitize_callback' => '_sanitize_image',
+			'sanitize_callback' => [ \HD_Helper::class, 'sanitizeImage' ],
 		] );
 
 		$wp_customize->add_control(
@@ -202,7 +202,7 @@ final class Customizer {
 		// Add control
 		$wp_customize->add_setting( 'breadcrumb_bg_setting', [
 			'capability'        => 'edit_theme_options',
-			'sanitize_callback' => '_sanitize_image',
+			'sanitize_callback' => [ \HD_Helper::class, 'sanitizeImage' ],
 		] );
 
 		$wp_customize->add_control(
@@ -383,7 +383,7 @@ final class Customizer {
 
 		$wp_customize->add_setting( 'alt_logo', [
 			'capability'        => 'edit_theme_options',
-			'sanitize_callback' => '_sanitize_image',
+			'sanitize_callback' => [ \HD_Helper::class, 'sanitizeImage' ],
 		] );
 
 		$wp_customize->add_control(
