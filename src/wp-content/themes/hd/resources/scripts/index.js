@@ -19,9 +19,6 @@ import '../styles/3rd/_index.scss';
 //import {Fancybox} from '@fancyapps/ui';
 //import '@fancyapps/ui/dist/fancybox/fancybox.css';
 
-//import AOS from 'aos';
-//import 'aos/dist/aos.css';
-
 const run = async () => {
     //
     // init
@@ -30,11 +27,6 @@ const run = async () => {
     initSocialShare('[data-social-share]', {
         intents: [ 'facebook', 'x', 'print', 'send-email', 'copy-link', 'web-share' ]
     });
-
-    //
-    // AOS
-    //
-    // AOS.init();
 
     //
     // Fancybox

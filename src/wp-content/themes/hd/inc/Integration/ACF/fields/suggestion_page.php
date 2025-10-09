@@ -48,6 +48,11 @@ add_action( 'acf/include_fields', static function () {
 					'operator' => '==',
 					'value'    => 'page',
 				],
+				[
+					'param' => 'page_template',
+					'operator' => '!=',
+					'value' => 'templates/template-page-home.php',
+				],
 			],
 		],
 		'menu_order'            => 0,

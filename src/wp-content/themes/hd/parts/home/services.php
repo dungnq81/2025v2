@@ -41,7 +41,7 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 		</ul>
 		<div class="tabs-content pt-24 pb-12 lg:px-24" data-tabs-content="services-tabs-<?=$id?>">
 			<div class="tabs-panel is-active" id="thiet-ke-website">
-                <div class="flex gap-20 items-center">
+                <div class="flex flex-cold md:flex-row gap-20 items-center">
                     <?php
                     $bg00 = $background_image[0] ?? '';
                     if ( ! empty( $bg00['img'] ) ) :

@@ -90,16 +90,16 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                             <p class="text-base font-bold mb-10 text-1">
                                 Đội ngũ SEO chuyên nghiệp với hơn 10 năm kinh nghiệm
                             </p>
-                            <div class="text-[15px] leading-[1.8]">
+                            <p class="text-[15px] leading-[1.8]">
                                 Nếu doanh nghiệp của bạn không xuất hiện ở những vị trí đầu tiên, bạn đã bỏ lỡ hàng trăm, thậm chí hàng ngàn khách hàng tiềm năng mỗi ngày. Dịch vụ SEO từ khóa Google của HD Agency sẽ giúp website của bạn lên top bền vững, thu hút đúng đối tượng khách hàng và gia tăng doanh thu. Với chiến lược tối ưu chuẩn SEO, nội dung chất lượng và hệ thống liên kết hiệu quả, chúng tôi cam kết biến website thành công cụ kinh doanh mạnh mẽ nhất cho doanh nghiệp.
-                                <ul class="list-disc mt-6 ml-8 flex flex-col flex-nowrap gap-3">
-                                    <li class="dark:text-white font-medium">SEO từ khóa lên top bền vững, không lo tụt hạng</li>
-                                    <li class="dark:text-white font-medium">Thu hút đúng đối tượng khách hàng tiềm năng</li>
-                                    <li class="dark:text-white font-medium">Gia tăng doanh thu và lợi nhuận cho doanh nghiệp</li>
-                                    <li class="dark:text-white font-medium">Chi phí hợp lý, tối ưu ngân sách marketing</li>
-                                    <li class="dark:text-white font-medium">Báo cáo minh bạch, theo dõi tiến độ dễ dàng</li>
-                                </ul>
-                            </div>
+                            </p>
+                            <ul class="list-disc m-8 flex flex-col flex-nowrap gap-4 p-fs-clamp-[15,17]">
+                                <li class="dark:text-white font-medium">SEO từ khóa lên top bền vững, không lo tụt hạng</li>
+                                <li class="dark:text-white font-medium">Thu hút đúng đối tượng khách hàng tiềm năng</li>
+                                <li class="dark:text-white font-medium">Gia tăng doanh thu và lợi nhuận cho doanh nghiệp</li>
+                                <li class="dark:text-white font-medium">Chi phí hợp lý, tối ưu ngân sách marketing</li>
+                                <li class="dark:text-white font-medium">Báo cáo minh bạch, theo dõi tiến độ dễ dàng</li>
+                            </ul>
                             <ul class="flex flex-row flex-wrap gap-5 mt-12">
                                 <li class="flex items-center gap-4 group border-(--text-color-2) border rounded-md p-4 hover:border-(--text-color-1) c-hover">
                                     <svg class="c-hover w-6 h-6 text-2 group-hover:text-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.801 10A10 10 0 1 1 17 3.335"/><path d="m9 11 3 3L22 4"/></svg>
@@ -114,7 +114,7 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                                     <a class="uppercase font-bold text-[14px] hover:text-(--text-color-1) dark:hover:text-white" href="#" title="Website theo yêu cầu">GÓI SEO PRO</a>
                                 </li>
                             </ul>
-                        </div>
+                        </p>
                         <div class="thumb absolute aspect-1/1 rounded-[50%] c-light-button p-30 z-[-1] -right-3 lg:right-[4vw] bottom-3 opacity-[0.9]">
                             <img class="block object-contain max-w-50" src="https://webhd.vn/wp-content/uploads/2023/11/Group-7284.png" alt="">
                         </div>

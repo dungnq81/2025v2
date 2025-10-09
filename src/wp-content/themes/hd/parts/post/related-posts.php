@@ -50,6 +50,7 @@ if ( ! $query ) {
                             \HD_Helper::blockTemplate( 'parts/post/loop', [ 'title_tag' => $title_tag, 'id' => $post ] );
                             echo '</div>';
                         endforeach;
+                        wp_reset_postdata();
                         ?>
                     </div>
                 </div>

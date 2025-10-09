@@ -22,8 +22,8 @@ $breadcrumb_bg = $ACF['breadcrumb-bg'] ?? 0;
 echo \HD_Helper::breadCrumbBanner( $breadcrumb_bg, 'widescreen' );
 
 ?>
-<section class="section singular section-post m-20">
-	<div class="u-container xl:!max-w-7xl">
+<section class="section singular section-post m-12">
+	<div class="u-container lg:!max-w-6xl">
 		<?php \HD_Helper::breadCrumbs() ?>
 		<h1 class="h2 font-bold mb-3 mt-2" <?= \HD_Helper::microdata( 'headline' ) ?>><?php the_title(); ?></h1>
         <div class="meta flex items-center gap-6 text-sm mb-9">
@@ -43,16 +43,26 @@ echo \HD_Helper::breadCrumbBanner( $breadcrumb_bg, 'widescreen' );
         </div>
         <article class="entry-content" <?= \HD_Helper::microdata( 'article' ) ?>>
             <?php
+
             echo \HD_Helper::postExcerpt( $post, 'excerpt', 'div', false );
 
             the_content();
+
+            echo '<div class="entry-extra mt-6 md:mt-8 lg:mt-10 mb-24">';
+
             \HD_Helper::blockTemplate( 'parts/post/suggestion-posts', [], false );
+
+            echo \HD_Helper::postTerms( $post );
+
+            \HD_Helper::hashTags();
+            \HD_Helper::blockTemplate( 'parts/blocks/experiences', [], false );
+            \HD_Helper::blockTemplate( 'parts/blocks/author', [], false );
+
+            echo '</div>';
 
             ?>
         </article>
         <?php
-        \HD_Helper::hashTags();
-        \HD_Helper::blockTemplate( 'parts/blocks/author', [], false );
 
         // If comments are open, or we have at least one comment, load up the comment template.
         comments_template();

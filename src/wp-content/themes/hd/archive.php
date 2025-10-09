@@ -18,7 +18,7 @@ $breadcrumb_bg = $ACF['breadcrumb-bg'] ?? 0;
 echo \HD_Helper::breadCrumbBanner( $breadcrumb_bg, 'widescreen' );
 
 ?>
-<section class="section section-blog archive m-20">
+<section class="section section-blog archive m-12">
 	<div class="u-container">
 		<?php \HD_Helper::breadCrumbs() ?>
         <h1 class="h3 font-bold mb-9 mt-2" <?= \HD_Helper::microdata( 'headline' ) ?>>
@@ -47,6 +47,7 @@ echo \HD_Helper::breadCrumbBanner( $breadcrumb_bg, 'widescreen' );
                 $i++;
                 // End the loop.
             endwhile;
+            wp_reset_postdata();
             ?>
         </div>
         <?php

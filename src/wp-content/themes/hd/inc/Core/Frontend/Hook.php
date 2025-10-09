@@ -234,8 +234,10 @@ final class Hook {
                     </div>
                     <?php endif ?>
 
+                    <?= \HD_Helper::doShortcode( 'dropdown_search' ) ?>
+
                     <button class="dark-mode" type="button" aria-label="Dark mode">
-                        <svg class="w-6 h-6 u-flex-center" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><!-- // empty --></svg>
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><!-- // empty --></svg>
                     </button>
 
                     <?= \HD_Helper::doShortcode( 'off_canvas_button', [ 'hide_if_desktop' => 0 ] ) ?>
@@ -328,13 +330,13 @@ final class Hook {
                                 </li>
                             </ul>
                             <div class="social-links">
-                                <?= \HD_Helper::doShortcode( 'social_menu', [ 'class' => 'social-menu flex gap-4 mt-8 md:gap-6' ] ) ?>
+                                <?= \HD_Helper::doShortcode( 'social_menu', [ 'class' => 'social-menu flex flex-row gap-4 mt-8 md:gap-6' ] ) ?>
                             </div>
                         </div>
                         <div class="newsletter-footer">
                             <?= $contact_form['title'] ? '<p class="footer-title p-fs-clamp-[16,18] font-bold uppercase u-heading lg:mb-8 text-(--text-color)">' . esc_html( $contact_form['title'] ) . '</p>' : '' ?>
                             <div class="max-w-md">
-                                <?= $contact_form['desc'] ? '<p class="text-(--text-color) text-sm/6">' . esc_html( $contact_form['desc'] ) . '</p>' : '' ?>
+                                <?= $contact_form['desc'] ? '<p class="text-(--text-color) text-sm/6 text-balance">' . esc_html( $contact_form['desc'] ) . '</p>' : '' ?>
                                 <?= \HD_Helper::doShortcode( 'contact-form-7', [ 'id' => $contact_form['form'] ] ) ?>
                             </div>
                         </div>

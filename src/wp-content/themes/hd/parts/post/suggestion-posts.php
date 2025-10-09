@@ -11,8 +11,8 @@ if ( ! $suggestion_list ) {
 }
 
 ?>
-<div class="suggestion-list">
-    <p class="suggestion-title h6 font-bold"><?php echo __( 'Nội dung khác:', TEXT_DOMAIN ); ?></p>
+<div class="suggestion-list mt-6 md:mt-8 lg:mt-10 mb-10">
+    <p class="suggestion-title h6 mb-2 font-bold"><?php echo __( 'Nội dung khác:', TEXT_DOMAIN ); ?></p>
     <ul>
         <?php
         foreach ( $suggestion_list as $suggestion_id ) :

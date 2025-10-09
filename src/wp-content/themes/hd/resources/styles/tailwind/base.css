@@ -5,7 +5,7 @@
         @apply font-light text-(length:--global-fs) bg-(--bg-color) text-(--text-color) leading-(--global-line-height);
     }
 
-    :is([type='submit']:not(:disabled), [type='reset']:not(:disabled), [type='button']:not(:disabled), [role="button"]:not(:disabled)) {
+    :where([type='submit']:not(:disabled), [type='reset']:not(:disabled), [type='button']:not(:disabled), [role="button"]:not(:disabled)) {
         @apply cursor-pointer;
     }
 
@@ -13,7 +13,7 @@
         @apply cursor-not-allowed opacity-[0.8];
     }
 
-    :is(h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6) {
+    :where(h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6) {
         @apply antialiased font-(family-name:--font-header) leading-(--header-line-height);
         font-weight: inherit;
 
@@ -74,13 +74,13 @@
         @apply p-fs-clamp-h6;
     }
 
-    :is(a, area, button, [role="button"], input, label, select, summary, textarea) {
+    :where(a, area, button, [role="button"], input, label, select, summary, textarea) {
         -webkit-tap-highlight-color: transparent;
         -moz-tap-highlight-color: transparent;
         outline: none;
     }
 
-    :is(a, button, [role="button"]) {
+    :where(a, button, [role="button"]) {
         @apply transition ease-in-out;
     }
 

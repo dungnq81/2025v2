@@ -1,7 +1,7 @@
 <?php
 /**
  * The template for displaying `homepage`
- * Template Name: Home page
+ * Template Name: Trang chủ
  * Template Post Type: page
  *
  * @author Gaudev

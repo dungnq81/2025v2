@@ -1729,14 +1729,14 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
-	 * @param mixed $post
+	 * @param $post
 	 * @param string|null $taxonomy
 	 * @param string|null $wrapper_open
 	 * @param string|null $wrapper_close
 	 *
 	 * @return string|null
 	 */
-	public static function postTerms( mixed $post, ?string $taxonomy = '', ?string $wrapper_open = '<div class="terms">', ?string $wrapper_close = '</div>' ): ?string {
+	public static function postTerms( $post = null, ?string $taxonomy = '', ?string $wrapper_open = '<div class="terms-links links flex items-center flex-wrap gap-3">', ?string $wrapper_close = '</div>' ): ?string {
 		// Ensure $post is a valid post object
 		$post = get_post( $post );
 		if ( ! $post || is_wp_error( $post ) ) {
@@ -1763,7 +1763,9 @@ trait Wp {
 		}
 
 		if ( $wrapper_open && $wrapper_close ) {
-			$link = $wrapper_open . $link . $wrapper_close;
+			$svg = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M6 5a2 2 0 0 1 2-2h4.157a2 2 0 0 1 1.656.879L15.249 6H19a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2v-5a3 3 0 0 0-3-3h-3.22l-1.14-1.682A3 3 0 0 0 9.157 6H6z"/><path d="M3 9a2 2 0 0 1 2-2h4.157a2 2 0 0 1 1.656.879L12.249 10H3zm0 3v7a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-7z"/></g></svg>';
+			$svg .= '<span class="sr-only">' . __( 'Danh mục', TEXT_DOMAIN ) . '</span>';
+			$link = $wrapper_open . $svg . $link . $wrapper_close;
 		}
 
 		return $link;
@@ -1849,6 +1851,7 @@ trait Wp {
 	 * @param mixed|null $post
 	 * @param string $taxonomy
 	 * @param string|null $class
+	 * @param string|null $extra_title
 	 * @param string|null $wrapper_open
 	 * @param string|null $wrapper_close
 	 *

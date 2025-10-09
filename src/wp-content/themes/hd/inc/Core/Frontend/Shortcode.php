@@ -171,41 +171,61 @@ final class Shortcode {
         $title             = $atts['title'] ?: __( 'Tìm kiếm', TEXT_DOMAIN );
         $title_for         = __( 'Tìm kiếm cho', TEXT_DOMAIN );
         $placeholder_title = \HD_Helper::escAttr( __( 'Tìm kiếm...', TEXT_DOMAIN ) );
-        $close_title       = __( 'Đóng', TEXT_DOMAIN );
         $class             = $atts['class'] ? ' ' . \HD_Helper::escAttr( $atts['class'] ) : '';
         $id                = $atts['id'] ? \HD_Helper::escAttr( $atts['id'] ) : \HD_Helper::escAttr( $id );
 
         ob_start();
 
         ?>
-        <a class="trigger-s" title="<?= \HD_Helper::escAttr( $title ) ?>" href="javascript:;"
-           data-toggle="dropdown-<?= $id ?>">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"
-                      d="m21 21l-3.5-3.5M17 10a7 7 0 1 1-14 0a7 7 0 0 1 14 0Z"/>
-            </svg>
+        <a class="dropdown-trigger" title="<?= \HD_Helper::escAttr( $title ) ?>" href="javascript:;" data-toggle="dropdown-<?= $id ?>">
+            <svg class="w-6 h-6 svg-search" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21l-3.5-3.5M17 10a7 7 0 1 1-14 0a7 7 0 0 1 14 0Z"/></svg>
+            <svg class="w-6 h-6 svg-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L17.94 6M18 18L6.06 6"/></svg>
             <span><?= $title ?></span>
         </a>
         <div role="search" class="dropdown-pane" id="dropdown-<?= $id ?>" data-dropdown data-auto-focus="true">
             <form action="<?= \HD_Helper::home() ?>" class="frm-search" method="get" accept-charset="UTF-8">
                 <div class="frm-container">
                     <label for="<?= $id ?>" class="sr-only"><?= $title_for ?></label>
-                    <input id="<?= $id ?>" required pattern="^(.*\S+.*)$" type="search" name="s"
-                           value="<?= get_search_query() ?>" placeholder="<?= $placeholder_title ?>">
+                    <input id="<?= $id ?>" required pattern="^(.*\S+.*)$" type="search" name="s" value="<?= get_search_query() ?>" placeholder="<?= $placeholder_title ?>">
                     <button class="btn-s" type="submit" aria-label="Search">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"
-                                  d="m21 21l-3.5-3.5M17 10a7 7 0 1 1-14 0a7 7 0 0 1 14 0Z"/>
-                        </svg>
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21l-3.5-3.5M17 10a7 7 0 1 1-14 0a7 7 0 0 1 14 0Z"/></svg>
                         <span><?= $title ?></span>
                     </button>
-                    <button class="trigger-s-close" type="button" aria-label="Close">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                  stroke-width="2" d="M6 18L17.94 6M18 18L6.06 6"/>
-                        </svg>
-                        <span><?= $close_title ?></span>
-                    </button>
+                </div>
+                <div class="frm-hint">
+                    <p class="hint-title font-medium mt-6 mb-4"><?= __( 'Dịch vụ', TEXT_DOMAIN ) ?></p>
+                    <ul class="hint-list flex flex-col gap-4 ml-3">
+                        <li>
+                            <a class="flex items-center gap-3 text-[14px] group" href="#" title="">
+                                <svg class="w-4 h-4 group-hover:text-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12m13.707-1.293a1 1 0 0 0-1.414-1.414L11 12.586l-1.793-1.793a1 1 0 0 0-1.414 1.414l2.5 2.5a1 1 0 0 0 1.414 0z" clip-rule="evenodd"/></svg>
+                                Thiết kế website
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center gap-3 text-[14px] group" href="#" title="">
+                                <svg class="w-4 h-4 group-hover:text-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12m13.707-1.293a1 1 0 0 0-1.414-1.414L11 12.586l-1.793-1.793a1 1 0 0 0-1.414 1.414l2.5 2.5a1 1 0 0 0 1.414 0z" clip-rule="evenodd"/></svg>
+                                Nhận dạng thương hiệu
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center gap-3 text-[14px] group" href="#" title="">
+                                <svg class="w-4 h-4 group-hover:text-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12m13.707-1.293a1 1 0 0 0-1.414-1.414L11 12.586l-1.793-1.793a1 1 0 0 0-1.414 1.414l2.5 2.5a1 1 0 0 0 1.414 0z" clip-rule="evenodd"/></svg>
+                                Quảng cáo Google
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center gap-3 text-[14px] group" href="#" title="">
+                                <svg class="w-4 h-4 group-hover:text-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12m13.707-1.293a1 1 0 0 0-1.414-1.414L11 12.586l-1.793-1.793a1 1 0 0 0-1.414 1.414l2.5 2.5a1 1 0 0 0 1.414 0z" clip-rule="evenodd"/></svg>
+                                Quảng cáo Facebook
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center gap-3 text-[14px] group" href="#" title="">
+                                <svg class="w-4 h-4 group-hover:text-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12m13.707-1.293a1 1 0 0 0-1.414-1.414L11 12.586l-1.793-1.793a1 1 0 0 0-1.414 1.414l2.5 2.5a1 1 0 0 0 1.414 0z" clip-rule="evenodd"/></svg>
+                                Tối ưu Pagespeed
+                            </a>
+                        </li>
+                    </ul>
                 </div>
                 <?php echo \HD_Helper::isWoocommerceActive() ? '<input type="hidden" name="post_type" value="product">' : ''; ?>
             </form>

@@ -28,12 +28,10 @@
 
     &:not(.swiper-image) {
         .swiper-controls {
-            position: relative;
-            top: 24px;
-
             .swiper-pagination {
                 position: relative;
                 bottom: 0;
+                margin-top: 24px;
             }
         }
     }

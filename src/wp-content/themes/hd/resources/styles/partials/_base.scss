@@ -661,6 +661,107 @@ body {
     }
 }
 
+// .dropdown
+.dropdown-pane {
+    display: none;
+    position: absolute;
+    visibility: hidden;
+    z-index: 10;
+    width: 400px;
+    background-color: #f1f1f1;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.04);
+    padding: calc(var(--spacing) * 4);
+
+    &.is-opening {
+        display: block
+    }
+
+    &.is-open {
+        display: block;
+        visibility: visible;
+    }
+}
+
+.dropdown-trigger {
+    &:not(.hover) {
+        .svg-close {
+            display: none;
+        }
+    }
+
+    &.hover {
+        .svg-search {
+            display: none;
+        }
+    }
+}
+
+// .social-share
+.social-share {
+    .share-actions {
+        .share-icon {
+            display: block;
+            cursor: pointer;
+            background-color: currentColor;
+            mask-repeat: no-repeat;
+            mask-position: center;
+            mask-size: contain;
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            -webkit-mask-size: contain;
+            @include mixin.box(20);
+
+            &.icon-facebook {
+                mask-image: url('../../img/svg/facebook.svg');
+                -webkit-mask-image: url('../../img/svg/facebook.svg');
+            }
+
+            &.icon-x {
+                mask-image: url('../../img/svg/x.svg');
+                -webkit-mask-image: url('../../img/svg/x.svg');
+            }
+
+            &.icon-print {
+                mask-image: url('../../img/svg/print.svg');
+                -webkit-mask-image: url('../../img/svg/print.svg');
+            }
+
+            &.icon-send-email {
+                mask-image: url('../../img/svg/envelope.svg');
+                -webkit-mask-image: url('../../img/svg/envelope.svg');
+            }
+
+            &.icon-copy-link {
+                mask-image: url('../../img/svg/copy.svg');
+                -webkit-mask-image: url('../../img/svg/copy.svg');
+            }
+
+            &.icon-web-share {
+                mask-image: url('../../img/svg/share.svg');
+                -webkit-mask-image: url('../../img/svg/share.svg');
+            }
+        }
+    }
+}
+
+.sharing-toolbox {
+    .share-title {}
+
+    .share-actions {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        list-style: none !important;
+        margin: 0 !important;
+
+        .share-button {
+            display: block;
+        }
+    }
+}
+
 //
 // .dark-mode
 //
@@ -808,5 +909,11 @@ body {
                 border: 1px solid rgba(255, 255, 255, 0.2);
             }
         }
+    }
+
+    .dropdown-pane {
+        background-color: #1d1d1d;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: inset 0 0 12px rgba(255, 0255, 255, 0.04);
     }
 }
