@@ -294,7 +294,10 @@ function nav_menu_item_title_callback( $title, $item, $args, $depth ) {
 
 	// IMG
 	if ( ! empty( $item->menu_image ) ) {
-		$img   = \HD_Helper::attachmentImageHTML( $item->menu_image, 'thumbnail', [ 'loading' => 'lazy', 'alt' => wp_strip_all_tags( $item->title ?? '' ) ], true );
+		$img   = \HD_Helper::attachmentImageHTML( $item->menu_image, 'thumbnail', [
+			'loading' => 'lazy',
+			'alt'     => wp_strip_all_tags( $item->title ?? '' )
+		], true );
 		$title = $img . $title;
 	}
 
@@ -385,13 +388,14 @@ function hd_settings_filter_callback( array $arr ): array {
 		//
 		'defer_script'         => [
 			// defer.
-			'admin-bar'      => 'defer',
-			'contact-form-7' => 'defer',
-			'swv'            => 'defer',
+			'admin-bar'       => 'defer',
+			'swv'             => 'defer',
+			'contact-form-7'  => 'defer',
 
 			// delay.
-			'comment-reply'  => 'delay',
-			'wp-embed'       => 'delay',
+			'kk-star-ratings' => 'delay',
+			'comment-reply'   => 'delay',
+			'wp-embed'        => 'delay',
 		],
 
 		//
@@ -401,6 +405,7 @@ function hd_settings_filter_callback( array $arr ): array {
 			'dashicons',
 			'admin-bar',
 			'contact-form-7',
+			'kk-star-ratings',
 		],
 
 		//

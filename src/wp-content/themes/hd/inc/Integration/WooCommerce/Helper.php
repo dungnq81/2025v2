@@ -9,7 +9,7 @@ namespace HD\Integration\WooCommerce;
  *
  * @author Gaudev
  */
-final class WOO_Helper {
+final class Helper {
 	// -------------------------------------------------------------
 
 	/**
@@ -18,11 +18,7 @@ final class WOO_Helper {
 	 * @return string[]
 	 */
 	public static function wc_get_catalog_ordering_args( string $orderby = 'menu_order' ): array {
-		$args = [
-			'orderby'  => 'menu_order',
-			'order'    => 'asc',
-			'meta_key' => '',
-		];
+		$args = [];
 
 		switch ( $orderby ) {
 			case 'price':

@@ -324,7 +324,7 @@ final class WooCommerce {
                 ] );
             }
 
-            // Success → log the user in and redirect
+            // Log the user in and redirect
             \wc_set_customer_auth_cookie( $customer_id );
 
             $redirect = ! empty( $_POST['redirect_to'] ) ? $_POST['redirect_to'] : \wc_get_page_permalink( 'myaccount' );

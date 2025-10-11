@@ -144,10 +144,6 @@ final class Theme {
 		} else {
 			wp_dequeue_script( 'comment-reply' );
 		}
-
-		// -------------------------------------------------------------
-		// Homepage hooks
-		// -------------------------------------------------------------
 	}
 
 	// --------------------------------------------------
@@ -160,6 +156,11 @@ final class Theme {
 	 */
 	public function dynamicTemplateInclude( $template ): mixed {
 		static $enqueued_hooks = [];
+
+		// template debug
+		if ( \HD_Helper::development() ) {
+			dump( $template );
+		}
 
 		$_template_slug = basename( $template, '.php' );
 		$_parts         = preg_split( '/[-_]/', $_template_slug );

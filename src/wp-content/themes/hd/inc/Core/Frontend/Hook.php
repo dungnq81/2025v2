@@ -186,9 +186,8 @@ final class Hook {
 
                         <span class="content flex items-center gap-1">
                             <?= get_the_title( $post->ID ) ?> -
-                            <a class="flex items-center gap-1" href="<?= get_permalink( $post->ID ) ?>" title="Xem chi tiết">
-                                <span class="dark:text-(--color-white) font-medium">Chi tiết</span>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 16l4-4l-4-4"/></svg>
+                            <a class="flex items-center gap-1" href="<?= get_permalink( $post->ID ) ?>" title="<?= esc_attr__( 'Xem chi tiết', TEXT_DOMAIN ) ?>">
+                                <span class="dark:text-(--color-white) font-medium"><?= __( 'Xem chi tiết', TEXT_DOMAIN ) ?></span>
                             </a>
                         </span>
                     </div>
@@ -211,6 +210,7 @@ final class Hook {
 
     public function _masthead_header(): void {
         $hotline = \HD_Helper::getField( 'hotline', 'option' );
+
         ?>
         <div id="masthead" class="masthead py-3">
             <div class="u-container flex items-center justify-between">
@@ -433,7 +433,7 @@ final class Hook {
                                 'Content-Type': 'application/json',
                                 'X-WP-Nonce': window.hdConfig.restToken,
                             },
-                            body: JSON.stringify({id: postID})
+                            body: JSON.stringify({ id: postID })
                         });
                         const json = await resp.json();
                         if (json.success) {
@@ -448,10 +448,6 @@ final class Hook {
                 : run();
         </script>
         <?php endif;
-
-        //-------------------------------------------------
-        // Homepage
-        //-------------------------------------------------
 
         //...
 

@@ -18,7 +18,7 @@ Config::define( 'WP_ALLOW_REPAIR', true );
 ini_set( 'display_errors', '1' );
 
 /** Enable plugin and theme updates and installation from the admin */
-Config::define( 'DISALLOW_FILE_EDIT', true );
+Config::define( 'DISALLOW_FILE_EDIT', false );
 Config::define( 'DISALLOW_FILE_MODS', false );
 
 /** DISABLED_PLUGINS */

@@ -1,7 +1,7 @@
 /* index.js */
 
-const run = async () => {};
+const index = async () => {};
 
 ( document.readyState === 'loading' )
-    ? document.addEventListener('DOMContentLoaded', run, { once: true })
-    : run();
+    ? document.addEventListener('DOMContentLoaded', index, { once: true })
+    : index();
