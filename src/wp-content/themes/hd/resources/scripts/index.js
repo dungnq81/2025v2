@@ -16,8 +16,8 @@ import { initSocialShare } from './components/social-share.js';
 import '../styles/tailwind/index.css';
 import '../styles/3rd/_index.scss';
 
-//import {Fancybox} from '@fancyapps/ui';
-//import '@fancyapps/ui/dist/fancybox/fancybox.css';
+import { Fancybox } from '@fancyapps/ui';
+import '@fancyapps/ui/dist/fancybox/fancybox.css';
 
 const run = async () => {
     //
@@ -31,13 +31,13 @@ const run = async () => {
     //
     // Fancybox
     //
-    // Fancybox.bind('.fcy-popup, .fcy-video, .banner-video a', {});
-    // let $_array = ['[id^="gallery-"] a', '[data-rel="lightbox"]'];
-    // $_array.forEach((el, index) => {
-    //     Fancybox.bind(el, {
-    //         groupAll: true,
-    //     });
-    // });
+    Fancybox.bind('.fcy-popup, .fcy-video, .banner-video a', {});
+    let $_array = [ '[id^="gallery-"] a', '[data-rel="lightbox"]' ];
+    $_array.forEach((el, index) => {
+        Fancybox.bind(el, {
+            groupAll: true,
+        });
+    });
 
     //
     // Cookie Consent

@@ -28,7 +28,7 @@ $ACF = \HD_Helper::getFields( $post->ID );
             </h1>
             <blockquote class="text-balance text-[15px] font-medium italic">
                 <svg class="text-1 mb-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M6 6a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a3 3 0 0 1-3 3H5a1 1 0 1 0 0 2h1a5 5 0 0 0 5-5V8a2 2 0 0 0-2-2zm9 0a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h3a3 3 0 0 1-3 3h-1a1 1 0 1 0 0 2h1a5 5 0 0 0 5-5V8a2 2 0 0 0-2-2z" clip-rule="evenodd"/></svg>
-                Dịch vụ thiết kế website chuyên nghiệp - chuẩn seo – uy tín - giá rẻ.
+                dịch vụ thiết kế website chuyên nghiệp - chuẩn seo – uy tín - giá rẻ.
             </blockquote>
         </div>
         <div class="grid gap-7 lg:grid-cols-3 my-9">
@@ -45,7 +45,7 @@ $ACF = \HD_Helper::getFields( $post->ID );
                         <p class="mb-2 text-lg font-bold">Dịch vụ thiết kế website chuyên nghiệp</p>
                         <p class="">Providing businesses with effective tools to improve workflows, boost efficiency, and encourage growth.</p>
                     </div>
-                    <a href="#" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium c-hover outline-none border shadow-xs h-9 px-4 py-2 mr-auto">
+                    <a href="#" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium outline-none border shadow-xs h-9 px-4 py-2 mr-auto">
                         Discover more
                     </a>
                 </div>
@@ -56,15 +56,15 @@ $ACF = \HD_Helper::getFields( $post->ID );
             <h2 class="text-center font-bold h4 pb-5">CÔNG TY TNHH PHÁT TRIỂN CÔNG NGHỆ HD</h2>
             <div class="mt-8 flex flex-wrap justify-center gap-y-3 gap-x-8">
                 <div class="flex items-center gap-3">
-                    <span class="title font-bold text-1 hover:text-2"><?= __( 'Email:', TEXT_DOMAIN )?></span>
+                    <span class="title font-bold text-1 hover:text-2"><?= __( 'Email:', TEXT_DOMAIN ) ?></span>
                     <span class="p-fs-clamp-[16,18]"><?= \HD_Helper::safeMailTo( 'info@webhd.vn', '', [ 'title' => 'Info' ] ) ?> / <?= \HD_Helper::safeMailTo( 'hieudo.webhd@gmail.com', '', [ 'title' => 'HieuDo' ] ) ?></span>
                 </div>
                 <div class="flex items-center gap-3">
-                    <span class="title font-bold text-1 hover:text-2"><?= __( 'Điện thoại:', TEXT_DOMAIN )?></span>
+                    <span class="title font-bold text-1 hover:text-2"><?= __( 'Điện thoại:', TEXT_DOMAIN ) ?></span>
                     <span class="p-fs-clamp-[16,18]"><a href="tel:0938002776" title="0938002776">0938002776</a> / <a href="tel:0899602789" title="0899602789">0899602789</a></span>
                 </div>
                 <div class="flex items-center gap-3">
-                    <span class="title font-bold text-1 hover:text-2"><?= __( 'Văn phòng:', TEXT_DOMAIN )?></span>
+                    <span class="title font-bold text-1 hover:text-2"><?= __( 'Văn phòng:', TEXT_DOMAIN ) ?></span>
                     <span class="p-fs-clamp-[16,18]">38A, Lê Văn Huân, Phường Tân Bình, TP. Hồ Chí Minh</span>
                 </div>
             </div>

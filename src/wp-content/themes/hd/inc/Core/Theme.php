@@ -156,19 +156,32 @@ final class Theme {
 	 * @param $template
 	 *
 	 * @return mixed
+	 * @throws \JsonException
 	 */
 	public function dynamicTemplateInclude( $template ): mixed {
 		static $enqueued_hooks = [];
 
-		$template_slug = basename( $template, '.php' );
-		$hook_name     = 'enqueue_assets_' . str_replace( '-', '_', $template_slug );
+		$_template_slug = basename( $template, '.php' );
+		$_parts         = preg_split( '/[-_]/', $_template_slug );
+		$hook_name      = 'enqueue_assets_' . str_replace( '-', '_', $_template_slug );
+		$first_part     = $_parts[0];
+		$last_part      = end( $_parts );
 
-		if ( ! in_array( $hook_name, $enqueued_hooks, true ) ) {
+		if ( 'template' === $first_part && ! in_array( $hook_name, $enqueued_hooks, true ) ) {
 
 			// dynamic hook - enqueue style/script
-			add_action( 'wp_enqueue_scripts', static function () use ( $hook_name ) {
+			add_action( 'wp_enqueue_scripts', static function () use ( $hook_name, $last_part ) {
+
+				$version = \HD_Helper::version();
+				\HD_Asset::enqueueCSS( 'partials/template/extra.scss', [ \HD_Asset::handle( 'index.scss' ) ], $version );
+				\HD_Asset::enqueueJS( 'components/template/extra.js', [ \HD_Asset::handle( 'index.js' ) ], $version, true, [ 'module', 'defer' ] );
+				\HD_Asset::enqueueCSS( 'partials/template/' . $last_part . '.scss', [ \HD_Asset::handle( 'index.scss' ) ], $version );
+				\HD_Asset::enqueueJS( 'components/template/' . $last_part . '.js', [ \HD_Asset::handle( 'index.js' ) ], $version, true, [ 'module', 'defer' ] );
+
+				// dynamic hook
+				do_action( 'enqueue_assets_template_extra' );
 				do_action( $hook_name );
-				do_action( 'enqueue_assets_extra' ); // dynamic hook extra
+
 			}, 20 );
 
 			$enqueued_hooks[] = $hook_name;

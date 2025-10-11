@@ -27,7 +27,7 @@
         img.custom-logo {
             width: auto;
             display: block;
-            @include mixin.media-css(max-height, 64);
+            @include mixin.media-css(max-height, 68);
         }
     }
 

@@ -36,6 +36,7 @@ final class Optimizer {
 
 		if ( ! \HD_Helper::getOption( '_permalink_structure_updated' ) ) {
 			\HD_Helper::updateOption( '_permalink_structure_updated', true );
+
 			global $wp_rewrite;
 
 			$wp_rewrite->set_permalink_structure( '/%postname%/' );

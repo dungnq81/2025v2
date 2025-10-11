@@ -27,13 +27,13 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                 </a>
             </li>
 			<li class="tabs-title">
-                <a class="p-6 h-full flex items-center gap-4 c-light-button c-hover rounded-md hover:text-[#000] dark:hover:text-white" href="#marketing-online" title="Marketing Online">
+                <a class="p-6 h-full flex items-center gap-4 c-light-button rounded-md hover:text-[#000] dark:hover:text-white" href="#marketing-online" title="Marketing Online">
                     <svg class="w-10 h-10 relative" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8"/><path d="M12 18V6"/></svg>
                     <h3 class="uppercase font-bold p-fs-clamp-[16,20]">Marketing Online</h3>
                 </a>
             </li>
 			<li class="tabs-title">
-                <a class="p-6 h-full flex items-center gap-4 c-light-button c-hover rounded-md hover:text-[#000] dark:hover:text-white" href="#nhan-dang-thuong-hieu" title="Nhận dạng thương hiệu">
+                <a class="p-6 h-full flex items-center gap-4 c-light-button rounded-md hover:text-[#000] dark:hover:text-white" href="#nhan-dang-thuong-hieu" title="Nhận dạng thương hiệu">
                     <svg class="w-10 h-10 relative" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.12 6.4-6.05-4.06a2 2 0 0 0-2.17-.05L2.95 8.41a2 2 0 0 0-.95 1.7v5.82a2 2 0 0 0 .88 1.66l6.05 4.07a2 2 0 0 0 2.17.05l9.95-6.12a2 2 0 0 0 .95-1.7V8.06a2 2 0 0 0-.88-1.66Z"/><path d="M10 22v-8L2.25 9.15"/><path d="m10 14 11.77-6.87"/></svg>
                     <h3 class="uppercase font-bold p-fs-clamp-[16,20]">Nhận dạng thương hiệu</h3>
                 </a>
@@ -174,12 +174,4 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 			</div>
 		</div>
 	</div>
-
-    <svg class="absolute size-[0] overflow-hidden" xmlns="http://www.w3.org/2000/svg" hidden aria-hidden="true" focusable="false">
-        <defs>
-            <symbol id="icon-check-circle" viewBox="0 0 24 24">
-                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.5 11.5L11 14l4-4m6 2a9 9 0 1 1-18 0a9 9 0 0 1 18 0" />
-            </symbol>
-        </defs>
-    </svg>
 </section>

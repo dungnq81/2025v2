@@ -260,7 +260,7 @@ final class Shortcode {
         ob_start();
 
         ?>
-        <button class="menu-lines c-hover flex items-center gap-3 hover:text-[#000] dark:hover:text-(--color-white)" type="button" data-open="offCanvasMenu" aria-label="button">
+        <button class="menu-lines flex items-center gap-3 hover:text-[#000] dark:hover:text-(--color-white)" type="button" data-open="offCanvasMenu" aria-label="button">
             <span class="line w-[26px] h-[18px] flex flex-col flex-nowrap justify-between">
 				<span class="line-1 relative w-full"></span>
 				<span class="line-2 relative w-full"></span>

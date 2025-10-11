@@ -47,7 +47,8 @@ do_action( 'hd_footer_after_action' );
  *
  * @see ContactLink::add_this_contact_link() - 30
  * @see Hook::add_cookie_consent() - 31
- * @see Hook::wp_footer_action() - 32
+ * @see Hook::back_to_top() - 32
+ * @see Hook::template_svg() - 33
  * @see Hook::wp_footer_custom_js_action() - 99
  */
 wp_footer();

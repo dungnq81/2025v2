@@ -15,8 +15,11 @@ const directoriesToCopy = [
 // SASS
 const sassFiles = [
     // (partials)
-    'partials/home',
     'partials/woocommerce',
+
+    // (template)
+    'partials/template/extra',
+    'partials/template/home',
 
     // (entries)
     'admin',
@@ -27,11 +30,14 @@ const sassFiles = [
 // JS
 const jsFiles = [
     // (components)
-    'components/home',
     'components/preflight',
     'components/social-share',
     'components/swiper',
     'components/woocommerce',
+
+    // (template)
+    'components/template/extra',
+    'components/template/home',
 
     // (entries)
     'admin',

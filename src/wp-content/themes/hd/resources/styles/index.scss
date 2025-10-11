@@ -353,8 +353,21 @@
     }
 }
 
-// contact form
+// .section-about-us
+.section.section-about-us {
+    .breadcrumbs {
+        @include mixin.hidden-text;
+    }
+
+
+}
+
+// .section-contact
 .section.section-contact {
+    .breadcrumbs {
+        @include mixin.hidden-text;
+    }
+
     .wpcf7-form {
         :where(input, textarea) {
             color: var(--text-color);

@@ -52,7 +52,8 @@ final class Hook {
         // wp_footer
         // -----------------------------------------------
         add_action( 'wp_footer', [ $this, 'add_cookie_consent' ], 31 );
-        add_action( 'wp_footer', [ $this, 'wp_footer_action' ], 32 );
+        add_action( 'wp_footer', [ $this, 'back_to_top' ], 32 );
+        add_action( 'wp_footer', [ $this, 'template_svg' ], 33 );
         add_action( 'wp_footer', [ $this, 'wp_footer_custom_js_action' ], 99 );
 
         // -----------------------------------------------
@@ -82,19 +83,17 @@ final class Hook {
         add_action( 'wp_enqueue_scripts', [ $this, 'custom_css_action' ], 99 );
 
         // --------------------------------------------------
-        // enqueue_assets_extra
+        // enqueue_assets_template_extra
         // --------------------------------------------------
-        add_action( 'enqueue_assets_extra', static function () {} );
+        add_action( 'enqueue_assets_template_extra', static function () {} );
 
         // --------------------------------------------------
-        // `template-page-home.php` file
+        // `template` file
         // --------------------------------------------------
-        add_action( 'enqueue_assets_template_page_home', static function () {
-            $version = \HD_Helper::version();
 
-            \HD_Asset::enqueueCSS( 'partials/home.scss', [ \HD_Asset::handle( 'index.scss' ) ], $version );
-            \HD_Asset::enqueueJS( 'components/home.js', [ \HD_Asset::handle( 'index.js' ) ], $version, true, [ 'module', 'defer' ] );
-        } );
+        // enqueue_assets_template_page_home
+        // enqueue_assets_template_page_contact
+        //...
     }
 
     /* ---------- PUBLIC -------------------------------------------------- */
@@ -263,19 +262,25 @@ final class Hook {
 
     // -----------------------------------------------
 
-    public function wp_footer_action(): void {
+    public function back_to_top(): void {
         if ( apply_filters( 'hd_back_to_top_filter', true ) ) {
             echo apply_filters(
                     'hd_back_to_top_output_filter',
                     sprintf(
-                            '<a title="%1$s" aria-label="%1$s" rel="nofollow" href="#" class="js-back-to-top c-back-to-top w-7 h-7 right-3 bottom-18" data-show="false" data-scroll-speed="%2$s" data-scroll-start="%3$s">%4$s</a>',
+                            '<a title="%1$s" aria-label="%1$s" rel="nofollow" href="#" class="js-back-to-top c-back-to-top w-8 h-8 right-3 bottom-18" data-show="false" data-scroll-speed="%2$s" data-scroll-start="%3$s">%4$s</a>',
                             esc_attr__( 'Scroll back to top', TEXT_DOMAIN ),
                             absint( apply_filters( 'hd_back_to_top_scroll_speed_filter', 400 ) ),
                             absint( apply_filters( 'hd_back_to_top_scroll_start_filter', 300 ) ),
-                            '<svg class="w-6 h-6 relative block -rotate-90" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 24 24"><g fill="none"><path d="M8.47 4.22a.75.75 0 0 0 0 1.06L15.19 12l-6.72 6.72a.75.75 0 1 0 1.06 1.06l7.25-7.25a.75.75 0 0 0 0-1.06L9.53 4.22a.75.75 0 0 0-1.06 0z" fill="currentColor"></path></g></svg>'
+                            '<svg class="w-6 h-6 relative block" aria-hidden="true"><use href="#icon-angle-top-solid"></use></svg>'
                     )
             );
         }
+    }
+
+    // -----------------------------------------------
+
+    public function template_svg(): void {
+        \HD_Helper::blockTemplate( 'parts/blocks/svg', [], false );
     }
 
     // -----------------------------------------------

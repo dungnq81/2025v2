@@ -27,15 +27,15 @@ $id       = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 
             <ul class="flex flex-row mb-8 space-x-6">
                 <li class="flex items-center group">
-                    <svg class="text-2 w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917L9.724 16.5L19 7.5"/></svg>
+                    <svg class="text-2 w-6 h-6" aria-hidden="true"><use href="#icon-check-outline"></use></svg>
                     <span class="ml-2 text-sm c-hover dark:group-hover:text-white">No credit card required</span>
                 </li>
                 <li class="flex items-center group">
-                    <svg class="text-2 w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917L9.724 16.5L19 7.5"/></svg>
+                    <svg class="text-2 w-6 h-6" aria-hidden="true"><use href="#icon-check-outline"></use></svg>
                     <span class="ml-2 text-sm c-hover dark:group-hover:text-white">Free 14-day trial</span>
                 </li>
                 <li class="flex items-center group">
-                    <svg class="text-2 w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917L9.724 16.5L19 7.5"/></svg>
+                    <svg class="text-2 w-6 h-6" aria-hidden="true"><use href="#icon-check-outline"></use></svg>
                     <span class="ml-2 text-sm c-hover dark:group-hover:text-white">Cancel anytime</span>
                 </li>
             </ul>
@@ -44,7 +44,7 @@ $id       = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 
                 $content_1 = \HD_Helper::ACFLinkLabel( $button_1 );
                 $content_1 .= '<svg class="w-5 h-5 ml-2 -mr-1" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>';
-                $content_2 = '<svg class="w-5 h-5 mr-2 -ml-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M4.37 7.657c2.063.528 2.396 2.806 3.202 3.87c1.07 1.413 2.075 1.228 3.192 2.644c1.805 2.289 1.312 5.705 1.312 6.705M20 15h-1a4 4 0 0 0-4 4v1M8.587 3.992c0 .822.112 1.886 1.515 2.58c1.402.693 2.918.351 2.918 2.334c0 .276 0 2.008 1.972 2.008c2.026.031 2.026-1.678 2.026-2.008c0-.65.527-.9 1.177-.9H20M21 12a9 9 0 1 1-18 0a9 9 0 0 1 18 0Z"/></svg>';
+                $content_2 = '<svg class="w-5 h-5 mr-2 -ml-1" aria-hidden="true"><use href="#icon-globe-outline"></use></svg>';
                 $content_2 .= \HD_Helper::ACFLinkLabel( $button_2 );
 
             ?>
@@ -52,13 +52,13 @@ $id       = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                 <?= \HD_Helper::ACFLinkWrap(
                         $content_1,
                         $button_1,
-                        'inline-flex items-center justify-center px-6 py-3.5 text-[15px] font-medium text-white bg-(--text-color-1) rounded-md c-hover hover:shadow-[0px_4px_29px_-9px_#FE5242]',
+                        'inline-flex items-center justify-center px-6 py-3.5 text-[15px] font-medium text-white bg-(--text-color-1) rounded-md hover:shadow-[0px_4px_29px_-9px_#FE5242]',
                 ) ?>
 
                 <?= \HD_Helper::ACFLinkWrap(
                         $content_2,
                         $button_2,
-                        'c-light-button inline-flex items-center justify-center px-6 py-3.5 text-[15px] font-medium text-(-text-color) dark:text-white rounded-md c-hover hover:shadow-[0px_4px_29px_-9px_#1D1D1DB2]',
+                        'c-light-button inline-flex items-center justify-center px-6 py-3.5 text-[15px] font-medium text-(-text-color) dark:text-white rounded-md hover:shadow-[0px_4px_29px_-9px_#1D1D1DB2]',
                 ) ?>
 
 			</div>
@@ -78,8 +78,8 @@ $id       = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 				</div>
                 <?php endif; ?>
 
-				<div class="flex items-center">
-					<svg class="w-4 h-4 mr-1 text-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+				<div class="flex items-center leading-none">
+                    <svg class="w-4 h-4 mr-2 text-amber-500 fill-current stroke-none" aria-hidden="true"><use href="#icon-star"></use></svg>
 					<span class="font-bold">4.9</span>
 					<span class="mx-1">/</span>
 					<span>5.0 from 500+ reviews</span>
