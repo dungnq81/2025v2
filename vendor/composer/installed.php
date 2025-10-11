@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'ae75cf18918343448083ec9252610ac576cc64bb',
+        'reference' => '30630f0bb6f0c8f97a3af207d35a68c0aa4699af',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'ae75cf18918343448083ec9252610ac576cc64bb',
+            'reference' => '30630f0bb6f0c8f97a3af207d35a68c0aa4699af',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -128,9 +128,9 @@
             'dev_requirement' => false,
         ),
         'justinrainbow/json-schema' => array(
-            'pretty_version' => '6.5.2',
-            'version' => '6.5.2.0',
-            'reference' => 'ac0d369c09653cf7af561f6d91a705bc617a87b8',
+            'pretty_version' => '6.6.0',
+            'version' => '6.6.0.0',
+            'reference' => '68ba7677532803cc0c5900dd5a4d730537f2b2f3',
             'type' => 'library',
             'install_path' => __DIR__ . '/../justinrainbow/json-schema',
             'aliases' => array(),
@@ -146,9 +146,9 @@
             'dev_requirement' => true,
         ),
         'mck89/peast' => array(
-            'pretty_version' => 'v1.17.2',
-            'version' => '1.17.2.0',
-            'reference' => '465810689c477fbba17f4f949b75e4d0bdab13ea',
+            'pretty_version' => 'v1.17.4',
+            'version' => '1.17.4.0',
+            'reference' => 'c6a63f32410d2e4ee2cd20fe94b35af147fb852d',
             'type' => 'library',
             'install_path' => __DIR__ . '/../mck89/peast',
             'aliases' => array(),
@@ -226,7 +226,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => 'aeb989ee4f985c14504c76a0d1bcdd468046f53a',
+            'reference' => '60bbb2fff15a77ab2eda09d7a420883f863938f8',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(

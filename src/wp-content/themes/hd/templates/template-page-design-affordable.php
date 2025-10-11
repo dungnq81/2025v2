@@ -10,15 +10,15 @@
 \defined( 'ABSPATH' ) || die;
 
 // header
-get_header( 'affordable-website-design' );
+get_header( 'design-affordable' );
 
 if ( have_posts() ) {
 	the_post();
 }
 
-$ACF = \HD_Helper::getFields( $post->ID );
-
 ?>
+
+<!-- HERO -->
 
 
 <!-- FAQ -->
@@ -82,4 +82,4 @@ $ACF = \HD_Helper::getFields( $post->ID );
 <?php
 
 // footer
-get_footer( 'affordable-website-design' );
+get_footer( 'design-affordable' );

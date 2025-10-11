@@ -182,7 +182,7 @@ final class Theme {
 				do_action( 'enqueue_assets_template_extra' );
 				do_action( $hook_name );
 
-			}, 20 );
+			}, 31 );
 
 			$enqueued_hooks[] = $hook_name;
 		}
