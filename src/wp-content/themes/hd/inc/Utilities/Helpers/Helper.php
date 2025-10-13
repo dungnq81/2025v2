@@ -631,11 +631,11 @@ final class Helper {
 	public static function clearAllCache(): void {
 		global $wpdb;
 
-		// Clear all WordPress transients
+		// Transients
 		$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s", '_transient_%' ) );
 		$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s", '_transient_timeout_%' ) );
 
-		// Clear object cache (e.g., Redis or Memcached)
+		// Object cache (e.g., Redis or Memcached)
 		if ( function_exists( 'wp_cache_flush' ) ) {
 			wp_cache_flush();
 		}
@@ -659,7 +659,7 @@ final class Helper {
 			}
 		}
 
-		// Clear FlyingPress cache
+		// FlyingPress cache
 		if ( self::checkPluginActive( 'flying-press/flying-press.php' ) ) {
 			class_exists( \FlyingPress\Purge::class ) && \FlyingPress\Purge::purge_everything();
 		}
@@ -1005,50 +1005,51 @@ final class Helper {
 
 	/**
 	 * @return mixed
-	 * @throws \JsonException
 	 */
 	public static function manifest(): mixed {
 		static $cache = [];
 
 		$manifest_base = rtrim( THEME_PATH, '/\\' ) . '/assets/';
-		$key           = 'manifest-theme-auto:filtered';
+		$manifest_path = $manifest_base . '.vite/manifest.json';
+		$key           = 'manifest:' . md5( $manifest_path );
 
 		if ( isset( $cache[ $key ] ) ) {
 			return $cache[ $key ];
 		}
 
-		$candidates  = [ $manifest_base . '.vite/manifest.json' ];
-		$rawManifest = null;
-
-		foreach ( $candidates as $path ) {
-			if ( ! is_readable( $path ) || ! is_file( $path ) ) {
-				continue;
-			}
-
-			$data = wp_json_file_decode( $path, [ 'associative' => true, 'depth' => 512 ] );
-			if ( is_wp_error( $data ) ) {
-				error_log( '[manifest] JSON decode error at ' . $path . ': ' . $data->get_error_message() );
-				continue;
-			}
-
-			if ( is_array( $data ) ) {
-				$rawManifest = $data;
-				break;
-			}
-		}
-
-		// check $rawManifest
-		if ( ! is_array( $rawManifest ) ) {
+		if ( ! is_readable( $manifest_path ) || ! is_file( $manifest_path ) ) {
 			return $cache[ $key ] = [];
 		}
 
+		// transient + filemtime
+		$transient_key = 'theme_manifest_filtered_' . md5( $manifest_path );
+		$file_mtime    = filemtime( $manifest_path ) ?: 0;
+		$cached        = get_transient( $transient_key );
+
+		if ( is_array( $cached ) && ( $cached['mtime'] ?? 0 ) === $file_mtime ) {
+			return $cache[ $key ] = $cached['data'] ?? [];
+		}
+
+		// parse JSON
+		$data = wp_json_file_decode( $manifest_path, [ 'associative' => true, 'depth' => 512 ] );
+		if ( is_wp_error( $data ) ) {
+			error_log( '[manifest] JSON decode error at ' . $manifest_path . ': ' . $data->get_error_message() );
+
+			return $cache[ $key ] = [];
+		}
+
+		if ( ! is_array( $data ) ) {
+			return $cache[ $key ] = [];
+		}
+
+		// manifest filter
 		$filtered = [];
-		foreach ( $rawManifest as $entryKey => $entry ) {
+		foreach ( $data as $entryKey => $entry ) {
 			if ( ! is_array( $entry ) ) {
 				continue;
 			}
 
-			$isVendor = ( preg_match( '/^_?vendor\..+\.(js|css)$/', (string) $entryKey ) === 1 );
+			$isVendor = preg_match( '/^_?vendor\..+\.(js|css)$/', (string) $entryKey ) === 1;
 			$isEntry  = ! empty( $entry['isEntry'] );
 
 			if ( ! $isVendor && ! $isEntry ) {
@@ -1059,19 +1060,24 @@ final class Helper {
 			$filtered[ $entryKey ] = array_intersect_key( $entry, array_flip( $keepFields ) );
 		}
 
+		// transient cache (1 day)
+		set_transient( $transient_key, [
+			'mtime' => $file_mtime,
+			'data'  => $filtered,
+		], DAY_IN_SECONDS );
+
 		return $cache[ $key ] = $filtered;
 	}
 
 	// --------------------------------------------------
 
 	/**
-	 * Resolve a single entry from Vite manifest.
+	 *  Resolve a single entry from Vite manifest.
 	 *
-	 * @param string|null $entry \Ex: 'components/home.js', 'index.scss', 'vendor.js', 'vendor.css'.
+	 * @param string|null $entry \Ex: 'components/template/home.js', 'index.scss', 'vendor.js', 'vendor.css'.
 	 * @param string $handle_prefix
 	 *
 	 * @return array
-	 * @throws \JsonException
 	 */
 	public static function manifestResolve( ?string $entry = null, string $handle_prefix = '' ): array {
 		if ( ! is_string( $entry ) || ! trim( $entry ) ) {
@@ -1172,12 +1178,11 @@ final class Helper {
 
 		$found = null;
 		foreach ( $manifest as $k => $item ) {
-			if (
-				! is_array( $item ) ||
-				empty( $item['isEntry'] ) ||
-				empty( $item['src'] ) ||
-				! is_string( $item['src'] ) ||
-				preg_match( '/^_?vendor\..+\.(js|css)$/', $k )
+			if ( ! is_array( $item )
+			     || empty( $item['isEntry'] )
+			     || empty( $item['src'] )
+			     || ! is_string( $item['src'] )
+			     || preg_match( '/^_?vendor\..+\.(js|css)$/', $k )
 			) {
 				continue;
 			}

@@ -115,6 +115,7 @@ Config::define( 'WP_DEBUG', false );
 ini_set( 'display_errors', '0' );
 
 Config::define( 'FORCE_VERSION', env( 'FORCE_VERSION' ) ?? false );
+Config::define( 'SHOW_TEMPLATE_FILE', env( 'SHOW_TEMPLATE_FILE' ) ?? false );
 
 /** PHP Memory */
 Config::define( 'WP_MEMORY_LIMIT', env( 'WP_MEMORY_LIMIT' ) ?? '512M' );

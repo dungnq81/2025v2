@@ -18,7 +18,7 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 				<h2 class="font-bold text-(--text-color)">Sign up and get 25% account credit bonus on your first invoice</h2>
 				<a class="inline-flex mt-6 lg:mt-8 items-center justify-center px-6 py-3 text-[14px] font-medium text-white bg-(--text-color-1) rounded-md hover:shadow-[0px_4px_29px_-9px_#FE5242]" href="#" title="Get started">
 					Get started
-					<svg class="w-5 h-5 ml-2 -mr-1" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+					<svg class="w-5 h-5 ml-2 -mr-1" aria-hidden="true"><use href="#icon-arrow-right-outline"></use></svg>
 				</a>
 			</div>
 			<div class="w-full lg:w-1/2 max-w-2xl text-center">

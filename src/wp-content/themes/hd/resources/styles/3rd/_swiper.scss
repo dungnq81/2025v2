@@ -4,7 +4,10 @@
 @use '../utils/functions' as func;
 @use '../utils/mixins' as mixin;
 
-@use 'swiper/css/bundle';
+//@use 'swiper/css/bundle';
+@use 'swiper/css';
+@use 'swiper/css/navigation';
+@use 'swiper/css/pagination';
 
 //
 // Custom CSS.
@@ -35,6 +38,11 @@
             }
         }
     }
+}
+
+.swiper-wrapper {
+    /* fix height: 100%; */
+    height: fit-content;
 }
 
 .swiper-marquee {

@@ -1,7 +1,23 @@
 // components/swiper.js
 
 import { nanoid } from 'nanoid';
-import Swiper from 'swiper/bundle';
+//import Swiper from 'swiper/bundle';
+import Swiper from 'swiper';
+import { Navigation, Pagination, Autoplay, Grid } from 'swiper/modules';
+
+// Default Swiper options
+const getDefaultOptions = () => ( {
+    modules: [ Navigation, Pagination, Autoplay, Grid ],
+
+    grabCursor: !0,
+    allowTouchMove: !0,
+    threshold: 5,
+    hashNavigation: !1,
+    mousewheel: !1,
+    wrapperClass: 'swiper-wrapper',
+    slideClass: 'swiper-slide',
+    slideActiveClass: 'swiper-slide-active',
+} );
 
 // Initialize Swiper instances
 const initializeSwiper = (el, swiper_class, options) => {
@@ -37,18 +53,6 @@ const generateClasses = () => {
         scrollbarClass: 'scrollbar-' + rand,
     };
 };
-
-// Default Swiper options
-const getDefaultOptions = () => ( {
-    grabCursor: !0,
-    allowTouchMove: !0,
-    threshold: 5,
-    hashNavigation: !1,
-    mousewheel: !1,
-    wrapperClass: 'swiper-wrapper',
-    slideClass: 'swiper-slide',
-    slideActiveClass: 'swiper-slide-active',
-} );
 
 // Utility to get breakpoints from options
 const getBreakpoints = (options) => ( {
@@ -166,8 +170,8 @@ const initializeSwipers = () => {
                 btnNext.classList.add('swiper-button', 'swiper-button-next', classes.nextClass);
                 controls.append(btnPrev, btnNext);
 
-                const iconLeft = `<svg aria-hidden="true"><use href="#icon-arrow-left"></use></svg>`;
-                const iconRight = `<svg aria-hidden="true"><use href="#icon-arrow-right"></use></svg>`;
+                const iconLeft = `<svg aria-hidden="true"><use href="#icon-arrow-left-outline"></use></svg>`;
+                const iconRight = `<svg aria-hidden="true"><use href="#icon-arrow-right-outline"></use></svg>`;
 
                 btnPrev.innerHTML = iconLeft;
                 btnNext.innerHTML = iconRight;

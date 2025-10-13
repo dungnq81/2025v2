@@ -48,7 +48,7 @@ class ComposerStaticInit9b89879d0ffdac5f0eb892fc5d415441
         'HD\\Core\\Optimizer' => __DIR__ . '/../..' . '/inc/Core/Optimizer.php',
         'HD\\Core\\Theme' => __DIR__ . '/../..' . '/inc/Core/Theme.php',
         'HD\\Integration\\ACF\\ACF' => __DIR__ . '/../..' . '/inc/Integration/ACF/ACF.php',
-        'HD\\Integration\\WooCommerce\\WOO_Helper' => __DIR__ . '/../..' . '/inc/Integration/WooCommerce/WOO_Helper.php',
+        'HD\\Integration\\WooCommerce\\Helper' => __DIR__ . '/../..' . '/inc/Integration/WooCommerce/Helper.php',
         'HD\\Integration\\WooCommerce\\WooCommerce' => __DIR__ . '/../..' . '/inc/Integration/WooCommerce/WooCommerce.php',
         'HD\\Utilities\\Helpers\\Asset' => __DIR__ . '/../..' . '/inc/Utilities/Helpers/Asset.php',
         'HD\\Utilities\\Helpers\\CSS' => __DIR__ . '/../..' . '/inc/Utilities/Helpers/CSS.php',

@@ -44,8 +44,7 @@ final class Theme {
 	/**
 	 * Sets up theme defaults and register support for various WordPress features.
 	 *
-	 * Note that this function is hooked into the after_setup_theme hook, which runs before the init hook.
-	 * The init hook is too late for some features, such as indicating support for post-thumbnails.
+	 * @return void
 	 */
 	public function setupTheme(): void {
 		load_theme_textdomain( TEXT_DOMAIN, get_template_directory() . '/languages' );
@@ -104,7 +103,6 @@ final class Theme {
 	 * Enqueue scripts and styles
 	 *
 	 * @return void
-	 * @throws \JsonException
 	 */
 	public function enqueueAssets(): void {
 		$version = \HD_Helper::version();
@@ -116,17 +114,18 @@ final class Theme {
 			'baseUrl'      => \HD_Helper::siteURL( '/' ),
 			'themeUrl'     => THEME_URL,
 			'restApiUrl'   => RESTAPI_URL,
-			'wcAjaxUrl'    => \HD_Helper::home( '/?wc-ajax=%%endpoint%%' ),
+			//'wcAjaxUrl'    => \HD_Helper::home( '/?wc-ajax=%%endpoint%%' ),
 			'csrfToken'    => wp_create_nonce( 'wp_csrf_token' ),
 			'restToken'    => wp_create_nonce( 'wp_rest' ),
 			'reCaptcha_v2' => $recaptcha_options['recaptcha_v2_site_key'] ?? '',
 			'reCaptcha_v3' => $recaptcha_options['recaptcha_v3_site_key'] ?? '',
 			'lg'           => \HD_Helper::currentLanguage(),
 			'lang'         => [
-				'added_to_cart' => __( 'Đã thêm vào giỏ hàng', TEXT_DOMAIN ),
+				//'added_to_cart' => __( 'Đã thêm vào giỏ hàng', TEXT_DOMAIN ),
 				'view_more'     => __( 'Xem thêm', TEXT_DOMAIN )
 			]
 		];
+
 		\HD_Asset::localize( 'jquery-core', 'hdConfig', $l10n );
 		\HD_Asset::inlineScript( 'jquery-core', 'Object.assign(window,{ $:jQuery,jQuery });', 'after' );
 
@@ -152,19 +151,22 @@ final class Theme {
 	 * @param $template
 	 *
 	 * @return mixed
-	 * @throws \JsonException
 	 */
 	public function dynamicTemplateInclude( $template ): mixed {
+		if ( is_admin() || wp_doing_ajax() || wp_is_json_request() ) {
+			return $template;
+		}
+
 		static $enqueued_hooks = [];
 
 		// template debug
-		if ( \HD_Helper::development() ) {
+		if ( ( defined( 'SHOW_TEMPLATE_FILE' ) && \SHOW_TEMPLATE_FILE === true ) && \HD_Helper::development() ) {
 			dump( $template );
 		}
 
 		$_template_slug = basename( $template, '.php' );
+		$hook_name      = 'enqueue_assets_' . sanitize_key( str_replace( '-', '_', $_template_slug ) );
 		$_parts         = preg_split( '/[-_]/', $_template_slug );
-		$hook_name      = 'enqueue_assets_' . str_replace( '-', '_', $_template_slug );
 		$first_part     = $_parts[0];
 		$last_part      = end( $_parts );
 
@@ -172,17 +174,20 @@ final class Theme {
 
 			// dynamic hook - enqueue style/script
 			add_action( 'wp_enqueue_scripts', static function () use ( $hook_name, $last_part ) {
-
 				$version = \HD_Helper::version();
-				\HD_Asset::enqueueCSS( 'partials/template/extra.scss', [ \HD_Asset::handle( 'index.scss' ) ], $version );
-				\HD_Asset::enqueueJS( 'components/template/extra.js', [ \HD_Asset::handle( 'index.js' ) ], $version, true, [ 'module', 'defer' ] );
-				\HD_Asset::enqueueCSS( 'partials/template/' . $last_part . '.scss', [ \HD_Asset::handle( 'index.scss' ) ], $version );
-				\HD_Asset::enqueueJS( 'components/template/' . $last_part . '.js', [ \HD_Asset::handle( 'index.js' ) ], $version, true, [ 'module', 'defer' ] );
+				$names   = [ 'extra', $last_part ];
+
+				foreach ( $names as $name ) {
+					$scss = "partials/template/{$name}.scss";
+					$js   = "components/template/{$name}.js";
+
+					\HD_Asset::enqueueCSS( $scss, [ \HD_Asset::handle( 'index.scss' ) ], $version );
+					\HD_Asset::enqueueJS( $js, [ \HD_Asset::handle( 'index.js' ) ], $version, true, [ 'module', 'defer' ] );
+				}
 
 				// dynamic hook
 				do_action( 'enqueue_assets_template_extra' );
 				do_action( $hook_name );
-
 			}, 31 );
 
 			$enqueued_hooks[] = $hook_name;

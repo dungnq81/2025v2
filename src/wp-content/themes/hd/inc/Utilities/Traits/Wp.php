@@ -2820,8 +2820,8 @@ trait Wp {
 			'end_size'  => 1,
 			'mid_size'  => 2,
 			'prev_next' => true,
-			'prev_text' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14 8l-4 4l4 4"/></svg>',
-			'next_text' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m10 16l4-4l-4-4"/></svg>',
+			'prev_text' => '<svg aria-hidden="true"><use href="#icon-chevron-left-outline"></use></svg>',
+			'next_text' => '<svg aria-hidden="true"><use href="#icon-chevron-right-outline"></use></svg>',
 			'type'      => 'list',
 		] );
 
@@ -2834,7 +2834,7 @@ trait Wp {
 			],
 			[
 				'<ul class="pagination page-numbers u-flex-center flex-row flex-wrap space-x-2 mt-6 lg:mt-8">',
-				'<li class="w-9 h-9"><span class="page-numbers dots ellipsis"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="3" d="M6 12h.01m6 0h.01m5.99 0h.01"/></svg></span></li>',
+				'<li class="w-9 h-9"><span class="page-numbers dots ellipsis"><svg aria-hidden="true"><use href="#icon-dots-horizontal-outline"></use></svg></span></li>',
 				'<li class="w-9 h-9"><span aria-current="page" class="sr-only">You\'re on page </span><span aria-current="page" class="page-numbers current">',
 				'<li class="w-9 h-9">',
 			],

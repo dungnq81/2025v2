@@ -20,7 +20,7 @@ return array(
     'HD\\Core\\Optimizer' => $baseDir . '/inc/Core/Optimizer.php',
     'HD\\Core\\Theme' => $baseDir . '/inc/Core/Theme.php',
     'HD\\Integration\\ACF\\ACF' => $baseDir . '/inc/Integration/ACF/ACF.php',
-    'HD\\Integration\\WooCommerce\\WOO_Helper' => $baseDir . '/inc/Integration/WooCommerce/WOO_Helper.php',
+    'HD\\Integration\\WooCommerce\\Helper' => $baseDir . '/inc/Integration/WooCommerce/Helper.php',
     'HD\\Integration\\WooCommerce\\WooCommerce' => $baseDir . '/inc/Integration/WooCommerce/WooCommerce.php',
     'HD\\Utilities\\Helpers\\Asset' => $baseDir . '/inc/Utilities/Helpers/Asset.php',
     'HD\\Utilities\\Helpers\\CSS' => $baseDir . '/inc/Utilities/Helpers/CSS.php',

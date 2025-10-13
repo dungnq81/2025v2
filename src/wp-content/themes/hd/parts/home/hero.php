@@ -43,7 +43,7 @@ $id       = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
             <?php if ( $button_1 || $button_2 ) :
 
                 $content_1 = \HD_Helper::ACFLinkLabel( $button_1 );
-                $content_1 .= '<svg class="w-5 h-5 ml-2 -mr-1" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>';
+                $content_1 .= '<svg class="w-5 h-5 ml-2 -mr-1" aria-hidden="true"><use href="#icon-arrow-right-outline"></use></svg>';
                 $content_2 = '<svg class="w-5 h-5 mr-2 -ml-1" aria-hidden="true"><use href="#icon-globe-outline"></use></svg>';
                 $content_2 .= \HD_Helper::ACFLinkLabel( $button_2 );
 

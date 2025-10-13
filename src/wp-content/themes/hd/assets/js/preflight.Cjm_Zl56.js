@@ -1,0 +1,67 @@
+(() => {
+  if (localStorage.theme === "dark" || !("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    document.documentElement.classList.add("dark");
+  }
+  const sunIcon = '<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5V3m0 18v-2M7.05 7.05L5.636 5.636m12.728 12.728L16.95 16.95M5 12H3m18 0h-2M7.05 16.95l-1.414 1.414M18.364 5.636L16.95 7.05M16 12a4 4 0 1 1-8 0a4 4 0 0 1 8 0"></path>';
+  const moonIcon = '<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 0 1-.5-17.986V3c-.354.966-.5 1.911-.5 3a9 9 0 0 0 9 9c.239 0 .254.018.488 0A9 9 0 0 1 12 21"/>';
+  const run = async () => {
+    const button = document.querySelector(".dark-mode");
+    if (button) {
+      const svg = button.querySelector("svg");
+      if (document.documentElement.classList.contains("dark")) {
+        svg.innerHTML = moonIcon;
+      } else {
+        svg.innerHTML = sunIcon;
+      }
+      button.addEventListener("click", () => {
+        document.documentElement.classList.toggle("dark");
+        if (document.documentElement.classList.contains("dark")) {
+          localStorage.theme = "dark";
+          svg.innerHTML = moonIcon;
+        } else {
+          localStorage.theme = "light";
+          svg.innerHTML = sunIcon;
+        }
+      });
+    }
+  };
+  document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", run, { once: true }) : run();
+})();
+(async () => {
+  const DETECTION_CLASS = "is-lighthouse";
+  const indicators = {
+    ua: false,
+    backend: false
+  };
+  indicators.ua = navigator.userAgent.includes("Lighthouse") || navigator.userAgent.includes("HeadlessChrome") || navigator.webdriver === true;
+  if (indicators.ua) {
+    document.documentElement.classList.add(DETECTION_CLASS);
+    return;
+  }
+  if (typeof window.hdConfig !== "undefined") {
+    try {
+      const res = await fetch(window.hdConfig.restApiUrl + "global/lighthouse", {
+        method: "GET",
+        credentials: "same-origin",
+        headers: {
+          "X-WP-Nonce": window.hdConfig.restToken
+        }
+      });
+      const json = await res.json();
+      indicators.backend = json.success && json.detected;
+    } catch (err) {
+    }
+    if (indicators.backend) {
+      document.documentElement.classList.add(DETECTION_CLASS);
+    }
+  }
+})();
+(() => {
+  function setViewportProperty() {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  }
+  window.addEventListener("resize", setViewportProperty);
+  setViewportProperty();
+})();
+//# sourceMappingURL=preflight.Cjm_Zl56.js.map

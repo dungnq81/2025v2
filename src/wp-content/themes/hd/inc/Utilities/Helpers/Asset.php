@@ -17,7 +17,6 @@ final class Asset {
 	 * @param bool $relative_link
 	 *
 	 * @return string
-	 * @throws \JsonException
 	 */
 	public static function src( ?string $entry = null, bool $relative_link = false ): string {
 		if ( ! $entry ) {
@@ -40,7 +39,6 @@ final class Asset {
 	 * @param string $handle_prefix
 	 *
 	 * @return string
-	 * @throws \JsonException
 	 */
 	public static function handle( ?string $entry = null, string $handle_prefix = '' ): string {
 		if ( ! $entry ) {
@@ -59,7 +57,6 @@ final class Asset {
 	 * @param string $handle_prefix
 	 *
 	 * @return void
-	 * @throws \JsonException
 	 */
 	public static function preload( ?string $entry = null, string $handle_prefix = '' ): void {
 		if ( ! $entry ) {
@@ -94,7 +91,6 @@ final class Asset {
 	 * @param string $media
 	 *
 	 * @return void
-	 * @throws \JsonException
 	 */
 	public static function enqueueCSS(
 		?string $entry = null,
@@ -124,7 +120,6 @@ final class Asset {
 	 * @param array $extra
 	 *
 	 * @return void
-	 * @throws \JsonException
 	 */
 	public static function enqueueJS(
 		?string $entry = null,
@@ -202,7 +197,7 @@ final class Asset {
 	 * @param string|bool|null $ver
 	 * @param bool $in_footer
 	 * @param array $extra - Ex. [ 'module', 'defer' ]
-	 *
+     *
 	 * @return void
 	 */
 	public static function enqueueScript(
@@ -266,7 +261,7 @@ final class Asset {
 	/**
 	 * @param string $handle
 	 * @param string $object_name
-	 * @param array|null|bool $l10n
+	 * @param array|bool|null $l10n
 	 *
 	 * @return void
 	 */

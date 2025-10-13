@@ -41,7 +41,7 @@
         "jquery": "^3.7.1",
         "nanoid": "^5.1.6",
         "select2": "4.1.0-rc.0",
-        "sweetalert2": "^11.26.1",
+        "sweetalert2": "^11.26.2",
         "swiper": "^11.2.10",
         "tailwindcss": "^4.1.14",
         "vanilla-lazyload": "^19.1.3"
