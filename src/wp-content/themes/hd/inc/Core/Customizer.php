@@ -1,4 +1,15 @@
 <?php
+/**
+ * Theme Customizer and Admin Integration
+ *
+ * This file defines the Customizer class, responsible for extending the WordPress Customizer,
+ * modifying queries, and integrating with various admin hooks.
+ * It registers actions such as customize_register, pre_get_posts, display_post_states,
+ * and other hooks that control both frontend and backend behavior.
+ *
+ * @package HD
+ * @author Gaudev
+ */
 
 namespace HD\Core;
 
@@ -6,13 +17,10 @@ use HD\Utilities\Traits\Singleton;
 
 \defined( 'ABSPATH' ) || die;
 
-/**
- * Customizer Class
- *
- * @author Gaudev
- */
 final class Customizer {
 	use Singleton;
+
+	private array $page_archive_post_types = [];
 
 	// --------------------------------------------------
 
@@ -20,8 +28,86 @@ final class Customizer {
 	 * @return void
 	 */
 	private function init(): void {
+
 		// Theme Customizer settings and controls.
 		add_action( 'customize_register', [ $this, 'customizeRegister' ], 30 );
+
+		// post-types archive.
+		$page_archive_post_types = \HD_Helper::filterSettingOptions( 'page_archive_post_types', [] );
+		if ( ! empty( $page_archive_post_types ) && is_array( $page_archive_post_types ) ) {
+
+			$this->page_archive_post_types = $page_archive_post_types;
+			add_action( 'pre_get_posts', [ $this, 'handle_page_as_archive' ] );
+			add_filter( 'display_post_states', [ $this, 'add_archive_page_state' ] );
+		}
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param $query
+	 *
+	 * @return void
+	 */
+	public function handle_page_as_archive( $query ): void {
+		if ( is_admin() || ! $query->is_main_query() ) {
+			return;
+		}
+
+		foreach ( $this->page_archive_post_types as $type ) {
+			$obj = get_post_type_object( $type );
+			if ( ! $obj ) {
+				continue;
+			}
+
+			if ( ! empty( $obj->has_archive ) ) {
+				continue;
+			}
+
+			$page = get_page_by_path( $type );
+			if ( ! $page ) {
+				continue;
+			}
+
+			if ( is_page( $page->ID ) ) {
+				$query->set( 'post_type', $type );
+				$query->set( 'posts_per_page', \HD_Helper::getOption( 'posts_per_page' ) );
+				$query->is_page              = false;
+				$query->is_archive           = true;
+				$query->is_post_type_archive = true;
+				$query->set( 'pagename', '' );
+
+				break;
+			}
+		}
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param $post_states
+	 *
+	 * @return mixed
+	 */
+	public function add_archive_page_state( $post_states ): mixed {
+		if ( get_post_type( $GLOBALS['post'] ) !== 'page' ) {
+			return $post_states;
+		}
+
+		foreach ( $this->page_archive_post_types as $type ) {
+			$obj = get_post_type_object( $type );
+			if ( ! $obj || ! empty( $obj->has_archive ) ) {
+				continue;
+			}
+
+			$page = get_page_by_path( $type );
+			if ( $page && $page->ID === $GLOBALS['post']->ID ) {
+				$label                                  = sprintf( 'Archive Page (%s)', $obj->labels->singular_name ?? ucfirst( $type ) );
+				$post_states[ 'page_archive_' . $type ] = esc_html( $label );
+			}
+		}
+
+		return $post_states;
 	}
 
 	// --------------------------------------------------
@@ -32,12 +118,14 @@ final class Customizer {
 	 * @param \WP_Customize_Manager $wp_customize Theme Customizer object.
 	 */
 	public function customizeRegister( \WP_Customize_Manager $wp_customize ): void {
+
 		// hide 'Additional CSS' tab
 		$wp_customize->remove_section( 'custom_css' );
 
+		// logo + title
 		$this->_logoAndTitle( $wp_customize );
 
-		// -------------------------------------------------------------
+		// ------------------
 
 		$wp_customize->add_panel(
 			'addon_menu_panel',

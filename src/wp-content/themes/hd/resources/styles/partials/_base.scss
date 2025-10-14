@@ -82,8 +82,8 @@ body {
         .frm-search {
             position: relative;
             width: 100%;
+            height: 48px;
             color: #000;
-            padding-block: calc(var(--spacing) * 3);
             padding-inline: calc(var(--spacing) * 9) calc(var(--spacing) * 3);
             border-radius: var(--radius-md);
             background: var(--bg-light-color);
@@ -708,39 +708,30 @@ body {
             mask-repeat: no-repeat;
             mask-position: center;
             mask-size: contain;
-            -webkit-mask-repeat: no-repeat;
-            -webkit-mask-position: center;
-            -webkit-mask-size: contain;
             @include mixin.box(20);
 
             &.icon-facebook {
                 mask-image: url('../../img/svg/facebook.svg');
-                -webkit-mask-image: url('../../img/svg/facebook.svg');
             }
 
             &.icon-x {
                 mask-image: url('../../img/svg/x.svg');
-                -webkit-mask-image: url('../../img/svg/x.svg');
             }
 
             &.icon-print {
                 mask-image: url('../../img/svg/print.svg');
-                -webkit-mask-image: url('../../img/svg/print.svg');
             }
 
             &.icon-send-email {
                 mask-image: url('../../img/svg/envelope.svg');
-                -webkit-mask-image: url('../../img/svg/envelope.svg');
             }
 
             &.icon-copy-link {
                 mask-image: url('../../img/svg/copy.svg');
-                -webkit-mask-image: url('../../img/svg/copy.svg');
             }
 
             &.icon-web-share {
                 mask-image: url('../../img/svg/share.svg');
-                -webkit-mask-image: url('../../img/svg/share.svg');
             }
         }
     }

@@ -1,4 +1,15 @@
 <?php
+/**
+ * Theme Optimization and Cleanup
+ *
+ * This file defines the Optimizer class, which handles performance improvements,
+ * frontend and backend optimizations, and general WordPress cleanup tasks.
+ * It registers various hooks to disable unnecessary features, streamline output,
+ * and enhance overall theme efficiency.
+ *
+ * @package HD
+ * @author Gaudev
+ */
 
 namespace HD\Core;
 
@@ -6,11 +17,6 @@ use HD\Utilities\Traits\Singleton;
 
 \defined( 'ABSPATH' ) || die;
 
-/**
- * Optimizer Class
- *
- * @author Gaudev
- */
 final class Optimizer {
 	use Singleton;
 

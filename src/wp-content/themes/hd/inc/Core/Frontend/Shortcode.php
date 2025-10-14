@@ -1,4 +1,15 @@
 <?php
+/**
+ * Theme Shortcodes
+ *
+ * This file defines the Shortcode class, responsible for registering and managing
+ * all custom shortcodes used in the theme.
+ * It organizes shortcode logic into a single class and hooks them into WordPress
+ * during initialization for cleaner and modular code.
+ *
+ * @package HD
+ * @author Gaudev
+ */
 
 namespace HD\Core\Frontend;
 
@@ -6,11 +17,6 @@ use HD\Utilities\Traits\Singleton;
 
 \defined( 'ABSPATH' ) || die;
 
-/**
- * Shortcode Class
- *
- * @author Gaudev
- */
 final class Shortcode {
     use Singleton;
 

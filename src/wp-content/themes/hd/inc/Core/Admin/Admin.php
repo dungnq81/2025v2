@@ -1,4 +1,15 @@
 <?php
+/**
+ * Theme Admin Customizations
+ *
+ * This file defines the Admin class, responsible for handling all admin-side
+ * hooks and customizations specific to the WordPress dashboard.
+ * It manages custom columns, admin menus, metaboxes, styles, and other UI
+ * enhancements to improve the theme’s backend experience.
+ *
+ * @package HD
+ * @author Gaudev
+ */
 
 namespace HD\Core\Admin;
 
@@ -6,11 +17,6 @@ use HD\Utilities\Traits\Singleton;
 
 \defined( 'ABSPATH' ) || die;
 
-/**
- * Admin Class
- *
- * @author Gaudev
- */
 final class Admin {
     use Singleton;
 

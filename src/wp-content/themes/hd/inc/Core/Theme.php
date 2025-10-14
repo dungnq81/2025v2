@@ -1,4 +1,15 @@
 <?php
+/**
+ * Theme Bootstrap File
+ *
+ * This file initializes the theme’s core functionality.
+ * It defines the main Theme class responsible for setting up theme supports,
+ * registering hooks (e.g. after_setup_theme, wp_enqueue_scripts, template_include),
+ * and managing global theme behavior.
+ *
+ * @package HD
+ * @author Gaudev
+ */
 
 namespace HD\Core;
 
@@ -12,11 +23,6 @@ use HD\Utilities\Traits\Singleton;
 
 \defined( 'ABSPATH' ) || die;
 
-/**
- * Theme Class
- *
- * @author Gaudev
- */
 final class Theme {
 	use Singleton;
 

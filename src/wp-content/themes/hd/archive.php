@@ -29,6 +29,7 @@ echo \HD_Helper::breadCrumbBanner( $breadcrumb_bg, 'widescreen' );
             <?php
             // Start the Loop.
             $i = 0;
+
             while ( have_posts() ) : the_post();
                 \HD_Helper::blockTemplate( 'parts/post/loop', [
                         'title_tag'   => 'h2',

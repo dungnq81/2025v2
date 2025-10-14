@@ -1,14 +1,22 @@
 <?php
+/**
+ * Theme Asset Manager
+ *
+ * This file defines the Asset class, a utility class responsible for managing
+ * all CSS and JavaScript assets in the theme. It provides methods for collecting,
+ * registering, and enqueueing styles and scripts efficiently.
+ *
+ * The class helps maintain a clean and optimized loading strategy for frontend
+ * and backend assets.
+ *
+ * @package HD
+ * @author Gaudev
+ */
 
 namespace HD\Utilities\Helpers;
 
 \defined( 'ABSPATH' ) || die;
 
-/**
- * Collect & enqueue CSS/JS.
- *
- * @author Gaudev
- */
 final class Asset {
 	// ----------------------------------------
 

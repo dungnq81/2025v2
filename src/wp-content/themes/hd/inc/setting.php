@@ -1,7 +1,12 @@
 <?php
 /**
- * Theme Settings
+ * Theme Settings and Configuration
  *
+ * This file registers global theme settings, menus, widgets, and customization options.
+ * It also defines related hooks and initialization routines to configure
+ * the theme’s core behavior and default features.
+ *
+ * @package HD
  * @author Gaudev
  */
 
@@ -345,7 +350,6 @@ function hd_settings_filter_callback( array $arr ): array {
 				'user',
 				'post',
 				'page',
-				'du-an'
 			],
 
 			// Terms thumbnail (term_thumb).
@@ -368,11 +372,20 @@ function hd_settings_filter_callback( array $arr ): array {
 		],
 
 		//
+		// Custom post-type archive.
+		//
+		'page_archive_post_types'      => [
+			'thong-bao',
+			'du-an',
+		],
+
+		//
 		// Aspect Ratio.
 		//
 		'aspect_ratio'         => [
 			'post_type_term'       => [
 				'post',
+				'thong-bao',
 				'du-an',
 			],
 			'aspect_ratio_default' => [

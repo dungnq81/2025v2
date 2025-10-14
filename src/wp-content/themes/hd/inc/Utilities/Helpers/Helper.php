@@ -1,4 +1,16 @@
 <?php
+/**
+ * Theme Helper Utilities
+ *
+ * This file defines the Helper class, a static utility class that provides
+ * commonly used helper methods for various theme functionalities.
+ * It centralizes reusable logic such as data formatting, template helpers,
+ * and other generic utility operations.
+ *
+ * @package HD
+ * @author Gaudev
+ */
+
 
 namespace HD\Utilities\Helpers;
 
@@ -8,11 +20,6 @@ use Random\RandomException;
 
 \defined( 'ABSPATH' ) || die;
 
-/**
- * Helper Class
- *
- * @author Gaudev
- */
 final class Helper {
 	use Wp;
 

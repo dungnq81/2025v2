@@ -1,4 +1,16 @@
 <?php
+/**
+ * Theme Hooks
+ *
+ * This file defines the Hook class, which manages all custom theme hooks and
+ * integrates them throughout the template structure — including header, footer,
+ * body, and other key theme areas.
+ * It centralizes hook registration and execution, allowing for flexible extension
+ * and cleaner separation of template logic.
+ *
+ * @package HD
+ * @author Gaudev
+ */
 
 namespace HD\Core\Frontend;
 
@@ -6,11 +18,6 @@ use HD\Utilities\Traits\Singleton;
 
 \defined( 'ABSPATH' ) || die;
 
-/**
- * Hook Class
- *
- * @author Gaudev
- */
 final class Hook {
     use Singleton;
 

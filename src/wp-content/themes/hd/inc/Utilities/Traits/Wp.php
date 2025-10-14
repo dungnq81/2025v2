@@ -2280,7 +2280,7 @@ trait Wp {
 			if ( empty( $taxonomies ) ) {
 				$slug = $post_type?->rewrite;
 				if ( ! is_bool( $slug ) ) {
-					$breadcrumbs[] = '<li><a href="' . self::home() . $slug['slug'] . '/">' . $post_type?->labels?->singular_name . '</a></li>';
+					$breadcrumbs[] = '<li><a href="' . self::home( '/' ) . $slug['slug'] . '/">' . $post_type?->labels?->singular_name . '</a></li>';
 				}
 			} else {
 
