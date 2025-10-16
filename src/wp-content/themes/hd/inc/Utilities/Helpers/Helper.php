@@ -11,7 +11,6 @@
  * @author Gaudev
  */
 
-
 namespace HD\Utilities\Helpers;
 
 use HD\Utilities\Traits\Wp;

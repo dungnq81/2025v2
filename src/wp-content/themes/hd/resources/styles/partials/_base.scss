@@ -252,7 +252,8 @@ body {
     top: 0;
     left: 100%;
     z-index: 1;
-    min-width: 260px;
+    min-width: 280px;
+    display: none;
     background-color: #f1f1f1;
     border-radius: var(--radius-md);
     border: 1px solid rgba(0, 0, 0, 0.08);
@@ -405,8 +406,8 @@ body {
 
             &.col-2 {
                 & > ul.submenu {
-                    min-width: 520px;
-                    left: -260px;
+                    min-width: 560px;
+                    left: -280px;
 
                     &::before {
                         content: '';
@@ -426,8 +427,8 @@ body {
 
             &.col-3 {
                 & > ul.submenu {
-                    min-width: 780px;
-                    left: -390px;
+                    min-width: 840px;
+                    left: -420px;
 
                     &::before {
                         content: '';
@@ -465,9 +466,13 @@ body {
             display: block;
             color: var(--text-color);
             transition: 0.15s ease-in-out;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 8px;
 
             &:hover {
                 opacity: 0.8;
+                border-color: var(--text-color-1);
             }
         }
     }
@@ -667,12 +672,15 @@ body {
     position: absolute;
     visibility: hidden;
     z-index: 10;
-    width: 400px;
     background-color: #f1f1f1;
     border-radius: var(--radius-md);
     border: 1px solid rgba(0, 0, 0, 0.08);
     box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.04);
     padding: calc(var(--spacing) * 4);
+
+    @include mixin.mq-min(sm) {
+        width: 400px;
+    }
 
     &.is-opening {
         display: block
@@ -760,6 +768,16 @@ body {
 :where(.dark, .dark *) {
     body {
         background-image: url("../../img/bg.png");
+    }
+
+    .off-canvas {
+        .menu-lines {
+            &:hover {
+                .line {
+                    background-color: #fff;
+                }
+            }
+        }
     }
 
     .off-canvas-content {
@@ -886,6 +904,7 @@ body {
         & > li {
             & > a {
                 color: #fff;
+                border: 1px solid rgba(255, 255, 255, 0.1);
 
                 &:hover {
                     color: #c9c9c9;

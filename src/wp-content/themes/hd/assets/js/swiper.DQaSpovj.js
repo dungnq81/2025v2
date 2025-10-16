@@ -1,4 +1,4 @@
-import { n as nanoid, a as Swiper, b as Navigation, P as Pagination, A as Autoplay, G as Grid } from "./vendor.DOnxPhTB.js";
+import { n as nanoid, a as Swiper, b as Navigation, P as Pagination, A as Autoplay, G as Grid } from "./vendor.X7c1rwwu.js";
 const getDefaultOptions = () => ({
   modules: [Navigation, Pagination, Autoplay, Grid],
   grabCursor: true,
@@ -196,4 +196,4 @@ const initializeSwipers = () => {
   });
 };
 document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", initializeSwipers, { once: true }) : initializeSwipers();
-//# sourceMappingURL=swiper.D-w7wkim.js.map
+//# sourceMappingURL=swiper.DQaSpovj.js.map

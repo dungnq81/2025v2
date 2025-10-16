@@ -1296,7 +1296,6 @@ final class Helper {
 
 	/**
 	 * @return mixed
-	 * @throws \JsonException
 	 */
 	public static function manifest(): mixed {
 		static $cache = [];
@@ -1362,7 +1361,6 @@ final class Helper {
 	 * @param string $handle_prefix
 	 *
 	 * @return array
-	 * @throws \JsonException
 	 */
 	public static function manifestResolve( ?string $entry = null, string $handle_prefix = 'addon-' ): array {
 		if ( ! is_string( $entry ) || ! trim( $entry ) ) {

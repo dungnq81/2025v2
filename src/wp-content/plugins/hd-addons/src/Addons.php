@@ -106,7 +106,6 @@ final class Addons {
 	 * @param $hook
 	 *
 	 * @return void
-	 * @throws \JsonException
 	 */
 	public function adminEnqueueAssets( $hook ): void {
 		$version = Helper::version();

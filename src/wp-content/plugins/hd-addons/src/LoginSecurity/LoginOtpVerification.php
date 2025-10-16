@@ -53,7 +53,6 @@ class LoginOtpVerification {
 	 * Enqueue JS on OTP login page
 	 *
 	 * @return void
-	 * @throws \JsonException
 	 */
 	public function enqueueAssets(): void {
 		if ( $this->_isEnabled() ) {

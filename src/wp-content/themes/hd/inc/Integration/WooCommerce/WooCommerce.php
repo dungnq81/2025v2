@@ -146,7 +146,6 @@ final class WooCommerce {
 
     /**
      * @return void
-     * @throws \JsonException
      */
     public function enqueueAssets(): void {
         $version = \HD_Helper::version();

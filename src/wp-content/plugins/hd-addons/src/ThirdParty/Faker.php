@@ -21,8 +21,7 @@ final class Faker {
 	 * @param $parsed_args
 	 * @param $url
 	 *
-	 * @return array|mixed
-	 * @throws \JsonException
+	 * @return mixed
 	 */
 	public function acf_license_request( $preempt, $parsed_args, $url ): mixed {
 		if ( ! \Addons\Helper::isAcfProActive() ) {
@@ -37,7 +36,7 @@ final class Faker {
 		) {
 			return [
 				'headers'  => [],
-				'body'     => json_encode( [ 'checked' => [] ], JSON_INVALID_UTF8_IGNORE | JSON_THROW_ON_ERROR ),
+				'body'     => wp_json_encode( [ 'checked' => [] ], JSON_INVALID_UTF8_IGNORE | JSON_THROW_ON_ERROR ),
 				'response' => [
 					'code'    => 200,
 					'message' => 'OK',
@@ -49,7 +48,7 @@ final class Faker {
 		if ( str_contains( $url, 'https://connect.advancedcustomfields.com/v2/plugins/activate?p=pro' ) ) {
 			return [
 				'headers'  => [],
-				'body'     => json_encode(
+				'body'     => wp_json_encode(
 					[
 						'message'        => 'Licence key activated. Updates are now enabled',
 						'license'        => 'GPL001122334455AA6677BB8899CC000',
@@ -74,7 +73,7 @@ final class Faker {
 		if ( str_contains( $url, 'https://connect.advancedcustomfields.com/v2/plugins/validate?p=pro' ) ) {
 			return [
 				'headers'  => [],
-				'body'     => json_encode(
+				'body'     => wp_json_encode(
 					[
 						'expiration'     => 864000,
 						'license_status' => [
@@ -97,7 +96,7 @@ final class Faker {
 		if ( str_contains( $url, 'https://connect.advancedcustomfields.com/v2/plugins/get-info?p=pro' ) ) {
 			return [
 				'headers'  => [],
-				'body'     => json_encode(
+				'body'     => wp_json_encode(
 					[
 						'name'    => 'Advanced Custom Fields PRO',
 						'slug'    => 'advanced-custom-fields-pro',

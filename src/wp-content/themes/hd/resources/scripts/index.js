@@ -7,6 +7,7 @@ import Foundation from './3rd/zf.js';
 import './utils/back-to-top.js';
 import './utils/global.js';
 import './utils/script-loader.js';
+import { initMenu } from './utils/menu.js';
 import { stickyBar } from './utils/sticky-bar.js';
 import { setupCookieConsent } from './utils/cookie-consent.js';
 
@@ -24,6 +25,7 @@ const run = async () => {
     // init
     //
     stickyBar();
+    initMenu('#main-nav', '.main-nav');
     initSocialShare('[data-social-share]', {
         intents: [ 'facebook', 'x', 'print', 'send-email', 'copy-link', 'web-share' ]
     });

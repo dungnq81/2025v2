@@ -78,7 +78,6 @@ final class CustomSorting {
 	 * @param $hook_suffix
 	 *
 	 * @return void
-	 * @throws \JsonException
 	 */
 	public function admin_enqueue_scripts( $hook_suffix ): void {
 		if ( $this->_check_custom_sorting_script() ) {

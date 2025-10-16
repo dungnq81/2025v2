@@ -81,7 +81,6 @@ final class Admin {
      * Gutenberg editor
      *
      * @return void
-     * @throws \JsonException
      */
     public function blockEditorAssets(): void {
         \HD_Asset::enqueueCSS( 'editor-style.scss', [], \HD_Helper::version() );
@@ -91,7 +90,6 @@ final class Admin {
 
     /**
      * @return void
-     * @throws \JsonException
      */
     public function adminEnqueueScripts(): void {
         $version = \HD_Helper::version();
@@ -158,7 +156,6 @@ final class Admin {
 
     /**
      * @return void
-     * @throws \JsonException
      */
     public function adminInit(): void {
         //

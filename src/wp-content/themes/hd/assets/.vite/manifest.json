@@ -1,13 +1,13 @@
 {
-  "_vendor.CYkj0d-F.css": {
-    "file": "css/vendor.CYkj0d-F.css",
-    "src": "_vendor.CYkj0d-F.css"
+  "_vendor.5J3WgSLY.css": {
+    "file": "css/vendor.5J3WgSLY.css",
+    "src": "_vendor.5J3WgSLY.css"
   },
-  "_vendor.DOnxPhTB.js": {
-    "file": "js/vendor.DOnxPhTB.js",
+  "_vendor.X7c1rwwu.js": {
+    "file": "js/vendor.X7c1rwwu.js",
     "name": "vendor",
     "css": [
-      "css/vendor.CYkj0d-F.css"
+      "css/vendor.5J3WgSLY.css"
     ],
     "assets": [
       "fonts/SVN-Poppins-Light.woff2",
@@ -119,21 +119,21 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/components/social-share.js": {
-    "file": "js/social-share.XRNyM0u3.js",
+    "file": "js/social-share.DaAPYWP6.js",
     "name": "social-share",
     "src": "src/wp-content/themes/hd/resources/scripts/components/social-share.js",
     "isEntry": true,
     "imports": [
-      "_vendor.DOnxPhTB.js"
+      "_vendor.X7c1rwwu.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/swiper.js": {
-    "file": "js/swiper.D-w7wkim.js",
+    "file": "js/swiper.DQaSpovj.js",
     "name": "swiper",
     "src": "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
     "isEntry": true,
     "imports": [
-      "_vendor.DOnxPhTB.js"
+      "_vendor.X7c1rwwu.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/template/affordable.js": {
@@ -161,12 +161,12 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/index.js": {
-    "file": "js/index.CW-XOPXS.js",
+    "file": "js/index.CUbRDzBW.js",
     "name": "index",
     "src": "src/wp-content/themes/hd/resources/scripts/index.js",
     "isEntry": true,
     "imports": [
-      "_vendor.DOnxPhTB.js",
+      "_vendor.X7c1rwwu.js",
       "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
       "src/wp-content/themes/hd/resources/scripts/components/social-share.js"
     ]
@@ -188,7 +188,7 @@
     ]
   },
   "src/wp-content/themes/hd/resources/styles/index.scss": {
-    "file": "css/index.BOoYvsGi.css",
+    "file": "css/index.BLNBAwNY.css",
     "src": "src/wp-content/themes/hd/resources/styles/index.scss",
     "isEntry": true,
     "names": [
@@ -212,7 +212,7 @@
     ]
   },
   "src/wp-content/themes/hd/resources/styles/partials/template/home.scss": {
-    "file": "css/home.NuMp-SFl.css",
+    "file": "css/home.BQLYeuEX.css",
     "src": "src/wp-content/themes/hd/resources/styles/partials/template/home.scss",
     "isEntry": true,
     "names": [

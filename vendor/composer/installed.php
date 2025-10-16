@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '30630f0bb6f0c8f97a3af207d35a68c0aa4699af',
+        'reference' => '7ccdb9fb3b1753ce6bc2d5b4f0c060ce9f07d0f5',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '30630f0bb6f0c8f97a3af207d35a68c0aa4699af',
+            'reference' => '7ccdb9fb3b1753ce6bc2d5b4f0c060ce9f07d0f5',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -226,7 +226,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => '60bbb2fff15a77ab2eda09d7a420883f863938f8',
+            'reference' => 'f34f054015aff54acc108a8517308dc67b572841',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(
@@ -394,9 +394,9 @@
             'dev_requirement' => true,
         ),
         'symfony/var-dumper' => array(
-            'pretty_version' => 'v7.3.3',
-            'version' => '7.3.3.0',
-            'reference' => '34d8d4c4b9597347306d1ec8eb4e1319b1e6986f',
+            'pretty_version' => 'v7.3.4',
+            'version' => '7.3.4.0',
+            'reference' => 'b8abe7daf2730d07dfd4b2ee1cecbf0dd2fbdabb',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/var-dumper',
             'aliases' => array(),

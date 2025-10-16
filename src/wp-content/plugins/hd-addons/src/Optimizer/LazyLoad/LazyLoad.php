@@ -90,7 +90,6 @@ final class LazyLoad {
 
 	/**
 	 * @return void
-	 * @throws \JsonException
 	 */
 	public function load_scripts(): void {
 		\Addons\Asset::enqueueJS(

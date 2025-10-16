@@ -9,16 +9,21 @@
 
 .masthead {
     position: absolute;
-    top: var(--sticky-top, 0);
+    top: var(--sticky-top, 41px);
     left: 0;
     right: 0;
     z-index: 999;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: transform;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+    border-bottom: 1px solid transparent;
 
     &.is-sticky {
         top: 0;
         position: fixed;
         background-color: var(--bg-color);
-        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        border-bottom-color: rgba(0, 0, 0, 0.08);
     }
 
     .site-logo {
@@ -27,11 +32,14 @@
         img.custom-logo {
             width: auto;
             display: block;
-            @include mixin.media-css(max-height, 68);
+            @include mixin.media-css(max-height, 54, false, 60, 64);
         }
     }
 
     .dropdown-search {
+        display: flex;
+        flex: 0 0 auto;
+
         .dropdown-trigger {
             transition: 0.3s;
             background-color: #f4f4f4;
@@ -53,6 +61,13 @@
 
             &:hover {
                 box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.08);
+            }
+        }
+
+        .dropdown-pane {
+            @include mixin.mq-max(sm) {
+                right: 12px !important;
+                left: 12px !important;
             }
         }
 
@@ -97,6 +112,21 @@
     }
 }
 
+body.admin-bar {
+    .masthead.is-sticky {
+        top: 32px;
+
+        @include mixin.mq-max-width(782px) {
+            top: 46px;
+        }
+
+        @include mixin.mq-max-width(600px) {
+            position: absolute;
+            top: var(--sticky-top, 41px);
+        }
+    }
+}
+
 .site-header {
     position: relative;
 }
@@ -105,10 +135,62 @@
     height: var(--navbar-height, 0);
 }
 
+#main-nav {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+
+    .dropdown.menu.horizontal-menu {
+        flex-wrap: nowrap;
+        white-space: nowrap;
+
+        li a {
+            white-space: wrap;
+        }
+
+        & > li {
+            & > a {
+                height: 100%;
+                white-space: nowrap;
+            }
+
+            &.more {
+                & > a {
+                    font-size: 0;
+                    position: relative;
+                    @include mixin.flex-center;
+
+                    &::after {
+                        content: '';
+                        mask-repeat: no-repeat;
+                        mask-position: center;
+                        mask-size: contain;
+                        mask-image: func.inline-svg('<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="3" d="M6 12h.01m6 0h.01m5.99 0h.01"/></svg>');
+                        rotate: none;
+                        border: none;
+                        background-color: var(--text-color);
+                        margin-top: 0;
+                        @include mixin.box(28);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.nav-container {
+    flex: 1 1 0;
+    min-width: 0;
+
+    @include mixin.mq-max(lg) {
+        display: none;
+    }
+}
+
 //
 /** dark mode */
 //
-
 :where(.dark, .dark *) {
     .top-header {
         a {
@@ -120,20 +202,20 @@
 
     .masthead {
         &.is-sticky {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            border-bottom-color: rgba(255, 255, 255, 0.06);
         }
 
-        .site-logo {
-            img.custom-logo {
-                filter: brightness(0) invert(1) brightness(0.82) saturate(0);
-            }
-
-            &:hover {
-                img {
-                    filter: inherit;
-                }
-            }
-        }
+        //.site-logo {
+        //    img.custom-logo {
+        //        filter: brightness(0) invert(1) brightness(0.82) saturate(0);
+        //    }
+        //
+        //    &:hover {
+        //        img {
+        //            filter: inherit;
+        //        }
+        //    }
+        //}
 
         .dropdown-search {
             .dropdown-trigger {

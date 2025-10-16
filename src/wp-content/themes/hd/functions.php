@@ -1,8 +1,12 @@
 <?php
 /**
- * Theme functions and definitions
+ * Theme functions and definitions.
  *
- * @author Gaudev
+ * Initializes the HD Theme core, loads dependencies,
+ * defines constants, and ensures compatibility with PHP 8.2 or newer.
+ *
+ * @package HD
+ * @author  Gaudev
  */
 
 const THEME_VERSION = '1.10.0';

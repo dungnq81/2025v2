@@ -35,7 +35,6 @@ final class LoginSecurity {
 
 	/**
 	 * @return void
-	 * @throws \JsonException
 	 */
 	public function loginEnqueueAssets(): void {
 		$version = Helper::version();

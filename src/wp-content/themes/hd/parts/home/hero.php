@@ -15,28 +15,28 @@ $id       = $args['id'] ?? 0;
 $id       = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 
 ?>
-<section id="section-<?= $id ?>" class="section section-hero py-24">
+<section id="section-<?= $id ?>" class="section section-hero py-10 lg:py-24">
 	<div class="u-container grid pt-6 lg:gap-12 xl:gap-0 lg:grid-cols-12">
 		<div class="mr-auto place-self-center lg:col-span-7">
-            <h2 class="max-w-3xl font-bold mb-6 p-fs-clamp-[32,56] leading-[1.2]">
+            <h2 class="max-w-3xl font-bold mb-6 p-fs-clamp-[38,58] leading-[1.3]">
                 Discover new <span class="text-1">product</span> and best possibilities
             </h2>
             <p class="max-w-2xl mb-9 p-fs-clamp-[15,17]">
                 Streamline your global payment systems from checkout to tax compliance with our all-in-one solution. Save time and reduce complexity.
             </p>
 
-            <ul class="flex flex-row mb-8 space-x-6">
+            <ul class="flex flex-row flex-wrap mb-8 gap-y-1 gap-x-6">
                 <li class="flex items-center group">
                     <svg class="text-2 w-6 h-6" aria-hidden="true"><use href="#icon-check-outline"></use></svg>
-                    <span class="ml-2 text-sm c-hover dark:group-hover:text-white">No credit card required</span>
+                    <span class="ml-2 font-medium text-sm c-hover dark:group-hover:text-white">No credit card required</span>
                 </li>
                 <li class="flex items-center group">
                     <svg class="text-2 w-6 h-6" aria-hidden="true"><use href="#icon-check-outline"></use></svg>
-                    <span class="ml-2 text-sm c-hover dark:group-hover:text-white">Free 14-day trial</span>
+                    <span class="ml-2 font-medium text-sm c-hover dark:group-hover:text-white">Free 14-day trial</span>
                 </li>
                 <li class="flex items-center group">
                     <svg class="text-2 w-6 h-6" aria-hidden="true"><use href="#icon-check-outline"></use></svg>
-                    <span class="ml-2 text-sm c-hover dark:group-hover:text-white">Cancel anytime</span>
+                    <span class="ml-2 font-medium text-sm c-hover dark:group-hover:text-white">Cancel anytime</span>
                 </li>
             </ul>
 
@@ -87,7 +87,7 @@ $id       = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 			</div>
 		</div>
         <?php if ( $bg ) : ?>
-		<div class="lg:mt-0 lg:col-span-5 flex relative">
+		<div class="mt-6 -mx-3 sm:mx-0 lg:mt-0 lg:col-span-5 flex relative">
 
             <?= \HD_Helper::attachmentImageHTML( $bg, 'medium', [
                     'class' => 'w-full h-auto max-w-lg mx-auto',

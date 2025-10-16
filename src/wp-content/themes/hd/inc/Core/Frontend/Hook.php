@@ -116,10 +116,6 @@ final class Hook {
 
     // -----------------------------------------------
 
-    /**
-     * @return void
-     * @throws \JsonException
-     */
     public function other_head_action(): void {
         // Manifest
         if ( file_exists( ABSPATH . 'manifest.json' ) ) {
@@ -183,10 +179,10 @@ final class Hook {
         $acf_title = $acf_post['title'] ?? '';
 
         ?>
-        <div class="top-header c-light-bg border-t-[0]">
+        <div class="top-header c-light-bg border-t-[0] hidden md:block">
             <div class="u-container u-flex-x justify-between items-center gap-y-1 py-[8px]">
                 <?php if ( $post ) : ?>
-                <div class="top-items text-[12px] hidden md:block">
+                <div class="top-items text-[12px]">
                     <div class="flex gap-2 items-center">
 
                         <?= $acf_title ? '<span class="label rounded-sm px-2"' . $acf_style . '>' . $acf_title . '</span>' : '' ?>
@@ -220,34 +216,34 @@ final class Hook {
 
         ?>
         <div id="masthead" class="masthead py-3">
-            <div class="u-container flex items-center justify-between">
-                <div class="masthead-logo flex-initial"><?= \HD_Helper::siteTitleOrLogo() ?></div>
-                <div class="masthead-content flex-initial flex items-center gap-6">
+            <div class="u-container flex items-center gap-3">
+                <div class="masthead-logo flex-1 lg:grow-0 lg:shrink-0 basis-auto"><?= \HD_Helper::siteTitleOrLogo() ?></div>
+                <div class="nav-container pl-8 pr-3">
                     <nav class="nav" id="main-nav">
                         <?= \HD_Helper::doShortcode( 'horizontal_menu', [
                                 'location'         => 'main-nav',
                                 'extra_class'      => 'u-flex-x gap-6 min-h-[44px]',
-                                'link_class'       => 'flex items-center h-full font-bold text-[15px] hover:text-(--text-color-1) dark:hover:text-(--color-white)',
+                                'link_class'       => 'flex items-center h-full font-bold text-base hover:text-(--text-color-1) dark:hover:text-(--color-white)',
                                 'link_depth_class' => 'text-[15px] hover:text-(--text-color-1) dark:hover:text-(--color-white)',
                         ] ) ?>
                     </nav>
-                    <?php if ( $hotline ) : ?>
-                    <div class="hotline">
-                        <?= \HD_Helper::ACFLinkOpen( $hotline, 'c-hotline' ) ?>
-                            <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M7.978 4a2.55 2.55 0 0 0-1.926.877C4.233 6.7 3.699 8.751 4.153 10.814c.44 1.995 1.778 3.893 3.456 5.572c1.68 1.679 3.577 3.018 5.57 3.459c2.062.456 4.115-.073 5.94-1.885a2.556 2.556 0 0 0 .001-3.861l-1.21-1.21a2.69 2.69 0 0 0-3.802 0l-.617.618a.806.806 0 0 1-1.14 0l-1.854-1.855a.807.807 0 0 1 0-1.14l.618-.62a2.69 2.69 0 0 0 0-3.803l-1.21-1.211A2.56 2.56 0 0 0 7.978 4"/></svg>
-                            <span><?= \HD_Helper::ACFLinkLabel( $hotline ) ?></span>
-                        <?= \HD_Helper::ACFLinkClose( $hotline ) ?>
-                    </div>
-                    <?php endif ?>
-
-                    <?= \HD_Helper::doShortcode( 'dropdown_search' ) ?>
-
-                    <button class="dark-mode" type="button" aria-label="Dark mode">
-                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><!-- // empty --></svg>
-                    </button>
-
-                    <?= \HD_Helper::doShortcode( 'off_canvas_button', [ 'hide_if_desktop' => 0 ] ) ?>
                 </div>
+                <?php if ( $hotline ) : ?>
+                <div class="hotline hidden md:block">
+                    <?= \HD_Helper::ACFLinkOpen( $hotline, 'c-hotline whitespace-nowrap' ) ?>
+                        <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M7.978 4a2.55 2.55 0 0 0-1.926.877C4.233 6.7 3.699 8.751 4.153 10.814c.44 1.995 1.778 3.893 3.456 5.572c1.68 1.679 3.577 3.018 5.57 3.459c2.062.456 4.115-.073 5.94-1.885a2.556 2.556 0 0 0 .001-3.861l-1.21-1.21a2.69 2.69 0 0 0-3.802 0l-.617.618a.806.806 0 0 1-1.14 0l-1.854-1.855a.807.807 0 0 1 0-1.14l.618-.62a2.69 2.69 0 0 0 0-3.803l-1.21-1.211A2.56 2.56 0 0 0 7.978 4"/></svg>
+                        <span><?= \HD_Helper::ACFLinkLabel( $hotline ) ?></span>
+                    <?= \HD_Helper::ACFLinkClose( $hotline ) ?>
+                </div>
+                <?php endif ?>
+
+                <?= \HD_Helper::doShortcode( 'dropdown_search' ) ?>
+
+                <button class="dark-mode" type="button" aria-label="Dark mode">
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><!-- // empty --></svg>
+                </button>
+
+                <?= \HD_Helper::doShortcode( 'off_canvas_button', [ 'hide_if_desktop' => 0 ] ) ?>
             </div>
         </div>
         <?php
@@ -328,21 +324,21 @@ final class Hook {
                         <div class="seo-footer">
                             <?= \HD_Helper::siteLogo( 'alt', 'footer-logo' ) ?>
                             <ul class="footer-address">
-                                <li class="flex items-baseline gap-1">
+                                <li class="flex items-baseline gap-2">
                                     <svg class="relative top-[6px]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M7 2a2 2 0 0 0-2 2v1a1 1 0 0 0 0 2v1a1 1 0 0 0 0 2v1a1 1 0 1 0 0 2v1a1 1 0 1 0 0 2v1a1 1 0 1 0 0 2v1a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2zm3 8a3 3 0 1 1 6 0a3 3 0 0 1-6 0m-1 7a3 3 0 0 1 3-3h2a3 3 0 0 1 3 3a1 1 0 0 1-1 1h-6a1 1 0 0 1-1-1" clip-rule="evenodd" /></svg>
                                     <span>38A Lê Văn Huân, Phường Tân Bình, TP. Hồ Chí Minh</span>
                                 </li>
-                                <li class="flex items-baseline gap-1">
+                                <li class="flex items-baseline gap-2">
                                     <svg class="relative top-[6px]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M7.978 4a2.55 2.55 0 0 0-1.926.877C4.233 6.7 3.699 8.751 4.153 10.814c.44 1.995 1.778 3.893 3.456 5.572c1.68 1.679 3.577 3.018 5.57 3.459c2.062.456 4.115-.073 5.94-1.885a2.556 2.556 0 0 0 .001-3.861l-1.21-1.21a2.69 2.69 0 0 0-3.802 0l-.617.618a.806.806 0 0 1-1.14 0l-1.854-1.855a.807.807 0 0 1 0-1.14l.618-.62a2.69 2.69 0 0 0 0-3.803l-1.21-1.211A2.56 2.56 0 0 0 7.978 4" /></svg>
                                     <a class="lining-nums" href="tel:0938002776">0938 002 776</a>
                                 </li>
-                                <li class="flex items-baseline gap-1">
+                                <li class="flex items-baseline gap-2">
                                     <svg class="relative top-[6px]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="currentColor"><path d="M2.038 5.61A2 2 0 0 0 2 6v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6q0-.18-.03-.352l-.866.65l-7.89 6.032a2 2 0 0 1-2.429 0L2.884 6.288l-.846-.677Z"/><path d="M20.677 4.117A2 2 0 0 0 20 4H4q-.338.002-.642.105l.758.607L12 10.742L19.9 4.7z"/></g></svg>
                                     <?= \HD_Helper::safeMailTo( 'info@webhd.vn', '', [ 'title' => 'Email' ] ) ?>
                                 </li>
                             </ul>
                             <div class="social-links">
-                                <?= \HD_Helper::doShortcode( 'social_menu', [ 'class' => 'social-menu flex flex-row gap-4 mt-8 md:gap-6' ] ) ?>
+                                <?= \HD_Helper::doShortcode( 'social_menu', [ 'class' => 'social-menu flex flex-row gap-2 mt-8 md:gap-3' ] ) ?>
                             </div>
                         </div>
                         <div class="newsletter-footer">
@@ -468,7 +464,6 @@ final class Hook {
 
     /**
      * @return void
-     * @throws \JsonException
      */
     public function custom_css_action(): void {
         $css = new \HD_CSS();

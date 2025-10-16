@@ -17,7 +17,6 @@ final class Asset {
 	 * @param string $handle_prefix
 	 *
 	 * @return string
-	 * @throws \JsonException
 	 */
 	public static function handle( ?string $entry = null, string $handle_prefix = 'addon-' ): string {
 		if ( ! $entry ) {
@@ -38,7 +37,6 @@ final class Asset {
 	 * @param string $media
 	 *
 	 * @return void
-	 * @throws \JsonException
 	 */
 	public static function enqueueCSS(
 		?string $entry = null,
@@ -68,7 +66,6 @@ final class Asset {
 	 * @param array $extra
 	 *
 	 * @return void
-	 * @throws \JsonException
 	 */
 	public static function enqueueJS(
 		?string $entry = null,

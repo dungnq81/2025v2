@@ -5,28 +5,28 @@
 // Define the minimum dimensions at which your layout will change,
 // adapting to different screen sizes, for use in media queries.
 
-$xs: 0 !default;
-$sm: 640px !default;
-$md: 768px !default;
-$lg: 1024px !default;
-$xl: 1280px !default;
+$xs:  0 !default;
+$sm:  640px !default;
+$md:  768px !default;
+$lg:  1024px !default;
+$xl:  1280px !default;
 $xxl: 1536px !default;
 
 $mq-breakpoints: (
-        xs: $xs,
-        sm: $sm,
-        md: $md,
-        lg: $lg,
-        xl: $xl,
+        xs:  $xs,
+        sm:  $sm,
+        md:  $md,
+        lg:  $lg,
+        xl:  $xl,
         xxl: $xxl,
 ) !default;
 
 $mq-containers: (
-        xs: $xs,
-        sm: $sm,
-        md: $md,
-        lg: $lg,
-        xl: $xl,
+        xs:  $xs,
+        sm:  $sm,
+        md:  $md,
+        lg:  $lg,
+        xl:  $xl,
         xxl: $xxl,
 ) !default;
 
@@ -42,23 +42,23 @@ $xxl-container: true !default;
 
 // font-size
 $font-sizes: (
-        h1: (24px, 48px),
-        h2: (20px, 40px),
-        h3: (19px, 31px),
-        h4: (18px, 24px),
-        h5: (17px, 20px),
-        h6: (16px, 18px),
+        h1: (31px, 49px),
+        h2: (26px, 41px),
+        h3: (22px, 34px),
+        h4: (19px, 28px),
+        h5: (17px, 23px),
+        h6: (16px, 19px),
 ) !default;
 
 // gap
 $gap-base: 4px !default;
 
 $gutters: (
-        gap: $gap-base * 3,
-        gap-sm: $gap-base * 3,
-        gap-md: $gap-base * 6,
-        gap-lg: $gap-base * 6,
-        gap-xl: $gap-base * 6,
+        gap:     $gap-base * 3,
+        gap-sm:  $gap-base * 3,
+        gap-md:  $gap-base * 6,
+        gap-lg:  $gap-base * 6,
+        gap-xl:  $gap-base * 6,
         gap-xxl: $gap-base * 6,
 ) !default;
 

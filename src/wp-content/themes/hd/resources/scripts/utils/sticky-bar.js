@@ -19,7 +19,6 @@ export function stickyBar ({ navbar = '#masthead', header = '#header', topBar = 
     // Create placeholder element to maintain layout when navbar becomes fixed
     const placeholder = document.createElement('div');
     placeholder.className = 'masthead-placeholder';
-    //placeholder.style.display = 'none';
     navbarEl.parentNode.insertBefore(placeholder, navbarEl);
 
     // Calculate marker height: topBar if exists, otherwise header
@@ -51,7 +50,6 @@ export function stickyBar ({ navbar = '#masthead', header = '#header', topBar = 
     if (top <= markerHeight) {
         navbarEl.classList.remove('is-sticky');
         body.classList.remove('scrolling-up', 'scrolling-down');
-        //placeholder.style.display = 'none';
     } else {
         navbarEl.classList.add('is-sticky');
     }
@@ -82,7 +80,6 @@ export function stickyBar ({ navbar = '#masthead', header = '#header', topBar = 
         // Show/hide navbar based on scroll position relative to marker
         if (scrollTop > markerHeight) {
             navbarEl.classList.add('is-sticky');
-            //placeholder.style.display = 'block';
 
             // Scroll direction handling - only when sticky
             if (scrollTop > lastScrollTop) {
@@ -96,7 +93,6 @@ export function stickyBar ({ navbar = '#masthead', header = '#header', topBar = 
             }
         } else if (scrollTop <= markerHeight) {
             navbarEl.classList.remove('is-sticky');
-            //placeholder.style.display = 'none';
             body.classList.remove('scrolling-up', 'scrolling-down');
         }
 
