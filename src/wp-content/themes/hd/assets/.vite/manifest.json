@@ -1,13 +1,13 @@
 {
-  "_vendor.5J3WgSLY.css": {
-    "file": "css/vendor.5J3WgSLY.css",
-    "src": "_vendor.5J3WgSLY.css"
+  "_vendor.C1XozR0E.css": {
+    "file": "css/vendor.C1XozR0E.css",
+    "src": "_vendor.C1XozR0E.css"
   },
-  "_vendor.X7c1rwwu.js": {
-    "file": "js/vendor.X7c1rwwu.js",
+  "_vendor.Cr1aUNcD.js": {
+    "file": "js/vendor.Cr1aUNcD.js",
     "name": "vendor",
     "css": [
-      "css/vendor.5J3WgSLY.css"
+      "css/vendor.C1XozR0E.css"
     ],
     "assets": [
       "fonts/SVN-Poppins-Light.woff2",
@@ -119,21 +119,21 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/components/social-share.js": {
-    "file": "js/social-share.DaAPYWP6.js",
+    "file": "js/social-share.DEBrlu7U.js",
     "name": "social-share",
     "src": "src/wp-content/themes/hd/resources/scripts/components/social-share.js",
     "isEntry": true,
     "imports": [
-      "_vendor.X7c1rwwu.js"
+      "_vendor.Cr1aUNcD.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/swiper.js": {
-    "file": "js/swiper.DQaSpovj.js",
+    "file": "js/swiper.FeP5z7xK.js",
     "name": "swiper",
     "src": "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
     "isEntry": true,
     "imports": [
-      "_vendor.X7c1rwwu.js"
+      "_vendor.Cr1aUNcD.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/template/affordable.js": {
@@ -161,12 +161,12 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/index.js": {
-    "file": "js/index.CUbRDzBW.js",
+    "file": "js/index.D0UMAuJ4.js",
     "name": "index",
     "src": "src/wp-content/themes/hd/resources/scripts/index.js",
     "isEntry": true,
     "imports": [
-      "_vendor.X7c1rwwu.js",
+      "_vendor.Cr1aUNcD.js",
       "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
       "src/wp-content/themes/hd/resources/scripts/components/social-share.js"
     ]
@@ -188,7 +188,7 @@
     ]
   },
   "src/wp-content/themes/hd/resources/styles/index.scss": {
-    "file": "css/index.BLNBAwNY.css",
+    "file": "css/index.D63TwWJa.css",
     "src": "src/wp-content/themes/hd/resources/styles/index.scss",
     "isEntry": true,
     "names": [

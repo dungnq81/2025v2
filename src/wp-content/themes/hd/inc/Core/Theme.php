@@ -128,7 +128,7 @@ final class Theme {
 			'lg'           => \HD_Helper::currentLanguage(),
 			'lang'         => [
 				//'added_to_cart' => __( 'Đã thêm vào giỏ hàng', TEXT_DOMAIN ),
-				'view_more'     => __( 'Xem thêm', TEXT_DOMAIN )
+				'view_more' => __( 'Xem thêm', TEXT_DOMAIN )
 			]
 		];
 

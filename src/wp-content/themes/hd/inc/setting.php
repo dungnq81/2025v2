@@ -337,7 +337,7 @@ function hd_settings_filter_callback( array $arr ): array {
 		//
 		// Customize table column information, table display content, etc.
 		//
-		'admin_list_table'     => [
+		'admin_list_table'        => [
 			// Add ID to the admin category page.
 			'term_row_actions'                => [
 				'category',
@@ -366,7 +366,7 @@ function hd_settings_filter_callback( array $arr ): array {
 		//
 		// Custom post-type and taxonomy.
 		//
-		'post_type_terms'      => [
+		'post_type_terms'         => [
 			'post'  => 'category',
 			'du-an' => 'danh-muc-du-an',
 		],
@@ -374,7 +374,7 @@ function hd_settings_filter_callback( array $arr ): array {
 		//
 		// Custom post-type archive.
 		//
-		'page_archive_post_types'      => [
+		'page_archive_post_types' => [
 			'thong-bao',
 			'du-an',
 		],
@@ -382,7 +382,7 @@ function hd_settings_filter_callback( array $arr ): array {
 		//
 		// Aspect Ratio.
 		//
-		'aspect_ratio'         => [
+		'aspect_ratio'            => [
 			'post_type_term'       => [
 				'post',
 				'thong-bao',
@@ -399,7 +399,7 @@ function hd_settings_filter_callback( array $arr ): array {
 		//
 		// defer, delay script - default 5s.
 		//
-		'defer_script'         => [
+		'defer_script'            => [
 			// defer.
 			'admin-bar'       => 'defer',
 			'swv'             => 'defer',
@@ -414,7 +414,7 @@ function hd_settings_filter_callback( array $arr ): array {
 		//
 		// defer style.
 		//
-		'defer_style'          => [
+		'defer_style'             => [
 			'dashicons',
 			'admin-bar',
 			'contact-form-7',
@@ -424,7 +424,7 @@ function hd_settings_filter_callback( array $arr ): array {
 		//
 		// Admin menu sidebar
 		//
-		'admin_menu'           => [
+		'admin_menu'              => [
 			// hide admin menu
 			'admin_hide_menu'             => [
 				//'edit.php',
@@ -445,7 +445,7 @@ function hd_settings_filter_callback( array $arr ): array {
 		//
 		// ACF menu
 		//
-		'acf_menu'             => [
+		'acf_menu'                => [
 			// ACF attributes in `menu` locations.
 			'acf_menu_items_locations' => [
 				'main-nav',
@@ -462,7 +462,7 @@ function hd_settings_filter_callback( array $arr ): array {
 		//
 		// LazyLoad
 		//
-		'lazyload_exclude'     => [
+		'lazyload_exclude'        => [
 			'no-lazy',
 			'skip-lazy',
 		],
@@ -470,14 +470,14 @@ function hd_settings_filter_callback( array $arr ): array {
 		//
 		// Custom Email list (mailto).
 		//
-		'custom_emails'        => [
+		'custom_emails'           => [
 //			'contact'     => __( 'Contacts', TEXT_DOMAIN ),
 		],
 
 		//
 		// security
 		//
-		'security'             => [
+		'security'                => [
 			// Allowlist IPs Login Access
 			'allowlist_ips_login_access'          => [],
 
@@ -500,7 +500,7 @@ function hd_settings_filter_callback( array $arr ): array {
 		//
 		// Social Links.
 		//
-		'social_follows_links' => [
+		'social_follows_links'    => [
 			'facebook'  => [
 				'name'        => __( 'Facebook', TEXT_DOMAIN ),
 				'icon'        => \HD_Helper::svg( 'facebook' ),
@@ -572,7 +572,7 @@ function hd_settings_filter_callback( array $arr ): array {
 		//
 		// Contact Links.
 		//
-		'contact_links'        => [
+		'contact_links'           => [
 			'messenger'    => [
 				'name'        => __( 'Messenger', TEXT_DOMAIN ),
 				'icon'        => \HD_Helper::svg( 'messenger' ),

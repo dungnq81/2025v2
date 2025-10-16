@@ -7,13 +7,6 @@
 //
 // Base styles.
 
-body {
-    background-image: none;
-    background-position: center top 40px;
-    background-repeat: no-repeat;
-    background-size: 100% auto;
-}
-
 // aspect-ratio.
 .as-1-1 {
     aspect-ratio: 1 / 1;
@@ -768,6 +761,9 @@ body {
 :where(.dark, .dark *) {
     body {
         background-image: url("../../img/bg.png");
+        background-position: center top 40px;
+        background-repeat: no-repeat;
+        background-size: 100% auto;
     }
 
     .off-canvas {

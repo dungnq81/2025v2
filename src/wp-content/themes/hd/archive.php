@@ -1,6 +1,7 @@
 <?php
 /**
  * The template for displaying archive post.
+ * http://codex.wordpress.org/Template_Hierarchy
  *
  * @author Gaudev
  */

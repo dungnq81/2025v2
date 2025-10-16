@@ -1,6 +1,7 @@
 <?php
 /**
  * The template for displaying archive dự án.
+ * http://codex.wordpress.org/Template_Hierarchy
  *
  * @author Gaudev
  */
