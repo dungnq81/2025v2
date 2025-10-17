@@ -133,12 +133,12 @@ const initializeSwipers = () => {
             }
         }
 
-        if (options.autoheight) swiperOptions.autoHeight = !0;
+        if (options.autoHeight) swiperOptions.autoHeight = !0;
         if (options.loop) swiperOptions.loop = !0;
         if (options.parallax) swiperOptions.parallax = !0;
         if (options.direction) swiperOptions.direction = String(options.direction);
-        if (options.freemode) swiperOptions.freeMode = !0;
-        if (options.cssmode) swiperOptions.cssMode = !0;
+        if (options.freeMode) swiperOptions.freeMode = !0;
+        if (options.cssMode) swiperOptions.cssMode = !0;
 
         if (options.centered) {
             swiperOptions.centeredSlides = !0;

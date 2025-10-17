@@ -1,4 +1,4 @@
-import { n as nanoid, a as Swiper, b as Navigation, P as Pagination, A as Autoplay, G as Grid } from "./vendor.DJ-OJ7rb.js";
+import { n as nanoid, a as Swiper, b as Navigation, P as Pagination, A as Autoplay, G as Grid } from "./vendor.DydUsnSb.js";
 const getDefaultOptions = () => ({
   modules: [Navigation, Pagination, Autoplay, Grid],
   grabCursor: true,
@@ -98,12 +98,12 @@ const initializeSwipers = () => {
         swiperOptions.fadeEffect = { crossFade: true };
       }
     }
-    if (options.autoheight) swiperOptions.autoHeight = true;
+    if (options.autoHeight) swiperOptions.autoHeight = true;
     if (options.loop) swiperOptions.loop = true;
     if (options.parallax) swiperOptions.parallax = true;
     if (options.direction) swiperOptions.direction = String(options.direction);
-    if (options.freemode) swiperOptions.freeMode = true;
-    if (options.cssmode) swiperOptions.cssMode = true;
+    if (options.freeMode) swiperOptions.freeMode = true;
+    if (options.cssMode) swiperOptions.cssMode = true;
     if (options.centered) {
       swiperOptions.centeredSlides = true;
       swiperOptions.centeredSlidesBounds = true;
@@ -196,4 +196,4 @@ const initializeSwipers = () => {
   });
 };
 document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", initializeSwipers, { once: true }) : initializeSwipers();
-//# sourceMappingURL=swiper.s3ACQMd8.js.map
+//# sourceMappingURL=swiper.B7rYDuIU.js.map
