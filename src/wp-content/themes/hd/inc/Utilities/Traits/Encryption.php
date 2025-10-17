@@ -5,7 +5,6 @@ namespace HD\Utilities\Traits;
 \defined( 'ABSPATH' ) || die;
 
 trait Encryption {
-
 	private static ?string $method = null;
 	private static ?string $secretKey = null;
 
@@ -15,16 +14,9 @@ trait Encryption {
 	 * @return void
 	 */
 	private static function loadKeys(): void {
-		$keyFile = INC_PATH . 'encryption-key.php';
-
-		if ( is_file( $keyFile ) ) {
-			// Include the key file and validate its content
-			include $keyFile;
-		}
-
 		// Assign values or use defaults
-		self::$method    = $cipher_method ?? 'AES-128-CBC';
-		self::$secretKey = $secret_key ?? 'd24eebeca3db6407c18d4de572fff114';
+		self::$method    = 'AES-128-CBC';
+		self::$secretKey = 'd24eebeca3db6407c18d4de572fff114';
 	}
 
 	// -------------------------------------------------------------

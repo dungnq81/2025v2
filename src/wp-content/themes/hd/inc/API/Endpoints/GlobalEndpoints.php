@@ -1,4 +1,12 @@
 <?php
+/**
+ * Class GlobalEndpoints
+ *
+ * Registers and handles all REST API endpoints for global utilities,
+ * such as lighthouse checks, site configuration, and notification hooks, v.v...
+ *
+ * @author Gaudev
+ */
 
 namespace HD\API\Endpoints;
 
@@ -6,14 +14,6 @@ use HD\API\AbstractAPI;
 
 \defined( 'ABSPATH' ) || die;
 
-/**
- * Class GlobalEndpoints
- *
- * Registers and handles all REST API endpoints for global utilities,
- * such as lighthouse checks, site configuration, and notification hooks, v.v...
- *
- * @package HD\API\Endpoints
- */
 class GlobalEndpoints extends AbstractAPI {
 	/** ---------------------------------------- */
 

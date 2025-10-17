@@ -1,4 +1,15 @@
 <?php
+/**
+ * Advanced Custom Fields (ACF) integration handler.
+ *
+ * This class manages all theme-level integrations with the ACF plugin.
+ * It hides the ACF admin UI in production, extends allowed HTML sanitization
+ * for ACF fields, customizes WYSIWYG and TinyMCE toolbars, and enriches
+ * navigation menu items with ACF-based properties such as icons, labels,
+ * and mega menu support.
+ *
+ * @author Gaudev
+ */
 
 namespace HD\Integration\ACF;
 
@@ -6,11 +17,6 @@ use HD\Utilities\Traits\Singleton;
 
 \defined( 'ABSPATH' ) || die;
 
-/**
- * Advanced Custom Fields
- *
- * @author Gaudev
- */
 final class ACF {
 	use Singleton;
 

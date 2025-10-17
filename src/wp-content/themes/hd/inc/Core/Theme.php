@@ -7,7 +7,6 @@
  * registering hooks (e.g. after_setup_theme, wp_enqueue_scripts, template_include),
  * and managing global theme behavior.
  *
- * @package HD
  * @author Gaudev
  */
 
@@ -117,12 +116,15 @@ final class Theme {
 			'ajaxUrl'    => admin_url( 'admin-ajax.php', 'relative' ),
 			'baseUrl'    => \HD_Helper::siteURL( '/' ),
 			'themeUrl'   => THEME_URL,
-			'restApiUrl' => RESTAPI_URL,
 			'csrfToken'  => wp_create_nonce( 'wp_csrf_token' ),
 			'restToken'  => wp_create_nonce( 'wp_rest' ),
 			'lg'         => \HD_Helper::currentLanguage(),
 			'lang'       => [ 'view_more' => __( 'Xem thêm', TEXT_DOMAIN ) ]
 		];
+
+		if ( defined( 'RESTAPI_URL' ) ) {
+			$l10n['restApiUrl'] = RESTAPI_URL;
+		}
 
 		if ( \HD_Helper::isWoocommerceActive() ) {
 			$l10n['wcAjaxUrl']             = \HD_Helper::home( '/?wc-ajax=%%endpoint%%' );

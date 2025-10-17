@@ -626,11 +626,27 @@ trait Wp {
 
 		foreach ( $arr_styles as $style ) {
 			if ( str_contains( $handle, $style ) ) {
-				return preg_replace(
-					[ '/media=\'all\'/', '/media="all"/' ],
-					'media=\'print\' onload="this.media=\'all\'"',
-					$html
+				$attrs = [
+					'id'    => '',
+					'href'  => '',
+					'type'  => 'text/css',
+					'media' => 'all',
+				];
+
+				foreach ( array_keys( $attrs ) as $key ) {
+					if ( preg_match( '/' . $key . '=[\'"]([^\'"]+)[\'"]/', $html, $m ) ) {
+						$attrs[ $key ] = esc_attr( $m[1] );
+					}
+				}
+
+				$html = sprintf(
+					"<link rel='preload' id='%s' href='%s' as='style' type='%s' onload=\"this.rel='stylesheet'\">",
+					$attrs['id'],
+					$attrs['href'],
+					$attrs['type']
 				);
+
+				break;
 			}
 		}
 
@@ -2349,6 +2365,36 @@ trait Wp {
 		echo implode( '', $breadcrumbs );
 		echo '</ul>';
 
+		// Breadcrumb Schema
+		$schema_items = [];
+		$position     = 1;
+
+		foreach ( $breadcrumbs as $crumb_html ) {
+			if ( preg_match( '/<a[^>]+href=["\']([^"\']+)["\'][^>]*>(.*?)<\/a>/u', $crumb_html, $matches ) ) {
+				$schema_items[] = [
+					'@type'    => 'ListItem',
+					'position' => $position ++,
+					'name'     => wp_strip_all_tags( $matches[2] ),
+					'item'     => esc_url( $matches[1] ),
+				];
+			} else {
+				$schema_items[] = [
+					'@type'    => 'ListItem',
+					'position' => $position ++,
+					'name'     => wp_strip_all_tags( $crumb_html ),
+				];
+			}
+		}
+
+		$schema = [
+			'@context'        => 'https://schema.org',
+			'@type'           => 'BreadcrumbList',
+			'itemListElement' => $schema_items,
+		];
+
+		$schema_json = wp_json_encode( $schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES );
+		echo '<script type="application/ld+json">' . $schema_json . '</script>';
+
 		// Reset query
 		wp_reset_query();
 	}
@@ -2492,11 +2538,9 @@ trait Wp {
 			$ar_aspect_ratio_default = self::filterSettingOptions( 'aspect_ratio_default', [] );
 
 			if ( is_array( $ar_aspect_ratio_default ) && ! in_array( $ratio_x . '-' . $ratio_y, $ar_aspect_ratio_default, false ) ) {
+
 				$css = new \HD_CSS();
 				$css->set_selector( '.' . $ratio_class );
-
-				//$css->add_property( 'height', 0 );
-				//$css->add_property( 'padding-bottom', ( $ratio_y / $ratio_x ) * 100 . '%' );
 				$css->add_property( 'aspect-ratio', $ratio_x . '/' . $ratio_y );
 
 				$ratio_style = $css->css_output();

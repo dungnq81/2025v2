@@ -46,22 +46,6 @@ $faqs = [
 ];
 
 if ( ! empty( $faqs ) ) :
-    $schema_faq = [
-        '@context'    => 'https://schema.org',
-        '@type'       => 'FAQPage',
-        'mainEntity'  => array_map( static function( $faq ) {
-            return [
-                '@type'          => 'Question',
-                'name'           => wp_strip_all_tags( $faq['question'] ),
-                'acceptedAnswer' => [
-                    '@type' => 'Answer',
-                    'text'  => wp_strip_all_tags( $faq['answer'] ),
-                ],
-            ];
-        }, $faqs ),
-    ];
-
-    $schema_json = wp_json_encode( $schema_faq, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
 ?>
 <section class="section section-faq py-20">
     <div class="u-container md:!max-w-4xl">
@@ -95,7 +79,9 @@ if ( ! empty( $faqs ) ) :
             <?php endforeach; ?>
         </ul>
     </div>
-    <script type="application/ld+json"><?= $schema_json ?></script>
+
+    <?= \HD_Helper::faqSchema( $faqs ) ?>
+
 </section>
 <?php endif; ?>
 

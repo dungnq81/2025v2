@@ -7,7 +7,6 @@
  * It organizes shortcode logic into a single class and hooks them into WordPress
  * during initialization for cleaner and modular code.
  *
- * @package HD
  * @author Gaudev
  */
 

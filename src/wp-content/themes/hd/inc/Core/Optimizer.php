@@ -7,7 +7,6 @@
  * It registers various hooks to disable unnecessary features, streamline output,
  * and enhance overall theme efficiency.
  *
- * @package HD
  * @author Gaudev
  */
 

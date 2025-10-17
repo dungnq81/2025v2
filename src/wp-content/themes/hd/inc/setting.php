@@ -6,7 +6,6 @@
  * It also defines related hooks and initialization routines to configure
  * the theme’s core behavior and default features.
  *
- * @package HD
  * @author Gaudev
  */
 
@@ -553,7 +552,7 @@ function hd_settings_filter_callback( array $arr ): array {
 				'placeholder' => 'https://www.linkedin.com',
 				'url'         => '',
 			],
-			'github'  => [
+			'github'    => [
 				'name'        => __( 'Github', TEXT_DOMAIN ),
 				'icon'        => \HD_Helper::svg( 'github' ),
 				'placeholder' => 'https://github.com',
@@ -572,10 +571,10 @@ function hd_settings_filter_callback( array $arr ): array {
 //				'url'  => '',
 //			],
 			'email'     => [
-				'name' => __( 'Email', TEXT_DOMAIN ),
-				'icon' => \HD_Helper::svg( 'envelope' ),
+				'name'        => __( 'Email', TEXT_DOMAIN ),
+				'icon'        => \HD_Helper::svg( 'envelope' ),
 				'placeholder' => 'mailto:example@gmail.com',
-				'url'  => '',
+				'url'         => '',
 			],
 //			'shopee'    => [
 //				'name' => __( 'Shopee', TEXT_DOMAIN ),

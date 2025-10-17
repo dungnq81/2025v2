@@ -7,7 +7,6 @@
  * It centralizes reusable logic such as data formatting, template helpers,
  * and other generic utility operations.
  *
- * @package HD
  * @author Gaudev
  */
 
@@ -1241,6 +1240,41 @@ final class Helper {
 		}
 
 		return [];
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param array|null $faqs
+	 * @param string|null $q
+	 * @param string|null $a
+	 *
+	 * @return string|null
+	 */
+	public static function faqSchema( ?array $faqs = [], ?string $q = 'question', ?string $a = 'answer' ): ?string {
+		if ( empty( $faqs ) ) {
+			return null;
+		}
+
+		$q = $q ?: 'question';
+		$a = $a ?: 'answer';
+
+		$schema_faq = [
+			'@context'   => 'https://schema.org',
+			'@type'      => 'FAQPage',
+			'mainEntity' => array_map( static function ( $faq ) use ( $q, $a ) {
+				return [
+					'@type'          => 'Question',
+					'name'           => wp_strip_all_tags( $faq[ $q ] ),
+					'acceptedAnswer' => [
+						'@type' => 'Answer',
+						'text'  => wp_strip_all_tags( $faq[ $a ] ),
+					],
+				];
+			}, $faqs ),
+		];
+
+		return '<script type="application/ld+json">' . wp_json_encode( $schema_faq, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>';
 	}
 
 	// --------------------------------------------------

@@ -7,7 +7,6 @@
  * It manages custom columns, admin menus, metaboxes, styles, and other UI
  * enhancements to improve the theme’s backend experience.
  *
- * @package HD
  * @author Gaudev
  */
 

@@ -6,7 +6,6 @@
  * used throughout the theme. It registers both frontend and backend AJAX actions,
  * providing a centralized structure for asynchronous requests and responses.
  *
- * @package HD
  * @author Gaudev
  */
 

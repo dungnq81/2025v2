@@ -1,4 +1,12 @@
 <?php
+/**
+ * Class SingleEndpoints
+ *
+ * Registers and handles all REST API endpoints for single resources in WordPress
+ * (e.g., posts, pages, attachments).
+ *
+ * @author Gaudev
+ */
 
 namespace HD\API\Endpoints;
 
@@ -6,14 +14,6 @@ use HD\API\AbstractAPI;
 
 \defined( 'ABSPATH' ) || die;
 
-/**
- * Class SingleEndpoints
- *
- * Registers and handles all REST API endpoints for single resources in WordPress
- * (e.g., posts, pages, attachments).
- *
- * @package HD\API\Endpoints
- */
 class SingleEndpoints extends AbstractAPI {
 	/** ---------------------------------------- */
 

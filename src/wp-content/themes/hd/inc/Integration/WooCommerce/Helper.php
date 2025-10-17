@@ -1,14 +1,14 @@
 <?php
-
-namespace HD\Integration\WooCommerce;
-
-\defined( 'ABSPATH' ) || die;
-
 /**
  * WOO_Helper Class
  *
  * @author Gaudev
  */
+
+namespace HD\Integration\WooCommerce;
+
+\defined( 'ABSPATH' ) || die;
+
 final class Helper {
 	// -------------------------------------------------------------
 

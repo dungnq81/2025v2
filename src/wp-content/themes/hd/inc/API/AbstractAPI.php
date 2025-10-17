@@ -1,4 +1,14 @@
 <?php
+/**
+ * Abstract base class for all custom REST API controllers.
+ *
+ * Provides shared methods and constants for defining REST API namespaces,
+ * generating endpoint URLs, and returning standardized REST responses.
+ * Child classes extending this abstract class must implement their own
+ * `registerRestRoutes()` method to define specific API endpoints.
+ *
+ * @author Gaudev
+ */
 
 namespace HD\API;
 

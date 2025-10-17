@@ -8,7 +8,6 @@
  * It centralizes hook registration and execution, allowing for flexible extension
  * and cleaner separation of template logic.
  *
- * @package HD
  * @author Gaudev
  */
 
@@ -422,7 +421,7 @@ final class Hook {
                 const dateEl = document.querySelector('section.section-post .meta .date');
                 const viewsEl = document.querySelector('section.section-post .meta .views');
 
-                if (!postID || !dateEl || !viewsEl) {
+                if ( !postID || !dateEl || !viewsEl ) {
                     return;
                 }
 
@@ -446,9 +445,7 @@ final class Hook {
                     } catch (err) {}
                 }
             }
-            document.readyState === 'loading'
-                ? document.addEventListener('DOMContentLoaded', run, { once: true })
-                : run();
+            document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', run, { once: true }) : run();
         </script>
         <?php endif;
 
@@ -468,30 +465,7 @@ final class Hook {
     public function custom_css_action(): void {
         $css = new \HD_CSS();
 
-        //-------------------------------------------------
-        // Breadcrumb
-        //-------------------------------------------------
-
-        $breadcrumb_max     = \HD_Helper::getThemeMod( 'breadcrumb_max_height_setting', 0 );
-        $breadcrumb_min     = \HD_Helper::getThemeMod( 'breadcrumb_min_height_setting', 0 );
-        $breadcrumb_bgcolor = \HD_Helper::getThemeMod( 'breadcrumb_bgcolor_setting' );
-
-        if ( $breadcrumb_max > 0 || $breadcrumb_min > 0 || $breadcrumb_bgcolor ) {
-            $css->set_selector( '.section.section-breadcrumb' );
-        }
-
-        $breadcrumb_min && $css->add_property( 'min-height', $breadcrumb_min . 'px !important' );
-        $breadcrumb_max && $css->add_property( 'max-height', $breadcrumb_max . 'px !important' );
-        $breadcrumb_bgcolor && $css->add_property( 'background-color', $breadcrumb_bgcolor . ' !important' );
-
-        $object                 = get_queried_object();
-        $breadcrumb_title_color = \HD_Helper::getField( 'breadcrumb_title_color', $object ) ?: \HD_Helper::getThemeMod( 'breadcrumb_color_setting' );
-        if ( $breadcrumb_title_color ) {
-            $css->set_selector( '.section.section-breadcrumb .breadcrumb-title' )
-                ->add_property( 'color', $breadcrumb_title_color . ' !important' );
-        }
-
-        // -----------------------------------------------
+        //...
 
         $css_output = $css->css_output();
         if ( $css_output ) {

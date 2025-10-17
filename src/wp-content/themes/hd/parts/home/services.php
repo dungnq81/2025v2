@@ -56,7 +56,7 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                     <?php endif; ?>
                     <div class="w-full lg:w-2/3 max-w-2xl">
                         <p class="h3 text-balance uppercase font-bold mb-6 text-2 dark:text-white">Thiết kế website</p>
-                        <p class="text-[15px]">
+                        <p class="text-base">
                             Là dịch vụ chiến lược tại HD AGENCY, chúng tôi có hơn 6+ năm kinh nghiệm trong việc lên kế hoạch thực hiện website cho các tất cả loại hình thiết kế website trên thị trường hiện nay.
                         </p>
                         <ul class="flex flex-col gap-5 mt-8">
@@ -100,7 +100,7 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                     <?php endif; ?>
                     <div class="w-full lg:w-2/3 max-w-2xl">
                         <p class="h3 text-balance uppercase font-bold mb-6 text-2 dark:text-white">Marketing Online</p>
-                        <p class="text-[15px]">
+                        <p class="text-base">
                             Với mong muốn mang lại hiệu quả cho khách hàng sử dụng dịch vụ tại HD AGENCY. Chúng tôi luôn tìm hiểu và lên kế hoạch marketing online cụ thể nhằm thúc đẩy doanh số, lan tỏa thương hiệu nhanh chóng đến cộng đồng người tiêu dùng online.
                         </p>
                         <ul class="flex flex-col gap-5 mt-8">
@@ -144,7 +144,7 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                     <?php endif; ?>
                     <div class="w-full lg:w-2/3 max-w-2xl">
                         <p class="h3 text-balance uppercase font-bold mb-6 text-2 dark:text-white">Nhận dạng thương hiệu</p>
-                        <p class="text-[15px]">
+                        <p class="text-base">
                             Dù che đi logo vẫn nhận diện được thương hiệu bạn giữa hàng trăm đối thủ cạnh tranh trên thị trường là kim chỉ nam khi HD AGENCY phát triển bộ nhận diện thương hiệu cho bạn.
                         </p>
                         <ul class="flex flex-col gap-5 mt-8">

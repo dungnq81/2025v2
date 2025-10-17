@@ -1,14 +1,19 @@
 <?php
+/**
+ * Main API controller for the theme/plugin.
+ *
+ * This class initializes and registers all REST API endpoint classes
+ * under the HD namespace, manages access control, and filters the
+ * available REST routes. It also hides default WordPress post types
+ * (posts, pages) from the REST API for security and optimization.
+ *
+ * @author Gaudev
+ */
 
 namespace HD\API;
 
 use HD\Utilities\Traits\Singleton;
 
-/**
- * API Class
- *
- * @author Gaudev
- */
 final class API extends AbstractAPI {
 	use Singleton;
 
@@ -16,9 +21,8 @@ final class API extends AbstractAPI {
 
 	// List of post-types to hide from the REST API
 	private array $blockedPostTypes = [
-		'post',
-		'page',
-		'attachment'
+		'posts',
+		'pages'
 	];
 
 	// List of custom routes allowed to pass through restPreDispatch
@@ -168,13 +172,10 @@ final class API extends AbstractAPI {
 	 */
 	public function restEndpoints( $endpoints ): mixed {
 		foreach ( $this->blockedPostTypes as $type ) {
-			unset(
-				$endpoints["/wp/v2/{$type}"],
-				$endpoints["/wp/v2/{$type}/(?P<id>[\\d]+)"]
-			);
+			unset( $endpoints["/wp/v2/{$type}"], $endpoints["/wp/v2/{$type}/(?P<id>[\\d]+)"] );
 		}
 
-		unset( $endpoints['/'] );
+		unset( $endpoints['/'], $endpoints['/wp/v2'] );
 
 		return $endpoints;
 	}

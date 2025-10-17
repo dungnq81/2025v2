@@ -11,7 +11,6 @@ namespace HD\Utilities\Helpers;
  * Modified by Gaudev
  */
 final class CSS {
-
 	/**
 	 * The CSS selector that you're currently adding rules to
 	 *

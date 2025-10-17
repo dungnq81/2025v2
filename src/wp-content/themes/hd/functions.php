@@ -5,8 +5,7 @@
  * Initializes the HD Theme core, loads dependencies,
  * defines constants, and ensures compatibility with PHP 8.2 or newer.
  *
- * @package HD
- * @author  Gaudev
+ * @author Gaudev
  */
 
 const THEME_VERSION = '1.10.0';
@@ -61,6 +60,7 @@ require_once __DIR__ . '/inc/setting.php';
 // Initialize theme.
 ( \HD\Core\Theme::get_instance() );
 
+$restApiUrl = ( \HD\API\API::get_instance() )->restApiUrl();
 if ( ! defined( 'RESTAPI_URL' ) ) {
-	define( 'RESTAPI_URL', untrailingslashit( ( \HD\API\API::get_instance() )->restApiUrl() ) . '/' );
+	define( 'RESTAPI_URL', untrailingslashit( $restApiUrl ) . '/' );
 }

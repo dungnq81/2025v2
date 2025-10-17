@@ -9,7 +9,6 @@
  * The class helps maintain a clean and optimized loading strategy for frontend
  * and backend assets.
  *
- * @package HD
  * @author Gaudev
  */
 
@@ -18,6 +17,15 @@ namespace HD\Utilities\Helpers;
 \defined( 'ABSPATH' ) || die;
 
 final class Asset {
+	// ----------------------------------------
+
+	/**
+	 * @return string|bool|null
+	 */
+	public static function version(): bool|string|null {
+		return Helper::version();
+	}
+
 	// ----------------------------------------
 
 	/**

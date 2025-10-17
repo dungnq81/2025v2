@@ -7,7 +7,6 @@
  * It registers actions such as customize_register, pre_get_posts, display_post_states,
  * and other hooks that control both frontend and backend behavior.
  *
- * @package HD
  * @author Gaudev
  */
 

@@ -1,4 +1,17 @@
 <?php
+/**
+ * WooCommerce Integration
+ *
+ * Handles WooCommerce-related theme integrations such as:
+ * - Custom widget registration/unregistration
+ * - Frontend scripts and styles
+ * - Custom cart fragment refresh logic
+ * - OTP-based customer login via email verification
+ * - WooCommerce UI adjustments and cleanup
+ *
+ * @author Gaudev
+ */
+
 
 namespace HD\Integration\WooCommerce;
 
@@ -9,11 +22,6 @@ use Random\RandomException;
 
 require __DIR__ . '/hooks.php';
 
-/**
- * WooCommerce Plugin
- *
- * @author   Gaudev
- */
 final class WooCommerce {
     use Singleton;
 
