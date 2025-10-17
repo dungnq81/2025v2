@@ -260,7 +260,7 @@ final class Hook {
     // -----------------------------------------------
 
     public function add_cookie_consent(): void {
-        \HD_Helper::blockTemplate( 'parts/blocks/cookie-consent', [], false );
+        \HD_Helper::blockTemplate( 'parts/blocks/cookie-consent' );
     }
 
     // -----------------------------------------------
@@ -283,7 +283,7 @@ final class Hook {
     // -----------------------------------------------
 
     public function template_svg(): void {
-        \HD_Helper::blockTemplate( 'parts/blocks/svg', [], false );
+        \HD_Helper::blockTemplate( 'parts/blocks/svg' );
     }
 
     // -----------------------------------------------

@@ -7,7 +7,7 @@
 //
 // Admin layout.
 
-#kk-star-ratings {
+:where(#kk-star-ratings, .metabox-prefs label) {
     .components-button {
         margin: 0 !important;
     }

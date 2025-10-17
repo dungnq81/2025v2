@@ -15,6 +15,7 @@
 // --------------------------------------------------
 // Action Menu location
 // --------------------------------------------------
+
 add_action( 'after_setup_theme', 'register_nav_menu_callback', 11 );
 function register_nav_menu_callback(): void {
 	register_nav_menus(
@@ -30,6 +31,7 @@ function register_nav_menu_callback(): void {
 // --------------------------------------------------
 // Action widgets_init
 // --------------------------------------------------
+
 add_action( 'widgets_init', 'register_sidebar_callback' );
 function register_sidebar_callback(): void {
 
@@ -119,6 +121,7 @@ function register_sidebar_callback(): void {
 // --------------------------------------------------
 // Action default scripts
 // --------------------------------------------------
+
 add_action( 'wp_default_scripts', 'wp_default_scripts_callback', 11, 1 );
 function wp_default_scripts_callback( $scripts ): void {
 	if ( isset( $scripts->registered['jquery'] ) && ! is_admin() ) {
@@ -137,6 +140,7 @@ function wp_default_scripts_callback( $scripts ): void {
 // --------------------------------------------------
 // Filter body_class
 // --------------------------------------------------
+
 add_filter( 'body_class', 'body_class_callback', 11, 1 );
 function body_class_callback( array $classes ): array {
 	// Check whether we're in the customizer preview.
@@ -169,6 +173,7 @@ function body_class_callback( array $classes ): array {
 // --------------------------------------------------
 // Filter post_class
 // --------------------------------------------------
+
 add_filter( 'post_class', 'post_class_callback', 11, 1 );
 function post_class_callback( array $classes ): array {
 	// remove_sticky_class
@@ -193,6 +198,7 @@ function post_class_callback( array $classes ): array {
 // --------------------------------------------------
 // Filter nav_menu_css_class
 // --------------------------------------------------
+
 add_filter( 'nav_menu_css_class', 'nav_menu_css_class_callback', 999, 4 );
 function nav_menu_css_class_callback( $classes, $menu_item, $args, $depth ): array {
 	if ( ! is_array( $classes ) ) {
@@ -240,6 +246,7 @@ function nav_menu_css_class_callback( $classes, $menu_item, $args, $depth ): arr
 // --------------------------------------------------
 // Filter nav_menu_link_attributes
 // --------------------------------------------------
+
 add_filter( 'nav_menu_link_attributes', 'nav_menu_link_attributes_callback', 999, 4 );
 function nav_menu_link_attributes_callback( $atts, $menu_item, $args, $depth ): array {
 	// link_class
@@ -268,6 +275,7 @@ function nav_menu_link_attributes_callback( $atts, $menu_item, $args, $depth ): 
 // --------------------------------------------------
 // Filter nav_menu_item_title
 // --------------------------------------------------
+
 add_filter( 'nav_menu_item_title', 'nav_menu_item_title_callback', 999, 4 );
 function nav_menu_item_title_callback( $title, $item, $args, $depth ) {
 
@@ -313,6 +321,7 @@ function nav_menu_item_title_callback( $title, $item, $args, $depth ) {
 // --------------------------------------------------
 // Filter query_vars
 // --------------------------------------------------
+
 add_filter( 'query_vars', 'query_vars_callback', 99, 1 );
 function query_vars_callback( $vars ): array {
 	$vars[] = 'page';
@@ -324,6 +333,7 @@ function query_vars_callback( $vars ): array {
 // --------------------------------------------------
 // Filter `hd settings`
 // --------------------------------------------------
+
 add_filter( 'hd_settings_filter', 'hd_settings_filter_callback', 99, 1 );
 function hd_settings_filter_callback( array $arr ): array {
 	static $setting_filter_cache = [];
@@ -543,6 +553,12 @@ function hd_settings_filter_callback( array $arr ): array {
 				'placeholder' => 'https://www.linkedin.com',
 				'url'         => '',
 			],
+			'github'  => [
+				'name'        => __( 'Github', TEXT_DOMAIN ),
+				'icon'        => \HD_Helper::svg( 'github' ),
+				'placeholder' => 'https://github.com',
+				'url'         => '',
+			],
 			'zalo'      => [
 				'name'        => __( 'Zalo', TEXT_DOMAIN ),
 				'icon'        => \HD_Helper::svg( 'zalo' ),
@@ -555,12 +571,12 @@ function hd_settings_filter_callback( array $arr ): array {
 //				'placeholder' => '0123456789',
 //				'url'  => '',
 //			],
-//			'email'     => [
-//				'name' => __( 'Email', TEXT_DOMAIN ),
-//				'icon' => \HD_Helper::svg( 'envelope' ),
-//				'placeholder' => 'example@gmail.com',
-//				'url'  => '',
-//			],
+			'email'     => [
+				'name' => __( 'Email', TEXT_DOMAIN ),
+				'icon' => \HD_Helper::svg( 'envelope' ),
+				'placeholder' => 'mailto:example@gmail.com',
+				'url'  => '',
+			],
 //			'shopee'    => [
 //				'name' => __( 'Shopee', TEXT_DOMAIN ),
 //				'icon' => \HD_Helper::svg( 'shopee' ),

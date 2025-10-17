@@ -29,7 +29,7 @@ trait Wp {
 	 *
 	 * @return void
 	 */
-	public static function blockTemplate( $slug, array $args = [], bool $use_cache = true, int $cache_in_hours = 12 ): void {
+	public static function blockTemplate( $slug, array $args = [], bool $use_cache = false, int $cache_in_hours = 12 ): void {
 		$block_slug = basename( $slug, '.php' );
 		$hook_name  = 'enqueue_assets_blocks_' . str_replace( '-', '_', $block_slug );
 		do_action( $hook_name );
@@ -965,7 +965,7 @@ trait Wp {
 						$wc_args['stock_status'] = 'instock';
 					}
 
-					$ids = wc_get_products( $wc_args );
+					$ids = \wc_get_products( $wc_args );
 				}
 			} else { /* not product */
 
@@ -1481,7 +1481,7 @@ trait Wp {
 	public static function siteTitleOrLogo( bool $echo = true, ?string $home_heading = 'h1', ?string $class = 'logo' ): ?string {
 		$logo_title = '';
 		$logo_class = ! empty( $class ) ? ' class="' . $class . '"' : '';
-		$home_link  = \function_exists( 'pll_home_url' ) ? pll_home_url() : self::home( '/' );
+		$home_link  = \function_exists( 'pll_home_url' ) ? \pll_home_url() : self::home( '/' );
 
 		if ( function_exists( 'the_custom_logo' ) && has_custom_logo() ) {
 			// replace \get_custom_logo() with self::customSiteLogo()
@@ -1525,7 +1525,7 @@ trait Wp {
 	public static function siteLogo( string $theme = 'default', ?string $class = '' ): string {
 		$html           = '';
 		$custom_logo_id = null;
-		$home_link      = function_exists( 'pll_home_url' ) ? pll_home_url() : self::home( '/' );
+		$home_link      = function_exists( 'pll_home_url' ) ? \pll_home_url() : self::home( '/' );
 
 		if ( 'default' !== $theme && $theme_logo = self::getThemeMod( $theme . '_logo' ) ) {
 			$custom_logo_id = attachment_url_to_postid( $theme_logo );

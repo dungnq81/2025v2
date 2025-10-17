@@ -111,27 +111,33 @@ final class Theme {
 	 * @return void
 	 */
 	public function enqueueAssets(): void {
-		$version = \HD_Helper::version();
-
-		/** Inline Js */
+		$version           = \HD_Helper::version();
 		$recaptcha_options = \HD_Helper::getOption( 'recaptcha__options' );
 		$l10n              = [
-			'ajaxUrl'      => admin_url( 'admin-ajax.php', 'relative' ),
-			'baseUrl'      => \HD_Helper::siteURL( '/' ),
-			'themeUrl'     => THEME_URL,
-			'restApiUrl'   => RESTAPI_URL,
-			//'wcAjaxUrl'    => \HD_Helper::home( '/?wc-ajax=%%endpoint%%' ),
-			'csrfToken'    => wp_create_nonce( 'wp_csrf_token' ),
-			'restToken'    => wp_create_nonce( 'wp_rest' ),
-			'reCaptcha_v2' => $recaptcha_options['recaptcha_v2_site_key'] ?? '',
-			'reCaptcha_v3' => $recaptcha_options['recaptcha_v3_site_key'] ?? '',
-			'lg'           => \HD_Helper::currentLanguage(),
-			'lang'         => [
-				//'added_to_cart' => __( 'Đã thêm vào giỏ hàng', TEXT_DOMAIN ),
-				'view_more' => __( 'Xem thêm', TEXT_DOMAIN )
-			]
+			'ajaxUrl'    => admin_url( 'admin-ajax.php', 'relative' ),
+			'baseUrl'    => \HD_Helper::siteURL( '/' ),
+			'themeUrl'   => THEME_URL,
+			'restApiUrl' => RESTAPI_URL,
+			'csrfToken'  => wp_create_nonce( 'wp_csrf_token' ),
+			'restToken'  => wp_create_nonce( 'wp_rest' ),
+			'lg'         => \HD_Helper::currentLanguage(),
+			'lang'       => [ 'view_more' => __( 'Xem thêm', TEXT_DOMAIN ) ]
 		];
 
+		if ( \HD_Helper::isWoocommerceActive() ) {
+			$l10n['wcAjaxUrl']             = \HD_Helper::home( '/?wc-ajax=%%endpoint%%' );
+			$l10n['lang']['added_to_cart'] = __( 'Đã thêm vào giỏ hàng', TEXT_DOMAIN );
+		}
+
+		if ( ! empty( $recaptcha_options['recaptcha_v2_site_key'] ) ) {
+			$l10n['reCaptcha_v2'] = $recaptcha_options['recaptcha_v2_site_key'];
+		}
+
+		if ( ! empty( $recaptcha_options['recaptcha_v3_site_key'] ) ) {
+			$l10n['reCaptcha_v3'] = $recaptcha_options['recaptcha_v3_site_key'];
+		}
+
+		/** Inline Js */
 		\HD_Asset::localize( 'jquery-core', 'hdConfig', $l10n );
 		\HD_Asset::inlineScript( 'jquery-core', 'Object.assign(window,{ $:jQuery,jQuery });', 'after' );
 

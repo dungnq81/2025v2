@@ -49,7 +49,7 @@ echo \HD_Helper::breadCrumbBanner( $breadcrumb_bg, 'widescreen' );
             // Previous/next page navigation.
             \HD_Helper::paginateLinks();
         else :
-            \HD_Helper::blockTemplate( 'parts/blocks/no-results', [], true );
+            \HD_Helper::blockTemplate( 'parts/blocks/no-results' );
         endif; ?>
 	</div>
 </section>

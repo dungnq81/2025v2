@@ -414,11 +414,12 @@
             list-style: decimal;
         }
 
-        figure {
-            img {
-                border-radius: 6px;
-            }
+        img {
+            border-radius: 6px;
+            height: auto;
+        }
 
+        figure {
             figcaption {
                 font-size: 14px;
                 font-weight: 500;

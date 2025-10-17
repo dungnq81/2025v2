@@ -1414,8 +1414,9 @@ body.admin-bar .masthead.is-sticky {
 .section.singular .entry-content ol {
   list-style: decimal;
 }
-.section.singular .entry-content figure img {
+.section.singular .entry-content img {
   border-radius: 6px;
+  height: auto;
 }
 .section.singular .entry-content figure figcaption {
   font-size: 14px;
