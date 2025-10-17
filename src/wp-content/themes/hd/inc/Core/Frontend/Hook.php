@@ -472,8 +472,6 @@ final class Hook {
         // Breadcrumb
         //-------------------------------------------------
 
-        $object = get_queried_object();
-
         $breadcrumb_max     = \HD_Helper::getThemeMod( 'breadcrumb_max_height_setting', 0 );
         $breadcrumb_min     = \HD_Helper::getThemeMod( 'breadcrumb_min_height_setting', 0 );
         $breadcrumb_bgcolor = \HD_Helper::getThemeMod( 'breadcrumb_bgcolor_setting' );
@@ -486,6 +484,7 @@ final class Hook {
         $breadcrumb_max && $css->add_property( 'max-height', $breadcrumb_max . 'px !important' );
         $breadcrumb_bgcolor && $css->add_property( 'background-color', $breadcrumb_bgcolor . ' !important' );
 
+        $object                 = get_queried_object();
         $breadcrumb_title_color = \HD_Helper::getField( 'breadcrumb_title_color', $object ) ?: \HD_Helper::getThemeMod( 'breadcrumb_color_setting' );
         if ( $breadcrumb_title_color ) {
             $css->set_selector( '.section.section-breadcrumb .breadcrumb-title' )

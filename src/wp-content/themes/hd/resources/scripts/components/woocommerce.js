@@ -1,3 +1,4 @@
 // components/woocommerce.js
 
-jQuery(function ($) {});
+jQuery(function ($) {
+});

@@ -1,6 +1,6 @@
-import { N } from "./vendor.DydUsnSb.js";
-import "./swiper.B7rYDuIU.js";
-import { i as initSocialShare } from "./social-share.Bpgkvhhq.js";
+import { N } from "./vendor.Cqxxl5a0.js";
+import "./swiper.UIWicAws.js";
+import { i as initSocialShare } from "./social-share.CkEweY4Y.js";
 class BackToTop {
   constructor(selector = ".js-back-to-top", smoothScrollEnabled = true, defaultScrollSpeed = 400) {
     this.buttonSelector = selector;
@@ -452,4 +452,4 @@ const run = async () => {
   });
 };
 document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", run, { once: true }) : run();
-//# sourceMappingURL=index.B2Ub93Ak.js.map
+//# sourceMappingURL=index.BeM1ata2.js.map
