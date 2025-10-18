@@ -202,8 +202,8 @@ trait Url {
 			return $_SERVER['REMOTE_ADDR'];
 		}
 
-		// Fallback to localhost IP
-		return '127.0.0.1';
+		// Fallback to 0.0.0.0 IP
+		return '0.0.0.0';
 	}
 
 	// --------------------------------------------------

@@ -17,7 +17,7 @@
     "devDependencies": {
         "@tailwindcss/vite": "^4.1.14",
         "@vheemstra/vite-plugin-imagemin": "^2.2.1",
-        "@wordpress/browserslist-config": "^6.32.0",
+        "@wordpress/browserslist-config": "^6.33.0",
         "autoprefixer": "^10.4.21",
         "concurrently": "^9.2.1",
         "cross-env": "^10.1.0",
@@ -41,7 +41,7 @@
         "jquery": "^3.7.1",
         "nanoid": "^5.1.6",
         "select2": "4.1.0-rc.0",
-        "sweetalert2": "^11.26.2",
+        "sweetalert2": "^11.26.3",
         "swiper": "^11.2.10",
         "tailwindcss": "^4.1.14",
         "vanilla-lazyload": "^19.1.3"

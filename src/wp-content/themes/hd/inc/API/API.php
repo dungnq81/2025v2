@@ -2,10 +2,7 @@
 /**
  * Main API controller for the theme/plugin.
  *
- * This class initializes and registers all REST API endpoint classes
- * under the HD namespace, manages access control, and filters the
- * available REST routes. It also hides default WordPress post types
- * (posts, pages) from the REST API for security and optimization.
+ * Handles REST API access restrictions, endpoint registration, and default route sanitization.
  *
  * @author Gaudev
  */
@@ -19,32 +16,51 @@ final class API extends AbstractAPI {
 
 	private array $endpointClasses = [];
 
-	// List of post-types to hide from the REST API
 	private array $blockedPostTypes = [
-		'posts',
-		'pages'
+		'post',
+		'page',
+		'attachment'
 	];
 
-	// List of custom routes allowed to pass through restPreDispatch
 	private array $allowedRoutes = [
-		'single/track_views',
 		'global/lighthouse',
+		'single/track_views',
 	];
 
 	/** ---------------------------------------- */
 
+	/**
+	 * @return void
+	 */
 	private function init(): void {
 		add_action( 'init', [ $this, 'initRestClasses' ] );
-
 		add_action( 'rest_api_init', [ $this, 'registerRestRoutes' ] );
-		add_action( 'rest_api_init', [ $this, 'disableDefaultPostTypes' ] );
+		add_action( 'rest_api_init', [ $this, 'disableDefaultPostTypes' ], 20 );
 
-		add_filter( 'rest_pre_dispatch', [ $this, 'restPreDispatch' ], 10, 3 );
-		add_filter( 'rest_endpoints', [ $this, 'restEndpoints' ] );
+		add_filter( 'rest_authentication_errors', [ $this, 'restrictRestApi' ], 99 );
+		add_filter( 'rest_endpoints', [ $this, 'filterRestEndpoints' ] );
+		add_filter( 'rest_index', [ $this, 'hideRestIndex' ] );
 	}
 
 	/** ---------------------------------------- */
 
+	/**
+	 * Automatically initialize classes in the API/Endpoints directory.
+	 *
+	 * @return void
+	 */
+	public function initRestClasses(): void {
+		foreach ( glob( __DIR__ . '/Endpoints/*.php', GLOB_NOSORT ) as $file ) {
+			$class_name = '\\HD\\API\\Endpoints\\' . basename( $file, '.php' );
+			if ( class_exists( $class_name ) ) {
+				$this->endpointClasses[] = new $class_name();
+			}
+		}
+	}
+
+	/**
+	 * @return void
+	 */
 	public function registerRestRoutes(): void {
 		foreach ( $this->endpointClasses as $api ) {
 			if ( method_exists( $api, 'registerRestRoutes' ) ) {
@@ -53,77 +69,19 @@ final class API extends AbstractAPI {
 		}
 	}
 
-	/** ---------------------------------------- */
-
 	/**
-	 * Automatically initialize classes in the Utilities/API directory.
-	 *
-	 * @return void
-	 */
-	public function initRestClasses(): void {
-		$directory = __DIR__ . '/Endpoints/*.php';
-		foreach ( glob( $directory, GLOB_NOSORT ) as $file ) {
-			$class_name = '\\HD\\API\\Endpoints\\' . basename( $file, '.php' );
-
-			if ( class_exists( $class_name ) ) {
-				$this->endpointClasses[] = new $class_name();
-			}
-		}
-	}
-
-	/** ---------------------------------------- */
-
-	/**
-	 * @param $pre
-	 * @param \WP_REST_Server $server
-	 * @param \WP_REST_Request $request
-	 *
-	 * @return \WP_Error|null
-	 */
-	public function restPreDispatch( $pre, \WP_REST_Server $server, \WP_REST_Request $request ): ?\WP_Error {
-		$route  = ltrim( $request->get_route(), '/' );
-		$routes = $server->get_routes();
-
-		$allowedFull = array_map(
-			static fn( $r ) => self::REST_NAMESPACE . '/' . $r,
-			$this->allowedRoutes
-		);
-
-		if ( ! in_array( $route, $allowedFull, true ) ) {
-			return $pre;
-		}
-
-		foreach ( (array) $routes[ '/' . $route ] as $args ) {
-			foreach ( (array) $args['methods'] as $method => $enabled ) {
-				if ( $enabled && strtoupper( $method ) === strtoupper( $request->get_method() ) ) {
-					return $pre;
-				}
-			}
-		}
-
-		return new \WP_Error(
-			'rest_forbidden',
-			'Access denied for this route.',
-			[ 'status' => 403 ]
-		);
-	}
-
-	/** ---------------------------------------- */
-
-	/**
-	 * Disable REST API access for default post-types
+	 * Disable REST Access for Default Post Types
 	 *
 	 * @return void
 	 */
 	public function disableDefaultPostTypes(): void {
 		foreach ( $this->blockedPostTypes as $type ) {
-			add_filter( "rest_{$type}_query", [ $this, 'forceEmptyRestQuery' ], 10, 2 );
-			add_filter( "rest_{$type}_collection", [ $this, 'forceEmptyRestCollection' ], 10, 2 );
-			add_filter( "rest_prepare_{$type}", [ $this, 'forceEmptyRestDetail' ], 10, 3 );
+			if ( post_type_exists( $type ) ) {
+				add_filter( "rest_{$type}_query", [ $this, 'forceEmptyRestQuery' ], 10, 2 );
+				add_filter( "rest_prepare_{$type}", [ $this, 'blockRestDetail' ], 10, 3 );
+			}
 		}
 	}
-
-	/** ---------------------------------------- */
 
 	/**
 	 * @param $args
@@ -132,51 +90,112 @@ final class API extends AbstractAPI {
 	 * @return mixed
 	 */
 	public function forceEmptyRestQuery( $args, $request ): mixed {
-		$args['post__in'] = [ 0 ]; // Prevent matching any post
+		$args['post__in'] = [ 0 ];
 
 		return $args;
 	}
 
-	/** ---------------------------------------- */
-
 	/**
-	 * @param $response
-	 *
-	 * @return \WP_REST_Response
-	 */
-	public function forceEmptyRestCollection( $response ): \WP_REST_Response {
-		return new \WP_REST_Response( [], 200 ); // Always return an empty array
-	}
-
-	/** ---------------------------------------- */
-
-	/**
-	 * @param $response
+	 * @param mixed $response
 	 * @param $post
 	 * @param $request
 	 *
-	 * @return \WP_REST_Response
+	 * @return mixed
 	 */
-	public function forceEmptyRestDetail( $response, $post, $request ): \WP_REST_Response {
-		return new \WP_REST_Response( (object) [], 200 ); // Always return an empty object
+	public function blockRestDetail( mixed $response, $post, $request ): mixed {
+		if ( ! current_user_can( 'edit_posts' ) ) {
+			return new \WP_Error(
+				'rest_forbidden',
+				__( 'REST access denied.', TEXT_DOMAIN ),
+				[ 'status' => 403 ]
+			);
+		}
+
+		return $response;
 	}
 
-	/** ---------------------------------------- */
-
 	/**
-	 * Remove post-type routes from the REST endpoint list
+	 * Restrict REST API access for guests
 	 *
-	 * @param $endpoints
+	 * @param mixed $result
 	 *
 	 * @return mixed
 	 */
-	public function restEndpoints( $endpoints ): mixed {
-		foreach ( $this->blockedPostTypes as $type ) {
-			unset( $endpoints["/wp/v2/{$type}"], $endpoints["/wp/v2/{$type}/(?P<id>[\\d]+)"] );
+	public function restrictRestApi( mixed $result ): mixed {
+		if ( ! empty( $result ) ) {
+			return $result;
 		}
 
+		$request_uri = $_SERVER['REQUEST_URI'] ?? '';
+		if ( empty( $request_uri ) ) {
+			return $result;
+		}
+
+		$user_logged = \is_user_logged_in();
+
+		// Allow your custom API
+		foreach ( $this->allowedRoutes as $allowed ) {
+			if ( str_contains( $request_uri, self::REST_NAMESPACE . '/' . $allowed ) ) {
+				return $result;
+			}
+		}
+
+		// Block wp-json root and default wp/v2 endpoints for unauthenticated users
+		if ( ! $user_logged && preg_match( '#^/wp-json(/wp/v2)?/?#', $request_uri ) ) {
+			if ( \HD_Helper::development() ) {
+				\HD_Helper::errorLog( "[REST Blocked] $request_uri" );
+			}
+
+			return new \WP_Error(
+				'rest_forbidden',
+				__( 'REST API access denied for unauthenticated users.', TEXT_DOMAIN ),
+				[ 'status' => 403 ]
+			);
+		}
+
+		return $result;
+	}
+
+	/**
+	 * Hide unwanted routes
+	 *
+	 * @param array $endpoints
+	 *
+	 * @return array
+	 */
+	public function filterRestEndpoints( array $endpoints ): array {
+		// Hide the discovery and default wp/v2 endpoints
 		unset( $endpoints['/'], $endpoints['/wp/v2'] );
 
+		// Remove post/page/attachment endpoints
+		foreach ( $this->blockedPostTypes as $type ) {
+			if ( $obj = get_post_type_object( $type ) ) {
+				$base = $obj->rest_base ?: $obj->name;
+				unset(
+					$endpoints["/wp/v2/{$base}"],
+					$endpoints["/wp/v2/{$base}/(?P<id>[\\d]+)"]
+				);
+			}
+		}
+
 		return $endpoints;
+	}
+
+	/**
+	 * Hide REST index response entirely for guests.
+	 *
+	 * @param $response
+	 *
+	 * @return mixed
+	 */
+	public function hideRestIndex( $response ): mixed {
+		if ( ! \is_user_logged_in() ) {
+			$response->data = [
+				'success' => false,
+				'message' => __( 'REST API is disabled for unauthenticated users.', TEXT_DOMAIN ),
+			];
+		}
+
+		return $response;
 	}
 }
