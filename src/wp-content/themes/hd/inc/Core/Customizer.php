@@ -89,7 +89,7 @@ final class Customizer {
 	 * @return mixed
 	 */
 	public function add_archive_page_state( $post_states ): mixed {
-		if ( get_post_type( $GLOBALS['post'] ) !== 'page' ) {
+		if ( ! isset( $GLOBALS['post'] ) || get_post_type( $GLOBALS['post'] ) !== 'page' ) {
 			return $post_states;
 		}
 

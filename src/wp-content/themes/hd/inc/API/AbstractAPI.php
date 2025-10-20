@@ -68,7 +68,7 @@ abstract class AbstractAPI {
 	 *
 	 * @return bool
 	 */
-	protected function rateLimit( string $key_prefix, int $limit = 5, int $window = 60 ): bool {
+	protected function rateLimit( string $key_prefix, int $limit = 6, int $window = 60 ): bool {
 		$ip  = \HD_Helper::ipAddress();
 		$key = "hd_api_rate_{$key_prefix}_" . md5( $ip );
 

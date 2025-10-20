@@ -22,9 +22,15 @@ final class API extends AbstractAPI {
 		'attachment'
 	];
 
-	private array $allowedRoutes = [
-		'global/lighthouse',
-		'single/track_views',
+	/**
+	 * Allowlisted REST API namespaces for unauthenticated access.
+	 * (Plugins or custom endpoints that must work for guests)
+	 *
+	 * Example: contact-form-7/v1, hd/v1, etc.
+	 */
+	private array $allowedNamespaces = [
+		self::REST_NAMESPACE,
+		'contact-form-7/v1',  // Contact Form 7
 	];
 
 	/** ---------------------------------------- */
@@ -131,26 +137,27 @@ final class API extends AbstractAPI {
 			return $result;
 		}
 
-		$user_logged = \is_user_logged_in();
-
-		// Allow your custom API
-		foreach ( $this->allowedRoutes as $allowed ) {
-			if ( str_contains( $request_uri, self::REST_NAMESPACE . '/' . $allowed ) ) {
+		foreach ( $this->allowedNamespaces as $namespace ) {
+			if ( str_contains( $request_uri, "/wp-json/{$namespace}" ) ) {
 				return $result;
 			}
 		}
 
-		// Block wp-json root and default wp/v2 endpoints for unauthenticated users
-		if ( ! $user_logged && preg_match( '#^/wp-json(/wp/v2)?/?#', $request_uri ) ) {
-			if ( \HD_Helper::development() ) {
-				\HD_Helper::errorLog( "[REST Blocked] $request_uri" );
-			}
+		$user_logged = \is_user_logged_in();
 
-			return new \WP_Error(
-				'rest_forbidden',
-				__( 'REST API access denied for unauthenticated users.', TEXT_DOMAIN ),
-				[ 'status' => 403 ]
-			);
+		// Block wp-json root and default wp/v2 endpoints for unauthenticated users
+		if ( ! $user_logged || ! current_user_can( 'edit_posts' ) ) {
+			if ( preg_match( '#^/wp-json(/wp/v2)?/?#', $request_uri ) ) {
+				if ( \HD_Helper::development() ) {
+					\HD_Helper::errorLog( "[REST Blocked] $request_uri" );
+				}
+
+				return new \WP_Error(
+					'rest_forbidden',
+					__( 'REST API access denied for unauthenticated users.', TEXT_DOMAIN ),
+					[ 'status' => 403 ]
+				);
+			}
 		}
 
 		return $result;

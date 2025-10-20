@@ -218,15 +218,22 @@ final class Theme {
 	 * @return void
 	 */
 	public function unregisterWidgets(): void {
-		unregister_widget( 'WP_Widget_Search' );
-		unregister_widget( 'WP_Widget_Recent_Posts' );
-
-		// Removes the styling added to the header for recent comments
 		global $wp_widget_factory;
+
+		// Remove the styling added to the header for recent comments
 		remove_action( 'wp_head', [
 			$wp_widget_factory->widgets['WP_Widget_Recent_Comments'],
 			'recent_comments_style'
 		] );
+
+		// Unregister all default WordPress widgets
+		foreach ( $wp_widget_factory->widgets as $class => $widget ) {
+			unregister_widget( $class );
+		}
+
+		// Re-register only specific widgets we want to keep
+		// register_widget( 'WP_Widget_Text' );
+		// register_widget( 'WP_Widget_Custom_HTML' );
 	}
 
 	// --------------------------------------------------

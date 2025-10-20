@@ -19,6 +19,8 @@ use HD\Utilities\Traits\Singleton;
 final class Optimizer {
 	use Singleton;
 
+	private array $lazy_styles = [];
+
 	// ------------------------------------------------------
 
 	private function init(): void {
@@ -188,6 +190,7 @@ final class Optimizer {
 		// Filters the script, style tag
 		add_filter( 'script_loader_tag', [ $this, 'scriptLoaderTag' ], 12, 3 );
 		add_filter( 'style_loader_tag', [ $this, 'styleLoaderTag' ], 12, 2 );
+		add_action( 'wp_body_open', [ $this, 'printLazyStyles' ], 1 );
 
 		// Adding Shortcode in WordPress Using Custom HTML Widget
 		add_filter( 'widget_text', 'do_shortcode' );
@@ -248,11 +251,11 @@ final class Optimizer {
 	 * @return string
 	 */
 	public function scriptLoaderTag( string $tag, string $handle, string $src ): string {
-		$attributes = wp_scripts()->registered[ $handle ]->extra ?? [];
-
-		if ( ! isset( wp_scripts()->registered[ $handle ] ) ) {
+		if ( is_admin() || ! isset( wp_scripts()->registered[ $handle ] ) ) {
 			return $tag;
 		}
+
+		$attributes = wp_scripts()->registered[ $handle ]->extra ?? [];
 
 		// Add `type="module"` attributes if the script is marked as a module
 		if ( ! empty( $attributes['module'] ) ) {
@@ -306,9 +309,39 @@ final class Optimizer {
 	 * @return string
 	 */
 	public function styleLoaderTag( string $html, string $handle ): string {
-		$styles = \HD_Helper::filterSettingOptions( 'defer_style', [] );
+		if ( is_admin() ) {
+			return $html;
+		}
 
-		return \HD_Helper::lazyStyleTag( $styles, $html, $handle );
+		$styles    = \HD_Helper::filterSettingOptions( 'defer_style', [] );
+		$lazy_html = \HD_Helper::lazyStyleTag( $styles, $html, $handle );
+
+		if ( $lazy_html !== $html ) {
+			$this->lazy_styles[] = str_replace(
+				"onload=\"this.rel='stylesheet'\"",
+				"data-handle='{$handle}' onload=\"this.rel='stylesheet'\"",
+				$lazy_html
+			);
+
+			return '';
+		}
+
+		return $html;
+	}
+
+	// ------------------------------------------------------
+
+	/**
+	 * @return void
+	 */
+	public function printLazyStyles(): void {
+		if ( empty( $this->lazy_styles ) ) {
+			return;
+		}
+
+		foreach ( $this->lazy_styles as $link ) {
+			echo $link;
+		}
 	}
 
 	// ------------------------------------------------------

@@ -75,46 +75,46 @@ function register_sidebar_callback(): void {
 	//----------------------------------------------------------
 
 	// News sidebar
-	register_sidebar(
-		[
-			'container'     => false,
-			'id'            => 'news-sidebar',
-			'name'          => __( 'News Sidebar', TEXT_DOMAIN ),
-			'description'   => __( 'Widgets added here will appear in news sidebar.', TEXT_DOMAIN ),
-			'before_widget' => '<div class="%2$s">',
-			'after_widget'  => '</div>',
-			'before_title'  => '<span>',
-			'after_title'   => '</span>',
-		]
-	);
+//	register_sidebar(
+//		[
+//			'container'     => false,
+//			'id'            => 'news-sidebar',
+//			'name'          => __( 'News Sidebar', TEXT_DOMAIN ),
+//			'description'   => __( 'Widgets added here will appear in news sidebar.', TEXT_DOMAIN ),
+//			'before_widget' => '<div class="%2$s">',
+//			'after_widget'  => '</div>',
+//			'before_title'  => '<span>',
+//			'after_title'   => '</span>',
+//		]
+//	);
 
 	// Page sidebar
-	register_sidebar(
-		[
-			'container'     => false,
-			'id'            => 'page-sidebar',
-			'name'          => __( 'Page Sidebar', TEXT_DOMAIN ),
-			'description'   => __( 'Widgets added here will appear in page sidebar.', TEXT_DOMAIN ),
-			'before_widget' => '<div class="%2$s">',
-			'after_widget'  => '</div>',
-			'before_title'  => '<span>',
-			'after_title'   => '</span>',
-		]
-	);
+//	register_sidebar(
+//		[
+//			'container'     => false,
+//			'id'            => 'page-sidebar',
+//			'name'          => __( 'Page Sidebar', TEXT_DOMAIN ),
+//			'description'   => __( 'Widgets added here will appear in page sidebar.', TEXT_DOMAIN ),
+//			'before_widget' => '<div class="%2$s">',
+//			'after_widget'  => '</div>',
+//			'before_title'  => '<span>',
+//			'after_title'   => '</span>',
+//		]
+//	);
 
 	// Archive sidebar
-	register_sidebar(
-		[
-			'container'     => false,
-			'id'            => 'archive-sidebar',
-			'name'          => __( 'Archive Sidebar', TEXT_DOMAIN ),
-			'description'   => __( 'Widgets added here will appear in archive sidebar.', TEXT_DOMAIN ),
-			'before_widget' => '<div class="%2$s">',
-			'after_widget'  => '</div>',
-			'before_title'  => '<span>',
-			'after_title'   => '</span>',
-		]
-	);
+//	register_sidebar(
+//		[
+//			'container'     => false,
+//			'id'            => 'archive-sidebar',
+//			'name'          => __( 'Archive Sidebar', TEXT_DOMAIN ),
+//			'description'   => __( 'Widgets added here will appear in archive sidebar.', TEXT_DOMAIN ),
+//			'before_widget' => '<div class="%2$s">',
+//			'after_widget'  => '</div>',
+//			'before_title'  => '<span>',
+//			'after_title'   => '</span>',
+//		]
+//	);
 }
 
 // --------------------------------------------------

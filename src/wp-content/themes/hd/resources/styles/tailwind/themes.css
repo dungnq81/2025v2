@@ -39,8 +39,4 @@
 
     --bg-color: #161616;
     --bg-light-color: #1D1D1DB2;
-
-    --bg-right-gradient: linear-gradient(90deg, var(--text-color-2) 0%, var(--text-color-1) 90%);
-    --bg-right-gradient-1: linear-gradient(90deg, var(--bg-color) 0%, var(--text-color-1) 90%);
-    --bg-right-gradient-2: linear-gradient(90deg, var(--bg-color) 0%, var(--text-color-2) 90%);
 }

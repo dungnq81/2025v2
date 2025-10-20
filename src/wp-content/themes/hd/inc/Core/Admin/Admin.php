@@ -103,7 +103,7 @@ final class Admin {
      * @return void
      */
     public function adminMenu(): void {
-        //global $menu, $submenu;
+        // global $menu, $submenu;
         // dump($menu);
         // dump($submenu);
 
@@ -306,6 +306,7 @@ final class Admin {
             $thumb   = [
                     'term_thumb' => sprintf( '<span class="wc-image tips">%1$s</span>', __( 'Thumb', TEXT_DOMAIN ) ),
             ];
+
             $columns = \HD_Helper::insertBefore( 'name', $columns, $thumb );
         }
 
