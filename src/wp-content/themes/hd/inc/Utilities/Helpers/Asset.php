@@ -20,6 +20,8 @@ final class Asset {
 	// ----------------------------------------
 
 	/**
+	 * Return theme version helper passthrough.
+	 *
 	 * @return string|bool|null
 	 */
 	public static function version(): bool|string|null {
@@ -29,18 +31,20 @@ final class Asset {
 	// ----------------------------------------
 
 	/**
+	 * Resolve src from manifest
+	 *
 	 * @param string|null $entry
 	 * @param bool $relative_link
 	 *
 	 * @return string
 	 */
 	public static function src( ?string $entry = null, bool $relative_link = false ): string {
-		if ( ! $entry ) {
+		if ( empty( $entry ) ) {
 			return '';
 		}
 
 		$resolve = Helper::manifestResolve( $entry );
-		$src     = ! empty( $resolve['src'] ) ? $resolve['src'] : '';
+		$src     = $resolve['src'] ?? '';
 		if ( ! $src ) {
 			return '';
 		}
@@ -51,31 +55,35 @@ final class Asset {
 	// ----------------------------------------
 
 	/**
+	 * Resolve handle for manifest entry
+	 *
 	 * @param string|null $entry
 	 * @param string $handle_prefix
 	 *
 	 * @return string
 	 */
 	public static function handle( ?string $entry = null, string $handle_prefix = '' ): string {
-		if ( ! $entry ) {
+		if ( empty( $entry ) ) {
 			return '';
 		}
 
 		$resolve = Helper::manifestResolve( $entry, $handle_prefix );
 
-		return ! empty( $resolve['handle'] ) ? $resolve['handle'] : '';
+		return $resolve['handle'] ?? '';
 	}
 
 	// ----------------------------------------
 
 	/**
+	 * Preload JS imports (modulepreload).
+	 *
 	 * @param string|null $entry
 	 * @param string $handle_prefix
 	 *
 	 * @return void
 	 */
 	public static function preload( ?string $entry = null, string $handle_prefix = '' ): void {
-		if ( ! $entry ) {
+		if ( empty( $entry ) ) {
 			return;
 		}
 
@@ -85,22 +93,68 @@ final class Asset {
 			$imports = array_merge( $imports, (array) $tmp['imports'] );
 		}
 
-		$links = '';
 		$imports = array_unique( $imports );
+		$links   = '';
 
 		foreach ( $imports as $import ) {
 			$resolve = Helper::manifestResolve( $import );
 			if ( ! empty( $resolve['src'] ) ) {
-				$links .= '<link rel="modulepreload" as="script" href="' . esc_url( $resolve['src'] ) . '" crossorigin>';
+				$href  = esc_url( $resolve['src'] );
+				$links .= '<link rel="modulepreload" href="' . $href . '" as="script" type="module" crossorigin>';
 			}
 		}
 
-		echo $links;
+		echo wp_kses( $links, [
+			'link' => [
+				'rel'         => [],
+				'href'        => [],
+				'as'          => [],
+				'type'        => [],
+				'crossorigin' => [],
+			]
+		] );
 	}
 
 	// ----------------------------------------
 
 	/**
+	 * Preload CSS file (for critical CSS)
+	 *
+	 * @param string|null $entry
+	 *
+	 * @return void
+	 */
+	public static function preloadCSS( ?string $entry = null ): void {
+		if ( empty( $entry ) ) {
+			return;
+		}
+
+		$resolve = Helper::manifestResolve( $entry );
+		if ( empty( $resolve['src'] ) ) {
+			return;
+		}
+
+		$href = esc_url( $resolve['src'] );
+		$tag  = sprintf(
+			'<link rel="preload" href="%s" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">',
+			$href
+		);
+
+		echo wp_kses( $tag, [
+			'link' => [
+				'rel'    => [],
+				'href'   => [],
+				'as'     => [],
+				'onload' => []
+			]
+		] );
+	}
+
+	// ----------------------------------------
+
+	/**
+	 * Enqueue CSS by manifest entry
+	 *
 	 * @param string|null $entry
 	 * @param array $deps
 	 * @param string|bool|null $ver
@@ -114,6 +168,10 @@ final class Asset {
 		string|bool|null $ver = null,
 		string $media = 'all'
 	): void {
+		if ( empty( $entry ) ) {
+			return;
+		}
+
 		$resolve = Helper::manifestResolve( $entry );
 		if ( empty( $resolve ) ) {
 			return;
@@ -129,6 +187,8 @@ final class Asset {
 	// ----------------------------------------
 
 	/**
+	 * Enqueue JS by manifest entry
+	 *
 	 * @param string|null $entry
 	 * @param array $deps
 	 * @param string|bool|null $ver
@@ -144,6 +204,10 @@ final class Asset {
 		bool $in_footer = true,
 		array $extra = []
 	): void {
+		if ( empty( $entry ) ) {
+			return;
+		}
+
 		$resolve = Helper::manifestResolve( $entry );
 		if ( empty( $resolve ) ) {
 			return;
@@ -160,6 +224,8 @@ final class Asset {
 	// ----------------------------------------
 
 	/**
+	 * Enqueue style helper (supports array or scalar args)
+	 *
 	 * @param string|array $handle
 	 * @param string|bool|null $src
 	 * @param array $deps
@@ -207,13 +273,15 @@ final class Asset {
 	// ----------------------------------------
 
 	/**
+	 * Enqueue script helper (supports script attributes via 'extra' or 'attrs')
+	 *
 	 * @param string|array $handle
 	 * @param string|bool|null $src
 	 * @param array $deps
 	 * @param string|bool|null $ver
 	 * @param bool $in_footer
 	 * @param array $extra - Ex. [ 'module', 'defer' ]
-     *
+	 *
 	 * @return void
 	 */
 	public static function enqueueScript(
@@ -236,12 +304,10 @@ final class Asset {
 				'attr'      => [],
 			] );
 
-			// url
 			if ( empty( $args['src'] ) && ! empty( $args['url'] ) ) {
 				$args['src'] = $args['url'];
 			}
 
-			// attr
 			if ( ! empty( $args['attr'] ) && empty( $args['extra'] ) ) {
 				$args['extra'] = $args['attr'];
 			}
@@ -261,10 +327,12 @@ final class Asset {
 			return;
 		}
 
+		// Register if not registered
 		if ( ! wp_script_is( $args['handle'], 'registered' ) ) {
 			wp_register_script( $args['handle'], $args['src'], $args['deps'], $args['ver'], (bool) $args['in_footer'] );
 		}
 
+		// Enqueue
 		wp_enqueue_script( $args['handle'] );
 
 		if ( ! empty( $args['extra'] ) ) {
@@ -275,22 +343,37 @@ final class Asset {
 	// ----------------------------------------
 
 	/**
+	 * Localize JS data safely. If modern approach preferred, it will add inline script JSON.
+	 *
 	 * @param string $handle
 	 * @param string $object_name
 	 * @param array|bool|null $l10n
+	 * @param bool $as_inline_json If true, use wp_add_inline_script(json) instead of wp_localize_script
 	 *
 	 * @return void
 	 */
 	public static function localize(
 		string $handle,
 		string $object_name,
-		array|bool|null $l10n
+		array|bool|null $l10n,
+		bool $as_inline_json = true
 	): void {
 		if ( empty( $object_name ) || empty( $l10n ) ) {
 			return;
 		}
 
-		if ( wp_script_is( $handle, 'registered' ) || wp_script_is( $handle, 'enqueued' ) ) {
+		if ( ! ( wp_script_is( $handle, 'registered' ) || wp_script_is( $handle, 'enqueued' ) ) ) {
+			return;
+		}
+
+		if ( $as_inline_json ) {
+			$json = wp_json_encode( $l10n );
+			if ( $json === false ) {
+				return;
+			}
+			$script = sprintf( 'window.%s = %s;', $object_name, $json );
+			wp_add_inline_script( $handle, $script, 'before' );
+		} else {
 			wp_localize_script( $handle, $object_name, $l10n );
 		}
 	}
@@ -298,6 +381,8 @@ final class Asset {
 	// ----------------------------------------
 
 	/**
+	 * Add inline CSS safely. Fallback register a dummy style.
+	 *
 	 * @param string $handle
 	 * @param string|bool|null $css
 	 *
@@ -321,6 +406,8 @@ final class Asset {
 	// ----------------------------------------
 
 	/**
+	 * Add inline JS safely. Fallback register a dummy script.
+	 *
 	 * @param string $handle
 	 * @param string|bool|null $code
 	 * @param string $position
@@ -341,4 +428,6 @@ final class Asset {
 			wp_add_inline_script( $fallback, $code, $position );
 		}
 	}
+
+	// ----------------------------------------
 }

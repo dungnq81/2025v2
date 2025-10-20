@@ -143,10 +143,8 @@ final class API extends AbstractAPI {
 			}
 		}
 
-		$user_logged = \is_user_logged_in();
-
 		// Block wp-json root and default wp/v2 endpoints for unauthenticated users
-		if ( ! $user_logged || ! current_user_can( 'edit_posts' ) ) {
+		if ( ! is_user_logged_in() || ! current_user_can( 'edit_posts' ) ) {
 			if ( preg_match( '#^/wp-json(/wp/v2)?/?#', $request_uri ) ) {
 				if ( \HD_Helper::development() ) {
 					\HD_Helper::errorLog( "[REST Blocked] $request_uri" );
@@ -196,7 +194,7 @@ final class API extends AbstractAPI {
 	 * @return mixed
 	 */
 	public function hideRestIndex( $response ): mixed {
-		if ( ! \is_user_logged_in() ) {
+		if ( ! is_user_logged_in() ) {
 			$response->data = [
 				'success' => false,
 				'message' => __( 'REST API is disabled for unauthenticated users.', TEXT_DOMAIN ),

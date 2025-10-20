@@ -19,8 +19,10 @@ use HD\Core\Frontend\Shortcode;
 use HD\Integration\ACF\ACF;
 use HD\Integration\WooCommerce\WooCommerce;
 use HD\Utilities\Traits\Singleton;
+use HD_Asset;
+use HD_Helper;
 
-\defined( 'ABSPATH' ) || die;
+defined( 'ABSPATH' ) || die;
 
 final class Theme {
 	use Singleton;
@@ -32,9 +34,9 @@ final class Theme {
 		// FE: init -> wp_loaded -> wp -> template_redirect -> template_include -> v.v...
 		// BE: init -> wp_loaded -> admin_menu -> admin_init -> v.v...
 
-		add_action( 'after_setup_theme', [ $this, 'setupTheme' ], 10 );
+		add_action( 'after_setup_theme', [ $this, 'setupTheme' ] );
 		add_action( 'after_setup_theme', [ $this, 'setup' ], 11 );
-		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueAssets' ], 10 );
+		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueAssets' ] );
 
 		/** Widgets */
 		add_action( 'widgets_init', [ $this, 'unregisterWidgets' ], 11 );
@@ -87,7 +89,7 @@ final class Theme {
 	// --------------------------------------------------
 
 	public function setup(): void {
-		if ( \HD_Helper::isAdmin() ) {
+		if ( HD_Helper::isAdmin() ) {
 			( Admin::get_instance() );
 		}
 
@@ -98,8 +100,8 @@ final class Theme {
 		( Ajax::get_instance() );
 
 		// Integration
-		\HD_Helper::isAcfActive() && ACF::get_instance();
-		\HD_Helper::isWoocommerceActive() && WooCommerce::get_instance();
+		HD_Helper::isAcfActive() && ACF::get_instance();
+		HD_Helper::isWoocommerceActive() && WooCommerce::get_instance();
 	}
 
 	// --------------------------------------------------
@@ -110,15 +112,15 @@ final class Theme {
 	 * @return void
 	 */
 	public function enqueueAssets(): void {
-		$version           = \HD_Helper::version();
-		$recaptcha_options = \HD_Helper::getOption( 'recaptcha__options' );
+		$version           = HD_Helper::version();
+		$recaptcha_options = HD_Helper::getOption( 'recaptcha__options' );
 		$l10n              = [
 			'ajaxUrl'    => admin_url( 'admin-ajax.php', 'relative' ),
-			'baseUrl'    => \HD_Helper::siteURL( '/' ),
+			'baseUrl'    => HD_Helper::siteURL( '/' ),
 			'themeUrl'   => THEME_URL,
 			'csrfToken'  => wp_create_nonce( 'wp_csrf_token' ),
 			'restToken'  => wp_create_nonce( 'wp_rest' ),
-			'lg'         => \HD_Helper::currentLanguage(),
+			'lg'         => HD_Helper::currentLanguage(),
 			'lang'       => [ 'view_more' => __( 'Xem thêm', TEXT_DOMAIN ) ]
 		];
 
@@ -126,8 +128,8 @@ final class Theme {
 			$l10n['restApiUrl'] = RESTAPI_URL;
 		}
 
-		if ( \HD_Helper::isWoocommerceActive() ) {
-			$l10n['wcAjaxUrl']             = \HD_Helper::home( '/?wc-ajax=%%endpoint%%' );
+		if ( HD_Helper::isWoocommerceActive() ) {
+			$l10n['wcAjaxUrl']             = HD_Helper::home( '/?wc-ajax=%%endpoint%%' );
 			$l10n['lang']['added_to_cart'] = __( 'Đã thêm vào giỏ hàng', TEXT_DOMAIN );
 		}
 
@@ -140,19 +142,19 @@ final class Theme {
 		}
 
 		/** Inline Js */
-		\HD_Asset::localize( 'jquery-core', 'hdConfig', $l10n );
-		\HD_Asset::inlineScript( 'jquery-core', 'Object.assign(window,{ $:jQuery,jQuery });', 'after' );
+		HD_Asset::localize( 'jquery-core', 'hdConfig', $l10n );
+		HD_Asset::inlineScript( 'jquery-core', 'Object.assign(window,{ $:jQuery,jQuery });' );
 
 		/** CSS */
-		\HD_Asset::enqueueCSS( 'vendor.css', [], $version );
-		\HD_Asset::enqueueCSS( 'index.scss', [ \HD_Asset::handle( 'vendor.css' ) ], $version );
+		HD_Asset::enqueueCSS( 'vendor.css', [], $version );
+		HD_Asset::enqueueCSS( 'index.scss', [ HD_Asset::handle( 'vendor.css' ) ], $version );
 
 		/** JS */
-		\HD_Asset::enqueueJS( 'components/preflight.js', [], $version, false );
-		\HD_Asset::enqueueJS( 'index.js', [ 'jquery-core' ], $version, true, [ 'module', 'defer' ] );
+		HD_Asset::enqueueJS( 'components/preflight.js', [], $version, false );
+		HD_Asset::enqueueJS( 'index.js', [ 'jquery-core' ], $version, true, [ 'module', 'defer' ] );
 
 		/** Comments */
-		if ( is_singular() && comments_open() && \HD_Helper::getOption( 'thread_comments' ) ) {
+		if ( is_singular() && comments_open() && HD_Helper::getOption( 'thread_comments' ) ) {
 			wp_enqueue_script( 'comment-reply' );
 		} else {
 			wp_dequeue_script( 'comment-reply' );
@@ -174,7 +176,7 @@ final class Theme {
 		static $enqueued_hooks = [];
 
 		// template debug
-		if ( ( defined( 'SHOW_TEMPLATE_FILE' ) && \SHOW_TEMPLATE_FILE === true ) && \HD_Helper::development() ) {
+		if ( ( defined( 'SHOW_TEMPLATE_FILE' ) && \SHOW_TEMPLATE_FILE === true ) && HD_Helper::development() ) {
 			dump( $template );
 		}
 
@@ -188,15 +190,15 @@ final class Theme {
 
 			// dynamic hook - enqueue style/script
 			add_action( 'wp_enqueue_scripts', static function () use ( $hook_name, $last_part ) {
-				$version = \HD_Helper::version();
+				$version = HD_Helper::version();
 				$names   = [ 'extra', $last_part ];
 
 				foreach ( $names as $name ) {
 					$scss = "partials/template/{$name}.scss";
 					$js   = "components/template/{$name}.js";
 
-					\HD_Asset::enqueueCSS( $scss, [ \HD_Asset::handle( 'index.scss' ) ], $version );
-					\HD_Asset::enqueueJS( $js, [ \HD_Asset::handle( 'index.js' ) ], $version, true, [ 'module', 'defer' ] );
+					HD_Asset::enqueueCSS( $scss, [ HD_Asset::handle( 'index.scss' ) ], $version );
+					HD_Asset::enqueueJS( $js, [ HD_Asset::handle( 'index.js' ) ], $version, true, [ 'module', 'defer' ] );
 				}
 
 				// dynamic hook
@@ -247,8 +249,8 @@ final class Theme {
 		$widgets_dir = INC_PATH . 'Utilities/Widgets';
 		$FQN         = '\\HD\\Utilities\\Widgets\\';
 
-		\HD_Helper::createDirectory( $widgets_dir );
-		\HD_Helper::FQNLoad( $widgets_dir, false, true, $FQN, true );
+		HD_Helper::createDirectory( $widgets_dir );
+		HD_Helper::FQNLoad( $widgets_dir, false, true, $FQN, true );
 	}
 
 	// --------------------------------------------------

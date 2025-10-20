@@ -1077,7 +1077,7 @@ final class Helper {
 	// --------------------------------------------------
 
 	/**
-	 *  Resolve a single entry from Vite manifest.
+	 *  Resolve a given asset entry from the Vite manifest.
 	 *
 	 * @param string|null $entry \Ex: 'components/template/home.js', 'index.scss', 'vendor.js', 'vendor.css'.
 	 * @param string $handle_prefix
@@ -1085,16 +1085,23 @@ final class Helper {
 	 * @return array
 	 */
 	public static function manifestResolve( ?string $entry = null, string $handle_prefix = '' ): array {
+		static $resolveCache = [];
+
 		if ( ! is_string( $entry ) || ! trim( $entry ) ) {
 			return [];
 		}
 
-		$manifest = self::manifest();
-		if ( ! $manifest ) {
-			return [];
+		$key = md5( $entry . $handle_prefix );
+		if ( isset( $resolveCache[ $key ] ) ) {
+			return $resolveCache[ $key ];
 		}
 
-		// --- Closure ---
+		$manifest = self::manifest();
+		if ( ! $manifest ) {
+			return $resolveCache[ $key ] = [];
+		}
+
+		// --- Helper closures ---
 		$makeSlugFromPath = static function ( string $pathNoExt ): string {
 			$pathNoExt = str_replace( '\\', '/', $pathNoExt );
 			$pathNoExt = preg_replace( '#/+#', '/', $pathNoExt );
@@ -1109,8 +1116,7 @@ final class Helper {
 			return $handle_prefix . $b . '-' . $kind;
 		};
 
-		// ---
-
+		// --- Normalize input ---
 		$entry = trim( $entry );
 		$entry = self::normalizePath( $entry );
 
@@ -1120,10 +1126,10 @@ final class Helper {
 				if ( is_array( $v ) && preg_match( '/^_?vendor\..+\.js$/', $k ) ) {
 					$file = $v['file'] ?? '';
 					if ( ! $file ) {
-						return [];
+						return $resolveCache[ $key ] = [];
 					}
 
-					return [
+					return $resolveCache[ $key ] = [
 						'handle' => $makeHandle( 'vendor', 'js' ),
 						'src'    => THEME_URL . 'assets/' . $file,
 						'file'   => $v['src'] ?? '',
@@ -1131,7 +1137,7 @@ final class Helper {
 				}
 			}
 
-			return [];
+			return $resolveCache[ $key ] = [];
 		}
 
 		// --- Vendor CSS ---
@@ -1140,10 +1146,10 @@ final class Helper {
 				if ( is_array( $v ) && preg_match( '/^_?vendor\..+\.css$/', $k ) ) {
 					$file = $v['file'] ?? '';
 					if ( ! $file ) {
-						return [];
+						return $resolveCache[ $key ] = [];
 					}
 
-					return [
+					return $resolveCache[ $key ] = [
 						'handle' => $makeHandle( 'vendor', 'css' ),
 						'src'    => THEME_URL . 'assets/' . $file,
 						'file'   => $v['src'] ?? '',
@@ -1151,20 +1157,20 @@ final class Helper {
 				}
 			}
 
-			// fallback
+			// fallback (vendor.css generated from vendor.js)
 			foreach ( $manifest as $k => $v ) {
 				if ( ! empty( $v['css'][0] ) && preg_match( '/^_?vendor\..+\.js$/', $k ) ) {
-					return [
+					return $resolveCache[ $key ] = [
 						'handle' => $makeHandle( 'vendor', 'css' ),
 						'src'    => THEME_URL . 'assets/' . $v['css'][0],
 					];
 				}
 			}
 
-			return [];
+			return $resolveCache[ $key ] = [];
 		}
 
-		// --- Entries ---
+		// --- Regular Entries ---
 		$ext       = strtolower( pathinfo( $entry, PATHINFO_EXTENSION ) );
 		$pathNoExt = preg_replace( '/\.' . preg_quote( $ext, '/' ) . '$/i', '', $entry );
 		$baseSlug  = $makeSlugFromPath( $pathNoExt );
@@ -1178,7 +1184,7 @@ final class Helper {
 		} elseif ( $isJs ) {
 			$srcTailCandidates[] = $pathNoExt . '.js';
 		} else {
-			return [];
+			return $resolveCache[ $key ] = [];
 		}
 
 		$found = null;
@@ -1201,15 +1207,19 @@ final class Helper {
 		}
 
 		if ( ! $found ) {
-			return [];
+			if ( \HD_Helper::development() ) {
+				\HD_Helper::errorLog( '[manifestResolve] Entry not found: ' . $entry );
+			}
+
+			return $resolveCache[ $key ] = [];
 		}
 
-		// --- JS ---
+		// --- JS entry ---
 		if ( $isJs ) {
 			$handle = $makeHandle( $baseSlug, 'js' );
 
 			if ( ! empty( $found['file'] ) ) {
-				return [
+				return $resolveCache[ $key ] = [
 					'handle'  => $handle,
 					'src'     => THEME_URL . 'assets/' . $found['file'],
 					'file'    => $found['src'] ?? '',
@@ -1218,12 +1228,12 @@ final class Helper {
 			}
 		}
 
-		// --- CSS ---
+		// --- CSS entry ---
 		if ( $isCss ) {
 			$handle = $makeHandle( $baseSlug, 'css' );
 
 			if ( ! empty( $found['css'][0] ) ) {
-				return [
+				return $resolveCache[ $key ] = [
 					'handle' => $handle,
 					'src'    => THEME_URL . 'assets/' . $found['css'][0],
 					'file'   => $found['src'] ?? '',
@@ -1231,7 +1241,7 @@ final class Helper {
 			}
 
 			if ( ! empty( $found['file'] ) ) {
-				return [
+				return $resolveCache[ $key ] = [
 					'handle' => $handle,
 					'src'    => THEME_URL . 'assets/' . $found['file'],
 					'file'   => $found['src'] ?? '',
@@ -1239,7 +1249,7 @@ final class Helper {
 			}
 		}
 
-		return [];
+		return $resolveCache[ $key ] = [];
 	}
 
 	// --------------------------------------------------

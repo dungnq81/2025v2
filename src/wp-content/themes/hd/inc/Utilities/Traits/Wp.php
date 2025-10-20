@@ -46,7 +46,7 @@ trait Wp {
 		$cache_key     = 'hd_block_cache_' . md5( $slug . serialize( $args ) );
 		$cached_output = get_transient( $cache_key );
 		if ( ! empty( $cached_output ) ) {
-			if ( mb_strlen( $cached_output, 'UTF-8' ) <= 1024 * 20 ) { // 20kb
+			if ( mb_strlen( $cached_output, 'UTF-8' ) <= 1024 * 15 ) { // 15kb
 				echo $cached_output;
 
 				return;
@@ -59,7 +59,7 @@ trait Wp {
 		get_template_part( $slug, null, $args );
 		$output = ob_get_clean();
 
-		if ( ! empty( $output ) && mb_strlen( $output, 'UTF-8' ) <= 1024 * 20 ) {
+		if ( ! empty( $output ) && mb_strlen( $output, 'UTF-8' ) <= 1024 * 15 ) {
 			set_transient( $cache_key, $output, $cache_in_hours * HOUR_IN_SECONDS );
 		}
 

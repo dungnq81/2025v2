@@ -7,10 +7,6 @@
 
 add_action( 'wp_enqueue_scripts', '_wp_enqueue_scripts', 999 );
 
-/**
- * @return void
- * @throws JsonException
- */
 function _wp_enqueue_scripts(): void {
 	if ( ! class_exists( \HD_Asset::class ) || ! class_exists( \HD_Helper::class ) ) {
 		return;

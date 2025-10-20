@@ -318,7 +318,7 @@ final class Optimizer {
 
 		if ( $lazy_html !== $html ) {
 			$this->lazy_styles[] = str_replace(
-				"onload=\"this.rel='stylesheet'\"",
+				"onload=\"this.onload=null;this.rel='stylesheet'\"",
 				"data-handle='{$handle}' onload=\"this.rel='stylesheet'\"",
 				$lazy_html
 			);
