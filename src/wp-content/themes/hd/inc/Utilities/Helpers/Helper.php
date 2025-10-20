@@ -1121,7 +1121,7 @@ final class Helper {
 		$entry = self::normalizePath( $entry );
 
 		// --- Vendor JS ---
-		if ( $entry === 'vendor.js' ) {
+		if ( preg_match( '/^_?vendor(\..+)?\.js$/', $entry ) ) {
 			foreach ( $manifest as $k => $v ) {
 				if ( is_array( $v ) && preg_match( '/^_?vendor\..+\.js$/', $k ) ) {
 					$file = $v['file'] ?? '';
@@ -1141,7 +1141,7 @@ final class Helper {
 		}
 
 		// --- Vendor CSS ---
-		if ( $entry === 'vendor.css' ) {
+		if ( preg_match( '/^_?vendor(\..+)?\.css$/', $entry ) ) {
 			foreach ( $manifest as $k => $v ) {
 				if ( is_array( $v ) && preg_match( '/^_?vendor\..+\.css$/', $k ) ) {
 					$file = $v['file'] ?? '';
@@ -1157,7 +1157,7 @@ final class Helper {
 				}
 			}
 
-			// fallback (vendor.css generated from vendor.js)
+			// fallback
 			foreach ( $manifest as $k => $v ) {
 				if ( ! empty( $v['css'][0] ) && preg_match( '/^_?vendor\..+\.js$/', $k ) ) {
 					return $resolveCache[ $key ] = [
