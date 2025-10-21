@@ -390,6 +390,7 @@ final class Hook {
                         'extra_class' => 'flex flex-wrap justify-center gap-3 md:gap-6',
                         'link_class'  => 'flex gap-1 flex-row-reverse p-hover dark:hover:text-(--color-white)',
                 ] );
+
                 ?>
                 <p class="copyright lining-nums u-flex-center gap-2">
                     <?php echo apply_filters( 'hd_footer_credit_filter', $footer_credit ); ?>
@@ -416,7 +417,7 @@ final class Hook {
         if ( is_single() && $ID = get_the_ID() ) :
         ?>
         <script>
-            const run = async () => {
+            const track = async () => {
                 let postID = <?= $ID ?>;
                 const dateEl = document.querySelector('section.section-post .meta .date');
                 const viewsEl = document.querySelector('section.section-post .meta .views');
@@ -445,7 +446,7 @@ final class Hook {
                     } catch (err) {}
                 }
             }
-            document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', run, { once: true }) : run();
+            document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', track, { once: true }) : track();
         </script>
         <?php endif;
 

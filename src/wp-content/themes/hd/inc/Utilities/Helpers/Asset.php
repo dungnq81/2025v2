@@ -118,7 +118,7 @@ final class Asset {
 	// ----------------------------------------
 
 	/**
-	 * Preload CSS file (for critical CSS)
+	 * Preload CSS file (non-critical CSS)
 	 *
 	 * @param string|null $entry
 	 *
@@ -162,12 +162,7 @@ final class Asset {
 	 *
 	 * @return void
 	 */
-	public static function enqueueCSS(
-		?string $entry = null,
-		array $deps = [],
-		string|bool|null $ver = null,
-		string $media = 'all'
-	): void {
+	public static function enqueueCSS( ?string $entry = null, array $deps = [], string|bool|null $ver = null, string $media = 'all' ): void {
 		if ( empty( $entry ) ) {
 			return;
 		}
@@ -197,13 +192,7 @@ final class Asset {
 	 *
 	 * @return void
 	 */
-	public static function enqueueJS(
-		?string $entry = null,
-		array $deps = [],
-		string|bool|null $ver = null,
-		bool $in_footer = true,
-		array $extra = []
-	): void {
+	public static function enqueueJS( ?string $entry = null, array $deps = [], string|bool|null $ver = null, bool $in_footer = true, array $extra = [] ): void {
 		if ( empty( $entry ) ) {
 			return;
 		}
@@ -234,13 +223,7 @@ final class Asset {
 	 *
 	 * @return void
 	 */
-	public static function enqueueStyle(
-		string|array $handle,
-		string|bool|null $src = null,
-		array $deps = [],
-		string|bool|null $ver = null,
-		string $media = 'all'
-	): void {
+	public static function enqueueStyle( string|array $handle, string|bool|null $src = null, array $deps = [], string|bool|null $ver = null, string $media = 'all' ): void {
 		if ( is_array( $handle ) ) {
 			$args = wp_parse_args( $handle, [
 				'handle' => '',
@@ -284,14 +267,7 @@ final class Asset {
 	 *
 	 * @return void
 	 */
-	public static function enqueueScript(
-		string|array $handle,
-		string|bool|null $src = null,
-		array $deps = [],
-		string|bool|null $ver = null,
-		bool $in_footer = true,
-		array $extra = []
-	): void {
+	public static function enqueueScript( string|array $handle, string|bool|null $src = null, array $deps = [], string|bool|null $ver = null, bool $in_footer = true, array $extra = [] ): void {
 		if ( is_array( $handle ) ) {
 			$args = wp_parse_args( $handle, [
 				'handle'    => '',
@@ -352,17 +328,12 @@ final class Asset {
 	 *
 	 * @return void
 	 */
-	public static function localize(
-		string $handle,
-		string $object_name,
-		array|bool|null $l10n,
-		bool $as_inline_json = true
-	): void {
+	public static function localize( string $handle, string $object_name, array|bool|null $l10n, bool $as_inline_json = true ): void {
 		if ( empty( $object_name ) || empty( $l10n ) ) {
 			return;
 		}
 
-		if ( ! ( wp_script_is( $handle, 'registered' ) || wp_script_is( $handle, 'enqueued' ) ) ) {
+		if ( ! ( wp_script_is( $handle, 'registered' ) || wp_script_is( $handle ) ) ) {
 			return;
 		}
 
@@ -393,7 +364,7 @@ final class Asset {
 			return;
 		}
 
-		if ( wp_style_is( $handle, 'registered' ) || wp_style_is( $handle, 'enqueued' ) ) {
+		if ( wp_style_is( $handle, 'registered' ) || wp_style_is( $handle ) ) {
 			wp_add_inline_style( $handle, $css );
 		} else {
 			$fallback = 'inline-style-' . md5( $handle );
@@ -419,7 +390,7 @@ final class Asset {
 			return;
 		}
 
-		if ( wp_script_is( $handle, 'registered' ) || wp_script_is( $handle, 'enqueued' ) ) {
+		if ( wp_script_is( $handle, 'registered' ) || wp_script_is( $handle ) ) {
 			wp_add_inline_script( $handle, $code, $position );
 		} else {
 			$fallback = 'inline-script-' . md5( $handle );
