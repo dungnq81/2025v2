@@ -17,8 +17,8 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
         <p class="max-w-4xl mb-0 p-fs-clamp-[15,17] pt-4">
             Mở rộng cung cấp các dịch vụ chuyên sâu về Digital Marketing như: SEO web, Sáng tạo nội dung – hình ảnh, Facebook Ads, Google Ads, Hosting – Tên miền, đăng ký website với Bộ Công Thương…
         </p>
-        <div class="flex gap-24">
-            <div class="w-full lg:w-1/4 max-w-xl">
+        <div class="flex flex-row flex-wrap lg:flex-nowrap gap-10 xl:gap-24">
+            <div class="w-full lg:w-1/4 lg:max-w-xl">
                 <ul class="tabs flex flex-col gap-4 mt-15" data-tabs id="services-extra-tabs-<?=$id?>">
                     <li class="tabs-title is-active">
                         <a href="#seo" class="px-6 py-2 h-full flex items-center gap-4 c-light-button rounded-md hover:text-[#000] dark:hover:text-white" aria-selected="true" title="">
@@ -115,7 +115,7 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                                 </li>
                             </ul>
                         </p>
-                        <div class="thumb absolute aspect-1/1 rounded-[50%] c-light-button p-30 z-[-1] -right-3 lg:right-[4vw] bottom-3 opacity-[0.9]">
+                        <div class="thumb absolute aspect-1/1 rounded-[50%] c-light-button p-30 z-[-1] right-0 lg:right-[4vw] bottom-3 opacity-[0.9]">
                             <img class="block object-contain max-w-50" src="https://webhd.vn/wp-content/uploads/2023/11/Group-7284.png" alt="">
                         </div>
                     </div>

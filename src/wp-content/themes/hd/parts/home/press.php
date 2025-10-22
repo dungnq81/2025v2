@@ -17,13 +17,16 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 		<p class="max-w-3xl mb-9 p-fs-clamp-[15,17] text-center mx-auto pt-4">HD AGENCY tự hào về những điều đạt được trong thời gian qua</p>
 		<div class="swiper-container px-16">
 			<?php
-			$data = [
-				'loop'       => true,
-				'autoview'   => true,
-				'gap'        => true,
-				'navigation' => true,
-				'autoplay'   => true,
-			];
+            $data = [
+                    'loop'          => true,
+                    'navigation'    => true,
+                    'autoplay'      => true,
+                    'spaceBetween'  => 12,
+                    'slidesPerView' => 'auto',
+                    'sm'            => [
+                            'spaceBetween' => 24
+                    ]
+            ];
 
 			$swiper_data = wp_json_encode( $data, JSON_THROW_ON_ERROR | JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE );
 			if ( ! $swiper_data ) {
@@ -32,7 +35,7 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 
 			?>
 			<div class="w-full swiper w-swiper">
-				<div class="swiper-wrapper" data-options='<?= $swiper_data ?>'>
+				<div class="swiper-wrapper" data-swiper-options='<?= $swiper_data ?>'>
 					<div class="swiper-slide">
 						<a class="u-flex-center h-full p-8 c-light-button rounded-md" rel="nofollow" href="#" title="">
 							<img loading="lazy" width="300" height="44" src="https://webhd.vn/wp-content/uploads/2025/02/logo-baolongan_3_11zon.png" class="attachment-thumbnail size-thumbnail object-contain w-full h-full" alt="" decoding="async">

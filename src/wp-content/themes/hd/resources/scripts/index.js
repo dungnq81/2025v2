@@ -11,7 +11,7 @@ import { initMenu } from './utils/menu.js';
 import { stickyBar } from './utils/sticky-bar.js';
 import { setupCookieConsent } from './utils/cookie-consent.js';
 
-import './components/swiper.js';
+import { initSwiper } from './components/swiper.js';
 import { initSocialShare } from './components/social-share.js';
 
 import '../styles/tailwind/index.css';

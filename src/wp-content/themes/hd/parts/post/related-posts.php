@@ -34,16 +34,16 @@ if ( ! $query ) {
                                 'slidesPerView' => 3,
                                 'spaceBetween'  => 24,
                         ],
+                        'pagination'    => 'bullets'
                 ];
 
-                $data['pagination'] = 'bullets';
-                $swiper_data        = wp_json_encode( $data, JSON_THROW_ON_ERROR | JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE );
+                $swiper_data = wp_json_encode( $data, JSON_THROW_ON_ERROR | JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE );
                 if ( ! $swiper_data ) {
                     $swiper_data = '';
                 }
                 ?>
                 <div class="swiper w-swiper">
-                    <div class="swiper-wrapper" data-options='<?= $swiper_data ?>'>
+                    <div class="swiper-wrapper" data-swiper-options='<?= $swiper_data ?>'>
                         <?php
                         foreach ( $query as $post ) :
                             echo '<div class="swiper-slide">';

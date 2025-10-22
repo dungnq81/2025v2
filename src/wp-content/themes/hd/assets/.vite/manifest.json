@@ -1,13 +1,9 @@
 {
-  "_vendor.DWWNSi-0.css": {
-    "file": "css/vendor.DWWNSi-0.css",
-    "src": "_vendor.DWWNSi-0.css"
-  },
-  "_vendor.Deh3cXX7.js": {
-    "file": "js/vendor.Deh3cXX7.js",
+  "_vendor.C6-Jm0Ee.js": {
+    "file": "js/vendor.C6-Jm0Ee.js",
     "name": "vendor",
     "css": [
-      "css/vendor.DWWNSi-0.css"
+      "css/vendor.Da_sgjuv.css"
     ],
     "assets": [
       "fonts/SVN-Poppins-Light.woff2",
@@ -29,6 +25,10 @@
       "fonts/SVN-Poppins-BoldItalic.ttf",
       "fonts/SVN-Poppins-BoldItalic.otf"
     ]
+  },
+  "_vendor.Da_sgjuv.css": {
+    "file": "css/vendor.Da_sgjuv.css",
+    "src": "_vendor.Da_sgjuv.css"
   },
   "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/OTF/SVN-Poppins-Bold.otf": {
     "file": "fonts/SVN-Poppins-Bold.otf",
@@ -113,27 +113,27 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/components/preflight.js": {
-    "file": "js/preflight.Cjm_Zl56.js",
+    "file": "js/preflight.BWpPCEwt.js",
     "name": "preflight",
     "src": "src/wp-content/themes/hd/resources/scripts/components/preflight.js",
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/components/social-share.js": {
-    "file": "js/social-share.BXUKC22Z.js",
+    "file": "js/social-share.DM7VS03P.js",
     "name": "social-share",
     "src": "src/wp-content/themes/hd/resources/scripts/components/social-share.js",
     "isEntry": true,
     "imports": [
-      "_vendor.Deh3cXX7.js"
+      "_vendor.C6-Jm0Ee.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/swiper.js": {
-    "file": "js/swiper.1PTXi6t9.js",
+    "file": "js/swiper.D3gQGSz1.js",
     "name": "swiper",
     "src": "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
     "isEntry": true,
     "imports": [
-      "_vendor.Deh3cXX7.js"
+      "_vendor.C6-Jm0Ee.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/template/affordable.js": {
@@ -161,12 +161,12 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/index.js": {
-    "file": "js/index.DrfooNn_.js",
+    "file": "js/index.BvMqM6AK.js",
     "name": "index",
     "src": "src/wp-content/themes/hd/resources/scripts/index.js",
     "isEntry": true,
     "imports": [
-      "_vendor.Deh3cXX7.js",
+      "_vendor.C6-Jm0Ee.js",
       "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
       "src/wp-content/themes/hd/resources/scripts/components/social-share.js"
     ]
@@ -188,7 +188,7 @@
     ]
   },
   "src/wp-content/themes/hd/resources/styles/index.scss": {
-    "file": "css/index.C6WeTCAH.css",
+    "file": "css/index.O-Zh-mII.css",
     "src": "src/wp-content/themes/hd/resources/styles/index.scss",
     "isEntry": true,
     "names": [

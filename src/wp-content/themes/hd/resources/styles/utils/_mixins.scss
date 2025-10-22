@@ -195,66 +195,36 @@
 
 @mixin media-flexbox( $default: 1, $sm: false, $md: false, $lg: false, $xl: false, $xxl: false ) {
     @if $default != false {
-        @include flex-self($default, 1, map.get(vars.$gutters, gap));
+        @include flex-self($default, 1, map.get(vars.$gutters, xs));
     }
 
     @if $sm != false {
         @include mq-min(sm) {
-            @include flex-self($sm, 1, map.get(vars.$gutters, gap-sm));
+            @include flex-self($sm, 1, map.get(vars.$gutters, sm));
         }
     }
 
     @if $md != false {
         @include mq-min(md) {
-            @include flex-self($md, 1, map.get(vars.$gutters, gap-md));
+            @include flex-self($md, 1, map.get(vars.$gutters, md));
         }
     }
 
     @if $lg != false {
         @include mq-min(lg) {
-            @include flex-self($lg, 1, map.get(vars.$gutters, gap-lg));
+            @include flex-self($lg, 1, map.get(vars.$gutters, lg));
         }
     }
 
     @if $xl != false {
         @include mq-min(xl) {
-            @include flex-self($xl, 1, map.get(vars.$gutters, gap-xl));
+            @include flex-self($xl, 1, map.get(vars.$gutters, xl));
         }
     }
 
     @if $xxl != false {
         @include mq-min(xxl) {
-            @include flex-self($xxl, 1, map.get(vars.$gutters, gap-xxl));
-        }
-    }
-}
-
-@mixin container( $gutter: true, $xxl: vars.$xxl-container ) {
-    margin-inline: auto;
-
-    @if $gutter == true {
-        padding-inline: map.get(vars.$gutters, gap);
-    }
-
-    &:not(.full) {
-        max-width: map.get(vars.$mq-containers, sm);
-
-        @include mq-min(md) {
-            max-width: map.get(vars.$mq-containers, md);
-        }
-
-        @include mq-min(lg) {
-            max-width: map.get(vars.$mq-containers, lg);
-        }
-
-        @include mq-min(xl) {
-            max-width: map.get(vars.$mq-containers, xl);
-        }
-
-        @if $xxl == true {
-            @include mq-min(xxl) {
-                max-width: map.get(vars.$mq-containers, xxl);
-            }
+            @include flex-self($xxl, 1, map.get(vars.$gutters, xxl));
         }
     }
 }

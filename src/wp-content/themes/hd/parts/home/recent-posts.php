@@ -28,9 +28,12 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
             <div class="swiper-container">
                 <?php
                 $data = [
-                        'autoview' => true,
-                        'gap'      => true,
-                        'autoplay' => true,
+                        'autoplay'      => true,
+                        'spaceBetween'  => 12,
+                        'slidesPerView' => 'auto',
+                        'sm'            => [
+                                'spaceBetween' => 24
+                        ]
                 ];
 
                 if ( $loop ) { $data['loop'] = true; }
@@ -43,7 +46,7 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                 }
                 ?>
                 <div class="swiper w-swiper">
-                    <div class="swiper-wrapper" data-options='<?= $swiper_data ?>'>
+                    <div class="swiper-wrapper" data-swiper-options='<?= $swiper_data ?>'>
                         <?php
                         foreach ( $post_query as $post ) :
                             echo '<div class="swiper-slide">';

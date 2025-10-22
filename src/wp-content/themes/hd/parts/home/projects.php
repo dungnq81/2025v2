@@ -33,8 +33,8 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                         'slidesPerView' => 1,
                         'spaceBetween'  => 12,
                         'autoplay'      => true,
-                        'rows'          => 1,
-                        'sm'        => [
+                        'rows'          => 2,
+                        'sm'            => [
                                 'slidesPerView' => 2,
                                 'spaceBetween'  => 24,
                                 'grid'          => [
@@ -42,7 +42,7 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                                         'fill' => 'row',
                                 ],
                         ],
-                        'lg'       => [
+                        'lg'            => [
                                 'slidesPerView' => 2,
                                 'spaceBetween'  => 24,
                                 'grid'          => [
@@ -61,7 +61,7 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                 }
                 ?>
                 <div class="swiper w-swiper">
-                    <div class="swiper-wrapper" data-options='<?= $swiper_data ?>'>
+                    <div class="swiper-wrapper" data-swiper-options='<?= $swiper_data ?>'>
                         <?php
                         foreach ( $post_query as $post ) :
                             echo '<div class="swiper-slide">';

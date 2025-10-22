@@ -20104,8 +20104,8 @@ export {
   N,
   Pagination as P,
   SocialShare as S,
-  Swiper as a,
-  Navigation as b,
+  Navigation as a,
+  Swiper as b,
   nanoid as n
 };
-//# sourceMappingURL=vendor.Deh3cXX7.js.map
+//# sourceMappingURL=vendor.C6-Jm0Ee.js.map
