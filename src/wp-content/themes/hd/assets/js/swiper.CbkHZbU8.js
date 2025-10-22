@@ -1,4 +1,4 @@
-import { a as Navigation, P as Pagination, A as Autoplay, G as Grid, b as Swiper, n as nanoid } from "./vendor.C6-Jm0Ee.js";
+import { a as Navigation, P as Pagination, A as Autoplay, G as Grid, b as Swiper, n as nanoid } from "./vendor.CVR-BGCV.js";
 const defaultModules = [Navigation, Pagination, Autoplay, Grid];
 const defaultOptions = {
   grabCursor: true,
@@ -65,25 +65,32 @@ const initSwiper = (el) => {
   Object.assign(swiperOptions, {
     spaceBetween: parseInt(options.spaceBetween) || 0,
     slidesPerView: options.slidesPerView === "auto" ? "auto" : parseInt(options.slidesPerView) || 1,
-    loop: !!options.loop,
     speed: parseInt(options.speed) || 600,
     direction: options.direction || "horizontal",
-    observer: !!options.observer,
-    observeParents: !!options.observer,
+    loop: !!options.loop,
+    autoHeight: !!options.autoHeight,
+    freeMode: !!options.freeMode,
+    cssMode: !!options.cssMode,
     breakpoints: getBreakpoints(options)
   });
-  if (options.autoHeight) swiperOptions.autoHeight = true;
-  if (options.freeMode) swiperOptions.freeMode = true;
-  if (options.cssMode) swiperOptions.cssMode = true;
-  if (options.effect) swiperOptions.effect = options.effect;
+  if (options.effect) {
+    swiperOptions.effect = options.effect;
+    if (swiperOptions.effect === "fade") {
+      swiperOptions.fadeEffect = { crossFade: true };
+    }
+  }
+  if (options.observer) {
+    swiperOptions.observer = true;
+    swiperOptions.observeParents = true;
+  }
   if (options.centered) {
     swiperOptions.centeredSlides = true;
     swiperOptions.centeredSlidesBounds = true;
   }
   if (options.autoplay) {
     swiperOptions.autoplay = {
-      delay: parseInt(options.delay) || 4e3,
-      disableOnInteraction: false,
+      delay: parseInt(options.delay) || 6e3,
+      disableOnInteraction: true,
       reverseDirection: !!options.reverse
     };
   }
@@ -154,7 +161,7 @@ const initSwiper = (el) => {
     };
   }
   const swiper = new Swiper(`.${classes.swiper}`, swiperOptions);
-  if (swiper.params.autoplay) {
+  if (swiperOptions.autoplay) {
     el.addEventListener("mouseenter", () => swiper.autoplay?.stop());
     el.addEventListener("mouseleave", () => swiper.autoplay?.start());
   }
@@ -164,4 +171,4 @@ const initAllSwipers = () => {
   document.querySelectorAll(".w-swiper").forEach(initSwiper);
 };
 document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", initAllSwipers, { once: true }) : initAllSwipers();
-//# sourceMappingURL=swiper.D3gQGSz1.js.map
+//# sourceMappingURL=swiper.CbkHZbU8.js.map

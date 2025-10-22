@@ -28,9 +28,9 @@
     .swiper {
         .swiper-slide {
             height: auto;
-            @include mixin.flex-self(1, 1, 12);
+            @include mixin.flex-self(1.2, 1, 12);
 
-            @include mixin.mq-min(md) {
+            @include mixin.mq-min(sm) {
                 @include mixin.flex-self(2, 1, 24);
             }
         }
@@ -41,7 +41,11 @@
     .swiper {
         .swiper-slide {
             height: auto;
-            @include mixin.flex-self(2, 1, 12);
+            @include mixin.flex-self(1.2, 1, 12);
+
+            @include mixin.mq-min(sm) {
+                @include mixin.flex-self(2, 1, 24);
+            }
 
             @include mixin.mq-min(md) {
                 @include mixin.flex-self(3, 1, 24);
@@ -50,11 +54,11 @@
     }
 
     .swiper-controls {
-        .swiper-pagination {
-            .swiper-pagination-bullet {
-                background-color: var(--text-color);
-            }
-        }
+        //.swiper-pagination {
+        //    .swiper-pagination-bullet {
+        //        background-color: var(--text-color);
+        //    }
+        //}
 
         .swiper-button {
             background-color: #fefefe;
@@ -62,9 +66,12 @@
             box-shadow: inset 0 0 12px #0000000d;
             border-radius: var(--radius-md);
             color: var(--text-color);
-
             @include mixin.flex-center;
             @include mixin.box(44);
+
+            @include mixin.mq-max(sm) {
+                display: none;
+            }
 
             svg {
                 @include mixin.box(24);

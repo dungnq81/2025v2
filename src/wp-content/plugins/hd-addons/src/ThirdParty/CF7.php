@@ -16,6 +16,21 @@ final class CF7 {
 		add_filter( 'wpcf7_autop_or_not', '__return_false' ); // remove <p> and <br> contact-form-7 plugin
 		add_filter( 'wpcf7_verify_nonce', '__return_true' ); // form CSRF
 		add_filter( 'wpcf7_form_tag', [ $this, 'dynamic_select_terms' ], 10, 1 ); // dynamic taxonomy select
+		add_filter( 'wpcf7_form_elements', [ $this, 'inputmode' ], 10, 1 ); // inputmode
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param $content
+	 *
+	 * @return array|string|null
+	 */
+	public function inputmode( $content ): array|string|null {
+		$content = preg_replace( '/(<input[^>]+type="tel"[^>]+)>/i', '$1 inputmode="numeric">', $content );
+		$content = preg_replace( '/(<input[^>]+type="email"[^>]+)>/i', '$1 inputmode="email">', $content );
+
+		return preg_replace( '/(<input[^>]+type="url"[^>]+)>/i', '$1 inputmode="url">', $content );
 	}
 
 	// --------------------------------------------------
@@ -65,7 +80,7 @@ final class CF7 {
 			'hide_empty'   => false,
 			'hierarchical' => 1,
 		] );
-		
+
 		$terms = \get_terms( $term_args );
 
 		// Add terms to values

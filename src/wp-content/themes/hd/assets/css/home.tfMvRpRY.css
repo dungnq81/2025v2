@@ -28,9 +28,9 @@
   height: auto;
 }
 .section.section-feedback .swiper .swiper-slide {
-  width: 100%;
+  width: calc(83.3333333333% - 0.125rem);
 }
-@media only screen and (min-width: 48rem) {
+@media only screen and (min-width: 40rem) {
   .section.section-feedback .swiper .swiper-slide {
     width: calc(50% - 0.75rem);
   }
@@ -40,15 +40,17 @@
   height: auto;
 }
 .section.section-press .swiper .swiper-slide {
-  width: calc(50% - 0.375rem);
+  width: calc(83.3333333333% - 0.125rem);
+}
+@media only screen and (min-width: 40rem) {
+  .section.section-press .swiper .swiper-slide {
+    width: calc(50% - 0.75rem);
+  }
 }
 @media only screen and (min-width: 48rem) {
   .section.section-press .swiper .swiper-slide {
     width: calc(33.3333333333% - 1rem);
   }
-}
-.section.section-press .swiper-controls .swiper-pagination .swiper-pagination-bullet {
-  background-color: var(--text-color);
 }
 .section.section-press .swiper-controls .swiper-button {
   background-color: #fefefe;
@@ -65,6 +67,11 @@
 .section.section-press .swiper-controls .swiper-button {
   width: 2.75rem;
   height: 2.75rem;
+}
+@media only screen and (max-width: 39.99875rem) {
+  .section.section-press .swiper-controls .swiper-button {
+    display: none;
+  }
 }
 .section.section-press .swiper-controls .swiper-button svg {
   width: 1.5rem;

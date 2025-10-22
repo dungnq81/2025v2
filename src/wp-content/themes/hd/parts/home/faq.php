@@ -43,18 +43,18 @@ if ( empty( $faqs ) ) {
 }
 
 ?>
-<section id="section-<?= $id ?>" class="section section-faq py-20">
+<section id="section-<?= $id ?>" class="section section-faq py-10 lg:py-20">
 	<div class="u-container">
-		<h2 class="font-bold text-center">Câu hỏi thường gặp</h2>
-		<p class="max-w-4xl mb-0 p-fs-clamp-[15,17] text-center mx-auto pt-4">
+		<h2 class="font-bold sm:text-center">Câu hỏi thường gặp</h2>
+		<p class="max-w-4xl mb-0 p-fs-clamp-[15,17] sm:text-center text-balance mx-auto pt-4">
 			Chúng tôi hỗ trợ bạn 24/7. Hãy liên lạc với chúng tôi theo số <a class="font-medium" href="tel:0938002776" title="0938 002 776">0938 002 776</a>
 		</p>
-		<a class="text-center font-medium text-sm pt-6 relative left-[50%] translate-x-[-50%] inline-flex items-center gap-2 text-1" href="https://zalo.me/0938002776" target="_blank">
+		<a class="sm:text-center font-medium text-sm pt-6 relative sm:left-[50%] sm:translate-x-[-50%] inline-flex items-center gap-2 text-1" href="https://zalo.me/0938002776" target="_blank">
 			<svg class="w-5 h-5" aria-hidden="true"><use href="#icon-question-circle-outline"></use></svg>
             Đặt câu hỏi của bạn
 			<svg class="w-5 h-5" aria-hidden="true"><use href="#icon-arrow-right-outline"></use></svg>
 		</a>
-		<ul class="accordion accordion-faq max-w-4xl mx-auto pt-10" data-accordion data-multi-expand="true" data-allow-all-closed="true">
+		<ul class="accordion accordion-faq max-w-4xl mx-auto pt-4 sm:pt-10" data-accordion data-multi-expand="true" data-allow-all-closed="true">
             <?php foreach ( $faqs as $faq ) :
                 $question = trim( $faq['question'] ?? '' );
                 $answer   = trim( $faq['answer'] ?? '' );
@@ -62,7 +62,7 @@ if ( empty( $faqs ) ) {
                     continue;
                 }
             ?>
-            <li class="accordion-item py-4 px-6 my-3 rounded-md" data-accordion-item>
+            <li class="accordion-item py-4 md:px-6 md:my-3 rounded-md" data-accordion-item>
 				<a href="#" class="accordion-title relative p-fs-clamp-[16,18] flex font-bold pr-8" aria-label="<?= esc_attr( $question ) ?>">
                     <?= esc_html( $question ) ?>
 					<svg class="w-6 h-6 minus absolute" aria-hidden="true"><use href="#icon-circle-minus-outline"></use></svg>

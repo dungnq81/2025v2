@@ -39,10 +39,11 @@ final class Addons {
 		}
 
 		// Load modules from YAML config
-		$modules = wp_cache_get( 'addons_module' );
+		$key     = 'hd-addons_module_' . md5( 'addons_module' );
+		$modules = get_transient( $key );
 		if ( ! $modules ) {
 			$modules = Helper::loadYaml( ADDONS_PATH . 'config.yaml' ) ?: [];
-			wp_cache_set( 'addons_module', $modules, '', 12 * HOUR_IN_SECONDS );
+			set_transient( $key, $modules, 12 * HOUR_IN_SECONDS );
 		}
 
 		foreach ( $modules as $slug => $enabled ) {

@@ -387,12 +387,12 @@ final class Hook {
                 echo \HD_Helper::doShortcode( 'horizontal_menu', [
                         'location'    => 'policy-nav',
                         'depth'       => 1,
-                        'extra_class' => 'flex flex-wrap justify-center gap-3 md:gap-6',
+                        'extra_class' => 'flex flex-wrap justify-center gap-x-3 md:gap-x-6',
                         'link_class'  => 'flex gap-1 flex-row-reverse p-hover dark:hover:text-(--color-white)',
                 ] );
 
                 ?>
-                <p class="copyright lining-nums u-flex-center gap-2">
+                <p class="copyright lining-nums u-flex-center flex-wrap gap-2">
                     <?php echo apply_filters( 'hd_footer_credit_filter', $footer_credit ); ?>
                     <a href="//www.dmca.com/Protection/Status.aspx?ID=23298db8-074d-41f7-abe1-c8dfd6eff269" title="DMCA.com Protection Status" class="dmca dmca-badge" target="_blank"> <img src ="https://images.dmca.com/Badges/dmca-badge-w100-5x1-05.png?ID=23298db8-074d-41f7-abe1-c8dfd6eff269"  alt="DMCA.com Protection Status" /></a>
                 </p>

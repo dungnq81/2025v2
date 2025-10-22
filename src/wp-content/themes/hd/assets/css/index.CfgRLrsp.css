@@ -453,10 +453,12 @@
 .accordion .accordion-item.is-active .accordion-title svg.plus {
   display: none;
 }
-.accordion .accordion-item.is-active, .accordion .accordion-item:hover {
-  background-color: #fefefe;
-  border: 1px solid rgba(0, 0, 0, 0.0784313725);
-  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.0509803922);
+@media only screen and (min-width: 48rem) {
+  .accordion .accordion-item.is-active, .accordion .accordion-item:hover {
+    background-color: #fefefe;
+    border: 1px solid rgba(0, 0, 0, 0.0784313725);
+    box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.0509803922);
+  }
 }
 .accordion .accordion-item.is-active .accordion-title svg, .accordion .accordion-item:hover .accordion-title svg {
   color: var(--text-color-1);
@@ -817,10 +819,12 @@
 :where(.dark, .dark *) .dropdown.menu > li.menu-mega.col-3 > ul.submenu::after {
   background-color: rgba(255, 255, 255, 0.09);
 }
-:where(.dark, .dark *) .accordion .accordion-item.is-active, :where(.dark, .dark *) .accordion .accordion-item:hover {
-  background-color: #1d1d1d;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.04);
+@media only screen and (min-width: 48rem) {
+  :where(.dark, .dark *) .accordion .accordion-item.is-active, :where(.dark, .dark *) .accordion .accordion-item:hover {
+    background-color: #1d1d1d;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.04);
+  }
 }
 :where(.dark, .dark *) .menu.social-menu > li > a {
   color: #fff;

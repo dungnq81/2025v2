@@ -12,14 +12,14 @@ $id               = $args['id'] ?? 0;
 $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 
 ?>
-<section id="section-<?= $id ?>" class="section section-services py-20">
+<section id="section-<?= $id ?>" class="section section-services py-10 lg:py-20">
 	<div class="u-container">
-		<h2 class="font-bold text-center">Dịch vụ của chúng tôi</h2>
-		<p class="max-w-3xl mb-0 p-fs-clamp-[15,17] text-center mx-auto pt-4">
+		<h2 class="font-bold sm:text-center">Dịch vụ của chúng tôi</h2>
+		<p class="max-w-3xl mb-0 p-fs-clamp-[15,17] sm:text-center mx-auto pt-4">
 			XÂY DỰNG WEBSITE <strong class="text-1">CHUYÊN NGHIỆP</strong> & ĐƯA RA CÁC GIẢI PHÁP CHUYÊN SÂU VỀ LĨNH VỰC <strong class="text-1">DIGITAL MARKETING</strong>
-			<i class="block text-sm text-center mt-3">Thiết kế WEBSITE, SEO, Sáng tạo nội dung website & Fanpage, Google Ads, Facebook Ads …</i>
+			<i class="block text-sm sm:text-center text-balance mt-3">Thiết kế WEBSITE, SEO, Sáng tạo nội dung website & Fanpage, Google Ads, Facebook Ads …</i>
 		</p>
-		<ul class="tabs flex flex-nowrap pb-3 lg:pb-0 lg:justify-center gap-4 mt-16 xl:px-20 lg:mb-8 lg:gap-8 snap-x snap-mandatory overflow-x-auto" data-tabs id="services-tabs-<?=$id?>">
+		<ul class="tabs flex flex-row flex-nowrap pb-3 lg:pb-0 lg:justify-center gap-4 mt-16 xl:px-20 lg:mb-8 lg:gap-8 snap-x snap-mandatory overflow-x-auto" data-tabs id="services-tabs-<?=$id?>">
 			<li class="tabs-title snap-start is-active">
                 <a class="p-6 h-full flex items-center gap-4 c-light-button c-hover rounded-md hover:text-[#000] dark:hover:text-white" href="#thiet-ke-website" aria-selected="true" title="Thiết kế website">
                     <svg class="w-10 h-10 relative" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 13.74a2 2 0 0 1-2 0L2.5 8.87a1 1 0 0 1 0-1.74L11 2.26a2 2 0 0 1 2 0l8.5 4.87a1 1 0 0 1 0 1.74z"/><path d="m20 14.285 1.5.845a1 1 0 0 1 0 1.74L13 21.74a2 2 0 0 1-2 0l-8.5-4.87a1 1 0 0 1 0-1.74l1.5-.845"/></svg>

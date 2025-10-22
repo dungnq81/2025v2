@@ -12,15 +12,15 @@ $title            = ! empty( $args['title'] ) ? $args['title'] : '';
 $limit            = ! empty( $args['limit'] ) ? (int) $args['limit'] : 0;
 $categories       = ! empty( $args['categories'] ) ? (array) $args['categories'] : [];
 $view_more_button = ! empty( $args['view_more_button'] ) ? $args['view_more_button'] : [];
-$post_query       = \HD_Helper::queryByTerms( $categories, 'post', 'category', $limit, false );
 $loop             = $args['loop'] ?? false;
 $pagination       = $args['pagination'] ?? false;
 $navigation       = $args['navigation'] ?? false;
 $id               = $args['id'] ?? 0;
 $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
+$post_query       = \HD_Helper::queryByTerms( $categories, 'post', 'category', $limit, false );
 
 ?>
-<section id="section-<?= $id ?>" class="section section-recent-posts py-20">
+<section id="section-<?= $id ?>" class="section section-recent-posts py-10 lg:py-20">
     <div class="u-container closest-swiper">
         <?= $title ? '<h2 class="font-bold">' . $title . '</h2>' : '' ?>
         <?php if ( $post_query ) : ?>

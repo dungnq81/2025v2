@@ -12,14 +12,14 @@ $title            = ! empty( $args['title'] ) ? $args['title'] : '';
 $desc             = ! empty( $args['desc'] ) ? $args['desc'] : '';
 $max_number       = ! empty( $args['max_number'] ) ? (int) $args['max_number'] : 4;
 $view_more_button = ! empty( $args['view_more_button'] ) ? $args['view_more_button'] : [];
-$post_query       = \HD_Helper::queryByLatestPosts( 'du-an', $max_number, false );
 $pagination       = $args['pagination'] ?? false;
 $navigation       = $args['navigation'] ?? false;
 $id               = $args['id'] ?? 0;
 $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
+$post_query       = \HD_Helper::queryByLatestPosts( 'du-an', $max_number, false );
 
 ?>
-<section id="section-<?= $id ?>" class="section section-projects c-light-bg py-20">
+<section id="section-<?= $id ?>" class="section section-projects c-light-bg py-10 lg:py-20">
     <div class="u-container closest-swiper">
 
         <?= $title ? '<h2 class="font-bold">' . $title . '</h2>' : '' ?>

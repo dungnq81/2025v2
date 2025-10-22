@@ -2,7 +2,6 @@
 
 ( () => {
     const run = async () => {
-        // update rel
         document.querySelectorAll('a._blank, a.blank, a[target="_blank"]').forEach((el) => {
             if (!el.hasAttribute('target') || el.getAttribute('target') !== '_blank') {
                 el.setAttribute('target', '_blank');

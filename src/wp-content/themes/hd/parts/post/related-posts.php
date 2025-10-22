@@ -8,8 +8,8 @@ $post_id   = $args['id'] ?? 0;
 $taxonomy  = $args['taxonomy'] ?? 'category';
 $max       = $args['max'] ?? 6;
 $rows      = $args['rows'] ?? 1;
+$query     = \HD_Helper::queryByRelated( $post_id, $taxonomy, $max, false );
 
-$query = \HD_Helper::queryByRelated( $post_id, $taxonomy, $max, false );
 if ( ! $query ) {
     return;
 }

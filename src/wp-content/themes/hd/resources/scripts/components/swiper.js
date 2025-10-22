@@ -41,7 +41,7 @@ const parseOptions = (el) => {
     }
 };
 
-// get controls
+// controls
 const getSwiperControls = (el) => {
     const wrapper = el.closest('.closest-swiper') || el.parentElement;
     const existing = wrapper?.querySelector('.swiper-controls');
@@ -89,19 +89,30 @@ const initSwiper = (el) => {
     Object.assign(swiperOptions, {
         spaceBetween: parseInt(options.spaceBetween) || 0,
         slidesPerView: options.slidesPerView === 'auto' ? 'auto' : parseInt(options.slidesPerView) || 1,
-        loop: !!options.loop,
         speed: parseInt(options.speed) || 600,
         direction: options.direction || 'horizontal',
-        observer: !!options.observer,
-        observeParents: !!options.observer,
+        loop: !!options.loop,
+        autoHeight: !!options.autoHeight,
+        freeMode: !!options.freeMode,
+        cssMode: !!options.cssMode,
         breakpoints: getBreakpoints(options),
     });
 
-    if (options.autoHeight) swiperOptions.autoHeight = true;
-    if (options.freeMode) swiperOptions.freeMode = true;
-    if (options.cssMode) swiperOptions.cssMode = true;
-    if (options.effect) swiperOptions.effect = options.effect;
+    // effect (custom)
+    if (options.effect) {
+        swiperOptions.effect = options.effect;
+        if (swiperOptions.effect === 'fade') {
+            swiperOptions.fadeEffect = { crossFade: !0 };
+        }
+    }
 
+    // observer (custom)
+    if (options.observer) {
+        swiperOptions.observer = true;
+        swiperOptions.observeParents = true;
+    }
+
+    // centered (custom)
     if (options.centered) {
         swiperOptions.centeredSlides = true;
         swiperOptions.centeredSlidesBounds = true;
@@ -110,20 +121,20 @@ const initSwiper = (el) => {
     // Autoplay
     if (options.autoplay) {
         swiperOptions.autoplay = {
-            delay: parseInt(options.delay) || 4000,
-            disableOnInteraction: false,
+            delay: parseInt(options.delay) || 6000,
+            disableOnInteraction: true,
             reverseDirection: !!options.reverse,
         };
     }
 
-    // Marquee
+    // Marquee (custom)
     if (options.marquee) {
         swiperOptions.loop = true;
         swiperOptions.speed = options.speed || 6000;
         swiperOptions.autoplay = { delay: 1, disableOnInteraction: true };
     }
 
-    // Grid (rows)
+    // Rows (custom)
     if (options.rows) {
         swiperOptions.grid = {
             rows: parseInt(options.rows),
@@ -133,7 +144,7 @@ const initSwiper = (el) => {
 
     const controls = getSwiperControls(el);
 
-    // Navigation
+    // Navigation (custom)
     if (options.navigation) {
         let btnPrev = controls?.querySelector('.swiper-button-prev');
         let btnNext = controls?.querySelector('.swiper-button-next');
@@ -157,7 +168,7 @@ const initSwiper = (el) => {
         };
     }
 
-    // Pagination
+    // Pagination (custom)
     if (options.pagination) {
         let pagination = controls?.querySelector('.swiper-pagination');
         if (pagination) {
@@ -179,7 +190,7 @@ const initSwiper = (el) => {
         };
     }
 
-    // Scrollbar
+    // Scrollbar (custom)
     if (options.scrollbar) {
         let scrollbar = controls?.querySelector('.swiper-scrollbar');
         if (scrollbar) {
@@ -200,8 +211,8 @@ const initSwiper = (el) => {
     // Initialize
     const swiper = new Swiper(`.${classes.swiper}`, swiperOptions);
 
-    // Hover pause
-    if (swiper.params.autoplay) {
+    // Autoplay (hover)
+    if (swiperOptions.autoplay) {
         el.addEventListener('mouseenter', () => swiper.autoplay?.stop());
         el.addEventListener('mouseleave', () => swiper.autoplay?.start());
     }

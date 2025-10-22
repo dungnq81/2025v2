@@ -568,9 +568,11 @@
         }
 
         &.is-active, &:hover {
-            background-color: #fefefe;
-            border: 1px solid #00000014;
-            box-shadow: inset 0 0 12px #0000000d;
+            @include mixin.mq-min(md) {
+                background-color: #fefefe;
+                border: 1px solid #00000014;
+                box-shadow: inset 0 0 12px #0000000d;
+            }
 
             .accordion-title {
                 svg {
@@ -941,9 +943,11 @@
     .accordion {
         .accordion-item {
             &.is-active, &:hover {
-                background-color: #1d1d1d;
-                border: 1px solid rgba(255, 255, 255, 0.06);
-                box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.04);
+                @include mixin.mq-min(md) {
+                    background-color: #1d1d1d;
+                    border: 1px solid rgba(255, 255, 255, 0.06);
+                    box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.04);
+                }
             }
         }
     }

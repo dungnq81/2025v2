@@ -8,4 +8,12 @@
     .u-container {
         @apply container px-3 mx-auto;
     }
+
+    .u-scrollbar-none {
+        scrollbar-width: none;
+    }
+
+    .u-scrollbar-thin {
+        scrollbar-width: thin;
+    }
 }

@@ -11,15 +11,16 @@ $id = $args['id'] ?? 0;
 $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 
 ?>
-<section id="section-<?= $id ?>" class="section section-press py-20">
+<section id="section-<?= $id ?>" class="section section-press py-10 lg:py-20">
 	<div class="u-container closest-swiper">
-		<h2 class="font-bold text-center">Báo chí nói gì về <span class="hover:text-1 c-hover">HD</span> <span class="hover:text-2 c-hover">AGENCY</span></h2>
-		<p class="max-w-3xl mb-9 p-fs-clamp-[15,17] text-center mx-auto pt-4">HD AGENCY tự hào về những điều đạt được trong thời gian qua</p>
-		<div class="swiper-container px-16">
+		<h2 class="font-bold sm:text-center">Báo chí nói gì về <span class="hover:text-1 c-hover">HD</span> <span class="hover:text-2 c-hover">AGENCY</span></h2>
+		<p class="max-w-3xl mb-9 p-fs-clamp-[15,17] sm:text-center mx-auto pt-4">HD AGENCY tự hào về những điều đạt được trong thời gian qua</p>
+		<div class="swiper-container sm:px-16">
 			<?php
             $data = [
                     'loop'          => true,
                     'navigation'    => true,
+                    'pagination'    => 'bullets',
                     'autoplay'      => true,
                     'spaceBetween'  => 12,
                     'slidesPerView' => 'auto',
@@ -32,7 +33,6 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 			if ( ! $swiper_data ) {
 				$swiper_data = '';
 			}
-
 			?>
 			<div class="w-full swiper w-swiper">
 				<div class="swiper-wrapper" data-swiper-options='<?= $swiper_data ?>'>

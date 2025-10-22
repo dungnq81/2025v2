@@ -945,7 +945,7 @@ trait Wp {
 
 		// If rand
 		if ( ! $is_rand ) {
-			$ids = wp_cache_get( $ckey, 'qbt' );
+			$ids = get_transient( $ckey );
 		}
 
 		if ( $ids === false ) {
@@ -1011,7 +1011,7 @@ trait Wp {
 			}
 
 			if ( ! $is_rand ) {
-				wp_cache_set( $ckey, $ids, 'qbt', $cache_expire );
+				set_transient( $ckey, $ids, $cache_expire );
 			}
 		}
 
@@ -1117,7 +1117,7 @@ trait Wp {
 
 		// If rand
 		if ( ! $is_rand ) {
-			$ids = wp_cache_get( $ckey, 'qbt' );
+			$ids = get_transient( $ckey );
 		}
 
 		if ( $ids === false ) {
@@ -1174,7 +1174,7 @@ trait Wp {
 			}
 
 			if ( ! $is_rand ) {
-				wp_cache_set( $ckey, $ids, 'qbt', $cache_expire );
+				set_transient( $ckey, $ids, $cache_expire );
 			}
 		}
 
@@ -1241,7 +1241,7 @@ trait Wp {
 		$ckey_parts = [ 'latest', $post_type, $posts_per_page, (int) $since_ts ];
 		$ckey       = 'qbt:latest:' . md5( wp_json_encode( $ckey_parts ) );
 
-		$ids = wp_cache_get( $ckey, 'qbt' );
+		$ids = get_transient( $ckey );
 		if ( $ids === false ) {
 			if ( $is_product && $since_ts === false ) {
 				$wc_args = [
@@ -1292,7 +1292,7 @@ trait Wp {
 				$ids = $q->posts ?: [];
 			}
 
-			wp_cache_set( $ckey, $ids, 'qbt', $cache_expire );
+			set_transient( $ckey, $ids, $cache_expire );
 		}
 
 		if ( empty( $ids ) ) {

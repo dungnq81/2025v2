@@ -1,9 +1,9 @@
 {
-  "_vendor.C6-Jm0Ee.js": {
-    "file": "js/vendor.C6-Jm0Ee.js",
+  "_vendor.CVR-BGCV.js": {
+    "file": "js/vendor.CVR-BGCV.js",
     "name": "vendor",
     "css": [
-      "css/vendor.Da_sgjuv.css"
+      "css/vendor.JsEPagNW.css"
     ],
     "assets": [
       "fonts/SVN-Poppins-Light.woff2",
@@ -26,9 +26,9 @@
       "fonts/SVN-Poppins-BoldItalic.otf"
     ]
   },
-  "_vendor.Da_sgjuv.css": {
-    "file": "css/vendor.Da_sgjuv.css",
-    "src": "_vendor.Da_sgjuv.css"
+  "_vendor.JsEPagNW.css": {
+    "file": "css/vendor.JsEPagNW.css",
+    "src": "_vendor.JsEPagNW.css"
   },
   "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/OTF/SVN-Poppins-Bold.otf": {
     "file": "fonts/SVN-Poppins-Bold.otf",
@@ -119,21 +119,21 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/components/social-share.js": {
-    "file": "js/social-share.DM7VS03P.js",
+    "file": "js/social-share.DMzevdhU.js",
     "name": "social-share",
     "src": "src/wp-content/themes/hd/resources/scripts/components/social-share.js",
     "isEntry": true,
     "imports": [
-      "_vendor.C6-Jm0Ee.js"
+      "_vendor.CVR-BGCV.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/swiper.js": {
-    "file": "js/swiper.D3gQGSz1.js",
+    "file": "js/swiper.CbkHZbU8.js",
     "name": "swiper",
     "src": "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
     "isEntry": true,
     "imports": [
-      "_vendor.C6-Jm0Ee.js"
+      "_vendor.CVR-BGCV.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/template/affordable.js": {
@@ -161,12 +161,12 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/index.js": {
-    "file": "js/index.BvMqM6AK.js",
+    "file": "js/index.0VZ2JXCv.js",
     "name": "index",
     "src": "src/wp-content/themes/hd/resources/scripts/index.js",
     "isEntry": true,
     "imports": [
-      "_vendor.C6-Jm0Ee.js",
+      "_vendor.CVR-BGCV.js",
       "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
       "src/wp-content/themes/hd/resources/scripts/components/social-share.js"
     ]
@@ -188,7 +188,7 @@
     ]
   },
   "src/wp-content/themes/hd/resources/styles/index.scss": {
-    "file": "css/index.O-Zh-mII.css",
+    "file": "css/index.CfgRLrsp.css",
     "src": "src/wp-content/themes/hd/resources/styles/index.scss",
     "isEntry": true,
     "names": [
@@ -212,7 +212,7 @@
     ]
   },
   "src/wp-content/themes/hd/resources/styles/partials/template/home.scss": {
-    "file": "css/home.BQLYeuEX.css",
+    "file": "css/home.tfMvRpRY.css",
     "src": "src/wp-content/themes/hd/resources/styles/partials/template/home.scss",
     "isEntry": true,
     "names": [
