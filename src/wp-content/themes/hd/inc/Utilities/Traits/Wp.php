@@ -1779,8 +1779,8 @@ trait Wp {
 		}
 
 		if ( $wrapper_open && $wrapper_close ) {
-			$svg = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M6 5a2 2 0 0 1 2-2h4.157a2 2 0 0 1 1.656.879L15.249 6H19a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2v-5a3 3 0 0 0-3-3h-3.22l-1.14-1.682A3 3 0 0 0 9.157 6H6z"/><path d="M3 9a2 2 0 0 1 2-2h4.157a2 2 0 0 1 1.656.879L12.249 10H3zm0 3v7a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-7z"/></g></svg>';
-			$svg .= '<span class="sr-only">' . __( 'Danh mục', TEXT_DOMAIN ) . '</span>';
+			$svg  = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M6 5a2 2 0 0 1 2-2h4.157a2 2 0 0 1 1.656.879L15.249 6H19a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2v-5a3 3 0 0 0-3-3h-3.22l-1.14-1.682A3 3 0 0 0 9.157 6H6z"/><path d="M3 9a2 2 0 0 1 2-2h4.157a2 2 0 0 1 1.656.879L12.249 10H3zm0 3v7a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-7z"/></g></svg>';
+			$svg  .= '<span class="sr-only">' . __( 'Danh mục', TEXT_DOMAIN ) . '</span>';
 			$link = $wrapper_open . $svg . $link . $wrapper_close;
 		}
 
@@ -2129,9 +2129,7 @@ trait Wp {
 			$html .= '<source srcset="' . self::attachmentImageSrc( $attachment_mobile_id ?: $attachment_id, 'medium' ) . '" media="(min-width: 480px)">';
 		}
 
-		$html .= self::iconImageHTML( $attachment_mobile_id ?: $attachment_id, 'thumbnail', [ 'class'   => 'lazy',
-		                                                                                      'loading' => 'lazy'
-		], false );
+		$html .= self::iconImageHTML( $attachment_mobile_id ?: $attachment_id, 'thumbnail', [ 'class' => 'lazy', 'loading' => 'lazy' ], false );
 		$html .= '</picture>';
 
 		return $filter ? apply_filters( 'hd_picture_html_filter', $html, $class, $attachment_id, $attachment_mobile_id ) : $html;
