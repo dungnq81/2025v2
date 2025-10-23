@@ -287,11 +287,6 @@ final class Optimizer {
 			}
 		}
 
-		// Fontawesome kit
-		if ( ( 'fontawesome-kit' === $handle ) && ! preg_match( '#\scrossorigin([=>\s])#', $tag ) ) {
-			$tag = preg_replace( '#(?=></script>)#', " crossorigin='anonymous'", $tag, 1 );
-		}
-
 		// Add script handles to the array
 		$str_parsed = \HD_Helper::filterSettingOptions( 'defer_script', [] );
 

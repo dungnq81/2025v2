@@ -2,14 +2,25 @@
 
 import { nanoid } from 'nanoid';
 import Swiper from 'swiper';
-import { Navigation, Pagination, Autoplay, Grid } from 'swiper/modules';
+import {
+    Navigation,
+    Pagination,
+    Autoplay,
+    Grid
+} from 'swiper/modules';
 
-const defaultModules = [ Navigation, Pagination, Autoplay, Grid ];
+const defaultModules = [
+    Navigation,
+    Pagination,
+    Autoplay,
+    Grid
+];
 
 // Default Swiper options
 const defaultOptions = {
     grabCursor: true,
     allowTouchMove: true,
+    watchSlidesProgress: true,
     threshold: 5,
     wrapperClass: 'swiper-wrapper',
     slideClass: 'swiper-slide',
@@ -26,6 +37,7 @@ const generateClasses = () => {
         prev: `swiper-prev-${id}`,
         pagination: `swiper-pagination-${id}`,
         scrollbar: `swiper-scrollbar-${id}`,
+        progress: `swiper-autoplay-progress-${id}`,
     };
 };
 
@@ -85,13 +97,27 @@ const initSwiper = (el) => {
         return;
     }
 
+    // thumbs (custom)
+    let thumbsSwiper = null;
+    if (options.thumbs) {
+        const thumbsSelector = options.thumbs;
+        const thumbsEl = document.querySelector(thumbsSelector);
+        if (thumbsEl && !thumbsEl.__swiper_inited) {
+            thumbsSwiper = initSwiper(thumbsEl);
+        } else if (thumbsEl && thumbsEl.swiper) {
+            thumbsSwiper = thumbsEl.swiper;
+        }
+    }
+
     // Base settings
     Object.assign(swiperOptions, {
         spaceBetween: parseInt(options.spaceBetween) || 0,
         slidesPerView: options.slidesPerView === 'auto' ? 'auto' : parseInt(options.slidesPerView) || 1,
         speed: parseInt(options.speed) || 600,
         direction: options.direction || 'horizontal',
+        lazy: !!options.lazy,
         loop: !!options.loop,
+        parallax: !!options.parallax,
         autoHeight: !!options.autoHeight,
         freeMode: !!options.freeMode,
         cssMode: !!options.cssMode,
@@ -118,12 +144,12 @@ const initSwiper = (el) => {
         swiperOptions.centeredSlidesBounds = true;
     }
 
-    // Autoplay
+    // Autoplay (custom)
     if (options.autoplay) {
         swiperOptions.autoplay = {
             delay: parseInt(options.delay) || 6000,
-            disableOnInteraction: true,
-            reverseDirection: !!options.reverse,
+            pauseOnMouseEnter: true,
+            reverseDirection: !!options.reverseDirection,
         };
     }
 
@@ -131,7 +157,16 @@ const initSwiper = (el) => {
     if (options.marquee) {
         swiperOptions.loop = true;
         swiperOptions.speed = parseInt(options.speed) || 6000;
-        swiperOptions.autoplay = { delay: 1, disableOnInteraction: true };
+        swiperOptions.autoplay = {
+            delay: 1,
+            pauseOnMouseEnter: true,
+            reverseDirection: !!options.reverseDirection,
+        };
+    }
+
+    // Rtl (custom)
+    if (options.rtl) {
+        el.setAttribute('dir', 'rtl');
     }
 
     // Rows (custom)
@@ -208,16 +243,32 @@ const initSwiper = (el) => {
         };
     }
 
-    // Initialize
-    const swiper = new Swiper(`.${classes.swiper}`, swiperOptions);
+    // Autoplay Progress (custom)
+    if (options.autoplayProgress) {
+        const progress = document.createElement('div');
+        progress.className = `swiper-autoplay-progress ${classes.progress}`;
+        progress.innerHTML = `<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="20"></circle></svg><span></span>`;
+        controls.append(progress);
 
-    // Autoplay (hover)
-    if (swiperOptions.autoplay) {
-        el.addEventListener('mouseenter', () => swiper.autoplay?.stop());
-        el.addEventListener('mouseleave', () => swiper.autoplay?.start());
+        swiperOptions.on = {
+            autoplayTimeLeft (s, time, progressValue) {
+                const svg = controls?.querySelector('.swiper-autoplay-progress > svg');
+                const span = controls?.querySelector('.swiper-autoplay-progress > span');
+                svg.style.setProperty('--progress', 1 - progressValue);
+                span.textContent = `${Math.ceil(time / 1000)}s`;
+            },
+        };
     }
 
-    return swiper;
+    // check thumbsSwiper
+    if (thumbsSwiper) {
+        swiperOptions.thumbs = { swiper: thumbsSwiper };
+    }
+
+    const swiperInstance = new Swiper(`.${classes.swiper}`, swiperOptions);
+    el.swiper = swiperInstance;
+
+    return swiperInstance;
 };
 
 const initAllSwipers = () => {
