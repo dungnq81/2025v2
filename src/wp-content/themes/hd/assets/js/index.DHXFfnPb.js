@@ -1,5 +1,5 @@
 import { N } from "./vendor.CVR-BGCV.js";
-import "./swiper.CbkHZbU8.js";
+import "./swiper.CIFs8aA-.js";
 import { i as initSocialShare } from "./social-share.DMzevdhU.js";
 class BackToTop {
   constructor(selector = ".js-back-to-top", smoothScrollEnabled = true, defaultScrollSpeed = 400) {
@@ -452,4 +452,4 @@ const run = async () => {
   });
 };
 document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", run, { once: true }) : run();
-//# sourceMappingURL=index.0VZ2JXCv.js.map
+//# sourceMappingURL=index.DHXFfnPb.js.map

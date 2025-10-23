@@ -96,7 +96,7 @@ const initSwiper = (el) => {
   }
   if (options.marquee) {
     swiperOptions.loop = true;
-    swiperOptions.speed = options.speed || 6e3;
+    swiperOptions.speed = parseInt(options.speed) || 6e3;
     swiperOptions.autoplay = { delay: 1, disableOnInteraction: true };
   }
   if (options.rows) {
@@ -171,4 +171,4 @@ const initAllSwipers = () => {
   document.querySelectorAll(".w-swiper").forEach(initSwiper);
 };
 document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", initAllSwipers, { once: true }) : initAllSwipers();
-//# sourceMappingURL=swiper.CbkHZbU8.js.map
+//# sourceMappingURL=swiper.CIFs8aA-.js.map

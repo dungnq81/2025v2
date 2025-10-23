@@ -130,7 +130,7 @@ const initSwiper = (el) => {
     // Marquee (custom)
     if (options.marquee) {
         swiperOptions.loop = true;
-        swiperOptions.speed = options.speed || 6000;
+        swiperOptions.speed = parseInt(options.speed) || 6000;
         swiperOptions.autoplay = { delay: 1, disableOnInteraction: true };
     }
 

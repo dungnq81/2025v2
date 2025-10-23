@@ -115,13 +115,13 @@ final class Theme {
 		$version           = HD_Helper::version();
 		$recaptcha_options = HD_Helper::getOption( 'recaptcha__options' );
 		$l10n              = [
-			'ajaxUrl'    => admin_url( 'admin-ajax.php', 'relative' ),
-			'baseUrl'    => HD_Helper::siteURL( '/' ),
-			'themeUrl'   => THEME_URL,
-			'csrfToken'  => wp_create_nonce( 'wp_csrf_token' ),
-			'restToken'  => wp_create_nonce( 'wp_rest' ),
-			'lg'         => HD_Helper::currentLanguage(),
-			'lang'       => [ 'view_more' => __( 'Xem thêm', TEXT_DOMAIN ) ]
+			'ajaxUrl'   => admin_url( 'admin-ajax.php', 'relative' ),
+			'baseUrl'   => HD_Helper::siteURL( '/' ),
+			'themeUrl'  => THEME_URL,
+			'csrfToken' => wp_create_nonce( 'wp_csrf_token' ),
+			'restToken' => wp_create_nonce( 'wp_rest' ),
+			'lg'        => HD_Helper::currentLanguage(),
+			'lang'      => [ 'view_more' => __( 'Xem thêm', TEXT_DOMAIN ) ]
 		];
 
 		if ( defined( 'RESTAPI_URL' ) ) {
@@ -176,9 +176,9 @@ final class Theme {
 		static $enqueued_hooks = [];
 
 		// template debug
-		if ( ( defined( 'SHOW_TEMPLATE_FILE' ) && \SHOW_TEMPLATE_FILE === true ) && HD_Helper::development() ) {
-			dump( $template );
-		}
+//		if ( ( defined( 'SHOW_TEMPLATE_FILE' ) && \SHOW_TEMPLATE_FILE === true ) && HD_Helper::development() ) {
+//			dump( $template );
+//		}
 
 		$_template_slug = basename( $template, '.php' );
 		$hook_name      = 'enqueue_assets_' . sanitize_key( str_replace( '-', '_', $_template_slug ) );
