@@ -32,7 +32,7 @@
         "vite-plugin-static-copy": "^3.1.4"
     },
     "dependencies": {
-        "@fancyapps/ui": "^6.0.34",
+        "@fancyapps/ui": "^6.1.0",
         "current-device": "^0.10.2",
         "ensemble": "github:loltgt/ensemble",
         "ensemble-social-share": "github:loltgt/ensemble-social-share",

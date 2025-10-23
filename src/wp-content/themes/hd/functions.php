@@ -52,8 +52,8 @@ if ( ! file_exists( $autoload ) ) {
 require_once $autoload; // composer dump-autoload -o --classmap-authoritative
 
 class_alias( \HD\Utilities\Helpers\Helper::class, 'HD_Helper' );
-class_alias( \HD\Utilities\Helpers\Asset::class, 'HD_Asset' );
 class_alias( \HD\Utilities\Helpers\CSS::class, 'HD_CSS' );
+class_alias( \HD\Utilities\Helpers\Asset::class, 'HD_Asset' );
 
 require_once __DIR__ . '/inc/setting.php';
 

@@ -9,7 +9,7 @@ const assets = `${dir}/assets`;
 
 // COPY
 const directoriesToCopy = [
-    { src: `${resources}/img`, dest: '' },
+    { src: `${resources}/img`, dest: '' }
 ];
 
 // SASS
