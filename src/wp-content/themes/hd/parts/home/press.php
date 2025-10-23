@@ -25,7 +25,7 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                     'spaceBetween'  => 12,
                     'slidesPerView' => 'auto',
                     'sm'            => [
-                            'spaceBetween' => 24
+                            'spaceBetween' => 24,
                     ]
             ];
 

@@ -1,14 +1,15 @@
-import { N as Navigation, P as Pagination, A as Autoplay, G as Grid, a as Swiper, n as nanoid } from "./vendor.DnwqQqWs.js";
+import { A as Autoplay, N as Navigation, P as Pagination, T as Thumb, f as freeMode, G as Grid, a as Swiper, n as nanoid } from "./vendor.pwv9KHRd.js";
 const defaultModules = [
+  Autoplay,
   Navigation,
   Pagination,
-  Autoplay,
+  Thumb,
+  freeMode,
   Grid
 ];
 const defaultOptions = {
   grabCursor: true,
   allowTouchMove: true,
-  watchSlidesProgress: true,
   threshold: 5,
   wrapperClass: "swiper-wrapper",
   slideClass: "swiper-slide",
@@ -90,6 +91,7 @@ const initSwiper = (el) => {
     autoHeight: !!options.autoHeight,
     freeMode: !!options.freeMode,
     cssMode: !!options.cssMode,
+    watchSlidesProgress: !!options.watchSlidesProgress,
     breakpoints: getBreakpoints(options)
   });
   if (options.effect) {
@@ -110,6 +112,7 @@ const initSwiper = (el) => {
     swiperOptions.autoplay = {
       delay: parseInt(options.delay) || 6e3,
       pauseOnMouseEnter: true,
+      disableOnInteraction: !!options.disableOnInteraction,
       reverseDirection: !!options.reverseDirection
     };
   }
@@ -117,8 +120,9 @@ const initSwiper = (el) => {
     swiperOptions.loop = true;
     swiperOptions.speed = parseInt(options.speed) || 6e3;
     swiperOptions.autoplay = {
-      delay: 1,
+      delay: 0,
       pauseOnMouseEnter: true,
+      disableOnInteraction: !!options.disableOnInteraction,
       reverseDirection: !!options.reverseDirection
     };
   }
@@ -211,4 +215,4 @@ const initAllSwipers = () => {
   document.querySelectorAll(".w-swiper").forEach(initSwiper);
 };
 document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", initAllSwipers, { once: true }) : initAllSwipers();
-//# sourceMappingURL=swiper.D8-dPqxz.js.map
+//# sourceMappingURL=swiper.nWmACkJF.js.map

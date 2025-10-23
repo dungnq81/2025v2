@@ -3,24 +3,27 @@
 import { nanoid } from 'nanoid';
 import Swiper from 'swiper';
 import {
+    Autoplay,
     Navigation,
     Pagination,
-    Autoplay,
-    Grid
+    Thumbs,
+    FreeMode,
+    Grid,
 } from 'swiper/modules';
 
 const defaultModules = [
+    Autoplay,
     Navigation,
     Pagination,
-    Autoplay,
-    Grid
+    Thumbs,
+    FreeMode,
+    Grid,
 ];
 
 // Default Swiper options
 const defaultOptions = {
     grabCursor: true,
     allowTouchMove: true,
-    watchSlidesProgress: true,
     threshold: 5,
     wrapperClass: 'swiper-wrapper',
     slideClass: 'swiper-slide',
@@ -121,6 +124,7 @@ const initSwiper = (el) => {
         autoHeight: !!options.autoHeight,
         freeMode: !!options.freeMode,
         cssMode: !!options.cssMode,
+        watchSlidesProgress: !!options.watchSlidesProgress,
         breakpoints: getBreakpoints(options),
     });
 
@@ -149,6 +153,7 @@ const initSwiper = (el) => {
         swiperOptions.autoplay = {
             delay: parseInt(options.delay) || 6000,
             pauseOnMouseEnter: true,
+            disableOnInteraction: !!options.disableOnInteraction,
             reverseDirection: !!options.reverseDirection,
         };
     }
@@ -158,8 +163,9 @@ const initSwiper = (el) => {
         swiperOptions.loop = true;
         swiperOptions.speed = parseInt(options.speed) || 6000;
         swiperOptions.autoplay = {
-            delay: 1,
+            delay: 0,
             pauseOnMouseEnter: true,
+            disableOnInteraction: !!options.disableOnInteraction,
             reverseDirection: !!options.reverseDirection,
         };
     }
