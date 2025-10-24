@@ -2129,7 +2129,9 @@ trait Wp {
 			$html .= '<source srcset="' . self::attachmentImageSrc( $attachment_mobile_id ?: $attachment_id, 'medium' ) . '" media="(min-width: 480px)">';
 		}
 
-		$html .= self::iconImageHTML( $attachment_mobile_id ?: $attachment_id, 'thumbnail', [ 'class' => 'lazy', 'loading' => 'lazy' ], false );
+		$html .= self::iconImageHTML( $attachment_mobile_id ?: $attachment_id, 'thumbnail', [ 'class'   => 'lazy',
+		                                                                                      'loading' => 'lazy'
+		], false );
 		$html .= '</picture>';
 
 		return $filter ? apply_filters( 'hd_picture_html_filter', $html, $class, $attachment_id, $attachment_mobile_id ) : $html;
@@ -2217,7 +2219,9 @@ trait Wp {
 	 */
 	public static function breadCrumbBanner( mixed $attachment_id, string $size = 'widescreen', int $cache_in_hours = 12 ): string {
 		if ( ! empty( $attachment_id ) ) {
-			return '<div class="breadcrumbs-bg dark:opacity-[0.7]">' . \HD_Helper::attachmentImageHTML( $attachment_id, $size, [ 'class' => 'w-full block', 'loading' => 'lazy' ] ) . '</div>';
+			return '<div class="breadcrumbs-bg dark:opacity-[0.7]">' . \HD_Helper::attachmentImageHTML( $attachment_id, $size, [ 'class'   => 'w-full block',
+			                                                                                                                     'loading' => 'lazy'
+				] ) . '</div>';
 		}
 
 		$breadcrumb_bg = \HD_Helper::getThemeMod( 'breadcrumb_bg_setting' );
@@ -2234,7 +2238,9 @@ trait Wp {
 		}
 
 		return ! empty( $cached_id )
-			? '<div class="breadcrumbs-bg dark:opacity-[0.7]">' . \HD_Helper::attachmentImageHTML( $cached_id, $size, [ 'class' => 'w-full block', 'loading' => 'lazy' ] ) . '</div>'
+			? '<div class="breadcrumbs-bg dark:opacity-[0.7]">' . \HD_Helper::attachmentImageHTML( $cached_id, $size, [ 'class'   => 'w-full block',
+			                                                                                                            'loading' => 'lazy'
+			] ) . '</div>'
 			: '';
 	}
 

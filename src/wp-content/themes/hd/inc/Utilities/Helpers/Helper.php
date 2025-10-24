@@ -176,6 +176,7 @@ final class Helper {
 			'png'          => 'image/png',
 			'bmp'          => 'image/bmp',
 			'webp'         => 'image/webp',
+			'avif'         => 'image/avif',
 			'tif|tiff'     => 'image/tiff',
 			'ico'          => 'image/x-icon',
 			'svg'          => 'image/svg+xml',
@@ -416,25 +417,16 @@ final class Helper {
 	 * @throws RandomException
 	 */
 	public static function makeUnique( int $length = 32, string $prefix = '' ): string {
-		// microtime
 		$time        = microtime( true );
-		$timeEncoded = base_convert( (string) ( $time * 1000000 ), 10, 36 );
+		$timeEncoded = base_convert( (string) floor( $time * 1e6 ), 10, 36 );
 
-		// Process ID
-		$pidEncoded = base_convert( (string) getmypid(), 10, 36 );
+		$pidEncoded  = base_convert( (string) getmypid(), 10, 36 );
+		$uniqEncoded = base_convert( str_replace( '.', '', uniqid( '', true ) ), 10, 36 );
 
-		// uniqid
-		$uniq        = uniqid( '', true );
-		$uniqEncoded = base_convert( str_replace( '.', '', $uniq ), 10, 36 );
+		$base = $timeEncoded . $pidEncoded . $uniqEncoded;
 
-		// Random supplement
-		$base   = $timeEncoded . $pidEncoded . $uniqEncoded;
-		$need   = max( 0, $length - strlen( $base ) );
-		$random = '';
-		if ( $need > 0 ) {
-			$bytes  = random_bytes( (int) ceil( $need * 0.75 ) );
-			$random = substr( base_convert( bin2hex( $bytes ), 16, 36 ), 0, $need );
-		}
+		$bytes  = random_bytes( (int) ceil( $length * 0.75 ) );
+		$random = substr( base_convert( bin2hex( $bytes ), 16, 36 ), 0, $length );
 
 		return $prefix . substr( $base . $random, 0, $length );
 	}

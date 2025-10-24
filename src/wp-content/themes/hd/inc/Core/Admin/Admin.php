@@ -303,7 +303,7 @@ final class Admin {
      */
     public function _manage_term_columns_header( $columns ): mixed {
         if ( \HD_Helper::isAcfActive() ) {
-            $thumb   = [
+            $thumb = [
                     'term_thumb' => sprintf( '<span class="wc-image tips">%1$s</span>', __( 'Thumb', TEXT_DOMAIN ) ),
             ];
 

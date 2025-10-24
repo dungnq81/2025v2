@@ -1,6 +1,6 @@
 // components/swiper.js
 
-import { nanoid } from 'nanoid';
+import {nanoid} from 'nanoid';
 import Swiper from 'swiper';
 import {
     Autoplay,
@@ -73,8 +73,8 @@ const getBreakpoints = (options = {}) => {
     if (options.breakpoints) return options.breakpoints;
 
     const bp = {};
-    const map = { xs: 0, sm: 640, md: 768, lg: 1024, xl: 1280, xxl: 1536 };
-    Object.entries(map).forEach(([ key, val ]) => {
+    const map = {xs: 0, sm: 640, md: 768, lg: 1024, xl: 1280, xxl: 1536};
+    Object.entries(map).forEach(([key, val]) => {
         if (options[key]) bp[val] = options[key];
     });
     return bp;
@@ -124,22 +124,24 @@ const initSwiper = (el) => {
         autoHeight: !!options.autoHeight,
         freeMode: !!options.freeMode,
         cssMode: !!options.cssMode,
+        rewind: !!options.rewind,
+        observer: !!options.observer,
+        observeParents: !!options.observeParents,
         watchSlidesProgress: !!options.watchSlidesProgress,
         breakpoints: getBreakpoints(options),
     });
+
+    // thumbsSwiper
+    if (thumbsSwiper) {
+        swiperOptions.thumbs = {swiper: thumbsSwiper};
+    }
 
     // effect (custom)
     if (options.effect) {
         swiperOptions.effect = options.effect;
         if (swiperOptions.effect === 'fade') {
-            swiperOptions.fadeEffect = { crossFade: !0 };
+            swiperOptions.fadeEffect = {crossFade: !0};
         }
-    }
-
-    // observer (custom)
-    if (options.observer) {
-        swiperOptions.observer = true;
-        swiperOptions.observeParents = true;
     }
 
     // centered (custom)
@@ -224,10 +226,10 @@ const initSwiper = (el) => {
         swiperOptions.pagination = {
             el: '.' + classes.pagination,
             clickable: true,
-            ...( paginationType === 'bullets' && { dynamicBullets: true, type: 'bullets' } ),
-            ...( paginationType === 'fraction' && { type: 'fraction' } ),
-            ...( paginationType === 'progressbar' && { type: 'progressbar' } ),
-            ...( paginationType === 'custom' && { renderBullet: (index, className) => `<span class="${className}">${index + 1}</span>` } ),
+            ...(paginationType === 'bullets' && {dynamicBullets: true, type: 'bullets'}),
+            ...(paginationType === 'fraction' && {type: 'fraction'}),
+            ...(paginationType === 'progressbar' && {type: 'progressbar'}),
+            ...(paginationType === 'custom' && {renderBullet: (index, className) => `<span class="${className}">${index + 1}</span>`}),
         };
     }
 
@@ -257,18 +259,13 @@ const initSwiper = (el) => {
         controls.append(progress);
 
         swiperOptions.on = {
-            autoplayTimeLeft (s, time, progressValue) {
+            autoplayTimeLeft(s, time, progressValue) {
                 const svg = controls?.querySelector('.swiper-autoplay-progress > svg');
                 const span = controls?.querySelector('.swiper-autoplay-progress > span');
                 svg.style.setProperty('--progress', 1 - progressValue);
                 span.textContent = `${Math.ceil(time / 1000)}s`;
             },
         };
-    }
-
-    // check thumbsSwiper
-    if (thumbsSwiper) {
-        swiperOptions.thumbs = { swiper: thumbsSwiper };
     }
 
     const swiperInstance = new Swiper(`.${classes.swiper}`, swiperOptions);
@@ -281,8 +278,8 @@ const initAllSwipers = () => {
     document.querySelectorAll('.w-swiper').forEach(initSwiper);
 };
 
-( document.readyState === 'loading' )
-    ? document.addEventListener('DOMContentLoaded', initAllSwipers, { once: true })
+(document.readyState === 'loading')
+    ? document.addEventListener('DOMContentLoaded', initAllSwipers, {once: true})
     : initAllSwipers();
 
-export { initAllSwipers, initSwiper };
+export {initAllSwipers, initSwiper};

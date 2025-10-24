@@ -30,26 +30,25 @@ $post_query       = \HD_Helper::queryByLatestPosts( 'du-an', $max_number, false 
             <div class="swiper-container">
                 <?php
                 $data = [
-                        'slidesPerView' => 1,
-                        'spaceBetween'  => 12,
-                        //'autoplay'      => true,
-                        'rows'          => 2,
-                        'sm'            => [
-                                'slidesPerView' => 2,
-                                'spaceBetween'  => 24,
-                                'grid'          => [
-                                        'rows' => 2,
-                                        'fill' => 'row',
-                                ],
-                        ],
-                        'lg'            => [
-                                'slidesPerView' => 2,
-                                'spaceBetween'  => 24,
-                                'grid'          => [
-                                        'rows' => 2,
-                                        'fill' => 'row',
-                                ],
-                        ],
+	                'slidesPerView' => 1,
+	                'spaceBetween'  => 12,
+	                'rows'          => 2,
+	                'sm'            => [
+		                'slidesPerView' => 2,
+		                'spaceBetween'  => 24,
+		                'grid'          => [
+			                'rows' => 2,
+			                'fill' => 'row',
+		                ],
+	                ],
+	                'lg'            => [
+		                'slidesPerView' => 2,
+		                'spaceBetween'  => 24,
+		                'grid'          => [
+			                'rows' => 2,
+			                'fill' => 'row',
+		                ],
+	                ],
                 ];
 
                 if ( $navigation ) { $data['navigation'] = true; }

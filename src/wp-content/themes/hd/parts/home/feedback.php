@@ -16,14 +16,14 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
         <div class="closest-swiper u-flex-center gap-y-8 lg:gap-y-0 flex-wrap lg:flex-nowrap lg:flex-row lg:justify-between lg:gap-x-8">
             <?php
             $data = [
-                    'loop'          => true,
-                    'navigation'    => true,
-                    'autoplay'      => true,
-                    'spaceBetween'  => 12,
-                    'slidesPerView' => 'auto',
-                    'sm'            => [
-                            'spaceBetween' => 24,
-                    ]
+	            'loop'          => true,
+	            'navigation'    => true,
+	            'autoplay'      => true,
+	            'spaceBetween'  => 12,
+	            'slidesPerView' => 'auto',
+	            'sm'            => [
+		            'spaceBetween' => 24,
+	            ]
             ];
 
             $swiper_data = wp_json_encode( $data, JSON_THROW_ON_ERROR | JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE );

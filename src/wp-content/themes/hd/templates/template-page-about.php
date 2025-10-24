@@ -10,7 +10,7 @@
 \defined( 'ABSPATH' ) || die;
 
 // header
-get_header( 'about-us' );
+get_header( 'about' );
 
 if ( have_posts() ) {
 	the_post();
@@ -27,6 +27,6 @@ $ACF = \HD_Helper::getFields( $post->ID );
 <?php
 
 // footer
-get_footer( 'about-us' );
+get_footer( 'about' );
 
 

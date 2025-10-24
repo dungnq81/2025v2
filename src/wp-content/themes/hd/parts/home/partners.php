@@ -23,16 +23,16 @@ if ( empty( $rtl_list_1 ) && empty( $ltr_list_2 ) ) {
         <div class="swiper-container">
             <?php
             $data = [
-                    'marquee'              => true,
-                    'rtl'                  => true,
-                    'slidesPerView'        => 'auto',
-                    'spaceBetween'         => 12,
-                    'speed'                => 6000,
-                    'disableOnInteraction' => false,
-                    'freeMode'             => true,
-                    'sm'                   => [
-                            'spaceBetween' => 24,
-                    ]
+	            'marquee'              => true,
+	            'rtl'                  => true,
+	            'slidesPerView'        => 'auto',
+	            'spaceBetween'         => 12,
+	            'speed'                => 6000,
+	            'disableOnInteraction' => false,
+	            'freeMode'             => true,
+	            'sm'                   => [
+		            'spaceBetween' => 24,
+	            ]
             ];
 
             $swiper_data = wp_json_encode( $data, JSON_THROW_ON_ERROR | JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE );
@@ -61,20 +61,20 @@ if ( empty( $rtl_list_1 ) && empty( $ltr_list_2 ) ) {
         <div class="swiper-container mt-6">
             <?php
             $data = [
-                    'marquee'              => true,
-                    'slidesPerView'        => 'auto',
-                    'spaceBetween'         => 12,
-                    'speed'                => 6000,
-                    'disableOnInteraction' => false,
-                    'freeMode'             => true,
-                    'sm'                   => [
-                            'spaceBetween' => 24,
-                    ]
+	            'marquee'              => true,
+	            'slidesPerView'        => 'auto',
+	            'spaceBetween'         => 12,
+	            'speed'                => 6000,
+	            'disableOnInteraction' => false,
+	            'freeMode'             => true,
+	            'sm'                   => [
+		            'spaceBetween' => 24,
+	            ]
             ];
 
             $swiper_data = wp_json_encode( $data, JSON_THROW_ON_ERROR | JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE );
             if ( ! $swiper_data ) {
-                $swiper_data = '';
+	            $swiper_data = '';
             }
             ?>
             <div class="swiper swiper-ltr w-swiper">

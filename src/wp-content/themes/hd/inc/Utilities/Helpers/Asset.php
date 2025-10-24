@@ -135,10 +135,7 @@ final class Asset {
 		}
 
 		$href = esc_url( $resolve['src'] );
-		$tag  = sprintf(
-			'<link rel="preload" href="%s" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">',
-			$href
-		);
+		$tag  = sprintf( '<link rel="preload" href="%s" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">', $href );
 
 		echo wp_kses( $tag, [
 			'link' => [

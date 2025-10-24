@@ -19,8 +19,8 @@ const sassFiles = [
 
     // (template)
     'partials/template/extra',
-    'partials/template/home',
-    'partials/template/affordable',
+    'partials/template/page-home',
+    'partials/template/page-design-affordable',
 
     // (entries)
     'admin',
@@ -38,8 +38,8 @@ const jsFiles = [
 
     // (template)
     'components/template/extra',
-    'components/template/home',
-    'components/template/affordable',
+    'components/template/page-home',
+    'components/template/page-design-affordable',
 
     // (entries)
     'admin',

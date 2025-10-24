@@ -28,12 +28,12 @@ $post_query       = \HD_Helper::queryByTerms( $categories, 'post', 'category', $
             <div class="swiper-container">
                 <?php
                 $data = [
-                        //'autoplay'      => true,
-                        'spaceBetween'  => 12,
-                        'slidesPerView' => 'auto',
-                        'sm'            => [
-                                'spaceBetween' => 24,
-                        ]
+	                //'autoplay'      => true,
+	                'spaceBetween'  => 12,
+	                'slidesPerView' => 'auto',
+	                'sm'            => [
+		                'spaceBetween' => 24,
+	                ]
                 ];
 
                 if ( $loop ) { $data['loop'] = true; }

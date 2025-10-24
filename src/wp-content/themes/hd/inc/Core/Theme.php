@@ -181,17 +181,15 @@ final class Theme {
 //		}
 
 		$_template_slug = basename( $template, '.php' );
-		$hook_name      = 'enqueue_assets_' . sanitize_key( str_replace( '-', '_', $_template_slug ) );
-		$_parts         = preg_split( '/[-_]/', $_template_slug );
-		$first_part     = $_parts[0];
-		$last_part      = end( $_parts );
+		$_template_slug = preg_replace( '/^template-/', '', $_template_slug );
+		$hook_name      = 'enqueue_assets_template_' . sanitize_key( str_replace( '-', '_', $_template_slug ) );
 
-		if ( 'template' === $first_part && ! in_array( $hook_name, $enqueued_hooks, true ) ) {
+		if ( ! in_array( $hook_name, $enqueued_hooks, true ) ) {
 
 			// dynamic hook - enqueue style/script
-			add_action( 'wp_enqueue_scripts', static function () use ( $hook_name, $last_part ) {
+			add_action( 'wp_enqueue_scripts', static function () use ( $_template_slug, $hook_name ) {
 				$version = HD_Helper::version();
-				$names   = [ 'extra', $last_part ];
+				$names   = [ 'extra', $_template_slug ];
 
 				foreach ( $names as $name ) {
 					$scss = "partials/template/{$name}.scss";

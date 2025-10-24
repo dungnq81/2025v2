@@ -17,17 +17,17 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 		<p class="max-w-3xl mb-9 p-fs-clamp-[15,17] sm:text-center mx-auto pt-4">HD AGENCY tự hào về những điều đạt được trong thời gian qua</p>
 		<div class="swiper-container sm:px-16">
 			<?php
-            $data = [
-                    'loop'          => true,
-                    'navigation'    => true,
-                    'pagination'    => 'bullets',
-                    'autoplay'      => true,
-                    'spaceBetween'  => 12,
-                    'slidesPerView' => 'auto',
-                    'sm'            => [
-                            'spaceBetween' => 24,
-                    ]
-            ];
+			$data = [
+				'loop'          => true,
+				'navigation'    => true,
+				'pagination'    => 'bullets',
+				'autoplay'      => true,
+				'spaceBetween'  => 12,
+				'slidesPerView' => 'auto',
+				'sm'            => [
+					'spaceBetween' => 24,
+				]
+			];
 
 			$swiper_data = wp_json_encode( $data, JSON_THROW_ON_ERROR | JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE );
 			if ( ! $swiper_data ) {
