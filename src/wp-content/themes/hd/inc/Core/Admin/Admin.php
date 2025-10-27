@@ -19,7 +19,7 @@ use HD\Utilities\Traits\Singleton;
 final class Admin {
     use Singleton;
 
-    // --------------------------------------------------
+	/* ---------- CONSTRUCT ---------------------------------------- */
 
     private function init(): void {
         add_action( 'enqueue_block_editor_assets', [ $this, 'blockEditorAssets' ] );
@@ -30,23 +30,24 @@ final class Admin {
         add_action( 'admin_footer', [ $this, 'adminFooterScript' ] );
 
         /** Show a clear cache message */
-        add_action( 'admin_notices', static function () {
-            $message = get_transient( '_clear_cache_message' );
-            if ( ! empty( $message ) ) {
-                \HD_Helper::messageSuccess( $message, false );
+	    add_action( 'admin_notices', [ $this, 'adminNotices' ], 11 );
+    }
 
-                if ( ! isset( $_GET['clear_cache'] ) ) {
-                    delete_transient( '_clear_cache_message' );
-                }
-            }
-        } );
+	/* ---------- PUBLIC ------------------------------------------- */
+
+    public function adminNotices(): void {
+	    $message = get_transient( '_clear_cache_message' );
+	    if ( ! empty( $message ) ) {
+		    \HD_Helper::messageSuccess( $message, false );
+
+		    if ( ! isset( $_GET['clear_cache'] ) ) {
+			    delete_transient( '_clear_cache_message' );
+		    }
+	    }
     }
 
     // --------------------------------------------------
 
-    /**
-     * @return void
-     */
     public function adminFooterScript(): void { ?>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -76,20 +77,12 @@ final class Admin {
 
     // --------------------------------------------------
 
-    /**
-     * Gutenberg editor
-     *
-     * @return void
-     */
     public function blockEditorAssets(): void {
         \HD_Asset::enqueueCSS( 'editor-style.scss', [], \HD_Helper::version() );
     }
 
     // --------------------------------------------------
 
-    /**
-     * @return void
-     */
     public function adminEnqueueScripts(): void {
         $version = \HD_Helper::version();
 
@@ -99,9 +92,6 @@ final class Admin {
 
     // --------------------------------------------------
 
-    /**
-     * @return void
-     */
     public function adminMenu(): void {
         // global $menu, $submenu;
         // dump($menu);
@@ -153,9 +143,6 @@ final class Admin {
 
     // --------------------------------------------------
 
-    /**
-     * @return void
-     */
     public function adminInit(): void {
         //
         // editor-style for Classic Editor
@@ -338,4 +325,6 @@ final class Admin {
                 return $out;
         }
     }
+
+	// --------------------------------------------------
 }

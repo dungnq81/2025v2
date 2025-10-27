@@ -27,26 +27,30 @@ defined( 'ABSPATH' ) || die;
 final class Theme {
 	use Singleton;
 
-	// --------------------------------------------------
+	/* ---------- CONSTRUCT ---------------------------------------- */
 
 	private function init(): void {
 		// wp-config.php -> muplugins_loaded -> plugins_loaded -> setup_theme -> after_setup_theme -> init (rest_api_init, widgets_init, v.v...)
 		// FE: init -> wp_loaded -> wp -> template_redirect -> template_include -> v.v...
 		// BE: init -> wp_loaded -> admin_menu -> admin_init -> v.v...
 
+		/** Setup */
 		add_action( 'after_setup_theme', [ $this, 'setupTheme' ] );
 		add_action( 'after_setup_theme', [ $this, 'setup' ], 11 );
-		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueAssets' ] );
 
-		/** Widgets */
+		/** Init */
+		add_action( 'init', [ $this, 'clearCache' ] );
 		add_action( 'widgets_init', [ $this, 'unregisterWidgets' ], 11 );
 		add_action( 'widgets_init', [ $this, 'registerWidgets' ], 11 );
 
-		/** Dynamic Template Hook */
+		/** Enqueue */
+		add_action( 'wp_enqueue_scripts', [ $this, 'enqueueAssets' ] );
+
+		/** Dynamic Template */
 		add_filter( 'template_include', [ $this, 'dynamicTemplateInclude' ], 20 );
 	}
 
-	// --------------------------------------------------
+	/* ---------- PUBLIC ------------------------------------------- */
 
 	/**
 	 * Sets up theme defaults and register support for various WordPress features.
@@ -249,6 +253,32 @@ final class Theme {
 
 		HD_Helper::createDirectory( $widgets_dir );
 		HD_Helper::FQNLoad( $widgets_dir, false, true, $FQN, true );
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * Clear Cache
+	 *
+	 * @return void
+	 */
+	public function clearCache(): void {
+		if ( isset( $_GET['clear_cache'] ) ) {
+			\HD_Helper::clearAllCache();
+			set_transient( '_clear_cache_message', __( 'Cache has been successfully cleared.', TEXT_DOMAIN ), 30 );
+
+			echo <<<HTML
+                <script>
+                    const currentUrl = window.location.href;
+                    if (currentUrl.includes('clear_cache=1')) {
+                        let newUrl = currentUrl.replace(/([?&])clear_cache=1/, '$1').replace(/&$/, '').replace(/\?$/, '');
+                        currentUrl.includes('wp-admin')
+                            ? window.location.replace(newUrl)
+                            : window.history.replaceState({}, document.title, newUrl);
+                    }
+                </script>
+            HTML;
+		}
 	}
 
 	// --------------------------------------------------

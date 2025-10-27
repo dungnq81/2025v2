@@ -1,6 +1,6 @@
 <?php
 /**
- * Theme Optimization and Cleanup
+ * Theme Optimization, Cleanup
  *
  * This file defines the Optimizer class, which handles performance improvements,
  * frontend and backend optimizations, and general WordPress cleanup tasks.
@@ -19,37 +19,20 @@ use HD\Utilities\Traits\Singleton;
 final class Optimizer {
 	use Singleton;
 
+	/* ---------- CONFIG ------------------------------------------- */
+
 	private array $lazy_styles = [];
 
-	// ------------------------------------------------------
+	/* ---------- CONSTRUCT ---------------------------------------- */
 
 	private function init(): void {
 		$this->_cleanup();
 		$this->_optimizer();
-
-		/** custom hooks */
-		$this->_customHooks();
 	}
 
-	// ------------------------------------------------------
+	/* ---------- PRIVATE ------------------------------------------ */
 
-	/**
-	 * @return void
-	 */
-	private function _customHooks(): void {
-		// -------------------------------------------------------------
-		// permalink structure
-		// -------------------------------------------------------------
-
-		if ( ! \HD_Helper::getOption( '_permalink_structure_updated' ) ) {
-			\HD_Helper::updateOption( '_permalink_structure_updated', true );
-
-			global $wp_rewrite;
-
-			$wp_rewrite->set_permalink_structure( '/%postname%/' );
-			$wp_rewrite->flush_rules();
-		}
-
+	private function _optimizer(): void {
 		// -------------------------------------------------------------
 		// images sizes
 		// -------------------------------------------------------------
@@ -110,99 +93,35 @@ final class Optimizer {
 			remove_image_size( '2048x2048' ); // disable 2x large size
 		} );
 
-		// ------------------------------------------
-
-		add_filter( 'post_thumbnail_html', static function ( $html ) {
-			return preg_replace( '/(<img[^>]+)(style=\"[^\"]+\")([^>]+)(>)/', '${1}${3}${4}', $html );
-		}, 10, 1 );
-
-		add_filter( 'the_content', static function ( $html ) {
-			return preg_replace( '/(<img[^>]+)(style=\"[^\"]+\")([^>]+)(>)/', '${1}${3}${4}', $html );
-		}, 10, 1 );
-
 		// -------------------------------------------------------------
-		// Custom hooks
+		// permalink structure
 		// -------------------------------------------------------------
 
-		// https://html.spec.whatwg.org/multipage/rendering.html#img-contain-size
-		add_filter( 'wp_img_tag_add_auto_sizes', '__return_false' );
+		if ( ! \HD_Helper::getOption( '_permalink_structure_updated' ) ) {
+			\HD_Helper::updateOption( '_permalink_structure_updated', true );
 
-		// excerpt_more
-		add_filter( 'excerpt_more', static function () {
-			return ' ' . '&hellip;';
-		} );
+			global $wp_rewrite;
 
-		// admin bar
-		add_action( 'wp_before_admin_bar_render', static function () {
-			if ( is_admin_bar_showing() ) {
-				global $wp_admin_bar;
+			$wp_rewrite->set_permalink_structure( '/%postname%/' );
+			$wp_rewrite->flush_rules();
+		}
 
-				$wp_admin_bar->remove_menu( 'wp-logo' );
-				$wp_admin_bar->remove_menu( 'updates' );
-
-				// Clear Cache
-				$current_url = add_query_arg( 'clear_cache', 1, $_SERVER['REQUEST_URI'] );
-				$wp_admin_bar->add_menu( [
-					'id'    => 'clear_cache_button',
-					'title' => '<div class="custom-admin-button"><span class="custom-icon">⚡</span><span class="custom-text">Clear cache</span></div>',
-					'href'  => $current_url,
-				] );
-			}
-		} );
-
-		/** Clear Cache */
-		add_action( 'init', static function () {
-			if ( isset( $_GET['clear_cache'] ) ) {
-				\HD_Helper::clearAllCache();
-				set_transient( '_clear_cache_message', __( 'Cache has been successfully cleared.', TEXT_DOMAIN ), 30 );
-
-				echo <<<HTML
-                <script>
-                    const currentUrl = window.location.href;
-                    if (currentUrl.includes('clear_cache=1')) {
-                        let newUrl = currentUrl.replace(/([?&])clear_cache=1/, '$1').replace(/&$/, '').replace(/\?$/, '');
-                        currentUrl.includes('wp-admin')
-                            ? window.location.replace(newUrl)
-                            : window.history.replaceState({}, document.title, newUrl);
-                    }
-                </script>
-            HTML;
-			}
-		} );
-
-		// Normalize upload filename
-		add_filter( 'sanitize_file_name', static function ( $filename ) {
-			return remove_accents( $filename );
-		}, 10, 1 );
-
-		// Remove archive title prefix
-		add_filter( 'get_the_archive_title_prefix', static function ( $prefix ) {
-			return __return_empty_string();
-		} );
-
-		// query_vars
-		add_filter( 'query_vars', static function ( $vars ) {
-			$vars[] = 'page';
-			$vars[] = 'paged';
-
-			return $vars;
-		}, 99, 1 );
-	}
-
-	// ------------------------------------------------------
-
-	/**
-	 * @return void
-	 */
-	private function _optimizer(): void {
-		// Filters the script, style tag
-		add_filter( 'script_loader_tag', [ $this, 'scriptLoaderTag' ], 12, 3 );
-		add_filter( 'style_loader_tag', [ $this, 'styleLoaderTag' ], 12, 2 );
-		add_action( 'wp_body_open', [ $this, 'printLazyStyles' ], 1 );
+		// -------------------------------------------------------------
+		// Optimizer
+		// -------------------------------------------------------------
 
 		// Adding Shortcode in WordPress Using Custom HTML Widget
 		add_filter( 'widget_text', 'do_shortcode' );
 		add_filter( 'widget_text', 'shortcode_unautop' );
+
+		// Style and script loader tags
+		add_filter( 'script_loader_tag', [ $this, 'scriptLoaderTag' ], 12, 3 );
+		add_filter( 'style_loader_tag', [ $this, 'styleLoaderTag' ], 12, 2 );
+		add_action( 'wp_body_open', [ $this, 'printLazyStyles' ], 1 );
+
+		// Remove inline styles
+		add_filter( 'post_thumbnail_html', [ $this, 'remove_inline_img_styles' ] );
+		add_filter( 'the_content', [ $this, 'remove_inline_img_styles' ] );
 
 		// Search by title
 		add_filter( 'posts_search', [ $this, 'searchByTitle' ], 500, 2 );
@@ -211,6 +130,13 @@ final class Optimizer {
 		if ( ! is_admin() && ! \HD_Helper::isLogin() ) {
 			add_action( 'wp_print_footer_scripts', [ $this, 'printFooterScripts' ], 999 );
 		}
+
+		// Custom hooks
+		add_filter( 'wp_img_tag_add_auto_sizes', '__return_false' ); // https://html.spec.whatwg.org/multipage/rendering.html#img-contain-size
+		add_filter( 'excerpt_more', [ $this, 'excerpt_more' ] );
+		add_filter( 'sanitize_file_name', [ $this, 'sanitize_file_name' ] );
+		add_filter( 'get_the_archive_title_prefix', '__return_empty_string' ); // Remove archive title prefix
+		add_filter( 'query_vars', [ $this, 'query_vars' ], 99 );
 	}
 
 	// ------------------------------------------------------
@@ -249,6 +175,54 @@ final class Optimizer {
 		add_filter( 'nav_menu_item_id', '__return_null', 10, 3 );
 	}
 
+	/* ---------- PUBLIC ------------------------------------------- */
+
+	/**
+	 * Remove inline style attribute from image tags in HTML content.
+	 *
+	 * @param $html
+	 *
+	 * @return array|string|string[]|null
+	 */
+	public function remove_inline_img_styles( $html ): array|string|null {
+		return preg_replace(
+			'/(<img[^>]+)(style=\"[^\"]+\")([^>]+)(>)/',
+			'${1}${3}${4}',
+			$html
+		);
+	}
+
+	// ------------------------------------------------------
+
+	public function excerpt_more(): string {
+		return ' ' . '&hellip;';
+	}
+
+	// ------------------------------------------------------
+
+	/**
+	 * @param $filename
+	 *
+	 * @return string
+	 */
+	public function sanitize_file_name( $filename ): string {
+		return remove_accents( $filename );
+	}
+
+	// ------------------------------------------------------
+
+	/**
+	 * @param $vars
+	 *
+	 * @return mixed
+	 */
+	public function query_vars( $vars ): mixed {
+		$vars[] = 'page';
+		$vars[] = 'paged';
+
+		return $vars;
+	}
+
 	// ------------------------------------------------------
 
 	/**
@@ -279,11 +253,7 @@ final class Optimizer {
 
 		// Process combined attributes (e.g., `module defer`) from `extra`
 		if ( ! empty( $attributes['extra'] ) ) {
-			// Convert space-separated string to array if necessary
-			$extra_attrs = is_array( $attributes['extra'] )
-				? $attributes['extra']
-				: explode( ' ', $attributes['extra'] );
-
+			$extra_attrs = is_array( $attributes['extra'] ) ? $attributes['extra'] : explode( ' ', $attributes['extra'] );
 			foreach ( $extra_attrs as $attr ) {
 				if ( $attr === 'module' ) {
 					if ( ! preg_match( '#\stype=(["\'])module\1#', $tag ) ) {
@@ -334,9 +304,6 @@ final class Optimizer {
 
 	// ------------------------------------------------------
 
-	/**
-	 * @return void
-	 */
 	public function printLazyStyles(): void {
 		if ( empty( $this->lazy_styles ) ) {
 			return;
@@ -393,10 +360,9 @@ final class Optimizer {
 
 	// ------------------------------------------------------
 
-	/**
-	 * @return void
-	 */
 	public function printFooterScripts(): void {
 		echo '<script>document.documentElement.classList.remove(\'no-js\');</script>';
 	}
+
+	// ------------------------------------------------------
 }

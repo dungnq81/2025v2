@@ -19,25 +19,46 @@ use HD\Utilities\Traits\Singleton;
 final class Customizer {
 	use Singleton;
 
+	/* ---------- CONFIG ------------------------------------------- */
+
 	private array $page_archive_post_types = [];
 
-	// --------------------------------------------------
+	/* ---------- CONSTRUCT ---------------------------------------- */
 
-	/**
-	 * @return void
-	 */
 	private function init(): void {
 
 		// Theme Customizer settings and controls.
 		add_action( 'customize_register', [ $this, 'customizeRegister' ], 30 );
 
+		// admin-bar render
+		add_action( 'wp_before_admin_bar_render', [ $this, 'before_admin_bar_render' ] );
+
 		// post-types archive.
 		$page_archive_post_types = \HD_Helper::filterSettingOptions( 'page_archive_post_types', [] );
 		if ( ! empty( $page_archive_post_types ) && is_array( $page_archive_post_types ) ) {
-
 			$this->page_archive_post_types = $page_archive_post_types;
+
 			add_action( 'pre_get_posts', [ $this, 'handle_page_as_archive' ] );
 			add_filter( 'display_post_states', [ $this, 'add_archive_page_state' ] );
+		}
+	}
+
+	/* ---------- PUBLIC ------------------------------------------- */
+
+	public function before_admin_bar_render(): void {
+		if ( is_admin_bar_showing() ) {
+			global $wp_admin_bar;
+
+			$wp_admin_bar->remove_menu( 'wp-logo' );
+			$wp_admin_bar->remove_menu( 'updates' );
+
+			// Clear cache button
+			$current_url = add_query_arg( 'clear_cache', 1, $_SERVER['REQUEST_URI'] );
+			$wp_admin_bar->add_menu( [
+				'id'    => 'clear_cache_button',
+				'title' => '<div class="custom-admin-button"><span class="custom-icon">⚡</span><span class="custom-text">Clear cache</span></div>',
+				'href'  => $current_url,
+			] );
 		}
 	}
 
@@ -455,7 +476,7 @@ final class Customizer {
 		);
 	}
 
-	// --------------------------------------------------
+	/* ---------- PRIVATE ------------------------------------------ */
 
 	/**
 	 * @param \WP_Customize_Manager $wp_customize
