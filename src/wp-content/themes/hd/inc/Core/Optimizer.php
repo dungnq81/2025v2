@@ -211,6 +211,10 @@ final class Optimizer {
 	 * @return string
 	 */
 	public function sanitize_file_name( $filename ): string {
+		if ( ! is_string( $filename ) ) {
+			$filename = (string) $filename;
+		}
+
 		return remove_accents( $filename );
 	}
 
@@ -236,9 +240,13 @@ final class Optimizer {
 	 * @return void
 	 */
 	public function wp_default_scripts( $scripts ): void {
+		if ( ! is_object( $scripts ) || ! isset( $scripts->registered ) || ! is_array( $scripts->registered ) ) {
+			return;
+		}
+
 		if ( isset( $scripts->registered['jquery'] ) && ! is_admin() ) {
 			$script = $scripts->registered['jquery'];
-			if ( $script->deps ) {
+			if ( is_array( $script->deps ) && ! empty( $script->deps ) ) {
 
 				// remove jquery-migrate
 				$script->deps = array_diff( $script->deps, [ 'jquery-migrate' ] );
@@ -305,7 +313,7 @@ final class Optimizer {
 	 * @return string
 	 */
 	public function styleLoaderTag( string $html, string $handle ): string {
-		if ( is_admin() ) {
+		if ( empty( $handle ) || is_admin() ) {
 			return $html;
 		}
 
@@ -313,9 +321,10 @@ final class Optimizer {
 		$lazy_html = \HD_Helper::lazyStyleTag( $styles, $html, $handle );
 
 		if ( $lazy_html !== $html ) {
+			$safe_handle         = htmlspecialchars( $handle, ENT_QUOTES, 'UTF-8' );
 			$this->lazy_styles[] = str_replace(
-				"onload=\"this.onload=null;this.rel='stylesheet'\"",
-				"data-handle='{$handle}' onload=\"this.rel='stylesheet'\"",
+				"onload=\"this.rel='stylesheet'\"",
+				"data-handle='{$safe_handle}' onload=\"this.rel='stylesheet'\"",
 				$lazy_html
 			);
 

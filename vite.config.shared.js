@@ -42,7 +42,6 @@ export const sharedConfig = {
     },
     build: {
         sourcemap: !isProduction,
-        //target: 'modules',
         manifest: true,
         minify: isProduction ? 'terser' : false,
         watch: isProduction ? false : { exclude: 'node_modules/**' },
