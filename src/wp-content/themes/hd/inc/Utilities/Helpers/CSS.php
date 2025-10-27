@@ -136,7 +136,8 @@ final class CSS {
 	 */
 	private function add_selector_rules_to_output(): void {
 		if ( ! empty( $this->_css ) ) {
-			$selector_output = sprintf( '%1$s{%2$s}', $this->_selector, $this->_css );
+			$_select_output  = $this->_selector;
+			$selector_output = sprintf( '%1$s{%2$s}', $_select_output, $this->_css );
 
 			// Add our CSS to the output.
 			if ( ! empty( $this->_media_query ) ) {
