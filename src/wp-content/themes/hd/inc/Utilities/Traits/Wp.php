@@ -2140,6 +2140,51 @@ trait Wp {
 	// -------------------------------------------------------------
 
 	/**
+	 * @param string|null $url
+	 * @param int|null $width
+	 * @param int|null $height
+	 * @param string|null $class
+	 * @param string|null $alt
+	 *
+	 * @return null|string
+	 */
+	public static function imageTag( ?string $url, ?int $width = null, ?int $height = null, ?string $class = '', ?string $alt = '' ): ?string {
+		if ( empty( $url ) ) {
+			return null;
+		}
+
+		$attrs = [
+			'src' => $url,
+		];
+
+		if ( $width !== null ) {
+			$attrs['width'] = $width;
+		}
+
+		if ( $height !== null ) {
+			$attrs['height'] = $height;
+		}
+
+		if ( ! empty( $class ) ) {
+			$attrs['class'] = trim( $class );
+		}
+
+		if ( $alt !== null ) {
+			$attrs['alt'] = trim( $alt );
+		}
+
+		// HTML attribute string
+		$attrString = '';
+		foreach ( $attrs as $key => $value ) {
+			$attrString .= sprintf( ' %s="%s"', $key, htmlspecialchars( (string) $value, ENT_QUOTES ) );
+		}
+
+		return "<img$attrString />";
+	}
+
+	// -------------------------------------------------------------
+
+	/**
 	 * @param mixed $post_id
 	 * @param bool $force_object
 	 * @param bool $format_value

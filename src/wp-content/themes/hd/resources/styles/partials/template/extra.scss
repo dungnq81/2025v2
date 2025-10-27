@@ -6,3 +6,49 @@
 
 //
 // Extra layout.
+
+// .section-partners
+.section-partners {
+    .swiper {
+        position: relative;
+
+        &::after, &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 100px;
+            z-index: 2;
+        }
+
+        &::before {
+            left: 0;
+            background: linear-gradient(90deg, #fefefe 0%, rgba(254, 254, 254, 0) 100%);
+            pointer-events: none;
+        }
+
+        &::after {
+            right: 0;
+            background: linear-gradient(90deg, rgba(254, 254, 254, 0) 0%, #fefefe 100%);
+            pointer-events: none;
+        }
+    }
+}
+
+//
+// dark mode
+//
+
+:where(.dark, .dark *) {
+    .partners {
+        .swiper {
+            &::before {
+                background: linear-gradient(90deg, #161616 0%, rgba(22, 22, 22, 0) 100%);
+            }
+
+            &::after {
+                background: linear-gradient(90deg, rgba(22, 22, 22, 0) 0%, #161616 100%);
+            }
+        }
+    }
+}

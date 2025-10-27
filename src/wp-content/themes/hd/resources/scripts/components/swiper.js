@@ -22,7 +22,6 @@ const defaultModules = [
 
 // Default Swiper options
 const defaultOptions = {
-    grabCursor: true,
     allowTouchMove: true,
     threshold: 5,
     wrapperClass: 'swiper-wrapper',
@@ -118,12 +117,10 @@ const initSwiper = (el) => {
         slidesPerView: options.slidesPerView === 'auto' ? 'auto' : parseInt(options.slidesPerView) || 1,
         speed: parseInt(options.speed) || 600,
         direction: options.direction || 'horizontal',
-        lazy: !!options.lazy,
+        grabCursor: !!options.grabCursor,
         loop: !!options.loop,
         parallax: !!options.parallax,
         autoHeight: !!options.autoHeight,
-        freeMode: !!options.freeMode,
-        cssMode: !!options.cssMode,
         rewind: !!options.rewind,
         observer: !!options.observer,
         observeParents: !!options.observeParents,
@@ -133,12 +130,29 @@ const initSwiper = (el) => {
 
     // thumbsSwiper
     if (thumbsSwiper) {
-        swiperOptions.thumbs = {swiper: thumbsSwiper};
+        swiperOptions.thumbs = {
+            swiper: thumbsSwiper
+        };
+    }
+
+    // freeMode (custom)
+    if (options.freeMode) {
+        swiperOptions.freeMode = {
+            enabled: true,
+            sticky: true,
+        };
+    }
+
+    // cssMode (custom)
+    if (options.cssMode) {
+        swiperOptions.cssMode = true;
+        swiperOptions.observer = true;
+        swiperOptions.observeParents = true;
     }
 
     // effect (custom)
     if (options.effect) {
-        swiperOptions.effect = options.effect;
+        swiperOptions.effect = options.effect || 'slide';
         if (swiperOptions.effect === 'fade') {
             swiperOptions.fadeEffect = {crossFade: !0};
         }
@@ -155,7 +169,7 @@ const initSwiper = (el) => {
         swiperOptions.autoplay = {
             delay: parseInt(options.delay) || 6000,
             pauseOnMouseEnter: true,
-            disableOnInteraction: !!options.disableOnInteraction,
+            disableOnInteraction: options.disableOnInteraction !== undefined ? !!options.disableOnInteraction : true,
             reverseDirection: !!options.reverseDirection,
         };
     }
@@ -167,7 +181,7 @@ const initSwiper = (el) => {
         swiperOptions.autoplay = {
             delay: 0,
             pauseOnMouseEnter: true,
-            disableOnInteraction: !!options.disableOnInteraction,
+            disableOnInteraction: options.disableOnInteraction !== undefined ? !!options.disableOnInteraction : true,
             reverseDirection: !!options.reverseDirection,
         };
     }
@@ -180,7 +194,7 @@ const initSwiper = (el) => {
     // Rows (custom)
     if (options.rows) {
         swiperOptions.grid = {
-            rows: parseInt(options.rows),
+            rows: parseInt(options.rows) || 1,
             fill: 'row',
         };
     }

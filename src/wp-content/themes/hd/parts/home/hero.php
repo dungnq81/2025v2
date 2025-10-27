@@ -49,16 +49,16 @@ $id       = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 
             ?>
 			<div class="flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
-                <?= \HD_Helper::ACFLinkWrap(
-                        $content_1,
-                        $button_1,
-                        'inline-flex items-center justify-center px-6 py-3.5 text-[15px] font-medium text-white bg-(--text-color-1) rounded-md hover:shadow-[0px_4px_29px_-9px_#FE5242]',
-                ) ?>
+				<?= \HD_Helper::ACFLinkWrap(
+					$content_1,
+					$button_1,
+					'inline-flex items-center justify-center px-6 py-3.5 text-[15px] font-medium text-white bg-(--text-color-1) rounded-md hover:shadow-[0px_4px_29px_-9px_#FE5242]',
+				) ?>
 
                 <?= \HD_Helper::ACFLinkWrap(
-                        $content_2,
-                        $button_2,
-                        'c-light-button inline-flex items-center justify-center px-6 py-3.5 text-[15px] font-medium text-(-text-color) dark:text-white rounded-md hover:shadow-[0px_4px_29px_-9px_#1D1D1DB2]',
+	                $content_2,
+	                $button_2,
+	                'c-light-button inline-flex items-center justify-center px-6 py-3.5 text-[15px] font-medium text-(-text-color) dark:text-white rounded-md hover:shadow-[0px_4px_29px_-9px_#1D1D1DB2]',
                 ) ?>
 
 			</div>
@@ -69,10 +69,10 @@ $id       = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 				<div class="flex -space-x-2">
                     <?php
                     foreach ( $avatars as $i => $avatar ) :
-                        echo \HD_Helper::iconImageHTML( $avatar, 'thumbnail', [
-                                'class' => 'w-10 h-10 rounded-full border border-(--text-color-1)',
-                                'alt' => 'Avatar ' . $i,
-                        ] );
+	                    echo \HD_Helper::iconImageHTML( $avatar, 'thumbnail', [
+		                    'class' => 'w-10 h-10 rounded-full border border-(--text-color-1)',
+		                    'alt'   => 'Avatar ' . $i,
+	                    ] );
                     endforeach;
                     ?>
 				</div>
@@ -89,10 +89,10 @@ $id       = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
         <?php if ( $bg ) : ?>
 		<div class="mt-6 -mx-3 sm:mx-0 lg:mt-0 lg:col-span-5 flex relative">
 
-            <?= \HD_Helper::attachmentImageHTML( $bg, 'medium', [
-                    'class' => 'w-full h-auto max-w-lg mx-auto',
-                    'alt' => 'Hero ' . $bg,
-            ] ) ?>
+			<?= \HD_Helper::attachmentImageHTML( $bg, 'medium', [
+				'class' => 'w-full h-auto max-w-lg mx-auto',
+				'alt'   => 'Hero ' . $bg,
+			] ) ?>
 
 			<span class="c-hero-dot-1"></span>
 			<span class="c-hero-dot-2"></span>

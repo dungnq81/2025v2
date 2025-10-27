@@ -20,7 +20,7 @@ $post_query       = \HD_Helper::queryByLatestPosts( 'du-an', $max_number, false 
 
 ?>
 <section id="section-<?= $id ?>" class="section section-projects c-light-bg py-10 lg:py-20">
-    <div class="u-container closest-swiper">
+    <div class="u-container">
 
         <?= $title ? '<h2 class="font-bold">' . $title . '</h2>' : '' ?>
         <?= $desc ? '<p class="max-w-3xl mb-0 p-fs-clamp-[16,18] pt-4 text-2 font-bold">' . $desc . '</p>' : '' ?>

@@ -35,7 +35,7 @@ class GlobalEndpoints extends AbstractAPI {
 	 * @return bool|\WP_Error
 	 */
 	public function canAccess(): bool|\WP_Error {
-		if ( ! $this->rateLimit( 'global_lighthouse', 5, 60 ) ) {
+		if ( ! $this->rateLimit( 'global_lighthouse', 6, 60 ) ) {
 			return new \WP_Error( 'too_many_requests', 'Too many requests. Please wait a minute.', [ 'status' => 429 ] );
 		}
 

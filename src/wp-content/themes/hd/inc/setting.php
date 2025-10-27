@@ -246,7 +246,7 @@ function nav_menu_css_class_callback( $classes, $menu_item, $args, $depth ): arr
 // Filter nav_menu_link_attributes
 // --------------------------------------------------
 
-add_filter( 'nav_menu_link_attributes', 'nav_menu_link_attributes_callback', 999, 4 );
+add_filter( 'nav_menu_link_attributes', 'nav_menu_link_attributes_callback', 998, 4 );
 function nav_menu_link_attributes_callback( $atts, $menu_item, $args, $depth ): array {
 	// link_class
 	// link_depth_class
@@ -259,74 +259,7 @@ function nav_menu_link_attributes_callback( $atts, $menu_item, $args, $depth ): 
 		$atts['class'] = esc_attr( $args->link_depth_class );
 	}
 
-	// menu_link_class
-	if ( ! empty( $menu_item->menu_link_class ) ) {
-		if ( ! empty( $atts['class'] ) ) {
-			$atts['class'] .= ' ' . esc_attr( $menu_item->menu_link_class );
-		} else {
-			$atts['class'] = esc_attr( $menu_item->menu_link_class );
-		}
-	}
-
 	return $atts;
-}
-
-// --------------------------------------------------
-// Filter nav_menu_item_title
-// --------------------------------------------------
-
-add_filter( 'nav_menu_item_title', 'nav_menu_item_title_callback', 999, 4 );
-function nav_menu_item_title_callback( $title, $item, $args, $depth ) {
-
-	// Label <sup>
-	if ( ! empty( $item->menu_label_text ) ) {
-		$_css = '';
-
-		if ( ! empty( $item->menu_label_color ) ) {
-			$_css .= 'color:' . $item->menu_label_color . ';';
-		}
-		if ( ! empty( $item->menu_label_background ) ) {
-			$_css .= 'background-color:' . $item->menu_label_background . ';';
-		}
-
-		$_style = $_css ? ' style="' . \HD_Helper::CSSMinify( $_css, true ) . '"' : '';
-		$title  .= '<sup' . $_style . '>' . esc_html( $item->menu_label_text ) . '</sup>';
-	}
-
-	// span + span css
-	if ( ! empty( $item->menu_span ) ) {
-		$span_open = ! empty( $item->menu_span_css ) ? '<span class="' . esc_attr( $item->menu_span_css ) . '">' : '<span>';
-		$title     = $span_open . $title . '</span>';
-	}
-
-	// SVG inline
-	if ( ! empty( $item->menu_svg ) ) {
-		$title = $item->menu_svg . $title;
-	}
-
-	// IMG
-	if ( ! empty( $item->menu_image ) ) {
-		$img   = \HD_Helper::attachmentImageHTML( $item->menu_image, 'thumbnail', [
-			'loading' => 'lazy',
-			'alt'     => wp_strip_all_tags( $item->title ?? '' )
-		], true );
-		$title = $img . $title;
-	}
-
-	return $title;
-}
-
-
-// --------------------------------------------------
-// Filter query_vars
-// --------------------------------------------------
-
-add_filter( 'query_vars', 'query_vars_callback', 99, 1 );
-function query_vars_callback( $vars ): array {
-	$vars[] = 'page';
-	$vars[] = 'paged';
-
-	return $vars;
 }
 
 // --------------------------------------------------

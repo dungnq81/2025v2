@@ -17,7 +17,7 @@ if ( empty( $rtl_list_1 ) && empty( $ltr_list_2 ) ) {
 }
 
 ?>
-<section id="section-<?= $id ?>" class="section section-partners py-10 lg:py-20">
+<section id="section-<?= $id ?>" class="section section-partners partners py-10 lg:py-20">
 	<div class="u-container">
         <?php if ( $rtl_list_1 ) : ?>
         <div class="swiper-container">

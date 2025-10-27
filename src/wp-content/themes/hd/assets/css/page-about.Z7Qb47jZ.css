@@ -1,0 +1,33 @@
+/* partials/template/page-about.scss */
+/* utils/_variables.scss */
+/* utils/_functions.scss */
+/** $string - svg */
+/** add unique id image url */
+/** https://webdesign.tutsplus.com/tutorials/an-introduction-to-error-handling-in-sass--cms-19996 */
+/** font size */
+/* partials/template/page-about.scss */
+/* utils/_mixins.scss */
+.section.section-about-us .breadcrumbs {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute !important;
+  overflow-wrap: normal !important;
+  white-space: nowrap;
+  display: inline;
+}
+.section.section-about-us .section-teams .manager .swiper-slide .avatar {
+  background: radial-gradient(50% 50% at 50% 50%, #FFA59D 0%, #FE5242 100%);
+  border: 3.5px solid #FFFFFF;
+  box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+}
+.section.section-about-us .section-teams .manager .swiper-slide .avatar .cover {
+  position: relative;
+  padding-inline: 32px;
+}

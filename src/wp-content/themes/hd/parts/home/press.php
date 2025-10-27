@@ -12,7 +12,7 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 
 ?>
 <section id="section-<?= $id ?>" class="section section-press py-10 lg:py-20">
-	<div class="u-container closest-swiper">
+	<div class="u-container">
 		<h2 class="font-bold sm:text-center">Báo chí nói gì về <span class="hover:text-1 c-hover">HD</span> <span class="hover:text-2 c-hover">AGENCY</span></h2>
 		<p class="max-w-3xl mb-9 p-fs-clamp-[15,17] sm:text-center mx-auto pt-4">HD AGENCY tự hào về những điều đạt được trong thời gian qua</p>
 		<div class="swiper-container sm:px-16">

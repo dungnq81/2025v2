@@ -21,7 +21,7 @@ $post_query       = \HD_Helper::queryByTerms( $categories, 'post', 'category', $
 
 ?>
 <section id="section-<?= $id ?>" class="section section-recent-posts py-10 lg:py-20">
-    <div class="u-container closest-swiper">
+    <div class="u-container">
         <?= $title ? '<h2 class="font-bold">' . $title . '</h2>' : '' ?>
         <?php if ( $post_query ) : ?>
         <div class="p-news-list mt-9">

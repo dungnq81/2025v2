@@ -194,7 +194,7 @@ final class API extends AbstractAPI {
 	 * @return mixed
 	 */
 	public function hideRestIndex( $response ): mixed {
-		if ( ! is_user_logged_in() ) {
+		if ( ! is_user_logged_in() || ! current_user_can( 'edit_posts' ) ) {
 			$response->data = [
 				'success' => false,
 				'message' => __( 'REST API is disabled for unauthenticated users.', TEXT_DOMAIN ),

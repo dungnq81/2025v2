@@ -1,0 +1,30 @@
+/* partials/template/page-about.scss */
+
+@use '../../utils/variables' as vars;
+@use '../../utils/functions' as func;
+@use '../../utils/mixins' as mixin;
+
+// .section-about-us
+.section.section-about-us {
+    .breadcrumbs {
+        @include mixin.hidden-text;
+    }
+
+    .section-teams {
+        .manager {
+            .swiper-slide {
+                .avatar {
+                    background: radial-gradient(50% 50% at 50% 50%, #FFA59D 0%, #FE5242 100%);
+                    border: 3.5px solid #FFFFFF;
+                    box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.25);
+                    border-radius: 10px;
+
+                    .cover {
+                        position: relative;
+                        padding-inline: 32px;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -179,6 +179,14 @@ final class Optimizer {
 		add_filter( 'get_the_archive_title_prefix', static function ( $prefix ) {
 			return __return_empty_string();
 		} );
+
+		// query_vars
+		add_filter( 'query_vars', static function ( $vars ) {
+			$vars[] = 'page';
+			$vars[] = 'paged';
+
+			return $vars;
+		}, 99, 1 );
 	}
 
 	// ------------------------------------------------------

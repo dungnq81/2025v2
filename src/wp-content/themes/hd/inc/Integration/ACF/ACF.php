@@ -28,12 +28,14 @@ final class ACF {
 			add_filter( 'acf/settings/show_admin', '__return_false' );
 		}
 
-		add_filter( 'wp_kses_allowed_html', [ $this, 'wp_kses_allowed_html' ], 11, 2 );
-		add_filter( 'acf/format_value/type=textarea', [ \HD_Helper::class, 'removeInlineJsCss' ], 11 );
+		add_filter( 'wp_kses_allowed_html', [ $this, 'ksesAllowedHtml' ], 11, 2 );
 		add_filter( 'acf/fields/wysiwyg/toolbars', [ $this, 'wysiwygToolbars' ], 98, 1 );
+		add_filter( 'acf/format_value/type=textarea', [ \HD_Helper::class, 'removeInlineJsCss' ], 11 );
 
 		add_filter( 'teeny_mce_buttons', [ $this, 'teenyMceButtons' ], 99, 2 );
-		add_filter( 'wp_nav_menu_objects', [ $this, 'navMenuObjects' ], 1000, 2 );
+		add_filter( 'wp_nav_menu_objects', [ $this, 'navMenuObjects' ], 998, 2 );
+		add_filter( 'nav_menu_item_title', [ $this, 'navMenuItemTitle' ], 999, 4 );
+		add_filter( 'nav_menu_link_attributes', [ $this, 'navMenuLinkAttributes' ], 999, 4 );
 
 		// auto required fields
 		$fields_dir = __DIR__ . DIRECTORY_SEPARATOR . 'fields';
@@ -49,7 +51,7 @@ final class ACF {
 	 *
 	 * @return mixed
 	 */
-	public function wp_kses_allowed_html( $tags, $context ): mixed {
+	public function ksesAllowedHtml( $tags, $context ): mixed {
 		if ( $context === 'acf' ) {
 			$allow = \HD_Helper::ksesSVG();
 			foreach ( $allow as $tag => $attrs ) {
@@ -170,4 +172,78 @@ final class ACF {
 
 		return $items;
 	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param $title
+	 * @param $item
+	 * @param $args
+	 * @param $depth
+	 *
+	 * @return mixed|string
+	 */
+	public function navMenuItemTitle( $title, $item, $args, $depth ): mixed {
+		// Label <sup>
+		if ( ! empty( $item->menu_label_text ) ) {
+			$_css = '';
+
+			if ( ! empty( $item->menu_label_color ) ) {
+				$_css .= 'color:' . $item->menu_label_color . ';';
+			}
+			if ( ! empty( $item->menu_label_background ) ) {
+				$_css .= 'background-color:' . $item->menu_label_background . ';';
+			}
+
+			$_style = $_css ? ' style="' . \HD_Helper::CSSMinify( $_css, true ) . '"' : '';
+			$title  .= '<sup' . $_style . '>' . esc_html( $item->menu_label_text ) . '</sup>';
+		}
+
+		// span + span css
+		if ( ! empty( $item->menu_span ) ) {
+			$span_open = ! empty( $item->menu_span_css ) ? '<span class="' . esc_attr( $item->menu_span_css ) . '">' : '<span>';
+			$title     = $span_open . $title . '</span>';
+		}
+
+		// SVG inline
+		if ( ! empty( $item->menu_svg ) ) {
+			$title = $item->menu_svg . $title;
+		}
+
+		// IMG
+		if ( ! empty( $item->menu_image ) ) {
+			$img   = \HD_Helper::attachmentImageHTML( $item->menu_image, 'thumbnail', [
+				'loading' => 'lazy',
+				'alt'     => wp_strip_all_tags( $item->title ?? '' )
+			], true );
+			$title = $img . $title;
+		}
+
+		return $title;
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param $atts
+	 * @param $menu_item
+	 * @param $args
+	 * @param $depth
+	 *
+	 * @return array
+	 */
+	public function navMenuLinkAttributes( $atts, $menu_item, $args, $depth ): array {
+		// menu_link_class
+		if ( ! empty( $menu_item->menu_link_class ) ) {
+			if ( ! empty( $atts['class'] ) ) {
+				$atts['class'] .= ' ' . esc_attr( $menu_item->menu_link_class );
+			} else {
+				$atts['class'] = esc_attr( $menu_item->menu_link_class );
+			}
+		}
+
+		return $atts;
+	}
+
+	// -------------------------------------------------------------
 }

@@ -42,14 +42,10 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                 </p>
                 <div class="swiper-controls flex flex-row gap-6">
                     <button class="swiper-button swiper-button-prev c-swiper-button c-light-button !left-0 !mt-6 lg:!mt-8 !relative !w-11 !h-11">
-                        <svg class="!h-6 !w-6" aria-hidden="true">
-                            <use href="#icon-arrow-left-outline"></use>
-                        </svg>
+                        <svg class="!h-6 !w-6" aria-hidden="true"><use href="#icon-arrow-left-outline"></use></svg>
                     </button>
                     <button class="swiper-button swiper-button-next c-swiper-button c-light-button !right-0 !mt-6 lg:!mt-8 !relative !w-11 !h-11">
-                        <svg class="!h-6 !w-6" aria-hidden="true">
-                            <use href="#icon-arrow-right-outline"></use>
-                        </svg>
+                        <svg class="!h-6 !w-6" aria-hidden="true"><use href="#icon-arrow-right-outline"></use></svg>
                     </button>
                 </div>
             </div>
@@ -59,39 +55,28 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                         <div class="swiper-slide">
                             <div class="bg-[#00000014] dark:bg-[#ffffff1a] border border-solid border-[#00000026] dark:border-[#ffffff26] c-hover hover:border-(--text-color-1) rounded-md p-6">
                                 <div class="flex items-center gap-5 mb-5 sm:mb-9">
-                                    <img class="rounded-full object-cover w-16 h-16" src="https://randomuser.me/api/portraits/men/33.jpg" alt="avatar">
+                                    <img class="rounded-full object-cover w-17 h-17" src="https://randomuser.me/api/portraits/men/33.jpg" alt="avatar">
                                     <div class="grid gap-1">
                                         <h5 class="text-[#000] dark:text-white font-bold">Jane D</h5>
                                         <span class="text-sm leading-6 text-(--text-color)">CEO </span>
                                     </div>
                                 </div>
                                 <div class="flex items-center mb-5 sm:mb-9 gap-2 text-amber-500">
-                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true">
-                                        <use href="#icon-star"></use>
-                                    </svg>
-                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true">
-                                        <use href="#icon-star"></use>
-                                    </svg>
-                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true">
-                                        <use href="#icon-star"></use>
-                                    </svg>
-                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true">
-                                        <use href="#icon-star"></use>
-                                    </svg>
-                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true">
-                                        <use href="#icon-star"></use>
-                                    </svg>
+                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true"><use href="#icon-star"></use></svg>
+                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true"><use href="#icon-star"></use></svg>
+                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true"><use href="#icon-star"></use></svg>
+                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true"><use href="#icon-star"></use></svg>
+                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true"><use href="#icon-star"></use></svg>
                                 </div>
                                 <p class="text-(--text-color) leading-6 min-h-24">
-                                    The user interface of this pagedone is so intuitive, I was able to start using it without any
-                                    guidance.
+                                    The user interface of this pagedone is so intuitive, I was able to start using it without any guidance.
                                 </p>
                             </div>
                         </div>
                         <div class="swiper-slide">
                             <div class="bg-[#00000014] dark:bg-[#ffffff1a] border border-solid border-[#00000026] dark:border-[#ffffff26] c-hover hover:border-(--text-color-1) rounded-md p-6">
                                 <div class="flex items-center gap-5 mb-5 sm:mb-9">
-                                    <img class="rounded-full object-cover w-16 h-16" src="https://randomuser.me/api/portraits/men/33.jpg"
+                                    <img class="rounded-full object-cover w-17 h-17" src="https://randomuser.me/api/portraits/men/33.jpg"
                                          alt="avatar">
                                     <div class="grid gap-1">
                                         <h5 class="text-[#000] dark:text-white font-bold">Jane D</h5>
@@ -99,32 +84,21 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                                     </div>
                                 </div>
                                 <div class="flex items-center mb-5 sm:mb-9 gap-2 text-amber-500">
-                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true">
-                                        <use href="#icon-star"></use>
-                                    </svg>
-                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true">
-                                        <use href="#icon-star"></use>
-                                    </svg>
-                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true">
-                                        <use href="#icon-star"></use>
-                                    </svg>
-                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true">
-                                        <use href="#icon-star"></use>
-                                    </svg>
-                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true">
-                                        <use href="#icon-star"></use>
-                                    </svg>
+                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true"><use href="#icon-star"></use></svg>
+                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true"><use href="#icon-star"></use></svg>
+                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true"><use href="#icon-star"></use></svg>
+                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true"><use href="#icon-star"></use></svg>
+                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true"><use href="#icon-star"></use></svg>
                                 </div>
                                 <p class="text-(--text-color) leading-6 min-h-24">
-                                    The user interface of this pagedone is so intuitive, I was able to start using it without any
-                                    guidance.
+                                    The user interface of this pagedone is so intuitive, I was able to start using it without any guidance.
                                 </p>
                             </div>
                         </div>
                         <div class="swiper-slide">
                             <div class="bg-[#00000014] dark:bg-[#ffffff1a] border border-solid border-[#00000026] dark:border-[#ffffff26] c-hover hover:border-(--text-color-1) rounded-md p-6">
                                 <div class="flex items-center gap-5 mb-5 sm:mb-9">
-                                    <img class="rounded-full object-cover w-16 h-16" src="https://randomuser.me/api/portraits/men/33.jpg"
+                                    <img class="rounded-full object-cover w-17 h-17" src="https://randomuser.me/api/portraits/men/33.jpg"
                                          alt="avatar">
                                     <div class="grid gap-1">
                                         <h5 class="text-[#000] dark:text-white font-bold">Jane D</h5>
@@ -132,25 +106,14 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                                     </div>
                                 </div>
                                 <div class="flex items-center mb-5 sm:mb-9 gap-2 text-amber-500">
-                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true">
-                                        <use href="#icon-star"></use>
-                                    </svg>
-                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true">
-                                        <use href="#icon-star"></use>
-                                    </svg>
-                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true">
-                                        <use href="#icon-star"></use>
-                                    </svg>
-                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true">
-                                        <use href="#icon-star"></use>
-                                    </svg>
-                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true">
-                                        <use href="#icon-star"></use>
-                                    </svg>
+                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true"><use href="#icon-star"></use></svg>
+                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true"><use href="#icon-star"></use></svg>
+                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true"><use href="#icon-star"></use></svg>
+                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true"><use href="#icon-star"></use></svg>
+                                    <svg class="w-5 h-5 fill-current stroke-none" aria-hidden="true"><use href="#icon-star"></use></svg>
                                 </div>
                                 <p class="text-(--text-color) leading-6 min-h-24">
-                                    The user interface of this pagedone is so intuitive, I was able to start using it without any
-                                    guidance.
+                                    The user interface of this pagedone is so intuitive, I was able to start using it without any guidance.
                                 </p>
                             </div>
                         </div>

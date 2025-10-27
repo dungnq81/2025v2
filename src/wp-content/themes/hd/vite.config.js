@@ -19,8 +19,10 @@ const sassFiles = [
 
     // (template)
     'partials/template/extra',
-    'partials/template/page-home',
+    'partials/template/page-about',
+    'partials/template/page-contact',
     'partials/template/page-design-affordable',
+    'partials/template/page-home',
 
     // (entries)
     'admin',
