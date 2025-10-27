@@ -123,8 +123,11 @@ final class Optimizer {
 		add_filter( 'post_thumbnail_html', [ $this, 'remove_inline_img_styles' ] );
 		add_filter( 'the_content', [ $this, 'remove_inline_img_styles' ] );
 
-		// Search by title
-		add_filter( 'posts_search', [ $this, 'searchByTitle' ], 500, 2 );
+		// CSS Class
+		add_filter( 'body_class', [ $this, 'body_class' ], 12 );
+		add_filter( 'post_class', [ $this, 'post_class' ], 12 );
+		add_filter( 'nav_menu_css_class', [ $this, 'nav_menu_css_class' ], 12, 4 );
+		add_filter( 'nav_menu_link_attributes', [ $this, 'nav_menu_link_attributes' ], 12, 4 );
 
 		// Front-end only, excluding the login page
 		if ( ! is_admin() && ! \HD_Helper::isLogin() ) {
@@ -137,6 +140,8 @@ final class Optimizer {
 		add_filter( 'sanitize_file_name', [ $this, 'sanitize_file_name' ] );
 		add_filter( 'get_the_archive_title_prefix', '__return_empty_string' ); // Remove archive title prefix
 		add_filter( 'query_vars', [ $this, 'query_vars' ], 99 );
+		add_filter( 'posts_search', [ $this, 'searchByTitle' ], 500, 2 ); // Search by title
+		add_action( 'wp_default_scripts', [ $this, 'wp_default_scripts' ] );
 	}
 
 	// ------------------------------------------------------
@@ -221,6 +226,24 @@ final class Optimizer {
 		$vars[] = 'paged';
 
 		return $vars;
+	}
+
+	// ------------------------------------------------------
+
+	/**
+	 * @param $scripts
+	 *
+	 * @return void
+	 */
+	public function wp_default_scripts( $scripts ): void {
+		if ( isset( $scripts->registered['jquery'] ) && ! is_admin() ) {
+			$script = $scripts->registered['jquery'];
+			if ( $script->deps ) {
+
+				// remove jquery-migrate
+				$script->deps = array_diff( $script->deps, [ 'jquery-migrate' ] );
+			}
+		}
 	}
 
 	// ------------------------------------------------------
@@ -362,6 +385,140 @@ final class Optimizer {
 
 	public function printFooterScripts(): void {
 		echo '<script>document.documentElement.classList.remove(\'no-js\');</script>';
+	}
+
+	// ------------------------------------------------------
+
+	/**
+	 * @param array $classes
+	 *
+	 * @return array
+	 */
+	public function body_class( array $classes ): array {
+		// Check whether we're in the customizer preview.
+		if ( is_customize_preview() ) {
+			$classes[] = 'customizer-preview';
+		}
+
+		foreach ( $classes as $class ) {
+			if (
+				str_contains( $class, 'wp-custom-logo' ) ||
+				str_contains( $class, 'page-template-templates' ) ||
+				str_contains( $class, 'page-id-' ) ||
+				str_contains( $class, 'postid-' ) ||
+				str_contains( $class, 'single-format-standard' ) ||
+				str_contains( $class, 'no-customize-support' )
+			) {
+				$classes = array_diff( $classes, [ $class ] );
+			}
+		}
+
+		if ( \HD_Helper::isWoocommerceActive() ) {
+			$classes[] = 'woocommerce';
+		}
+
+		return $classes;
+	}
+
+	// ------------------------------------------------------
+
+	/**
+	 * @param array $classes
+	 *
+	 * @return array
+	 */
+	public function post_class( array $classes ): array {
+		// remove_sticky_class
+		if ( in_array( 'sticky', $classes, false ) ) {
+			$classes   = array_diff( $classes, [ 'sticky' ] );
+			$classes[] = 'wp-sticky';
+		}
+
+		// remove 'tag-', 'category-' classes
+		foreach ( $classes as $class ) {
+			if (
+				str_contains( $class, 'tag-' ) ||
+				str_contains( $class, 'category-' )
+			) {
+				$classes = array_diff( $classes, [ $class ] );
+			}
+		}
+
+		return $classes;
+	}
+
+	// ------------------------------------------------------
+
+	/**
+	 * @param $classes
+	 * @param $menu_item
+	 * @param $args
+	 * @param $depth
+	 *
+	 * @return array
+	 */
+	public function nav_menu_css_class( $classes, $menu_item, $args, $depth ): array {
+		if ( ! is_array( $classes ) ) {
+			$classes = [];
+		}
+
+		// Remove 'menu-item-type-', 'menu-item-object-' classes
+		foreach ( $classes as $class ) {
+			if (
+				str_contains( $class, 'menu-item-type-' ) ||
+				str_contains( $class, 'menu-item-object-' ) ||
+				str_contains( $class, 'menu-item' ) ||
+				str_contains( $class, 'menu-item-' )
+			) {
+				$classes = array_diff( $classes, [ $class ] );
+			}
+		}
+
+		if ( 1 === $menu_item->current || $menu_item->current_item_ancestor || $menu_item->current_item_parent ) {
+			$classes[] = 'active';
+		}
+
+		// li_class
+		// li_depth_class
+
+		if ( $depth === 0 ) {
+			if ( ! empty( $args->li_class ) ) {
+				$classes[] = $args->li_class;
+			}
+
+			return $classes;
+		}
+
+		if ( ! empty( $args->li_depth_class ) ) {
+			$classes[] = $args->li_depth_class;
+		}
+
+		return $classes;
+	}
+
+	// ------------------------------------------------------
+
+	/**
+	 * @param $atts
+	 * @param $menu_item
+	 * @param $args
+	 * @param $depth
+	 *
+	 * @return array
+	 */
+	public function nav_menu_link_attributes( $atts, $menu_item, $args, $depth ): array {
+		// link_class
+		// link_depth_class
+
+		if ( $depth === 0 ) {
+			if ( property_exists( $args, 'link_class' ) ) {
+				$atts['class'] = esc_attr( $args->link_class );
+			}
+		} elseif ( property_exists( $args, 'link_depth_class' ) ) {
+			$atts['class'] = esc_attr( $args->link_depth_class );
+		}
+
+		return $atts;
 	}
 
 	// ------------------------------------------------------
