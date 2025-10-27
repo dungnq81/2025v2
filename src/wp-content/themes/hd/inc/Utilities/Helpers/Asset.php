@@ -530,10 +530,6 @@ final class Asset {
 		}
 
 		if ( ! $found ) {
-			if ( \HD_Helper::development() ) {
-				\HD_Helper::errorLog( '[manifestResolve] Entry not found: ' . $entry );
-			}
-
 			return $resolveCache[ $key ] = [];
 		}
 

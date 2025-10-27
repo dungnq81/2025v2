@@ -8,7 +8,7 @@
  * @author Gaudev
  */
 
-const THEME_VERSION = '1.10.0';
+const THEME_VERSION = '1.11.0';
 const TEXT_DOMAIN   = 'hd';
 const AUTHOR        = 'Gaudev';
 

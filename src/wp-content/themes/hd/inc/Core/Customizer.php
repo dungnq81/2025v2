@@ -26,7 +26,6 @@ final class Customizer {
 	/* ---------- CONSTRUCT ---------------------------------------- */
 
 	private function init(): void {
-
 		// Theme Customizer settings and controls.
 		add_action( 'customize_register', [ $this, 'customizeRegister' ], 30 );
 
@@ -76,11 +75,7 @@ final class Customizer {
 
 		foreach ( $this->page_archive_post_types as $type ) {
 			$obj = get_post_type_object( $type );
-			if ( ! $obj ) {
-				continue;
-			}
-
-			if ( ! empty( $obj->has_archive ) ) {
+			if ( ! $obj || ! empty( $obj->has_archive ) ) {
 				continue;
 			}
 
