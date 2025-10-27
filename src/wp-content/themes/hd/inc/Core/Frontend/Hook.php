@@ -88,17 +88,6 @@ final class Hook {
         // -----------------------------------------------
         add_action( 'wp_enqueue_scripts', [ $this, 'custom_css_action' ], 99 );
 
-        // --------------------------------------------------
-        // enqueue_assets_template_extra
-        // --------------------------------------------------
-        add_action( 'enqueue_assets_template_extra', static function () {} );
-
-        // --------------------------------------------------
-        // `template` file
-        // --------------------------------------------------
-
-        // enqueue_assets_template_page_home
-        // enqueue_assets_template_page_contact
         //...
     }
 

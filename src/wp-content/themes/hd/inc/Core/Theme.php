@@ -184,8 +184,16 @@ final class Theme {
 //			dump( $template );
 //		}
 
-		$_template_slug = basename( $template, '.php' );
-		$_template_slug = preg_replace( '/^template-/', '', $_template_slug );
+		$info      = pathinfo( $template );
+		$filename  = $info['filename'];
+		$extension = strtolower( $info['extension'] ?? '' );
+
+		if ( $extension !== 'php' || ! str_starts_with( $filename, 'template-' ) ) {
+			return $template;
+		}
+
+		// Remove 'template-'
+		$_template_slug = substr( $filename, strlen( 'template-' ) );
 		$hook_name      = 'enqueue_assets_template_' . sanitize_key( str_replace( '-', '_', $_template_slug ) );
 
 		if ( ! in_array( $hook_name, $enqueued_hooks, true ) ) {
