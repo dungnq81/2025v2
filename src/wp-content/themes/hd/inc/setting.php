@@ -224,7 +224,7 @@ function hd_settings_filter_callback( array $arr ): array {
 		'admin_menu'              => [
 			// hide admin menu
 			'admin_hide_menu'             => [
-				//'edit.php',
+//				'edit.php',
 			],
 
 			// hide admin submenu

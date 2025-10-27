@@ -144,7 +144,6 @@ final class Admin {
     // --------------------------------------------------
 
     public function adminInit(): void {
-        //
         // editor-style for Classic Editor
         add_editor_style( \HD_Asset::src( 'editor-style.scss', true ) );
 

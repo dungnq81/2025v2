@@ -337,7 +337,7 @@ final class Optimizer {
 	// ------------------------------------------------------
 
 	public function printLazyStyles(): void {
-		if ( empty( $this->lazy_styles ) ) {
+		if ( empty( $this->lazy_styles ) || is_admin() ) {
 			return;
 		}
 

@@ -96,10 +96,6 @@ final class Hook {
     public function wp_head_action(): void {
         echo '<meta name="viewport" content="width=device-width, initial-scale=1.0" />';
         echo '<meta name="format-detection" content="telephone=no,email=no,address=no">';
-
-//        if ( is_singular() && pings_open() ) {
-//            printf( '<link rel="pingback" href="%s" />', esc_url( get_bloginfo( 'pingback_url' ) ) );
-//        }
     }
 
     // -----------------------------------------------
@@ -438,8 +434,6 @@ final class Hook {
             document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', track, { once: true }) : track();
         </script>
         <?php endif;
-
-        //...
 
         $content = ob_get_clean();
         if ( $content ) {

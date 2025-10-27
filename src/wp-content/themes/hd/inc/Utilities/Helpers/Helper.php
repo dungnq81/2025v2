@@ -72,7 +72,7 @@ final class Helper {
 			] );
 
 			if ( is_wp_error( $response ) ) {
-				error_log( '[recaptcha] HTTP error: ' . $response->get_error_message() );
+				self::errorLog( '[recaptcha] HTTP error: ' . $response->get_error_message() );
 
 				return false;
 			}
@@ -85,7 +85,7 @@ final class Helper {
 			try {
 				return json_decode( $body, false, 512, JSON_THROW_ON_ERROR );
 			} catch ( \JsonException $e ) {
-				error_log( '[recaptcha] JSON decode error: ' . $e->getMessage() );
+				self::errorLog( '[recaptcha] JSON decode error: ' . $e->getMessage() );
 
 				return false;
 			}
