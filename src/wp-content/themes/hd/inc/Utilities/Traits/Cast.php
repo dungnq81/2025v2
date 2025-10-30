@@ -111,23 +111,38 @@ trait Cast {
 
 	// --------------------------------------------------
 
+	/**
+	 * @param mixed $value
+	 * @param bool $strict
+	 *
+	 * @return string
+	 */
 	public static function toString( mixed $value, bool $strict = true ): string {
-		if ( is_string( $value ) || is_numeric( $value ) || is_bool( $value ) ) {
+		if ( is_scalar( $value ) ) { // int, float, string, bool
 			return (string) $value;
 		}
 
+		// Object with __toString method
 		if ( is_object( $value ) && method_exists( $value, '__toString' ) ) {
 			return (string) $value;
 		}
 
+		// Null, empty array, or other "empty" values
 		if ( self::isEmpty( $value ) ) {
 			return '';
 		}
 
+		// Indexed flat arrays
 		if ( self::isIndexedAndFlat( $value ) ) {
-			return implode( ', ', (array) $value );
+			return implode( ', ', $value );
 		}
 
+		// Resource or Closure: cannot cast to string
+		if ( is_resource( $value ) || is_callable( $value ) ) {
+			return $strict ? '' : '[unsupported type]';
+		}
+
+		// Other types (associative array, object without __toString)
 		return $strict ? '' : maybe_serialize( $value );
 	}
 

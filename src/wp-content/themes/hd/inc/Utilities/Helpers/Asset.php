@@ -631,10 +631,7 @@ final class Asset {
 		}
 
 		// transient cache (1 day)
-		set_transient( $transient_key, [
-			'mtime' => $file_mtime,
-			'data'  => $filtered,
-		], DAY_IN_SECONDS );
+		set_transient( $transient_key, [ 'mtime' => $file_mtime, 'data' => $filtered ], DAY_IN_SECONDS );
 
 		return $cache[ $key ] = $filtered;
 	}

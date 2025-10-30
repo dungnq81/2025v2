@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'f88b718bad3abb8d96740ba763593bc8691cfdd2',
+        'reference' => 'ec507c2202cc10fc906f99bf3ba21f4c646b0743',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => 'f88b718bad3abb8d96740ba763593bc8691cfdd2',
+            'reference' => 'ec507c2202cc10fc906f99bf3ba21f4c646b0743',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -226,7 +226,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => 'd8a6a765b23a6877089086ead3d4d415a3310068',
+            'reference' => '951a7e1c8fa344e8bad8950f994aa9109ff218fe',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(
@@ -271,9 +271,9 @@
             'dev_requirement' => true,
         ),
         'symfony/console' => array(
-            'pretty_version' => 'v6.4.26',
-            'version' => '6.4.26.0',
-            'reference' => '492de6dfd93910d7d7a729c5a04ddcd2b9e99c4f',
+            'pretty_version' => 'v6.4.27',
+            'version' => '6.4.27.0',
+            'reference' => '13d3176cf8ad8ced24202844e9f95af11e2959fc',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/console',
             'aliases' => array(),
@@ -298,9 +298,9 @@
             'dev_requirement' => true,
         ),
         'symfony/finder' => array(
-            'pretty_version' => 'v7.3.2',
-            'version' => '7.3.2.0',
-            'reference' => '2a6614966ba1074fa93dae0bc804227422df4dfe',
+            'pretty_version' => 'v7.3.5',
+            'version' => '7.3.5.0',
+            'reference' => '9f696d2f1e340484b4683f7853b273abff94421f',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/finder',
             'aliases' => array(),

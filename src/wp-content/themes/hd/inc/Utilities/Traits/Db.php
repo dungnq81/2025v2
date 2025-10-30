@@ -324,7 +324,7 @@ trait Db {
 	 *
 	 * @return int|\WP_Error Number of rows updated or WP_Error
 	 */
-	public static function update_one_row( string $table_name, $id, array $data, string $primary_key = 'id', ?array $format = null ): \WP_Error|int {
+	public static function update_one_row( string $table_name, int|string $id, array $data, string $primary_key = 'id', ?array $format = null ): \WP_Error|int {
 		global $wpdb;
 
 		if ( empty( $data ) ) {

@@ -10,8 +10,9 @@
 
 namespace HD\Utilities\Helpers;
 
-final class CSS {
+\defined( 'ABSPATH' ) || die;
 
+final class CSS {
 	/* ---------- CONFIG ------------------------------------------- */
 
 	private ?string $_selector = '';
