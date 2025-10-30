@@ -8,111 +8,62 @@ trait Str {
 	// --------------------------------------------------
 
 	/**
-	 * https://github.com/cofirazak/phpMissingFunctions
-	 *
-	 * Replicates PHP's ucfirst() function with multibyte support.
-	 *
-	 * @param string $str The string being converted.
-	 * @param null|string $encoding Optional encoding parameter is the character encoding.
-	 *                              If it is omitted, the internal character encoding value will be used.
-	 *
-	 * @return string The input string with the first character in uppercase.
-	 */
-	public static function mbUcFirst( string $str, string $encoding = null ): string {
-		// Check for an empty string
-		if ( $str === '' ) {
-			return $str;
-		}
-
-		// Use the null coalescing operator to assign encoding
-		$encoding = $encoding ?? mb_internal_encoding();
-
-		return mb_strtoupper( mb_substr( $str, 0, 1, $encoding ), $encoding ) . mb_substr( $str, 1, null, $encoding );
-	}
-
-	// --------------------------------------------------
-
-	/**
 	 * Remove empty <p> tags from content.
 	 *
-	 * @param string $content The input content with <p> tags.
+	 * @param string $content
 	 *
-	 * @return string|null The content with empty <p> tags removed, or null if the input is not a string.
+	 * @return string
 	 */
-	public static function removeEmptyP( string $content ): ?string {
-		return preg_replace( '/<p>(\s|&nbsp;)*<\/p>/', '', $content ) ?? $content;
+	public static function removeEmptyP( string $content ): string {
+		return preg_replace( '/<p(?:\s+[^>]*)?>\s*(?:&nbsp;|\xC2\xA0|\s)*<\/p>/i', '', $content ) ?? $content;
 	}
+
 
 	// --------------------------------------------------
 
 	/**
 	 * Convert newlines to <p> tags in HTML content.
 	 *
-	 * @param string $html The input HTML content.
+	 * @param string $text
 	 *
-	 * @return string The HTML content wrapped in <p> tags, with empty <p> tags removed.
+	 * @return string
 	 */
-	public static function nl2P( string $html ): string {
-		$html = trim( $html );
-		if ( empty( $html ) ) {
+	public static function nl2P( string $text ): string {
+		$text = trim( $text );
+		if ( $text === '' ) {
 			return '';
 		}
 
-		// Replace newlines with </p><p> and wrap in <p> tags
-		$html = preg_replace( '/(\r?\n)+/', '</p><p>', $html );
-		$html = '<p>' . $html . '</p>';
+		$parts = preg_split( '/\r?\n+/', $text, - 1, PREG_SPLIT_NO_EMPTY );
+		if ( ! $parts ) {
+			return '';
+		}
 
-		// Remove any empty <p> tags
-		return self::removeEmptyP( $html );
+		return '<p>' . implode( '</p><p>', array_map( 'trim', $parts ) ) . '</p>';
 	}
+
 
 	// --------------------------------------------------
 
 	/**
 	 * Convert <br> tags in HTML content to <p> tags.
 	 *
-	 * @param string $html The input HTML content.
+	 * @param string $html
 	 *
-	 * @return string The HTML content wrapped in <p> tags, with empty <p> tags removed.
+	 * @return string
 	 */
 	public static function br2P( string $html ): string {
 		$html = trim( $html );
-		if ( empty( $html ) ) {
+		if ( $html === '' ) {
 			return '';
 		}
 
-		// Replace <br> tags with </p><p> and wrap in <p> tags
-		$html = preg_replace( '/(<br\s*\/?>\s*)+/', "</p>\n<p>", $html );
-		$html = '<p>' . $html . '</p>';
-
-		return self::removeEmptyP( $html );
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * Remove inline JavaScript and CSS from the given HTML content.
-	 *
-	 * @param string $content The HTML content to clean.
-	 *
-	 * @return string The cleaned HTML content without inline JavaScript and CSS.
-	 */
-	public static function removeInlineJsCss( string $content ): string {
-		if ( empty( $content ) ) {
+		$parts = preg_split( '/<br\s*\/?>/i', $html, - 1, PREG_SPLIT_NO_EMPTY );
+		if ( ! $parts ) {
 			return '';
 		}
 
-		return preg_replace(
-			       [
-				       '/<script\b[^>]*>(.*?)<\/script>/is',
-				       '/\s*on\w+="[^"]*"/i',
-				       "/\s*on\w+='[^']*'/i",
-				       '/<style\b[^>]*>(.*?)<\/style>/is',
-				       '/\s*style=["\'][^"\']*["\']/i',
-			       ],
-			       '',
-			       $content
-		       ) ?? $content;
+		return '<p>' . implode( '</p><p>', array_map( 'trim', $parts ) ) . '</p>';
 	}
 
 	// --------------------------------------------------
@@ -123,10 +74,37 @@ trait Str {
 	 * @return string
 	 */
 	public static function camelCase( string $string ): string {
-		$string = ucwords( str_replace( [ '-', '_' ], ' ', trim( $string ) ) );
+		$string = trim( $string );
+		if ( $string === '' ) {
+			return '';
+		}
 
-		return str_replace( ' ', '', $string );
+		$string = str_replace( [ '-', '_' ], ' ', $string );
+		$string = mb_convert_case( $string, MB_CASE_TITLE, 'UTF-8' );
+		$string = str_replace( ' ', '', $string );
+
+		return lcfirst( $string );
 	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string $string
+	 *
+	 * @return string
+	 */
+	public static function snakeCase( string $string ): string {
+		$string = trim( $string );
+		if ( $string === '' ) {
+			return '';
+		}
+
+		$string = str_replace( '-', '_', $string );
+		$string = preg_replace( '/(?<!^)([A-Z])/u', '_$1', $string );
+
+		return mb_strtolower( $string, 'UTF-8' );
+	}
+
 
 	// --------------------------------------------------
 
@@ -142,50 +120,37 @@ trait Str {
 	// --------------------------------------------------
 
 	/**
-	 * @param string $string
+	 * @param string|array $needles
+	 * @param string $haystack
 	 *
-	 * @return string
+	 * @return bool
 	 */
-	public static function snakeCase( string $string ): string {
-		if ( ! ctype_lower( $string ) ) {
-			$string = preg_replace( [ '/\s+/u', '/(.)(?=[A-Z])/u' ], [ '', '$1_' ], $string );
-			$string = mb_strtolower( $string, 'UTF-8' );
+	public static function startsWith( string $haystack, string|array $needles ): bool {
+		foreach ( (array) $needles as $needle ) {
+			if ( $needle !== '' && str_starts_with( $haystack, $needle ) ) {
+				return true;
+			}
 		}
 
-		return str_replace( '-', '_', $string );
+		return false;
 	}
 
 	// --------------------------------------------------
 
 	/**
-	 * @param int $length
+	 * @param string|array $needles
+	 * @param string $haystack
 	 *
-	 * @return string
+	 * @return bool
 	 */
-	public static function random( int $length = 8 ): string {
-		$text = base64_encode( wp_generate_password( $length, false ) );
-
-		return substr( str_replace( [ '/', '+', '=' ], '', $text ), 0, $length );
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param string $string
-	 * @param string $prefix
-	 * @param $trim
-	 *
-	 * @return string
-	 */
-	public static function prefix( string $string, string $prefix, $trim = null ): string {
-		if ( '' === $string ) {
-			return $string;
-		}
-		if ( null === $trim ) {
-			$trim = $prefix;
+	public static function endsWith( string $haystack, string|array $needles ): bool {
+		foreach ( (array) $needles as $needle ) {
+			if ( $needle !== '' && str_ends_with( $haystack, $needle ) ) {
+				return true;
+			}
 		}
 
-		return $prefix . trim( self::removePrefix( $string, $trim ) );
+		return false;
 	}
 
 	// --------------------------------------------------
@@ -197,84 +162,78 @@ trait Str {
 	 * @return string
 	 */
 	public static function removePrefix( string $string, string $prefix ): string {
-		return self::startsWith( $prefix, $string )
-			? mb_substr( $string, mb_strlen( $prefix ) )
+		if ( $prefix === '' ) {
+			return $string;
+		}
+
+		return self::startsWith( $string, $prefix )
+			? mb_substr( $string, mb_strlen( $prefix, 'UTF-8' ), null, 'UTF-8' )
 			: $string;
 	}
 
 	// --------------------------------------------------
 
 	/**
-	 * @param $needles
-	 * @param $haystack
-	 *
-	 * @return bool
-	 */
-	public static function startsWith( $needles, $haystack ): bool {
-		$needles = (array) $needles;
-		foreach ( $needles as $needle ) {
-			if ( str_starts_with( $haystack, $needle ) ) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param $needles
-	 * @param $haystack
-	 *
-	 * @return bool
-	 */
-	public static function endsWith( $needles, $haystack ): bool {
-		$needles = (array) $needles;
-		foreach ( $needles as $needle ) {
-			if ( str_ends_with( $haystack, $needle ) ) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param $string
-	 * @param $suffix
+	 * @param string $string
+	 * @param string $prefix
+	 * @param string|null $trim
 	 *
 	 * @return string
 	 */
-	public static function suffix( $string, $suffix ): string {
-		if ( ! self::endsWith( $suffix, $string ) ) {
-			return $string . $suffix;
+	public static function prefix( string $string, string $prefix, ?string $trim = null ): string {
+		$string = trim( $string );
+		if ( $string === '' ) {
+			return '';
 		}
 
-		return $string;
+		$trim    = $trim ?? $prefix;
+		$cleaned = self::removePrefix( $string, $trim );
+
+		return $prefix . $cleaned;
 	}
 
 	// --------------------------------------------------
 
 	/**
-	 * @param $search
-	 * @param $replace
-	 * @param $subject
+	 * @param string $string
+	 * @param string $suffix
 	 *
 	 * @return string
 	 */
-	public static function replaceFirst( $search, $replace, $subject ): string {
-		if ( $search === '' ) {
+	public static function suffix( string $string, string $suffix ): string {
+		$string = trim( $string );
+
+		if ( $suffix === '' || $string === '' ) {
+			return $string;
+		}
+
+		return self::endsWith( $string, $suffix )
+			? $string
+			: $string . $suffix;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string $search
+	 * @param string $replace
+	 * @param string $subject
+	 *
+	 * @return string
+	 */
+	public static function replaceFirst( string $search, string $replace, string $subject ): string {
+		if ( $search === '' || $subject === '' ) {
 			return $subject;
 		}
-		$position = mb_strpos( $subject, $search );
-		if ( $position !== false ) {
-			return mb_substr( $subject, 0, $position ) . $replace . mb_substr( $subject, $position + mb_strlen( $search ) );
+
+		$pos = mb_strpos( $subject, $search, 0, 'UTF-8' );
+		if ( $pos === false ) {
+			return $subject;
 		}
 
-		return $subject;
+		return mb_substr( $subject, 0, $pos, 'UTF-8' )
+		       . $replace
+		       . mb_substr( $subject, $pos + mb_strlen( $search, 'UTF-8' ), null, 'UTF-8' );
 	}
 
 	// --------------------------------------------------
@@ -287,64 +246,26 @@ trait Str {
 	 * @return string
 	 */
 	public static function replaceLast( string $search, string $replace, string $subject ): string {
-		$position = mb_strrpos( $subject, $search );
-		if ( '' !== $search && false !== $position ) {
-			return mb_substr( $subject, 0, $position ) . $replace . mb_substr( $subject, $position + mb_strlen( $search ) );
+		if ( $search === '' || $subject === '' ) {
+			return $subject;
 		}
 
-		return $subject;
+		$pos = mb_strrpos( $subject, $search, 0, 'UTF-8' );
+		if ( $pos === false ) {
+			return $subject;
+		}
+
+		return mb_substr( $subject, 0, $pos, 'UTF-8' )
+		       . $replace
+		       . mb_substr( $subject, $pos + mb_strlen( $search, 'UTF-8' ), null, 'UTF-8' );
 	}
 
 	// --------------------------------------------------
 
 	/**
-	 * Strpos over an array.
-	 *
-	 * @param     $haystack
-	 * @param     $needles
-	 * @param int $offset
-	 *
-	 * @return bool
-	 */
-	public static function strposOffset( $haystack, $needles, int $offset = 0 ): bool {
-		if ( ! is_array( $needles ) ) {
-			$needles = [ $needles ];
-		}
-		foreach ( $needles as $query ) {
-			if ( mb_strrpos( $haystack, $query, $offset ) !== false ) {
-
-				// stop on the first true result.
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param string $string
+	 * @param string $str
 	 *
 	 * @return string
-	 */
-	public static function titleCase( string $string ): string {
-		$value = str_replace( [ '-', '_' ], ' ', $string );
-
-		return mb_convert_case( $value, MB_CASE_TITLE, 'UTF-8' );
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * Keywords
-	 *
-	 * Takes multiple words separated by spaces and changes them to keywords
-	 * Makes sure the keywords are separated by a comma followed by a space.
-	 *
-	 * @param string $str The keywords as a string, separated by whitespace.
-	 *
-	 * @return string The list of keywords in a comma separated string form.
 	 */
 	public static function keyWords( string $str ): string {
 		$str = preg_replace( '/[\v\s]+/u', ' ', $str );
@@ -355,52 +276,82 @@ trait Str {
 	// --------------------------------------------------
 
 	/**
-	 * @param $value
-	 * @param $length
+	 * @param string $str
+	 *
+	 * @return string
+	 */
+	public static function sanitizeKeywords( string $str ): string {
+		$str = strip_tags( $str );
+		$str = preg_replace( '/[\s\v]+/u', ' ', $str );
+		$str = preg_replace( '/\s*,\s*/u', ',', $str );
+		$str = preg_replace( '/\s+/u', ',', trim( $str ) );
+
+		$keywords = array_filter( array_unique( array_map( static function ( $word ) {
+			$word = mb_strtolower( trim( $word ), 'UTF-8' );
+
+			return preg_replace(
+				'/[^a-z0-9áàảãạăắằẳẵặâấầẩẫậđéèẻẽẹêếềểễệíìỉĩịóòỏõọôốồổỗộơớờởỡợúùủũụưứừửữựýỳỷỹỵ\s\-]/u',
+				'',
+				$word
+			);
+		}, explode( ',', $str ) ) ) );
+
+		return implode( ', ', $keywords );
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string $value
+	 * @param int $length
 	 * @param string $end
 	 *
 	 * @return string
 	 */
-	public static function truncate( $value, $length, string $end = '' ): string {
-		return mb_strwidth( $value, 'UTF-8' ) > $length
-			? mb_substr( $value, 0, $length, 'UTF-8' ) . $end
-			: $value;
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param string|null $string
-	 *
-	 * @return string|null
-	 */
-	public static function escAttr( ?string $string ): ?string {
-		return esc_attr( self::stripAllTags( $string ) );
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param string|null $string
-	 * @param bool $remove_js
-	 * @param bool $flatten
-	 * @param $allowed_tags
-	 *
-	 * @return string
-	 */
-	public static function stripAllTags( ?string $string, $allowed_tags = null, bool $remove_js = true, bool $flatten = true ): string {
-		if ( ! is_scalar( $string ) ) {
+	public static function truncate( string $value, int $length, string $end = '' ): string {
+		if ( $length <= 0 ) {
 			return '';
 		}
 
+		$value = trim( $value );
+		if ( mb_strlen( $value, 'UTF-8' ) <= $length ) {
+			return $value;
+		}
+
+		$adjusted  = max( 0, $length - mb_strlen( $end, 'UTF-8' ) );
+		$truncated = mb_substr( $value, 0, $adjusted, 'UTF-8' );
+
+		return rtrim( $truncated ) . $end;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string|null $string
+	 * @param string|array|null $allowed_tags
+	 *
+	 * @param bool $remove_js
+	 * @param bool $flatten
+	 *
+	 * @return string
+	 */
+	public static function stripAllTags( ?string $string, string|array|null $allowed_tags = null, bool $remove_js = true, bool $flatten = true ): string {
+		if ( $string === null || $string === '' ) {
+			return '';
+		}
+
+		if ( is_array( $allowed_tags ) ) {
+			$allowed_tags = implode( '', array_map( static fn( $tag ) => "<{$tag}>", $allowed_tags ) );
+		}
+
 		if ( $remove_js ) {
-			$string = preg_replace( '@<(script|style)[^>]*?>.*?</\\1>@si', ' ', $string ) ?? '';
+			$string = preg_replace( '/<(script|style)[^>]*>.*?<\/\1>/is', ' ', $string ) ?? '';
 		}
 
 		$string = strip_tags( $string, $allowed_tags );
 
 		if ( $flatten ) {
-			$string = preg_replace( '/[\r\n\t ]+/', ' ', $string ) ?? '';
+			$string = preg_replace( '/\s+/u', ' ', $string ) ?? '';
 		}
 
 		return trim( $string );
@@ -416,7 +367,7 @@ trait Str {
 	 * @return string
 	 */
 	public static function stripSpace( ?string $string, bool $strip_tags = true, string $replace = '' ): string {
-		if ( empty( $string ) ) {
+		if ( $string === null || trim( $string ) === '' ) {
 			return '';
 		}
 
@@ -424,7 +375,22 @@ trait Str {
 			$string = strip_tags( $string );
 		}
 
-		return preg_replace( '/[\v\s\x{00a0}]+/u', $replace, $string ) ?? $string;
+		return trim( preg_replace( '/[\p{Z}\s]+/u', $replace, $string ) ?? '' );
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string|null $string
+	 *
+	 * @return string
+	 */
+	public static function escAttr( ?string $string ): string {
+		if ( $string === null ) {
+			return '';
+		}
+
+		return esc_attr( self::stripAllTags( $string ) );
 	}
 
 	// --------------------------------------------------
@@ -436,106 +402,12 @@ trait Str {
 	 */
 	public static function normalize( string $text ): string {
 		$allowedHtml         = wp_kses_allowed_html();
-		$allowedHtml['mark'] = []; // allow using the <mark> tag to highlight text
+		$allowedHtml['mark'] = [];
 
-		// just in case...
-		$text = convert_smilies( excerpt_remove_blocks( strip_shortcodes( wp_kses( $text, $allowedHtml ) ) ) );
+		$text = wp_kses( $text, $allowedHtml );
+		$text = convert_smilies( $text );
 		$text = str_replace( ']]>', ']]&gt;', $text );
 
-		return preg_replace( '/(\v){2,}/u', '$1', $text );
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param string $text
-	 *
-	 * @return string
-	 */
-	public static function text( string $text ): string {
-		$text = wptexturize( nl2br( self::normalize( $text ) ) );
-
-		// replace all multiple-space and carriage return characters with a space
-		return preg_replace( '/[\v\s]+/u', ' ', $text );
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param string $text
-	 * @param int $limit
-	 *
-	 * @return int
-	 */
-	public static function excerptIntlSplit( string $text, int $limit ): int {
-		if ( ! extension_loaded( 'intl' ) ) {
-			return mb_strlen( $text );
-		}
-
-		$words = \IntlRuleBasedBreakIterator::createWordInstance( '' );
-		$words->setText( $text );
-		$count = 0;
-		foreach ( $words as $offset ) {
-			if ( \IntlBreakIterator::WORD_NONE === $words->getRuleStatus() ) {
-				continue;
-			}
-			++ $count;
-			if ( $count !== $limit ) {
-				continue;
-			}
-
-			return $offset;
-		}
-
-		return mb_strlen( $text );
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param string $text
-	 * @param int $limit
-	 *
-	 * @return int
-	 */
-	protected static function excerptSplit( string $text, int $limit ): int {
-		if ( str_word_count( $text ) > $limit ) {
-			$words = array_keys( str_word_count( $text, 2 ) );
-
-			return $words[ $limit ];
-		}
-
-		return mb_strlen( $text );
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param string $text
-	 * @param int $limit
-	 * @param bool $splitWords
-	 * @param string $showMore
-	 *
-	 * @return string
-	 */
-	public static function excerpt( string $text, int $limit = 55, bool $splitWords = true, string $showMore = '...' ): string {
-		$text        = strip_tags( $text );
-		$text        = self::normalize( $text );
-		$splitLength = $limit;
-
-		if ( $splitWords ) {
-			$splitLength = extension_loaded( 'intl' )
-				? self::excerptIntlSplit( $text, $limit )
-				: self::excerptSplit( $text, $limit );
-		}
-
-		$hiddenText = mb_substr( $text, $splitLength );
-		if ( ! empty( $hiddenText ) ) {
-			$text = ltrim( mb_substr( $text, 0, $splitLength ) ) . $showMore;
-		}
-
-		$text = wptexturize( nl2br( $text ) );
-
-		return preg_replace( '/[\v\s]+/u', ' ', $text ) ?? $text;
+		return preg_replace( '/\n{2,}/', "\n", trim( $text ) );
 	}
 }

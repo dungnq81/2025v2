@@ -15,117 +15,117 @@ trait Cast {
 	 * @param string|null $string
 	 * @param bool $remove_empty
 	 *
-	 * @return null[]|string[]
+	 * @return array|string[]
 	 */
 	public static function explodeMulti( mixed $delimiters, ?string $string, bool $remove_empty = true ): array {
 		$string = (string) $string;
+
+		if ( $string === '' ) {
+			return [];
+		}
+
 		if ( is_string( $delimiters ) ) {
-			return explode( $delimiters, $string );
-		}
-
-		if ( is_array( $delimiters ) ) {
+			$result = explode( $delimiters, $string );
+		} elseif ( is_array( $delimiters ) && count( $delimiters ) > 0 ) {
 			$ready  = str_replace( $delimiters, $delimiters[0], $string );
-			$launch = explode( $delimiters[0], $ready );
-
-			return $remove_empty ? array_values( array_filter( $launch ) ) : array_values( $launch );
+			$result = explode( $delimiters[0], $ready );
+		} else {
+			return [ $string ];
 		}
 
-		return [ $string ];
+		return $remove_empty
+			? array_values( array_filter( $result, 'strlen' ) )
+			: array_values( $result );
 	}
 
 	// --------------------------------------------------
 
 	/**
-	 * Convert a mixed value to an integer.
+	 * @param mixed $value
 	 *
-	 * @param mixed $value The value to be converted.
-	 *
-	 * @return int The converted integer value.
+	 * @return int
 	 */
 	public static function toInt( mixed $value ): int {
-		// Convert the value to float first
-		$floatValue = self::toFloat( $value );
-
-		// Round and return as integer
-		return (int) round( $floatValue );
+		return (int) round( self::toFloat( $value ) );
 	}
 
 	// --------------------------------------------------
 
 	/**
-	 * Convert a mixed value to a float.
+	 * @param mixed $value
 	 *
-	 * @param mixed $value The value to be converted.
-	 *
-	 * @return float The converted float value or 0.0 if invalid.
+	 * @return float
 	 */
 	public static function toFloat( mixed $value ): float {
-		// Attempt to validate and convert the value to float
-		$floatValue = filter_var( $value, FILTER_VALIDATE_FLOAT, FILTER_FLAG_ALLOW_FRACTION | FILTER_FLAG_ALLOW_THOUSAND );
+		if ( is_float( $value ) || is_int( $value ) ) {
+			return (float) $value;
+		}
+
+		if ( is_string( $value ) ) {
+			$value = trim( $value );
+			$value = str_replace( [ ' ', ',' ], [ '', '.' ], $value );
+			if ( is_numeric( $value ) ) {
+				return (float) $value;
+			}
+		}
 
 		// If the conversion fails, return 0.0 or handle the error accordingly
-		return $floatValue !== false ? (float) $floatValue : 0.0;
+		return 0.0;
 	}
 
 	// --------------------------------------------------
 
 	/**
-	 * Convert a mixed value to an array.
+	 * @param mixed $value
+	 * @param bool $explode
 	 *
-	 * @param mixed $value The value to convert.
-	 * @param bool $explode If true, attempt to convert scalar values (like strings) to an array.
-	 *
-	 * @return array The converted array.
+	 * @return array|bool[]
 	 */
 	public static function toArray( mixed $value, bool $explode = true ): array {
+		if ( $value === null ) {
+			return [];
+		}
+
 		if ( is_bool( $value ) ) {
 			return [ $value ];
 		}
 
-		// If the value is scalar and explosion is allowed
+		if ( is_array( $value ) ) {
+			return $value;
+		}
+
 		if ( is_scalar( $value ) && $explode ) {
-			return self::convertFromString( $value );
+			return self::convertFromString( (string) $value );
 		}
 
-		// If the value is an object
 		if ( is_object( $value ) ) {
-			$reflection = new \ReflectionObject( $value );
-			$value      = $reflection->hasMethod( 'toArray' )
-				? $value->toArray()
-				: get_object_vars( $value );
+			if ( method_exists( $value, 'toArray' ) ) {
+				return $value->toArray();
+			}
+
+			return get_object_vars( $value );
 		}
 
-		return (array) $value;
+		return [];
 	}
 
 	// --------------------------------------------------
 
-	/**
-	 * Convert a mixed value to a string.
-	 *
-	 * @param mixed $value The value to convert.
-	 * @param bool $strict If true, return an empty string for non-scalar values; if false, serialize them.
-	 *
-	 * @return string The converted string.
-	 */
 	public static function toString( mixed $value, bool $strict = true ): string {
-		if ( is_scalar( $value ) ) {
+		if ( is_string( $value ) || is_numeric( $value ) || is_bool( $value ) ) {
 			return (string) $value;
 		}
 
-		// Handle object conversion using __toString method
-		if ( is_object( $value ) && in_array( '__toString', get_class_methods( $value ) ) ) {
-			return (string) $value->__toString();
+		if ( is_object( $value ) && method_exists( $value, '__toString' ) ) {
+			return (string) $value;
 		}
 
-		// Return an empty string for empty values
 		if ( self::isEmpty( $value ) ) {
 			return '';
 		}
 
-		// Handle indexed and flat arrays
 		if ( self::isIndexedAndFlat( $value ) ) {
-			return implode( ', ', $value );
+			return implode( ', ', (array) $value );
 		}
 
 		return $strict ? '' : maybe_serialize( $value );
@@ -134,20 +134,12 @@ trait Cast {
 	// --------------------------------------------------
 
 	/**
-	 * Convert a mixed value to a boolean.
+	 * @param mixed $value
 	 *
-	 * @param mixed $value The value to convert.
-	 *
-	 * @return bool True for "truthy" values, false otherwise.
+	 * @return bool
 	 */
 	public static function toBool( mixed $value ): bool {
-		// Handle null explicitly if needed (optional)
-		if ( is_null( $value ) ) {
-			return false;
-		}
-
-		// Use filter_var to convert value to boolean
-		return filter_var( $value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE ) ?? false;
+		return (bool) filter_var( $value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE );
 	}
 
 	// --------------------------------------------------
@@ -159,8 +151,6 @@ trait Cast {
 	 */
 	public static function toObject( mixed $value ): mixed {
 		if ( ! is_object( $value ) ) {
-
-			// Attempt to convert to array, catching any potential JsonException
 			return (object) self::toArray( $value );
 		}
 

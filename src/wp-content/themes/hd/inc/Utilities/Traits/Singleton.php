@@ -1,9 +1,4 @@
 <?php
-
-namespace HD\Utilities\Traits;
-
-\defined( 'ABSPATH' ) || die;
-
 /**
  * Singleton base class for having singleton implementation
  * This allows you to have only one instance of the necessary object
@@ -11,11 +6,21 @@ namespace HD\Utilities\Traits;
  *
  * /!\ The get_instance method has to be implemented in the child class!
  */
-trait Singleton {
-	protected static $instance;
 
+namespace HD\Utilities\Traits;
+
+\defined( 'ABSPATH' ) || die;
+
+trait Singleton {
+
+	/** @var static|null */
+	protected static $instance = null;
+
+	/**
+	 * @return static
+	 */
 	final public static function get_instance(): static {
-		if ( null === static::$instance ) {
+		if ( ! isset( static::$instance ) ) {
 			static::$instance = new static();
 		}
 
@@ -28,7 +33,9 @@ trait Singleton {
 
 	protected function init(): void {}
 
-	final public function __clone() {}
+	final public function __clone(): void {}
 
-	final public function __wakeup() {}
+	final public function __wakeup(): void {
+		throw new \RuntimeException( 'Cannot unserialize singleton.' );
+	}
 }

@@ -5,7 +5,135 @@ namespace HD\Utilities\Traits;
 \defined( 'ABSPATH' ) || die;
 
 trait File {
-	use Base;
+	// --------------------------------------------------
+
+	/**
+	 * @return \WP_Filesystem_Base|null
+	 */
+	private static function wpFileSystem(): ?\WP_Filesystem_Base {
+		global $wp_filesystem;
+
+		if ( ! function_exists( 'WP_Filesystem' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+		}
+
+		if ( empty( $wp_filesystem ) ) {
+			WP_Filesystem();
+		}
+
+		return $wp_filesystem instanceof \WP_Filesystem_Base ? $wp_filesystem : null;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string $path
+	 *
+	 * @return string|null
+	 */
+	public static function fileRead( string $path ): ?string {
+		$fs = self::wpFileSystem();
+		if ( ! $fs ) {
+			return is_file( $path ) ? file_get_contents( $path ) : null;
+		}
+
+		if ( ! $fs->is_file( $path ) ) {
+			return null;
+		}
+
+		return $fs->get_contents( $path );
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string $path
+	 * @param string $content
+	 * @param bool $lock
+	 *
+	 * @return bool
+	 */
+	public static function fileWrite( string $path, string $content, bool $lock = false ): bool {
+		$fs = self::wpFileSystem();
+		if ( $fs ) {
+			return (bool) $fs->put_contents( $path, $content, FS_CHMOD_FILE );
+		}
+
+		if ( $lock ) {
+			$fp = fopen( $path, 'cb' );
+			if ( ! $fp ) {
+				return false;
+			}
+			flock( $fp, LOCK_EX );
+			fwrite( $fp, $content );
+			fflush( $fp );
+			flock( $fp, LOCK_UN );
+			fclose( $fp );
+
+			return true;
+		}
+
+		return (bool) file_put_contents( $path, $content );
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string $directory
+	 *
+	 * @return bool
+	 */
+	public static function createDirectory( string $directory ): bool {
+		return wp_mkdir_p( $directory );
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string $url
+	 * @param string $destination
+	 * @param array|null $allowed
+	 *
+	 * @return string|null
+	 */
+	public static function uploadFileFromUrl( string $url, string $destination, array $allowed = null ): ?string {
+		$extension = strtolower( pathinfo( parse_url( $url, PHP_URL_PATH ), PATHINFO_EXTENSION ) );
+
+		if ( $allowed !== null && ! in_array( $extension, $allowed, true ) ) {
+			return null;
+		}
+
+		$content = wp_remote_retrieve_body( wp_safe_remote_get( $url ) );
+
+		if ( ! $content ) {
+			return null;
+		}
+
+		$dir = dirname( $destination );
+		self::createDirectory( $dir );
+
+		if ( ! self::fileWrite( $destination, $content, true ) ) {
+			return null;
+		}
+
+		return $destination;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string $path
+	 *
+	 * @return bool
+	 */
+	public static function deleteFile( string $path ): bool {
+		$fs = self::wpFileSystem();
+		if ( $fs ) {
+			return $fs->exists( $path ) && $fs->delete( $path, false, 'f' );
+		}
+
+		return file_exists( $path ) && unlink( $path );
+	}
 
 	// --------------------------------------------------
 
@@ -23,146 +151,6 @@ trait File {
 		if ( isset( $_SERVER['HTACCESS'] ) && $_SERVER['HTACCESS'] === 'on' ) {
 			return true;
 		}
-
-		return false;
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @return mixed
-	 */
-	public static function wpFileSystem(): mixed {
-		global $wp_filesystem;
-
-		// Initialize the WP filesystem, no more using the 'file-put-contents' function.
-		if ( empty( $wp_filesystem ) ) {
-			require_once ABSPATH . '/wp-admin/includes/file.php';
-			WP_Filesystem();
-		}
-
-		return $wp_filesystem;
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param string|null $path
-	 *
-	 * @return bool
-	 */
-	public static function fileCreate( ?string $path ): bool {
-		if ( empty( $path ) || ! is_string( $path ) ) {
-			self::errorLog( 'Invalid file path provided for fileCreate.' );
-
-			return false;
-		}
-
-		$wp_filesystem = self::wpFileSystem();
-
-		if ( empty( $wp_filesystem ) ) {
-			return false;
-		}
-
-		// Bail if the file already exists.
-		if ( $wp_filesystem->is_file( $path ) ) {
-			return true;
-		}
-
-		// Create the file.
-		return $wp_filesystem->touch( $path );
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param string|null $file
-	 *
-	 * @return string|null
-	 */
-	public static function fileRead( ?string $file ): ?string {
-		if ( empty( $file ) || ! is_file( $file ) ) {
-			self::errorLog( 'Invalid file path provided for fileRead.' );
-
-			return null;
-		}
-
-		$wp_filesystem = self::wpFileSystem();
-
-		if ( empty( $wp_filesystem ) ) {
-			return null;
-		}
-
-		// Read `file`
-		return $wp_filesystem->get_contents( $file ) ?: null;
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param string|null $path
-	 * @param string $content
-	 *
-	 * @return void
-	 */
-	public static function fileUpdate( ?string $path, string $content = '' ): void {
-		if ( empty( $path ) || ! is_string( $path ) ) {
-			self::errorLog( 'Invalid file path provided for fileUpdate.' );
-
-			return;
-		}
-
-		if ( ! is_string( $content ) ) {
-			self::errorLog( 'Invalid content provided for fileUpdate.' );
-
-			return;
-		}
-
-		$wp_filesystem = self::wpFileSystem();
-
-		if ( empty( $wp_filesystem ) ) {
-			return;
-		}
-
-		// Add the new content into the file.
-		$wp_filesystem->put_contents( $path, $content );
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param string|null $path
-	 * @param string $content
-	 *
-	 * @return bool
-	 */
-	public static function doLockWrite( ?string $path, string $content = '' ): bool {
-		if ( empty( $path ) || ! is_string( $path ) ) {
-			self::errorLog( 'Invalid file path provided for doLockWrite.' );
-
-			return false;
-		}
-
-		if ( ! is_string( $content ) ) {
-			self::errorLog( 'Invalid content provided for doLockWrite.' );
-
-			return false;
-		}
-
-		$fp = fopen( $path, 'wb+' );
-		if ( $fp === false ) {
-			return false;
-		}
-
-		if ( flock( $fp, LOCK_EX ) ) {
-			fwrite( $fp, $content );
-			flock( $fp, LOCK_UN );
-			fclose( $fp );
-
-			return true;
-		}
-
-		fclose( $fp );
 
 		return false;
 	}
@@ -229,125 +217,6 @@ trait File {
 		}
 
 		return true;
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param string|null $directory
-	 *
-	 * @return bool
-	 */
-	public static function createDirectory( ?string $directory ): bool {
-		if ( empty( $directory ) || ! is_string( $directory ) ) {
-			self::errorLog( 'Invalid directory path provided for createDirectory.' );
-
-			return false;
-		}
-
-		if ( ! is_writable( dirname( $directory ) ) ) {
-			self::errorLog( sprintf( 'Cannot write to the parent directory: %s.', dirname( $directory ) ) );
-
-			return false;
-		}
-
-		$is_directory_created = wp_mkdir_p( $directory );
-
-		if ( ! $is_directory_created ) {
-			self::errorLog( sprintf( 'Cannot create directory: %s.', $directory ) );
-		}
-
-		return $is_directory_created;
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param string|null $fileUrl
-	 * @param array|null $allowedTypes
-	 * @param int|null $maxFileSize
-	 * @param string|null $specificDir
-	 *
-	 * @return array|null
-	 */
-	public static function uploadFileFromUrl( ?string $fileUrl, ?array $allowedTypes = null, ?int $maxFileSize = null, ?string $specificDir = null ): ?array {
-		if ( empty( $fileUrl ) || ! self::isUrl( $fileUrl ) ) {
-			self::errorLog( 'Invalid file URL provided for uploadFileFromUrl.' );
-
-			return null;
-		}
-
-		$response = wp_remote_get( $fileUrl, [ 'timeout' => 10 ] );
-
-		if ( is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) !== 200 ) {
-			self::errorLog( 'Failed to retrieve file from URL: ' . $fileUrl );
-
-			return null;
-		}
-
-		$fileContent = wp_remote_retrieve_body( $response );
-
-		if ( empty( $fileContent ) ) {
-			self::errorLog( 'Empty file content retrieved from URL: ' . $fileUrl );
-
-			return null;
-		}
-
-		$filename  = basename( parse_url( $fileUrl, PHP_URL_PATH ) );
-		$uploadDir = wp_upload_dir();
-
-		if ( $specificDir ) {
-			$directory = trailingslashit( $uploadDir['basedir'] ) . trim( $specificDir, '/' );
-			if ( ! self::createDirectory( $directory ) ) {
-				return null;
-			}
-		} else {
-			$directory = $uploadDir['path'];
-		}
-
-		$filePath = trailingslashit( $directory ) . $filename;
-
-		if ( $maxFileSize !== null && mb_strlen( $fileContent ) > $maxFileSize ) {
-			self::errorLog( 'File exceeds maximum allowed size: ' . $filename );
-
-			return null;
-		}
-
-		if ( ! self::doLockWrite( $filePath, $fileContent ) ) {
-			self::errorLog( 'Failed to write file: ' . $filePath );
-
-			return null;
-		}
-
-		$filetype = wp_check_filetype( $filePath );
-
-		if ( $allowedTypes !== null && ( ! $filetype['type'] || ! in_array( $filetype['type'], $allowedTypes, false ) ) ) {
-			self::errorLog( 'File type not allowed: ' . $filetype['type'] );
-
-			return null;
-		}
-
-		$attachment = [
-			'guid'           => $uploadDir['url'] . '/' . $filename,
-			'post_mime_type' => $filetype['type'],
-			'post_title'     => self::fileName( $filename, false ),
-			'post_content'   => '',
-			'post_status'    => 'inherit',
-		];
-
-		$attachId = wp_insert_attachment( $attachment, $filePath );
-
-		if ( ! function_exists( 'wp_generate_attachment_metadata' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/image.php';
-		}
-
-		$attachData = wp_generate_attachment_metadata( $attachId, $filePath );
-		wp_update_attachment_metadata( $attachId, $attachData );
-
-		return [
-			'id'  => $attachId,
-			'url' => wp_get_attachment_url( $attachId ),
-		];
 	}
 
 	// --------------------------------------------------

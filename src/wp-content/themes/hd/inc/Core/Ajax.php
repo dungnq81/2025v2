@@ -9,7 +9,7 @@
  * @author Gaudev
  */
 
-namespace HD\Core\Frontend;
+namespace HD\Core;
 
 use HD\Utilities\Traits\Singleton;
 

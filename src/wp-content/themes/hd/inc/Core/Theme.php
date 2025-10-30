@@ -13,7 +13,6 @@
 namespace HD\Core;
 
 use HD\Core\Admin\Admin;
-use HD\Core\Frontend\Ajax;
 use HD\Core\Frontend\Hook;
 use HD\Core\Frontend\Shortcode;
 use HD\Integration\ACF\ACF;
@@ -93,17 +92,17 @@ final class Theme {
 	// --------------------------------------------------
 
 	public function setup(): void {
-		if ( HD_Helper::isAdmin() ) {
-			( Admin::get_instance() );
-		}
-
 		( Customizer::get_instance() );
 		( Optimizer::get_instance() );
-		( Shortcode::get_instance() );
-		( Hook::get_instance() );
 		( Ajax::get_instance() );
 
-		// Integration
+		if ( HD_Helper::isAdmin() ) {
+			( Admin::get_instance() );
+		} else {
+			( Hook::get_instance() );
+			( Shortcode::get_instance() );
+		}
+
 		HD_Helper::isAcfActive() && ACF::get_instance();
 		HD_Helper::isWoocommerceActive() && WooCommerce::get_instance();
 	}

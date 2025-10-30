@@ -9,25 +9,124 @@ trait Url {
 
 	/**
 	 * @param string $uri
-	 * @param int $status
+	 * @param bool $permanent
 	 *
-	 * @return bool|void
+	 * @return void
 	 */
-	public static function redirect( string $uri = '', int $status = 301 ) {
+	public static function redirect( string $uri = '', bool $permanent = true ): void {
 		$uri = esc_url_raw( $uri );
 		if ( ! $uri ) {
-			return false;
+			return;
 		}
 
-		if ( ! headers_sent() ) {
+		$status = $permanent ? 301 : 302;
+
+		if ( ! headers_sent() && ! wp_doing_ajax() && ! wp_is_json_request() ) {
 			wp_safe_redirect( $uri, $status );
 			exit;
 		}
 
-		echo '<script>window.location.href="' . esc_js( $uri ) . '";</script>';
-		echo '<noscript><meta http-equiv="refresh" content="0;url=' . esc_attr( $uri ) . '" /></noscript>';
+		// Fallback for already sent headers
+		if ( ! wp_doing_ajax() && ! wp_is_json_request() ) {
+			echo '<script>window.location.href="' . esc_js( $uri ) . '";</script>';
+			echo '<noscript><meta http-equiv="refresh" content="0;url=' . esc_attr( $uri ) . '" /></noscript>';
+		}
+	}
 
-		return true;
+	// --------------------------------------------------
+
+	/**
+	 * @param string $ip
+	 * @param string $subnet
+	 * @param int $maskLength
+	 *
+	 * @return bool
+	 */
+	private static function ipCIDRCheck( string $ip, string $subnet, int $maskLength ): bool {
+		if ( $maskLength < 0 || $maskLength > 32 ) {
+			return false;
+		}
+
+		$ipLong     = ip2long( $ip );
+		$subnetLong = ip2long( $subnet );
+
+		if ( $ipLong === false || $subnetLong === false ) {
+			return false;
+		}
+
+		$mask = - 1 << ( 32 - $maskLength );
+
+		return ( $ipLong & $mask ) === ( $subnetLong & $mask );
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string $ip1
+	 * @param string $ip2
+	 *
+	 * @return int
+	 */
+	private static function compareIPs( string $ip1, string $ip2 ): int {
+		$ip1Long = ip2long( $ip1 );
+		$ip2Long = ip2long( $ip2 );
+
+		if ( $ip1Long === false || $ip2Long === false ) {
+			return 0;
+		}
+
+		return $ip1Long <=> $ip2Long;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param string $range
+	 *
+	 * @return bool
+	 */
+	public static function isValidIPRange( string $range ): bool {
+		$range = trim( $range );
+
+		// Single IP
+		if ( filter_var( $range, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 ) ) {
+			return true;
+		}
+
+		// CIDR (Ex 192.168.1.0/24)
+		if ( str_contains( $range, '/' ) ) {
+			[ $subnet, $mask ] = explode( '/', $range, 2 );
+			if ( filter_var( $subnet, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 ) ) {
+				$mask = (int) $mask;
+
+				return $mask >= 0 && $mask <= 32;
+			}
+
+			return false;
+		}
+
+		// Range: 192.168.1.1-192.168.1.100 or 192.168.1.1-100
+		if ( str_contains( $range, '-' ) ) {
+			[ $start, $end ] = explode( '-', $range, 2 );
+			$start = trim( $start );
+			$end   = trim( $end );
+
+			// Ex: 192.168.1.1-100
+			if ( is_numeric( $end ) ) {
+				$parts = explode( '.', $start );
+				if ( count( $parts ) === 4 ) {
+					$end = "{$parts[0]}.{$parts[1]}.{$parts[2]}.$end";
+				}
+			}
+
+			if ( filter_var( $start, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 ) && filter_var( $end, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 ) ) {
+				return self::compareIPs( $start, $end ) < 0;
+			}
+
+			return false;
+		}
+
+		return false;
 	}
 
 	// --------------------------------------------------
@@ -47,128 +146,34 @@ trait Url {
 		$rangePattern = '/^(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})-(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])$/';
 		$cidrPattern  = '/^(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\/(\d|[1-2]\d|3[0-2])$/';
 
-		// Check if it's a single IP address
+		// Single IP
 		if ( preg_match( $ipPattern, $range ) ) {
 			return (string) $ip === (string) $range;
 		}
 
-		// Check if it's an IP range
+		// IP Range
 		if ( preg_match( $rangePattern, $range, $matches ) ) {
 			$startIP = "{$matches[1]}.{$matches[2]}.{$matches[3]}.{$matches[4]}";
 			$endIP   = "{$matches[1]}.{$matches[2]}.{$matches[3]}.{$matches[5]}";
 
-			return self::_compareIPs( $startIP, $endIP ) < 0 && self::_compareIPs( $startIP, $ip ) <= 0 && self::_compareIPs( $ip, $endIP ) <= 0;
+			return self::compareIPs( $startIP, $endIP ) <= 0 &&
+			       self::compareIPs( $startIP, $ip ) <= 0 &&
+			       self::compareIPs( $ip, $endIP ) <= 0;
 		}
 
-		// Check if it's a CIDR notation
+		// CIDR
 		if ( preg_match( $cidrPattern, $range ) ) {
 			[ $subnet, $maskLength ] = explode( '/', $range );
+			$maskLength = (int) $maskLength;
 
-			return self::_ipCIDRCheck( $ip, $subnet, $maskLength );
+			if ( $maskLength < 0 || $maskLength > 32 ) {
+				return false;
+			}
+
+			return self::ipCIDRCheck( $ip, $subnet, $maskLength );
 		}
 
 		return false;
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param $ip
-	 * @param $subnet
-	 * @param $maskLength
-	 *
-	 * @return bool
-	 */
-	private static function _ipCIDRCheck( $ip, $subnet, $maskLength ): bool {
-		$ip     = ip2long( $ip );
-		$subnet = ip2long( $subnet );
-		$mask   = - 1 << ( 32 - $maskLength );
-		$subnet &= $mask; // Align the subnet to the mask
-
-		return ( $ip & $mask ) === $subnet;
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param $range
-	 *
-	 * @return bool
-	 */
-	public static function isValidIPRange( $range ): bool {
-		$ipPattern    = '/^(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})$/';
-		$rangePattern = '/^(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})-(\d|[1-9]\d|1\d{2}|2[0-4]\d|25[0-5])$/';
-		$cidrPattern  = '/^(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\/(\d|[1-2]\d|3[0-2])$/';
-
-		if ( preg_match( $ipPattern, $range ) ) {
-			return true;
-		}
-
-		if ( preg_match( $rangePattern, $range, $matches ) ) {
-			$startIP = "{$matches[1]}.{$matches[2]}.{$matches[3]}.{$matches[4]}";
-			$endIP   = "{$matches[1]}.{$matches[2]}.{$matches[3]}.{$matches[5]}";
-
-			return self::_compareIPs( $startIP, $endIP ) < 0;
-		}
-
-		if ( preg_match( $cidrPattern, $range ) ) {
-			return true;
-		}
-
-		return false;
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param $ip1
-	 * @param $ip2
-	 *
-	 * @return int
-	 */
-	private static function _compareIPs( $ip1, $ip2 ): int {
-		$ip1Long = (int) ip2long( $ip1 );
-		$ip2Long = (int) ip2long( $ip2 );
-
-		if ( $ip1Long < $ip2Long ) {
-			return - 1;
-		}
-
-		if ( $ip1Long > $ip2Long ) {
-			return 1;
-		}
-
-		return 0;
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @return mixed|string|null
-	 */
-	public static function serverIpAddress(): mixed {
-		if ( ! empty( $_SERVER['SERVER_ADDR'] ) && filter_var( $_SERVER['SERVER_ADDR'], FILTER_VALIDATE_IP ) ) {
-			return $_SERVER['SERVER_ADDR'];
-		}
-
-		$hostname = gethostname();
-		if ( $hostname ) {
-			$ipv4 = gethostbyname( $hostname );
-			if ( $ipv4 !== $hostname && filter_var( $ipv4, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 ) ) {
-				return $ipv4;
-			}
-		}
-
-		$dnsRecords = dns_get_record( $hostname, DNS_AAAA );
-		if ( ! empty( $dnsRecords ) ) {
-			foreach ( $dnsRecords as $record ) {
-				if ( ! empty( $record['ipv6'] ) && filter_var( $record['ipv6'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 ) ) {
-					return $record['ipv6'];
-				}
-			}
-		}
-
-		return null;
 	}
 
 	// --------------------------------------------------
@@ -209,50 +214,6 @@ trait Url {
 	// --------------------------------------------------
 
 	/**
-	 * @param string $url
-	 *
-	 * @return string
-	 */
-	public static function urlToPath( string $url ): string {
-		// Ensure the URL is absolute before converting
-		if ( ! filter_var( $url, FILTER_VALIDATE_URL ) ) {
-			return '';
-		}
-
-		// Get the home path and make the URL relative
-		$homePath     = rtrim( get_home_path(), '/' );
-		$relativePath = wp_make_link_relative( $url );
-
-		// Combine the home path and relative path
-		return $homePath . $relativePath;
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param string $dir
-	 *
-	 * @return string
-	 */
-	public static function pathToUrl( string $dir ): string {
-		$dirs = wp_upload_dir();
-
-		// Ensure the directory path starts with the base directory
-		if ( ! str_starts_with( $dir, $dirs['basedir'] ) ) {
-			return '';
-		}
-
-		// Replace basedir with baseurl and ABSPATH with home URL
-		return str_replace(
-			[ $dirs['basedir'], ABSPATH ],
-			[ $dirs['baseurl'], self::siteURL() ],
-			$dir
-		);
-	}
-
-	// --------------------------------------------------
-
-	/**
 	 * @param string $path
 	 * @param $scheme
 	 *
@@ -272,23 +233,6 @@ trait Url {
 	 */
 	public static function siteURL( string $path = '', $scheme = null ): string {
 		return apply_filters( 'hd_site_url_filter', esc_url( site_url( $path, $scheme ) ), $path );
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param string $path
-	 *
-	 * @return string|null
-	 */
-	public static function adminCurrentUrl( string $path = 'admin.php' ): ?string {
-		$parsed_url  = parse_url( wp_unslash( $_SERVER['REQUEST_URI'] ) );
-		$current_url = admin_url( $path );
-		if ( $parsed_url ) {
-			$current_url .= '?' . $parsed_url['query'];
-		}
-
-		return $current_url;
 	}
 
 	// --------------------------------------------------
@@ -398,27 +342,5 @@ trait Url {
 		$queries = self::urlQueries( $url );
 
 		return $queries[ $param ] ?? $fallback;
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * Check the HTTP status of a remote URL.
-	 *
-	 * @param string $url The URL to check.
-	 *
-	 * @return int|false The HTTP response code on success, false on error.
-	 */
-	public static function remoteStatusCheck( string $url ): int|false {
-		$response = wp_safe_remote_head( $url, [
-			'timeout'   => 5,
-			'sslverify' => false,
-		] );
-
-		if ( is_wp_error( $response ) || ! isset( $response['response']['code'] ) ) {
-			return false;
-		}
-
-		return (int) $response['response']['code'];
 	}
 }

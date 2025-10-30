@@ -17,7 +17,7 @@
     "devDependencies": {
         "@tailwindcss/vite": "^4.1.16",
         "@vheemstra/vite-plugin-imagemin": "^2.2.1",
-        "@wordpress/browserslist-config": "^6.33.0",
+        "@wordpress/browserslist-config": "^6.34.0",
         "autoprefixer": "^10.4.21",
         "concurrently": "^9.2.1",
         "cross-env": "^10.1.0",
@@ -32,7 +32,7 @@
         "vite-plugin-static-copy": "^3.1.4"
     },
     "dependencies": {
-        "@fancyapps/ui": "^6.1.0",
+        "@fancyapps/ui": "^6.1.2",
         "current-device": "^0.10.2",
         "ensemble": "github:loltgt/ensemble",
         "ensemble-social-share": "github:loltgt/ensemble-social-share",

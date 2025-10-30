@@ -9,17 +9,18 @@ trait Base {
 
 	/**
 	 * @param string $msg
-	 * @param bool $autoHide
+	 * @param string $class
 	 *
 	 * @return void
 	 */
-	public static function messageSuccess( string $msg = 'Values saved', bool $autoHide = false ): void {
-		$text  = esc_html__( $msg, TEXT_DOMAIN );
-		$class = 'notice notice-success is-dismissible' . ( $autoHide ? ' dismissible-auto' : '' );
+	private static function renderNotice( string $msg, string $class ): void {
+		$text = esc_html__( $msg, TEXT_DOMAIN );
+
 		printf(
-			'<div class="%1$s"><p><strong>%2$s</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>',
-			self::escAttr( $class ),
-			$text
+			'<div class="%1$s"><p><strong>%2$s</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">%3$s</span></button></div>',
+			esc_attr( $class ),
+			$text,
+			esc_html__( 'Dismiss this notice.', TEXT_DOMAIN )
 		);
 	}
 
@@ -31,14 +32,16 @@ trait Base {
 	 *
 	 * @return void
 	 */
+	public static function messageSuccess( string $msg = 'Values saved', bool $autoHide = false ): void {
+		$class = 'notice notice-success is-dismissible' . ( $autoHide ? ' dismissible-auto' : '' );
+		self::renderNotice( $msg, $class );
+	}
+
+	// -------------------------------------------------------------
+
 	public static function messageError( string $msg = 'Values error', bool $autoHide = false ): void {
-		$text  = esc_html__( $msg, TEXT_DOMAIN );
 		$class = 'notice notice-error is-dismissible' . ( $autoHide ? ' dismissible-auto' : '' );
-		printf(
-			'<div class="%1$s"><p><strong>%2$s</strong></p><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss this notice.</span></button></div>',
-			self::escAttr( $class ),
-			$text
-		);
+		self::renderNotice( $msg, $class );
 	}
 
 	// -------------------------------------------------------------
@@ -50,7 +53,7 @@ trait Base {
 	 *
 	 * @return void
 	 */
-	public static function wpDie( string|\WP_Error $message = '', string|int $title = '', string|array|int $args = [] ) {
+	public static function wpDie( string|\WP_Error $message = '', string|int $title = '', string|array|int $args = [] ): void {
 		// Intentionally calling wp_die as a final error handler.
 		wp_die( $message, $title, $args );
 	}
@@ -69,8 +72,10 @@ trait Base {
 	 */
 	public static function errorLog( string $message, int $type = 0, ?string $dest = null, ?string $headers = null ): void {
 		$key = 'hd_err_' . md5( $message );
-		if ( empty( get_transient( $key ) ) ) {
+
+		if ( ! get_transient( $key ) ) {
 			set_transient( $key, 1, MINUTE_IN_SECONDS );
+
 			// Intentionally calling error_log for throttled logging.
 			error_log( $message, $type, $dest, $headers );
 		}
@@ -90,12 +95,9 @@ trait Base {
 			return false;
 		}
 
-		$current_template_slug = get_page_template_slug( get_the_ID() );
-		if ( ! $current_template_slug ) {
-			return false;
-		}
+		$current = get_page_template_slug( get_the_ID() );
 
-		return $current_template_slug === trim( $template );
+		return $current !== false && $current === trim( $template );
 	}
 
 	// -------------------------------------------------------------
@@ -108,28 +110,28 @@ trait Base {
 	 * @return bool
 	 */
 	public static function isTaxonomy( ?string $taxonomy = null ): bool {
-		$queried_object = get_queried_object();
+		$obj = get_queried_object();
 
-		if ( $taxonomy === null ) {
-			return $queried_object && ! empty( $queried_object?->taxonomy );
+		if ( ! $obj || empty( $obj->taxonomy ) ) {
+			return false;
 		}
 
-		// Validate queried object and its taxonomy.
-		return $queried_object && isset( $queried_object->taxonomy ) && $queried_object->taxonomy === $taxonomy;
+		return $taxonomy === null || $obj->taxonomy === $taxonomy;
 	}
 
 	// --------------------------------------------------
 
 	/**
-	 * @param $content
+	 * @param mixed $content
 	 *
-	 * @return false|int
+	 * @return bool
 	 */
-	public static function isXml( $content ): false|int {
-		// Get the first 30 chars of the file to make the preg_match check faster.
-		$xml_part = substr( $content, 0, 30 );
+	public static function isXml( mixed $content ): bool {
+		if ( ! is_string( $content ) || $content === '' ) {
+			return false;
+		}
 
-		return preg_match( '/<\?xml version="/', $xml_part );
+		return str_starts_with( trim( $content ), '<?xml ' );
 	}
 
 	// --------------------------------------------------
@@ -140,12 +142,10 @@ trait Base {
 	 * @return bool
 	 */
 	public static function isUrl( ?string $url ): bool {
-		// Basic URL validation using filter_var
 		if ( ! filter_var( $url, FILTER_VALIDATE_URL ) ) {
 			return false;
 		}
 
-		// Ensure the URL has a valid scheme (http or https)
 		$scheme = parse_url( $url, PHP_URL_SCHEME );
 		if ( ! in_array( $scheme, [ 'http', 'https' ], true ) ) {
 			return false;
@@ -153,7 +153,7 @@ trait Base {
 
 		$host = parse_url( $url, PHP_URL_HOST );
 
-		return (bool) filter_var( $host, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME );
+		return is_string( $host ) && filter_var( $host, FILTER_VALIDATE_DOMAIN, FILTER_FLAG_HOSTNAME ) !== false;
 	}
 
 	// --------------------------------------------------
@@ -171,16 +171,12 @@ trait Base {
 	/**
 	 * @param string $version
 	 *
-	 * @return  bool
+	 * @return bool
 	 */
-	public static function isPhp( string $version = '7.4' ): bool {
-		static $phpVer = [];
+	public static function isPhp( string $version = '8.2' ): bool {
+		static $cache = [];
 
-		if ( ! isset( $phpVer[ $version ] ) ) {
-			$phpVer[ $version ] = version_compare( PHP_VERSION, $version, '>=' );
-		}
-
-		return $phpVer[ $version ];
+		return $cache[ $version ] ??= version_compare( PHP_VERSION, $version, '>=' );
 	}
 
 	// --------------------------------------------------
@@ -191,7 +187,11 @@ trait Base {
 	 * @return bool
 	 */
 	public static function isInteger( mixed $input ): bool {
-		return filter_var( $input, FILTER_VALIDATE_INT ) !== false;
+		if ( is_int( $input ) ) {
+			return true;
+		}
+
+		return is_string( $input ) && filter_var( $input, FILTER_VALIDATE_INT ) !== false;
 	}
 
 	// --------------------------------------------------
@@ -240,7 +240,18 @@ trait Base {
 	 * @return bool
 	 */
 	public static function isLogin(): bool {
-		return in_array( $GLOBALS['pagenow'], [ 'wp-login.php', 'wp-register.php' ] );
+		return isset( $GLOBALS['pagenow'] ) && in_array( $GLOBALS['pagenow'], [ 'wp-login.php', 'wp-register.php' ], true );
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @return void
+	 */
+	private static function ensurePluginFunctions(): void {
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
 	}
 
 	// -------------------------------------------------------------
@@ -253,30 +264,20 @@ trait Base {
 	 * @return bool
 	 */
 	public static function checkPluginInstalled( string $plugin_file ): bool {
-		// Ex: 'woocommerce/woocommerce.php'
-		$path = WP_PLUGIN_DIR . '/' . ltrim( $plugin_file, '/' );
+		$plugin_file = ltrim( $plugin_file, '/' );
+		$path        = WP_PLUGIN_DIR . '/' . $plugin_file;
+
 		if ( file_exists( $path ) ) {
 			return true;
 		}
 
-		// check mu-plugins
 		if ( defined( 'WPMU_PLUGIN_DIR' ) ) {
-			$mu_candidate = WPMU_PLUGIN_DIR . '/' . basename( $plugin_file );
-			if ( file_exists( $mu_candidate ) ) {
-				return true;
-			}
+			$mu_path = WPMU_PLUGIN_DIR . '/' . basename( $plugin_file );
+
+			return file_exists( $mu_path );
 		}
 
 		return false;
-	}
-
-	// -------------------------------------------------------------
-
-	private static function _ensurePlugin(): void {
-		// Ensure required functions are available
-		if ( ! \function_exists( 'is_plugin_active' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/plugin.php';
-		}
 	}
 
 	// -------------------------------------------------------------
@@ -289,11 +290,12 @@ trait Base {
 	 * @return bool
 	 */
 	public static function checkPluginActive( string $plugin_file ): bool {
-		self::_ensurePlugin();
+		self::ensurePluginFunctions();
 
 		if (
-			\function_exists( 'is_plugin_active_for_network' ) &&
-			\is_multisite() && \is_plugin_active_for_network( $plugin_file )
+			\function_exists( 'is_plugin_active_for_network' )
+			&& \is_multisite()
+			&& \is_plugin_active_for_network( $plugin_file )
 		) {
 			return true;
 		}
@@ -307,13 +309,7 @@ trait Base {
 	 * @return bool
 	 */
 	public static function isWoocommerceActive(): bool {
-		if (
-			\function_exists( 'WC' ) ||
-			\function_exists( 'wc_get_container' ) ||
-			\defined( 'WC_VERSION' ) ||
-			\defined( 'WC_ABSPATH' ) ||
-			\class_exists( \WooCommerce::class )
-		) {
+		if ( function_exists( 'WC' ) || class_exists( \WooCommerce::class ) ) {
 			return true;
 		}
 
@@ -326,16 +322,12 @@ trait Base {
 	 * @return bool
 	 */
 	public static function isAcfActive(): bool {
-		if (
-			\function_exists( 'acf' ) ||
-			\class_exists( \ACF::class )
-		) {
+		if ( function_exists( 'acf' ) || class_exists( \ACF::class ) ) {
 			return true;
 		}
 
-		return self::checkPluginActive( 'secure-custom-fields/secure-custom-fields.php' ) ||
-		       self::checkPluginActive( 'advanced-custom-fields-pro/acf.php' ) ||
-		       self::checkPluginActive( 'advanced-custom-fields/acf.php' );
+		return self::checkPluginActive( 'advanced-custom-fields-pro/acf.php' )
+		       || self::checkPluginActive( 'advanced-custom-fields/acf.php' );
 	}
 
 	// -------------------------------------------------------------
@@ -344,10 +336,7 @@ trait Base {
 	 * @return bool
 	 */
 	public static function isAcfProActive(): bool {
-		if (
-			\defined( 'ACF_PRO' ) ||
-			\class_exists( \acf_pro::class )
-		) {
+		if ( defined( 'ACF_PRO' ) || class_exists( \acf_pro::class ) ) {
 			return true;
 		}
 
@@ -360,16 +349,12 @@ trait Base {
 	 * @return bool
 	 */
 	public static function isPolylangActive(): bool {
-		if (
-			\defined( 'POLYLANG_BASENAME' ) ||
-			\defined( 'POLYLANG' ) ||
-			\defined( 'POLYLANG_PRO' )
-		) {
+		if ( defined( 'POLYLANG' ) || defined( 'POLYLANG_PRO' ) ) {
 			return true;
 		}
 
-		return self::checkPluginActive( 'polylang/polylang.php' ) ||
-		       self::checkPluginActive( 'polylang-pro/polylang.php' );
+		return self::checkPluginActive( 'polylang/polylang.php' )
+		       || self::checkPluginActive( 'polylang-pro/polylang.php' );
 	}
 
 	// -------------------------------------------------------------
@@ -378,27 +363,17 @@ trait Base {
 	 * @return bool
 	 */
 	public static function isRankMathActive(): bool {
-		if (
-			\class_exists( \RankMath::class ) ||
-			\class_exists( \RankMathPro::class )
-		) {
+		if ( class_exists( \RankMath::class ) ) {
 			return true;
 		}
 
-		return self::checkPluginActive( 'seo-by-rank-math/rank-math.php' ) ||
-		       self::checkPluginActive( 'seo-by-rank-math-pro/rank-math-pro.php' );
+		return self::checkPluginActive( 'seo-by-rank-math/rank-math.php' );
 	}
 
 	// -------------------------------------------------------------
 
-	/**
-	 * @return bool
-	 */
 	public static function isCf7Active(): bool {
-		if (
-			\defined( 'WPCF7_PLUGIN_BASENAME' ) ||
-			\class_exists( \WPCF7::class )
-		) {
+		if ( defined( 'WPCF7_PLUGIN_BASENAME' ) || class_exists( \WPCF7::class ) ) {
 			return true;
 		}
 

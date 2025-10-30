@@ -20,7 +20,7 @@ use HD\Utilities\Traits\Singleton;
 final class ACF {
 	use Singleton;
 
-	// -------------------------------------------------------------
+	/* ---------- CONSTRUCT ---------------------------------------- */
 
 	private function init(): void {
 		// Hide the ACF Admin UI
@@ -30,7 +30,6 @@ final class ACF {
 
 		add_filter( 'wp_kses_allowed_html', [ $this, 'ksesAllowedHtml' ], 11, 2 );
 		add_filter( 'acf/fields/wysiwyg/toolbars', [ $this, 'wysiwygToolbars' ], 98, 1 );
-		add_filter( 'acf/format_value/type=textarea', [ \HD_Helper::class, 'removeInlineJsCss' ], 11 );
 
 		add_filter( 'teeny_mce_buttons', [ $this, 'teenyMceButtons' ], 99, 2 );
 		add_filter( 'wp_nav_menu_objects', [ $this, 'navMenuObjects' ], 998, 2 );
@@ -43,7 +42,7 @@ final class ACF {
 		\HD_Helper::FQNLoad( $fields_dir, true );
 	}
 
-	// -------------------------------------------------------------
+	/* ---------- PUBLIC ------------------------------------------- */
 
 	/**
 	 * @param $tags

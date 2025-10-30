@@ -79,7 +79,7 @@ trait Wp {
 	public static function CSRFToken( string|int $action = - 1, string $name = '_csrf_token', bool $referer = false, bool $display = false ): ?string {
 		$name        = esc_attr( $name );
 		$token       = wp_create_nonce( $action );
-		$nonce_field = '<input type="hidden" id="' . self::random( 10 ) . '" name="' . $name . '" value="' . esc_attr( $token ) . '" />';
+		$nonce_field = '<input type="hidden" id="' . wp_generate_password( 10, false ) . '" name="' . $name . '" value="' . esc_attr( $token ) . '" />';
 
 		if ( $referer ) {
 			$nonce_field .= wp_referer_field( false );

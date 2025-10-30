@@ -77,7 +77,7 @@ $schema_json = wp_json_encode( $schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_
                 <li>
                     <?= \HD_Helper::ACFLinkOpen( $social_url, 'flex items-center opacity-[0.7] hover:opacity-[0.9]' ) ?>
                     <?= \HD_Helper::svg( $social_name ) ?>
-                    <span class="sr-only"><?= \HD_Helper::mbUcFirst( $social_name ) ?></span>
+                    <span class="sr-only"><?= $social_name ?></span>
                     <?= \HD_Helper::ACFLinkClose( $social_url ) ?>
                 </li>
                 <?php endforeach; ?>

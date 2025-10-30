@@ -1,20 +1,38 @@
 // utils/global.js (IIFE)
 
-( () => {
+(() => {
     const run = async () => {
-        document.querySelectorAll('a._blank, a.blank, a[target="_blank"]').forEach((el) => {
-            if (!el.hasAttribute('target') || el.getAttribute('target') !== '_blank') {
-                el.setAttribute('target', '_blank');
-            }
+        //
+        // target _blank links
+        //
+        const currentDomain = window.location.hostname;
+        const linkSet = new Set([
+            ...document.querySelectorAll('a._blank, a.blank, a[target="_blank"]')
+        ]);
 
-            const relValue = el?.getAttribute('rel');
-            if (!relValue || !relValue.includes('noopener') || !relValue.includes('nofollow')) {
-                const newRelValue = ( relValue ? relValue + ' ' : '' ) + 'noopener noreferrer nofollow';
-                el.setAttribute('rel', newRelValue);
-            }
-        });
+        for (const el of document.querySelectorAll('a[href]')) {
+            const href = el.getAttribute('href');
+            if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) continue;
 
+            try {
+                const url = new URL(href, window.location.href);
+                if (url.hostname !== currentDomain) linkSet.add(el);
+            } catch {
+            }
+        }
+
+        for (const el of linkSet) {
+            if (el.target !== '_blank') el.target = '_blank';
+            const relParts = (el.rel || '').split(/\s+/).filter(Boolean);
+            ['noopener', 'noreferrer', 'nofollow'].forEach(r => {
+                if (!relParts.includes(r)) relParts.push(r);
+            });
+            el.rel = relParts.join(' ');
+        }
+
+        //
         // Error handling for images
+        //
         const images = document.querySelectorAll('img');
         images.forEach(img => {
             img.addEventListener('error', function () {
@@ -23,7 +41,9 @@
             });
         });
 
+        //
         // MutationObserver
+        //
         const observer = new MutationObserver(() => {
             document.querySelectorAll('ul.submenu[role="menubar"]').forEach(menu => {
                 menu.setAttribute('role', 'menu');
@@ -34,9 +54,11 @@
             });
         });
 
-        observer.observe(document.body, { childList: true, subtree: true });
+        observer.observe(document.body, {childList: true, subtree: true});
 
+        //
         // toggle menu footer
+        //
         document.querySelectorAll("#footer-columns .toggle-title").forEach(link => {
             link.addEventListener("click", function (event) {
                 event.preventDefault();
@@ -44,7 +66,9 @@
             });
         });
 
+        //
         // table scroll
+        //
         document.querySelectorAll('.entry-content table').forEach(function (tbl) {
             if (tbl.parentElement && tbl.parentElement.classList.contains('table-scroll')) return;
 
@@ -56,6 +80,6 @@
     };
 
     document.readyState === 'loading'
-        ? document.addEventListener('DOMContentLoaded', run, { once: true })
+        ? document.addEventListener('DOMContentLoaded', run, {once: true})
         : run();
-} )();
+})();

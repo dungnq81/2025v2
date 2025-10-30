@@ -5,85 +5,96 @@ namespace HD\Utilities\Traits;
 \defined( 'ABSPATH' ) || die;
 
 trait Encryption {
-	private static ?string $method = null;
-	private static ?string $secretKey = null;
-
-	// -------------------------------------------------------------
+	// --------------------------------------------------
 
 	/**
-	 * @return void
+	 * @return string
 	 */
-	private static function loadKeys(): void {
-		// Assign values or use defaults
-		self::$method    = 'AES-128-CBC';
-		self::$secretKey = 'd24eebeca3db6407c18d4de572fff114';
+	private static function getKey(): string {
+		$key = defined( 'SECRET_KEY' ) ? \SECRET_KEY : AUTH_KEY;
+
+		return hash( 'sha256', $key, true );
 	}
 
-	// -------------------------------------------------------------
+	// --------------------------------------------------
 
 	/**
+	 * @return string
+	 */
+	private static function getMethod(): string {
+		return 'AES-256-CBC';
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * Encrypt data with IV + HMAC
+	 *
 	 * @param string|null $data
 	 *
 	 * @return string|null
 	 * @throws \Random\RandomException
 	 */
 	public static function encode( ?string $data ): ?string {
-		if ( is_null( $data ) ) {
+		if ( $data === null ) {
 			return null;
 		}
 
-		self::loadKeys();
+		$method   = self::getMethod();
+		$key      = self::getKey();
+		$ivLength = openssl_cipher_iv_length( $method );
+		$iv       = random_bytes( $ivLength );
 
-		$ivLength = \openssl_cipher_iv_length( self::$method );
-		if ( $ivLength === false ) {
-			throw new \RuntimeException( "Invalid cipher method: " . self::$method );
+		$cipher = openssl_encrypt( $data, $method, $key, OPENSSL_RAW_DATA, $iv );
+		if ( $cipher === false ) {
+			throw new \RuntimeException( "Encryption failed" );
 		}
 
-		$iv        = random_bytes( $ivLength );
-		$key       = substr( hash( 'sha256', self::$secretKey ), 0, 16 );
-		$encrypted = \openssl_encrypt( $data, self::$method, $key, 0, $iv );
+		// HMAC to verify integrity
+		$hmac = hash_hmac( 'sha256', $iv . $cipher, $key, true );
 
-		if ( $encrypted === false ) {
-			throw new \RuntimeException( "Encryption failed." );
-		}
-
-		return base64_encode( $iv . $encrypted );
+		return base64_encode( $iv . $cipher . $hmac );
 	}
 
-	// -------------------------------------------------------------
+	// --------------------------------------------------
 
 	/**
-	 * @param string|null $encryptedData
+	 * Decrypt with HMAC validation
+	 *
+	 * @param string|null $encoded
 	 *
 	 * @return string|null
 	 */
-	public static function decode( ?string $encryptedData ): ?string {
-		if ( is_null( $encryptedData ) ) {
+	public static function decode( ?string $encoded ): ?string {
+		if ( $encoded === null ) {
 			return null;
 		}
 
-		self::loadKeys();
+		$method = self::getMethod();
+		$key    = self::getKey();
 
-		$data = base64_decode( $encryptedData, true );
+		$data = base64_decode( $encoded, true );
 		if ( $data === false ) {
-			throw new \RuntimeException( "Invalid base64 encoded data." );
+			throw new \RuntimeException( "Invalid base64 input" );
 		}
 
-		$ivLength = \openssl_cipher_iv_length( self::$method );
-		if ( $ivLength === false ) {
-			throw new \RuntimeException( "Invalid cipher method: " . self::$method );
+		$ivLength = openssl_cipher_iv_length( $method );
+		$iv       = substr( $data, 0, $ivLength );
+		$cipher   = substr( $data, $ivLength, - 32 );
+		$hmac     = substr( $data, - 32 );
+
+		$calcHmac = hash_hmac( 'sha256', $iv . $cipher, $key, true );
+
+		// Constant-time compare
+		if ( ! hash_equals( $hmac, $calcHmac ) ) {
+			throw new \RuntimeException( "Invalid HMAC, tampered data" );
 		}
 
-		$iv        = substr( $data, 0, $ivLength );
-		$encrypted = substr( $data, $ivLength );
-
-		$key       = substr( hash( 'sha256', self::$secretKey ), 0, 16 );
-		$decrypted = \openssl_decrypt( $encrypted, self::$method, $key, 0, $iv );
-
-		if ( $decrypted === false ) {
-			throw new \RuntimeException( "Decryption failed." );
+		$plain = openssl_decrypt( $cipher, $method, $key, OPENSSL_RAW_DATA, $iv );
+		if ( $plain === false ) {
+			throw new \RuntimeException( "Decryption failed" );
 		}
 
-		return $decrypted;
+		return $plain;
 	}
 }
