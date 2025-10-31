@@ -1,6 +1,9 @@
 // utils/dark.js (IIFE)
 
 (() => {
+    if (window.__darkInit) return;
+    window.__darkInit = true;
+
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.documentElement.classList.add('dark')
     }

@@ -4,16 +4,16 @@ const scriptLoader = (timeout = 3000, scriptSelector = 'script[data-type="lazy"]
     const userInteractionEvents = ['mouseover', 'keydown', 'touchstart', 'touchmove', 'wheel'];
     const loadScriptsTimer = setTimeout(loadScripts, timeout);
 
-    // Attach event listeners to trigger script loading on user interaction
-    userInteractionEvents.forEach((event) => {
-        window.addEventListener(event, triggerScriptLoader, {once: true, passive: true});
-    });
-
+    // Triggered once by user interaction
     function triggerScriptLoader() {
         loadScripts();
-        clearTimeout(loadScriptsTimer); // Clear timeout if triggered by interaction
+        clearTimeout(loadScriptsTimer);
+        userInteractionEvents.forEach((event) => {
+            window.removeEventListener(event, triggerScriptLoader, true);
+        });
     }
 
+    // Load all scripts
     function loadScripts() {
         document.querySelectorAll(scriptSelector).forEach((elem) => {
             const dataSrc = elem.getAttribute('data-src');
@@ -24,8 +24,11 @@ const scriptLoader = (timeout = 3000, scriptSelector = 'script[data-type="lazy"]
             }
         });
     }
-};
 
-scriptLoader();
+    // Attach listeners
+    userInteractionEvents.forEach((event) => {
+        window.addEventListener(event, triggerScriptLoader, {once: true, passive: true});
+    });
+};
 
 export default scriptLoader;

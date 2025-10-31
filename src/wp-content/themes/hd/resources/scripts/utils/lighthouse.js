@@ -1,6 +1,9 @@
 // utils/lighthouse.js (IIFE)
 
 (async () => {
+    if (window.__lighthouseInit) return;
+    window.__lighthouseInit = true;
+
     const DETECTION_CLASS = 'is-lighthouse';
 
     const indicators = {

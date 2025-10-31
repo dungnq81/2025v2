@@ -4,9 +4,9 @@ import device from 'current-device';
 import {nanoid} from 'nanoid';
 import Foundation from './3rd/zf.js';
 
-import './utils/back-to-top.js';
 import './utils/global.js';
-import './utils/script-loader.js';
+import scriptLoader from './utils/script-loader.js';
+import BackToTop from './utils/back-to-top.js';
 import {initMenu} from './utils/menu.js';
 import {stickyBar} from './utils/sticky-bar.js';
 import {setupCookieConsent} from './utils/cookie-consent.js';
@@ -24,10 +24,21 @@ const run = async () => {
     //
     // init
     //
+    scriptLoader();
+    initMenu();
     stickyBar();
-    initMenu('#main-nav', '.main-nav');
+
+    new BackToTop();
+
+    // Share buttons
     initSocialShare('[data-social-share]', {
         intents: ['facebook', 'x', 'print', 'send-email', 'copy-link', 'web-share']
+    });
+
+    // Cookie Consent
+    await setupCookieConsent({
+        consentDays: 180,
+        dismissDays: 7,
     });
 
     //
@@ -39,14 +50,6 @@ const run = async () => {
         Fancybox.bind(el, {
             groupAll: true,
         });
-    });
-
-    //
-    // Cookie Consent
-    //
-    await setupCookieConsent({
-        consentDays: 180,
-        dismissDays: 7,
     });
 }
 

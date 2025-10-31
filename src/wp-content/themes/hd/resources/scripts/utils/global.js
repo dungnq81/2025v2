@@ -1,6 +1,9 @@
 // utils/global.js (IIFE)
 
 (() => {
+    if (window.__globalInit) return;
+    window.__globalInit = true;
+
     const currentDomain = window.location.hostname;
     const invalidHref = /^(#|mailto:|tel:|javascript:|data:|blob:)/i;
     const selector = 'a._blank, a.blank, a[target="_blank"]';
@@ -46,6 +49,25 @@
     }
 
     /**
+     * Optimize observer callback with debounce
+     */
+    let observerTimeout;
+
+    function handleMutations() {
+        clearTimeout(observerTimeout);
+        observerTimeout = setTimeout(() => {
+            // Re-check submenu roles
+            document.querySelectorAll('ul.submenu[role="menubar"]').forEach(menu => {
+                menu.setAttribute('role', 'menu');
+            });
+            // Disable focus for hidden elements
+            document.querySelectorAll('[aria-hidden="true"] a, [aria-hidden="true"] button').forEach(el => {
+                el.setAttribute('tabindex', '-1');
+            });
+        }, 200);
+    }
+
+    /**
      * Run
      *
      * @returns {Promise<void>}
@@ -60,17 +82,9 @@
         processLinks();
 
         //
-        // MutationObserver
+        // MutationObserver (debounced)
         //
-        const observer = new MutationObserver(mutations => {
-            document.querySelectorAll('ul.submenu[role="menubar"]').forEach(menu => {
-                menu.setAttribute('role', 'menu');
-            });
-            document.querySelectorAll('[aria-hidden="true"] a, [aria-hidden="true"] button').forEach(el => {
-                el.setAttribute('tabindex', '-1');
-            });
-        });
-
+        const observer = new MutationObserver(handleMutations);
         observer.observe(document.body, {childList: true, subtree: true});
 
         //

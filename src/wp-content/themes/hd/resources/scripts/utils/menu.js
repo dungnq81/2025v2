@@ -1,34 +1,40 @@
-// menu.js
+// utils/menu.js
 
-export function initMenu(containerSelector, menuSelector) {
+const initializedMenus = new WeakSet();
+
+export function initMenu(containerSelector = '#main-nav', menuSelector = '.main-nav') {
     const container = document.querySelector(containerSelector);
     const menu = document.querySelector(menuSelector);
 
     if (!container || !menu) return;
+    if (initializedMenus.has(menu)) return;
+    initializedMenus.add(menu);
+
+    let more = menu.querySelector('.more');
+    if (!more) {
+        more = document.createElement('li');
+        more.classList.add('more');
+        more.innerHTML = '<a href="#"></a><ul class="submenu dropdown"></ul>';
+        menu.appendChild(more);
+    }
+
+    const dropdown = more.querySelector('.dropdown');
 
     function adjustMenu() {
-        let more = menu.querySelector('.more');
-
-        if (!more) {
-            more = document.createElement('li');
-            more.classList.add('more');
-            more.innerHTML = '<a href="#"></a><ul class="submenu dropdown"></ul>';
-            menu.appendChild(more);
-        }
-
-        const dropdown = more.querySelector('.dropdown');
         dropdown.innerHTML = '';
         more.style.display = 'none';
 
-        let items = [...menu.children].filter((li) => li !== more);
-        items.forEach((li) => (li.style.display = 'block'));
+        const items = [...menu.children].filter(li => li !== more);
+        items.forEach(li => (li.style.display = 'block'));
+
+        container.style.overflow = 'hidden';
 
         if (menu.scrollWidth <= container.clientWidth) {
-            removeOverflowHidden();
+            container.style.overflow = 'visible';
             return;
         }
 
-        let hiddenItems = [];
+        const hiddenItems = [];
         for (let i = items.length - 1; i >= 0; i--) {
             if (menu.scrollWidth > container.clientWidth) {
                 hiddenItems.unshift(items[i]);
@@ -39,27 +45,19 @@ export function initMenu(containerSelector, menuSelector) {
         }
 
         if (hiddenItems.length > 0) {
-            hiddenItems.forEach((item) => {
-                let clone = item.cloneNode(true);
+            hiddenItems.forEach(item => {
+                const clone = item.cloneNode(true);
                 clone.style.display = 'block';
                 dropdown.appendChild(clone);
             });
             more.style.display = 'block';
         }
 
-        removeOverflowHidden();
-    }
-
-    function setOverflowHidden() {
-        container.style.overflow = 'hidden';
-    }
-
-    function removeOverflowHidden() {
         container.style.overflow = 'visible';
     }
 
     function reinitializeFoundationDropdown() {
-        if (typeof Foundation !== 'undefined') {
+        if (typeof Foundation !== 'undefined' && Foundation.DropdownMenu) {
             let mainNav = $(menuSelector);
             if (mainNav.length) {
                 new Foundation.DropdownMenu(mainNav);
@@ -67,19 +65,42 @@ export function initMenu(containerSelector, menuSelector) {
         }
     }
 
+    function ensureStableMenu() {
+        adjustMenu();
+        window.addEventListener('load', () => requestAnimationFrame(adjustMenu));
+
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => adjustMenu());
+        }
+
+        if (typeof ResizeObserver !== 'undefined') {
+            const ro = new ResizeObserver(() => {
+                clearTimeout(ro._t);
+                ro._t = setTimeout(adjustMenu, 100);
+            });
+            ro.observe(container);
+        }
+
+        let tries = 0;
+        const poll = setInterval(() => {
+            adjustMenu();
+            if (++tries > 10) clearInterval(poll);
+        }, 100);
+    }
+
+    // Debounced resize handler
     let resizeTimeout;
 
-    function init() {
-        setOverflowHidden();
+    function onResize() {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
             adjustMenu();
             reinitializeFoundationDropdown();
-        }, 100);
+        }, 150);
     }
 
-    init();
-    window.addEventListener('resize', function () {
-        init();
-    });
+    ensureStableMenu();
+    reinitializeFoundationDropdown();
+
+    window.addEventListener('resize', onResize);
 }

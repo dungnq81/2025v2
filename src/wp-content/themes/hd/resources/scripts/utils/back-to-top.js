@@ -5,79 +5,60 @@ class BackToTop {
         this.buttonSelector = selector;
         this.smoothScrollEnabled = smoothScrollEnabled;
         this.defaultScrollSpeed = defaultScrollSpeed;
+        this._scrollTicking = false;
         this.init();
     }
 
     init() {
-        if (!('querySelector' in document && 'addEventListener' in window)) {
-            return;
-        }
+        if (!document.querySelector || !window.addEventListener) return;
 
         this.goTopBtn = document.querySelector(this.buttonSelector);
-        if (!this.goTopBtn) {
-            return;
-        }
+        if (!this.goTopBtn) return;
 
-        this.scrollThreshold = parseInt(this.goTopBtn.getAttribute('data-scroll-start'), 10) || 300;
-
-        // Add event listeners
+        this.scrollThreshold = parseInt(this.goTopBtn.dataset.scrollStart, 10) || 300;
         window.addEventListener('scroll', this.trackScroll.bind(this));
         this.goTopBtn.addEventListener('click', this.scrollToTop.bind(this), false);
     }
 
     trackScroll() {
-        const scrolled = window.scrollY;
-
-        if (scrolled > this.scrollThreshold) {
-            this.goTopBtn.classList.add('back-to-top__show');
-            this.goTopBtn.setAttribute('data-show', 'true');
-        } else {
-            this.goTopBtn.classList.remove('back-to-top__show');
-            this.goTopBtn.setAttribute('data-show', 'false')
-        }
+        if (this._scrollTicking) return;
+        this._scrollTicking = true;
+        requestAnimationFrame(() => {
+            const show = window.scrollY > this.scrollThreshold;
+            this.goTopBtn.classList.toggle('back-to-top__show', show);
+            this.goTopBtn.dataset.show = show ? 'true' : 'false';
+            this._scrollTicking = false;
+        });
     }
 
     scrollToTop(event) {
         event.preventDefault();
-
         if (this.smoothScrollEnabled) {
-            const duration = parseInt(this.goTopBtn.getAttribute('data-scroll-speed'), 10) || this.defaultScrollSpeed;
+            const duration = parseInt(this.goTopBtn.dataset.scrollSpeed, 10) || this.defaultScrollSpeed;
             this.smoothScroll(duration);
         } else {
-            window.scrollTo(0, 0);
+            window.scrollTo({top: 0});
         }
     }
 
     smoothScroll(duration) {
-        const startLocation = window.scrollY;
-        const distance = -startLocation;
+        const start = window.scrollY;
+        const distance = -start;
         let startTime = null;
-
-        const animateScroll = (currentTime) => {
-            if (!startTime) startTime = currentTime;
-            const timeElapsed = currentTime - startTime;
-            const run = this.easeInOutQuad(timeElapsed, startLocation, distance, duration);
-
-            window.scrollTo(0, run);
-
-            if (timeElapsed < duration) {
-                requestAnimationFrame(animateScroll);
-            }
+        const animate = (time) => {
+            if (!startTime) startTime = time;
+            const elapsed = time - startTime;
+            const pos = this.easeInOutQuad(elapsed, start, distance, duration);
+            window.scrollTo(0, pos);
+            if (elapsed < duration) requestAnimationFrame(animate);
         };
-
-        requestAnimationFrame(animateScroll);
+        requestAnimationFrame(animate);
     }
 
     easeInOutQuad(t, b, c, d) {
         t /= d / 2;
-        if (t < 1) return (c / 2) * t * t + b;
-        t--;
-        return (-c / 2) * (t * (t - 2) - 1) + b;
+        return t < 1 ? (c / 2) * t * t + b : (-c / 2) * (--t * (t - 2) - 1) + b;
     }
 }
-
-setTimeout(() => {
-    new BackToTop();
-}, 100);
 
 export default BackToTop;
