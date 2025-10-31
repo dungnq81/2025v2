@@ -9,8 +9,6 @@
 
 \defined( 'ABSPATH' ) || die;
 
-ob_start();
-
 ?>
 <svg class="absolute size-[0] overflow-hidden" xmlns="http://www.w3.org/2000/svg" hidden aria-hidden="true" focusable="false">
 	<defs>
@@ -30,6 +28,3 @@ ob_start();
         <symbol id="icon-dots-horizontal-outline" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="3" d="M6 12h.01m6 0h.01m5.99 0h.01"/></symbol>
 	</defs>
 </svg>
-<?php
-
-echo \HD_Helper::JSMinify( ob_get_clean(), true );

@@ -2,8 +2,6 @@
 
 \defined( 'ABSPATH' ) || die;
 
-ob_start();
-
 ?>
 <section class="z-9999 hidden fixed max-w-2xl p-4 bg-[#efefef] border border-[#eee] md:gap-x-4 left-0 right-0 md:left-8 md:right-auto bottom-0 md:bottom-8 flex-col md:flex-row md:items-center rounded-md">
 	<div class="flex items-start gap-x-3">
@@ -19,6 +17,3 @@ ob_start();
 		<button class="js-cookie-consent-accept cursor-pointer text-xs w-1/2 md:w-auto font-medium bg-[#161616] rounded-md hover:bg-(--text-color-1) text-white px-4 py-2.5 focus:outline-none">Accept all</button>
 	</div>
 </section>
-<?php
-
-echo \HD_Helper::JSMinify( ob_get_clean(), true );
