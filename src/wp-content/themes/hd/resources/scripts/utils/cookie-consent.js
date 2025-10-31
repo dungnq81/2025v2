@@ -19,7 +19,7 @@ const DEFAULTS = {
 let _inited = false;
 let _mo = null;
 
-function _getBanner (opts) {
+function _getBanner(opts) {
     if (opts.bannerSelector) {
         return document.querySelector(opts.bannerSelector);
     }
@@ -27,18 +27,18 @@ function _getBanner (opts) {
     return btn ? btn.closest('section') : null;
 }
 
-function _hide (el) {
+function _hide(el) {
     if (!el) return;
     el.style.display = 'none';
 }
 
-function _show (el) {
+function _show(el) {
     if (!el) return;
     el.style.display = 'flex';
     el.classList.remove('hidden');
 }
 
-function _hideAndRemove (el) {
+function _hideAndRemove(el) {
     if (!el) return;
 
     el.style.transition = el.style.transition || 'opacity .25s ease';
@@ -49,7 +49,7 @@ function _hideAndRemove (el) {
         el.removeEventListener('transitionend', onEnd);
         if (el.isConnected) el.remove();
     };
-    el.addEventListener('transitionend', onEnd, { once: true });
+    el.addEventListener('transitionend', onEnd, {once: true});
 
     // Fallback
     setTimeout(() => {
@@ -57,13 +57,13 @@ function _hideAndRemove (el) {
     }, 350);
 }
 
-async function _initNow (opts) {
+async function _initNow(opts) {
     const banner = _getBanner(opts);
     const btnAccept = document.querySelector(opts.acceptSelector);
     const btnClose = document.querySelector(opts.closeSelector);
     if (!banner || !btnAccept || !btnClose) return false;
 
-    const [ consent, dismissed ] = await Promise.all([
+    const [consent, dismissed] = await Promise.all([
         CookieService.get(opts.consentCookie),
         CookieService.get(opts.dismissCookie),
     ]);
@@ -80,11 +80,11 @@ async function _initNow (opts) {
         await CookieService.set(opts.consentCookie, 'accepted', {
             days: opts.consentDays, path: opts.path, sameSite: opts.sameSite, secure: opts.secure,
         });
-        await CookieService.delete(opts.dismissCookie, { path: opts.path });
+        await CookieService.delete(opts.dismissCookie, {path: opts.path});
 
         if (opts.removeOnHide) _hideAndRemove(banner);
         else _hide(banner);
-    }, { once: true });
+    }, {once: true});
 
     // Close
     btnClose.addEventListener('click', async () => {
@@ -94,15 +94,15 @@ async function _initNow (opts) {
 
         if (opts.removeOnHide) _hideAndRemove(banner);
         else _hide(banner);
-    }, { once: true });
+    }, {once: true});
 
     return true;
 }
 
-export async function setupCookieConsent (userOptions = {}) {
+export async function setupCookieConsent(userOptions = {}) {
     if (_inited) return;
 
-    const opts = { ...DEFAULTS, ...userOptions };
+    const opts = {...DEFAULTS, ...userOptions};
     const ok = await _initNow(opts);
 
     if (ok) {
@@ -126,5 +126,5 @@ export async function setupCookieConsent (userOptions = {}) {
             }
         }
     });
-    _mo.observe(document.body, { childList: true, subtree: true });
+    _mo.observe(document.body, {childList: true, subtree: true});
 }

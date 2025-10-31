@@ -1,12 +1,12 @@
 // menu.js
 
-export function initMenu (containerSelector, menuSelector) {
+export function initMenu(containerSelector, menuSelector) {
     const container = document.querySelector(containerSelector);
     const menu = document.querySelector(menuSelector);
 
     if (!container || !menu) return;
 
-    function adjustMenu () {
+    function adjustMenu() {
         let more = menu.querySelector('.more');
 
         if (!more) {
@@ -20,8 +20,8 @@ export function initMenu (containerSelector, menuSelector) {
         dropdown.innerHTML = '';
         more.style.display = 'none';
 
-        let items = [ ...menu.children ].filter((li) => li !== more);
-        items.forEach((li) => ( li.style.display = 'block' ));
+        let items = [...menu.children].filter((li) => li !== more);
+        items.forEach((li) => (li.style.display = 'block'));
 
         if (menu.scrollWidth <= container.clientWidth) {
             removeOverflowHidden();
@@ -50,15 +50,15 @@ export function initMenu (containerSelector, menuSelector) {
         removeOverflowHidden();
     }
 
-    function setOverflowHidden () {
+    function setOverflowHidden() {
         container.style.overflow = 'hidden';
     }
 
-    function removeOverflowHidden () {
+    function removeOverflowHidden() {
         container.style.overflow = 'visible';
     }
 
-    function reinitializeFoundationDropdown () {
+    function reinitializeFoundationDropdown() {
         if (typeof Foundation !== 'undefined') {
             let mainNav = $(menuSelector);
             if (mainNav.length) {
@@ -69,7 +69,7 @@ export function initMenu (containerSelector, menuSelector) {
 
     let resizeTimeout;
 
-    function init () {
+    function init() {
         setOverflowHidden();
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {

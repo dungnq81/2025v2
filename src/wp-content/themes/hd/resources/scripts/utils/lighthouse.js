@@ -1,6 +1,6 @@
 // utils/lighthouse.js (IIFE)
 
-( async () => {
+(async () => {
     const DETECTION_CLASS = 'is-lighthouse';
 
     const indicators = {
@@ -39,4 +39,4 @@
             document.documentElement.classList.add(DETECTION_CLASS);
         }
     }
-} )();
+})();

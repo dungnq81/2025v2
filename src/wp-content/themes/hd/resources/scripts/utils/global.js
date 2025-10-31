@@ -1,54 +1,71 @@
 // utils/global.js (IIFE)
 
 (() => {
+    const currentDomain = window.location.hostname;
+    const invalidHref = /^(#|mailto:|tel:|javascript:|data:|blob:)/i;
+    const selector = 'a._blank, a.blank, a[target="_blank"]';
+    const linkSet = new Set();
+
+    /**
+     * Check external link
+     *
+     * @param el
+     */
+    function checkExternal(el) {
+        const href = el.getAttribute('href')?.trim();
+        if (!href || invalidHref.test(href)) return;
+
+        try {
+            const url = new URL(href, window.location.href);
+            if (url.hostname && url.hostname !== currentDomain) {
+                linkSet.add(el);
+            }
+        } catch {
+        }
+    }
+
+    /**
+     * Apply target and rel to link
+     *
+     * @param el
+     */
+    function applyTargetRel(el) {
+        if (el.target !== '_blank') el.target = '_blank';
+        const relParts = (el.rel || '').split(/\s+/).filter(Boolean);
+        ['noopener', 'noreferrer', 'nofollow'].forEach(r => {
+            if (!relParts.includes(r)) relParts.push(r);
+        });
+        el.rel = relParts.join(' ');
+    }
+
+    /**
+     * Process links
+     */
+    function processLinks() {
+        for (const el of linkSet) applyTargetRel(el);
+    }
+
+    /**
+     * Run
+     *
+     * @returns {Promise<void>}
+     */
     const run = async () => {
         //
         // target _blank links
         //
-        const currentDomain = window.location.hostname;
-        const linkSet = new Set([
-            ...document.querySelectorAll('a._blank, a.blank, a[target="_blank"]')
-        ]);
+        document.querySelectorAll(selector).forEach(el => linkSet.add(el));
+        document.querySelectorAll('a[href]').forEach(checkExternal);
 
-        for (const el of document.querySelectorAll('a[href]')) {
-            const href = el.getAttribute('href');
-            if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) continue;
-
-            try {
-                const url = new URL(href, window.location.href);
-                if (url.hostname !== currentDomain) linkSet.add(el);
-            } catch {
-            }
-        }
-
-        for (const el of linkSet) {
-            if (el.target !== '_blank') el.target = '_blank';
-            const relParts = (el.rel || '').split(/\s+/).filter(Boolean);
-            ['noopener', 'noreferrer', 'nofollow'].forEach(r => {
-                if (!relParts.includes(r)) relParts.push(r);
-            });
-            el.rel = relParts.join(' ');
-        }
-
-        //
-        // Error handling for images
-        //
-        const images = document.querySelectorAll('img');
-        images.forEach(img => {
-            img.addEventListener('error', function () {
-                this.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0xNTAgMTAwQzEyNy45MSAxMDAgMTEwIDExNy45MSAxMTAgMTQwQzExMCAxNjIuMDkgMTI3LjkxIDE4MCAxNTAgMTgwQzE3Mi4wOSAxODAgMTkwIDE2Mi4wOSAxOTAgMTQwQzE5MCAxMTcuOTEgMTcyLjA5IDEwMCAxNTAgMTAwWiIgZmlsbD0iI0Q5RERFMSIvPgo8L3N2Zz4K';
-                this.alt = 'Not found';
-            });
-        });
+        processLinks();
 
         //
         // MutationObserver
         //
-        const observer = new MutationObserver(() => {
+        const observer = new MutationObserver(mutations => {
             document.querySelectorAll('ul.submenu[role="menubar"]').forEach(menu => {
                 menu.setAttribute('role', 'menu');
             });
-
             document.querySelectorAll('[aria-hidden="true"] a, [aria-hidden="true"] button').forEach(el => {
                 el.setAttribute('tabindex', '-1');
             });

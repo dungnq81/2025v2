@@ -1,12 +1,12 @@
 // utils/cookie.js
 
 export default class CookieService {
-    static _normalizeSameSiteForCookieStore (val = 'Lax') {
+    static _normalizeSameSiteForCookieStore(val = 'Lax') {
         const v = String(val).toLowerCase();
         return v === 'lax' || v === 'strict' || v === 'none' ? v : 'lax';
     }
 
-    static _normalizeSameSiteForHeader (val = 'Lax') {
+    static _normalizeSameSiteForHeader(val = 'Lax') {
         const v = String(val).toLowerCase();
         if (v === 'lax') return 'Lax';
         if (v === 'strict') return 'Strict';
@@ -14,7 +14,7 @@ export default class CookieService {
         return 'Lax';
     }
 
-    static async get (name) {
+    static async get(name) {
         if (window.cookieStore) {
             const entry = await window.cookieStore.get(name);
             return entry?.value || '';
@@ -25,10 +25,10 @@ export default class CookieService {
         return match ? decodeURIComponent(match[2]) : '';
     }
 
-    static async set (
+    static async set(
         name,
         value,
-        { days = 365, path = '/', secure = true, sameSite = 'Lax' } = {}
+        {days = 365, path = '/', secure = true, sameSite = 'Lax'} = {}
     ) {
         if (window.cookieStore) {
             const opts = {
@@ -56,10 +56,10 @@ export default class CookieService {
         document.cookie = cookieStr;
     }
 
-    static async delete (name, { path = '/' } = {}) {
+    static async delete(name, {path = '/'} = {}) {
         if (window.cookieStore) {
 
-            return window.cookieStore.delete(name, { path });
+            return window.cookieStore.delete(name, {path});
         }
 
         // Fallback

@@ -1,7 +1,7 @@
 // utils/dark.js (IIFE)
 
-( () => {
-    if (localStorage.theme === 'dark' || ( !( 'theme' in localStorage ) && window.matchMedia('(prefers-color-scheme: dark)').matches )) {
+(() => {
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         document.documentElement.classList.add('dark')
     }
 
@@ -35,6 +35,6 @@
     };
 
     document.readyState === 'loading'
-        ? document.addEventListener('DOMContentLoaded', run, { once: true })
+        ? document.addEventListener('DOMContentLoaded', run, {once: true})
         : run();
-} )();
+})();

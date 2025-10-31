@@ -1,9 +1,13 @@
 {
-  "_vendor.C18Q0eg-.js": {
-    "file": "js/vendor.C18Q0eg-.js",
+  "_vendor.CJCoQNL2.css": {
+    "file": "css/vendor.CJCoQNL2.css",
+    "src": "_vendor.CJCoQNL2.css"
+  },
+  "_vendor.DLXgotYE.js": {
+    "file": "js/vendor.DLXgotYE.js",
     "name": "vendor",
     "css": [
-      "css/vendor.CXG5ezOB.css"
+      "css/vendor.CJCoQNL2.css"
     ],
     "assets": [
       "fonts/SVN-Poppins-Light.woff2",
@@ -25,10 +29,6 @@
       "fonts/SVN-Poppins-BoldItalic.ttf",
       "fonts/SVN-Poppins-BoldItalic.otf"
     ]
-  },
-  "_vendor.CXG5ezOB.css": {
-    "file": "css/vendor.CXG5ezOB.css",
-    "src": "_vendor.CXG5ezOB.css"
   },
   "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/OTF/SVN-Poppins-Bold.otf": {
     "file": "fonts/SVN-Poppins-Bold.otf",
@@ -113,27 +113,27 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/components/preflight.js": {
-    "file": "js/preflight.42vAXXTp.js",
+    "file": "js/preflight.zExqGgew.js",
     "name": "preflight",
     "src": "src/wp-content/themes/hd/resources/scripts/components/preflight.js",
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/components/social-share.js": {
-    "file": "js/social-share.kqpnfAvw.js",
+    "file": "js/social-share.CtZRp70p.js",
     "name": "social-share",
     "src": "src/wp-content/themes/hd/resources/scripts/components/social-share.js",
     "isEntry": true,
     "imports": [
-      "_vendor.C18Q0eg-.js"
+      "_vendor.DLXgotYE.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/swiper.js": {
-    "file": "js/swiper.d5KxqOq5.js",
+    "file": "js/swiper.CMhMIyc9.js",
     "name": "swiper",
     "src": "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
     "isEntry": true,
     "imports": [
-      "_vendor.C18Q0eg-.js"
+      "_vendor.DLXgotYE.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/template/extra.js": {
@@ -161,12 +161,12 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/index.js": {
-    "file": "js/index.TZeIkGUI.js",
+    "file": "js/index.DOd7NGSb.js",
     "name": "index",
     "src": "src/wp-content/themes/hd/resources/scripts/index.js",
     "isEntry": true,
     "imports": [
-      "_vendor.C18Q0eg-.js",
+      "_vendor.DLXgotYE.js",
       "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
       "src/wp-content/themes/hd/resources/scripts/components/social-share.js"
     ]

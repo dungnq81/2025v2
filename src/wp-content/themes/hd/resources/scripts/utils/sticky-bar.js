@@ -1,6 +1,6 @@
 // utils/sticky-bar.js
 
-export function stickyBar ({ navbar = '#masthead', header = '#header', topBar = '.top-header' } = {}) {
+export function stickyBar({navbar = '#masthead', header = '#header', topBar = '.top-header'} = {}) {
     const navbarEl = document.querySelector(navbar);
     if (!navbarEl) return;
 
@@ -32,7 +32,7 @@ export function stickyBar ({ navbar = '#masthead', header = '#header', topBar = 
     const getScrollTop = () => document.scrollingElement?.scrollTop ?? window.scrollY ?? window.pageYOffset ?? 0;
 
     // Update heights and CSS variables
-    function updateHeights () {
+    function updateHeights() {
         const markerEl = topBarEl || headerEl;
         markerHeight = markerEl ? markerEl.offsetHeight : 0;
         navbarHeight = navbarEl.offsetHeight;
@@ -74,7 +74,7 @@ export function stickyBar ({ navbar = '#masthead', header = '#header', topBar = 
         }
     });
 
-    function handleScroll (scrollTop) {
+    function handleScroll(scrollTop) {
         const atBottom = scrollTop + window.innerHeight >= document.documentElement.scrollHeight - 4;
 
         // Show/hide navbar based on scroll position relative to marker
