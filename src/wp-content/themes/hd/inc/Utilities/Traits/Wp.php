@@ -30,37 +30,38 @@ trait Wp {
 	 * @return void
 	 */
 	public static function blockTemplate( $slug, array $args = [], bool $use_cache = false, int $cache_in_hours = 12 ): void {
-		$block_slug = basename( $slug, '.php' );
-		$hook_name  = 'enqueue_assets_blocks_' . str_replace( '-', '_', $block_slug );
+		$block_slug = trim( str_replace( [ '/', '-' ], '_', $slug ), '_' );
+		$hook_name  = 'enqueue_assets_blocks_' . $block_slug;
 		do_action( $hook_name );
 
 		if ( ! $use_cache ) {
 			ob_start();
 			get_template_part( $slug, null, $args );
-			$output = ob_get_clean();
-			echo $output;
+			echo ob_get_clean();
 
 			return;
 		}
 
 		$cache_key     = 'hd_block_cache_' . md5( $slug . serialize( $args ) );
-		$cached_output = get_transient( $cache_key );
-		if ( ! empty( $cached_output ) ) {
+		$cached_output = wp_cache_get( $cache_key, 'hd_block_cache' );
+
+		if ( $cached_output !== false && is_string( $cached_output ) && $cached_output !== '' ) {
 			if ( mb_strlen( $cached_output, 'UTF-8' ) <= 1024 * 15 ) { // 15kb
 				echo $cached_output;
 
 				return;
 			}
-			delete_transient( $cache_key );
+
+			wp_cache_delete( $cache_key, 'hd_block_cache' );
 		}
 
-		// buffer
+		// Buffer render block
 		ob_start();
 		get_template_part( $slug, null, $args );
 		$output = ob_get_clean();
 
 		if ( ! empty( $output ) && mb_strlen( $output, 'UTF-8' ) <= 1024 * 15 ) {
-			set_transient( $cache_key, $output, $cache_in_hours * HOUR_IN_SECONDS );
+			wp_cache_set( $cache_key, $output, 'hd_block_cache', $cache_in_hours * HOUR_IN_SECONDS );
 		}
 
 		echo $output;
@@ -2129,8 +2130,9 @@ trait Wp {
 			$html .= '<source srcset="' . self::attachmentImageSrc( $attachment_mobile_id ?: $attachment_id, 'medium' ) . '" media="(min-width: 480px)">';
 		}
 
-		$html .= self::iconImageHTML( $attachment_mobile_id ?: $attachment_id, 'thumbnail', [ 'class'   => 'lazy',
-		                                                                                      'loading' => 'lazy'
+		$html .= self::iconImageHTML( $attachment_mobile_id ?: $attachment_id, 'thumbnail', [
+			'class'   => 'lazy',
+			'loading' => 'lazy'
 		], false );
 		$html .= '</picture>';
 
@@ -2264,8 +2266,9 @@ trait Wp {
 	 */
 	public static function breadCrumbBanner( mixed $attachment_id, string $size = 'widescreen', int $cache_in_hours = 12 ): string {
 		if ( ! empty( $attachment_id ) ) {
-			return '<div class="breadcrumbs-bg dark:opacity-[0.7]">' . \HD_Helper::attachmentImageHTML( $attachment_id, $size, [ 'class'   => 'w-full block',
-			                                                                                                                     'loading' => 'lazy'
+			return '<div class="breadcrumbs-bg dark:opacity-[0.7]">' . \HD_Helper::attachmentImageHTML( $attachment_id, $size, [
+					'class'   => 'w-full block',
+					'loading' => 'lazy'
 				] ) . '</div>';
 		}
 
@@ -2283,8 +2286,9 @@ trait Wp {
 		}
 
 		return ! empty( $cached_id )
-			? '<div class="breadcrumbs-bg dark:opacity-[0.7]">' . \HD_Helper::attachmentImageHTML( $cached_id, $size, [ 'class'   => 'w-full block',
-			                                                                                                            'loading' => 'lazy'
+			? '<div class="breadcrumbs-bg dark:opacity-[0.7]">' . \HD_Helper::attachmentImageHTML( $cached_id, $size, [
+				'class'   => 'w-full block',
+				'loading' => 'lazy'
 			] ) . '</div>'
 			: '';
 	}
