@@ -17,9 +17,12 @@ export function stickyBar({navbar = '#masthead', header = '#header', topBar = '.
     }
 
     // Create placeholder element to maintain layout when navbar becomes fixed
-    const placeholder = document.createElement('div');
-    placeholder.className = 'masthead-placeholder';
-    navbarEl.parentNode.insertBefore(placeholder, navbarEl);
+    let placeholder = headerEl?.querySelector('.masthead-placeholder');
+    if ( ! placeholder ) {
+        placeholder = document.createElement('div');
+        placeholder.className = 'masthead-placeholder';
+        navbarEl.parentNode.insertBefore(placeholder, navbarEl);
+    }
 
     // Calculate marker height: topBar if exists, otherwise header
     const markerElement = topBarEl || headerEl;

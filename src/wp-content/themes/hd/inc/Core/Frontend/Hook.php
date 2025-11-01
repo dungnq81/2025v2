@@ -199,6 +199,7 @@ final class Hook {
         $hotline = \HD_Helper::getField( 'hotline', 'option' );
 
         ?>
+        <div class="masthead-placeholder"></div>
         <div id="masthead" class="masthead py-3">
             <div class="u-container flex items-center gap-3">
                 <div class="masthead-logo flex-1 lg:grow-0 lg:shrink-0 basis-auto"><?= \HD_Helper::siteTitleOrLogo() ?></div>
