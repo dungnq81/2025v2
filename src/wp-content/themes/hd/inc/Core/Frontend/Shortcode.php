@@ -198,10 +198,8 @@ final class Shortcode {
                     </button>
                 </div>
 				<?php
-
 				\HD_Helper::blockTemplate( 'parts/blocks/search-hint', [], true );
 				echo \HD_Helper::isWoocommerceActive() ? '<input type="hidden" name="post_type" value="product">' : '';
-
 				?>
             </form>
         </div>

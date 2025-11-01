@@ -31,6 +31,7 @@ export function initMenu(containerSelector = '#main-nav', menuSelector = '.main-
 
         if (menu.scrollWidth <= container.clientWidth) {
             container.style.overflow = 'visible';
+            reinitializeFoundationDropdown();
             return;
         }
 
@@ -54,6 +55,7 @@ export function initMenu(containerSelector = '#main-nav', menuSelector = '.main-
         }
 
         container.style.overflow = 'visible';
+        reinitializeFoundationDropdown();
     }
 
     function reinitializeFoundationDropdown() {
@@ -67,7 +69,6 @@ export function initMenu(containerSelector = '#main-nav', menuSelector = '.main-
 
     function ensureStableMenu() {
         adjustMenu();
-        window.addEventListener('load', () => requestAnimationFrame(adjustMenu));
 
         if (document.fonts && document.fonts.ready) {
             document.fonts.ready.then(() => adjustMenu());
@@ -80,12 +81,6 @@ export function initMenu(containerSelector = '#main-nav', menuSelector = '.main-
             });
             ro.observe(container);
         }
-
-        let tries = 0;
-        const poll = setInterval(() => {
-            adjustMenu();
-            if (++tries > 10) clearInterval(poll);
-        }, 100);
     }
 
     // Debounced resize handler
@@ -93,14 +88,10 @@ export function initMenu(containerSelector = '#main-nav', menuSelector = '.main-
 
     function onResize() {
         clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(() => {
-            adjustMenu();
-            reinitializeFoundationDropdown();
-        }, 150);
+        resizeTimeout = setTimeout(() => adjustMenu(), 200);
     }
 
     ensureStableMenu();
-    reinitializeFoundationDropdown();
 
     window.addEventListener('resize', onResize);
 }

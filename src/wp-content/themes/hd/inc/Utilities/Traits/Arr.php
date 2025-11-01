@@ -59,9 +59,6 @@ trait Arr {
 	/**
 	 * Convert a scalar (comma-separated string by default) or array into a filtered re-indexed array.
 	 *
-	 * - If $value is scalar -> split by $separator
-	 * - If $callback is provided and callable -> array_filter will use it
-	 *
 	 * @param mixed $value
 	 * @param callable|null $callback
 	 * @param string $separator
