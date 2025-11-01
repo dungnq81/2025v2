@@ -107,17 +107,13 @@ trait Wp {
 	 * @return void
 	 */
 	public static function FQNLoad( ?string $path, bool $require_path = false, bool $init_class = false, string $FQN = '\\', bool $is_widget = false ): void {
-		// Validate $path
 		if ( empty( $path ) || ! is_dir( $path ) ) {
 			self::errorLog( "Invalid or inaccessible path: $path" );
 
 			return;
 		}
 
-		// Retrieve PHP files in the directory
 		$files = glob( $path . '/*.php', GLOB_NOSORT );
-
-		// Check if glob() failed
 		if ( $files === false ) {
 			self::errorLog( "Failed to read files in directory: $path" );
 
@@ -159,7 +155,6 @@ trait Wp {
 						new $filenameFQN();
 					}
 				} catch ( \Exception $e ) {
-					// Log any error that occurs during class initialization
 					self::errorLog( "Error initializing class $filenameFQN: " . $e->getMessage() );
 				}
 			}
