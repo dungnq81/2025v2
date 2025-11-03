@@ -47,7 +47,7 @@ class SingleEndpoints extends AbstractAPI {
 	 * @return bool|\WP_Error
 	 */
 	public function canTrackViews(): bool|\WP_Error {
-		if ( ! $this->rateLimit( 'single_track_view', 10, 60 ) ) {
+		if ( ! $this->rateLimit( 'single_track_view', 30, 60 ) ) {
 			return new \WP_Error( 'too_many_requests', 'Too many requests from your IP.', [ 'status' => 429 ] );
 		}
 
