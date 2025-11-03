@@ -271,7 +271,7 @@ final class Theme {
 	 */
 	public function clearCache(): void {
 		if ( isset( $_GET['clear_cache'] ) ) {
-			\HD_Helper::clearAllCache();
+			HD_Helper::clearAllCache();
 			set_transient( '_clear_cache_message', __( 'Cache has been successfully cleared.', TEXT_DOMAIN ), 30 );
 
 			echo <<<HTML

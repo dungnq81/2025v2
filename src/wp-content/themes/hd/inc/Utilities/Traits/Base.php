@@ -73,8 +73,8 @@ trait Base {
 	public static function errorLog( string $message, int $type = 0, ?string $dest = null, ?string $headers = null ): void {
 		$key = 'hd_err_' . md5( $message );
 
-		if ( ! get_transient( $key ) ) {
-			set_transient( $key, 1, MINUTE_IN_SECONDS );
+		if ( ! wp_cache_get( $key, 'hd_error_log_cache' ) ) {
+			wp_cache_set( $key, 1, 'hd_error_log_cache', MINUTE_IN_SECONDS );
 
 			// Intentionally calling error_log for throttled logging.
 			error_log( $message, $type, $dest, $headers );
