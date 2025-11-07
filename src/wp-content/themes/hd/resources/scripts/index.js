@@ -49,6 +49,10 @@ const run = async () => {
     $_array.forEach((el, index) => {
         Fancybox.bind(el, {
             groupAll: true,
+            Carousel: {
+                transition: "slide",
+                friction: 0.92,
+            },
         });
     });
 }

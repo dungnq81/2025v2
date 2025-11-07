@@ -3,20 +3,17 @@
  * Theme functions and definitions.
  *
  * Initializes the HD Theme core, loads dependencies,
- * defines constants, and ensures compatibility with PHP 8.2 or newer.
+ * defines constants, and ensures compatibility with PHP 8.3 or newer.
  *
  * @author Gaudev
  */
 
 const THEME_VERSION = '1.11.0';
-const TEXT_DOMAIN   = 'hd';
+const TEXT_DOMAIN   = 'hd2026';
 const AUTHOR        = 'Gaudev';
 
 define( 'THEME_PATH', untrailingslashit( get_template_directory() ) . DIRECTORY_SEPARATOR ); // **\wp-content\themes\**\
 define( 'THEME_URL', untrailingslashit( get_template_directory_uri() ) . '/' );  // http(s)://**/wp-content/themes/**/
-
-const INC_PATH   = THEME_PATH . 'inc' . DIRECTORY_SEPARATOR;
-const ASSETS_URL = THEME_URL . 'assets/';
 
 /**
  * @param $error_message
@@ -34,14 +31,14 @@ function _static_error( $error_message ): void {
 	}
 }
 
-// PHP version guard (8.2 or newer)
-if ( PHP_VERSION_ID < 80200 ) {
-	_static_error( 'HD Theme: requires PHP 8.2 or newer. Please upgrade your PHP version.' );
+// PHP version guard (8.3 or newer)
+if ( PHP_VERSION_ID < 80300 ) {
+	_static_error( 'HD Theme: requires PHP 8.3 or newer. Please upgrade your PHP version.' );
 
 	return;
 }
 
-// Composer autoload
+// Autoload classes (PSR-4 via composer)
 $autoload = __DIR__ . '/vendor/autoload.php';
 if ( ! file_exists( $autoload ) ) {
 	_static_error( 'HD Theme: missing vendor autoload file. Please run `composer install`.' );
@@ -51,16 +48,8 @@ if ( ! file_exists( $autoload ) ) {
 
 require_once $autoload; // composer dump-autoload -o --classmap-authoritative
 
-class_alias( \HD\Utilities\Helpers\Helper::class, 'HD_Helper' );
-class_alias( \HD\Utilities\Helpers\CSS::class, 'HD_CSS' );
-class_alias( \HD\Utilities\Helpers\Asset::class, 'HD_Asset' );
+class_alias( \HD\Utilities\Helper::class, 'HD_Helper' );
+class_alias( \HD\Utilities\Asset::class, 'HD_Asset' );
 
-require_once __DIR__ . '/inc/setting.php';
-
-// Initialize theme.
-( \HD\Core\Theme::get_instance() );
-
-$restApiUrl = ( \HD\API\API::get_instance() )->restApiUrl();
-if ( ! defined( 'RESTAPI_URL' ) ) {
-	define( 'RESTAPI_URL', untrailingslashit( $restApiUrl ) . '/' );
-}
+// Bootstrap the theme core
+( \HD\Bootstrap::get_instance() );

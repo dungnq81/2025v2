@@ -1572,12 +1572,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "d2e1583e5f89f53f7882861c1639c14c9a154585"
+                "reference": "19966d2f97bbc444bb176432754e33256a7d45bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/d2e1583e5f89f53f7882861c1639c14c9a154585",
-                "reference": "d2e1583e5f89f53f7882861c1639c14c9a154585",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/19966d2f97bbc444bb176432754e33256a7d45bf",
+                "reference": "19966d2f97bbc444bb176432754e33256a7d45bf",
                 "shasum": ""
             },
             "conflict": {
@@ -2012,7 +2012,7 @@
                 "maikuolan/phpmussel": ">=1,<1.6",
                 "mainwp/mainwp": "<=4.4.3.3",
                 "manogi/nova-tiptap": "<=3.2.6",
-                "mantisbt/mantisbt": "<=2.26.3",
+                "mantisbt/mantisbt": "<2.27.2",
                 "marcwillmann/turn": "<0.3.3",
                 "marshmallow/nova-tiptap": "<5.7",
                 "matomo/matomo": "<1.11",
@@ -2100,7 +2100,7 @@
                 "open-web-analytics/open-web-analytics": "<1.8.1",
                 "opencart/opencart": ">=0",
                 "openid/php-openid": "<2.3",
-                "openmage/magento-lts": "<20.12.3",
+                "openmage/magento-lts": "<20.16",
                 "opensolutions/vimbadmin": "<=3.0.15",
                 "opensource-workshop/connect-cms": "<1.8.7|>=2,<2.4.7",
                 "orchid/platform": ">=8,<14.43",
@@ -2519,7 +2519,7 @@
                 "zfr/zfr-oauth2-server-module": "<0.1.2",
                 "zoujingli/thinkadmin": "<=6.1.53"
             },
-            "time": "2025-10-30T18:07:16+00:00",
+            "time": "2025-11-03T21:05:38+00:00",
             "default-branch": true,
             "type": "metapackage",
             "notification-url": "https://packagist.org/downloads/",
@@ -6157,12 +6157,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wp-cli/wp-cli.git",
-                "reference": "901157f28a507e6dd1f2b26de80b27eea57339de"
+                "reference": "ee4fb67b12eb904527bde1c4a0a4d6538a14681a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/901157f28a507e6dd1f2b26de80b27eea57339de",
-                "reference": "901157f28a507e6dd1f2b26de80b27eea57339de",
+                "url": "https://api.github.com/repos/wp-cli/wp-cli/zipball/ee4fb67b12eb904527bde1c4a0a4d6538a14681a",
+                "reference": "ee4fb67b12eb904527bde1c4a0a4d6538a14681a",
                 "shasum": ""
             },
             "require": {
@@ -6186,7 +6186,7 @@
                 "ext-readline": "Include for a better --prompt implementation",
                 "ext-zip": "Needed to support extraction of ZIP archives when doing downloads or updates"
             },
-            "time": "2025-10-23T14:44:57+00:00",
+            "time": "2025-11-04T11:07:49+00:00",
             "default-branch": true,
             "bin": [
                 "bin/wp",

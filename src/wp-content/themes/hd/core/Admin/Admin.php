@@ -1,0 +1,194 @@
+<?php
+/**
+ * Theme Admin Customizations
+ *
+ * This file defines the Admin class, responsible for handling all admin-side
+ * hooks and customizations specific to the WordPress dashboard.
+ * It manages custom columns, admin menus, styles, and other UI
+ * enhancements to improve the theme’s backend experience.
+ *
+ * @author Gaudev
+ */
+
+namespace HD\Admin;
+
+use HD\Utilities\Asset;
+use HD\Utilities\Helper;
+use HD\Utilities\Traits\Singleton;
+
+\defined( 'ABSPATH' ) || die;
+
+final class Admin {
+	use Singleton;
+
+	/* ---------- CONSTRUCT ---------------------------------------- */
+
+	private function init(): void {
+		add_action( 'admin_menu', [ $this, 'adminMenu' ] );
+		add_action( 'admin_init', [ $this, 'adminInit' ], 11 );
+		add_action( 'admin_enqueue_scripts', [ $this, 'adminEnqueueScripts' ], 30 );
+		add_action( 'admin_footer', [ $this, 'adminFooterScript' ] );
+
+		add_action( 'enqueue_block_editor_assets', [ $this, 'blockEditorAssets' ] );
+
+		/** Show a clear cache message */
+		add_action( 'admin_notices', [ $this, 'adminNotices' ], 11 );
+	}
+
+	/* ---------- PUBLIC ------------------------------------------- */
+
+	public function adminMenu(): void {
+		// global $menu, $submenu;
+		// dump($menu);
+		// dump($submenu);
+
+		remove_meta_box( 'dashboard_site_health', 'dashboard', 'normal' );
+		remove_meta_box( 'dashboard_incoming_links', 'dashboard', 'normal' );
+		remove_meta_box( 'dashboard_primary', 'dashboard', 'normal' );
+		remove_meta_box( 'dashboard_secondary', 'dashboard', 'side' );
+
+		$admin_menu_settings = Helper::filterSettingOptions( 'admin_menu', [] );
+
+		$admin_hide_menu             = $admin_menu_settings['admin_hide_menu'] ?? [];
+		$admin_hide_submenu          = $admin_menu_settings['admin_hide_submenu'] ?? [];
+		$admin_hide_menu_ignore_user = $admin_menu_settings['admin_hide_menu_ignore_user'] ?? [];
+
+		$user_id = get_current_user_id();
+
+		// admin menu
+		if ( $admin_hide_menu && ! in_array( $user_id, $admin_hide_menu_ignore_user, false ) ) {
+			foreach ( $admin_hide_menu as $menu_slug ) {
+				if ( $menu_slug ) {
+					remove_menu_page( $menu_slug );
+				}
+			}
+		}
+
+		// admin submenu
+		if ( $admin_hide_submenu && ! in_array( $user_id, $admin_hide_menu_ignore_user, false ) ) {
+			foreach ( $admin_hide_submenu as $menu_slug => $_submenu ) {
+				foreach ( $_submenu as $_submenu_item ) {
+					if ( $_submenu_item ) {
+						remove_submenu_page( $menu_slug, $_submenu_item );
+					}
+				}
+			}
+		}
+
+		// Other settings
+		$remove_menu_setting = Helper::getThemeMod( 'remove_menu_setting' );
+		if ( $remove_menu_setting ) {
+			foreach ( explode( "\n", $remove_menu_setting ) as $menu_slug ) {
+				if ( $menu_slug ) {
+					remove_menu_page( $menu_slug );
+				}
+			}
+		}
+	}
+
+	// --------------------------------------------------
+
+	public function adminInit(): void {
+		// editor-style for Classic Editor
+		add_editor_style( Asset::src( 'editor-style.scss', true ) );
+
+		$admin_list_table                = Helper::filterSettingOptions( 'admin_list_table', [] );
+		$term_row_actions                = $admin_list_table['term_row_actions'] ?? [];
+		$post_row_actions                = $admin_list_table['post_row_actions'] ?? [];
+		$term_thumb_columns              = $admin_list_table['term_thumb_columns'] ?? [];
+		$post_type_exclude_thumb_columns = $admin_list_table['post_type_exclude_thumb_columns'] ?? [];
+
+		// https://wordpress.stackexchange.com/questions/77532/how-to-add-the-category-id-to-admin-page
+		if ( $term_row_actions ) {
+			foreach ( $term_row_actions as $term ) {
+				add_filter( "{$term}_row_actions", [ $this, '_term_row_actions' ], 11, 2 );
+			}
+		}
+
+		// customize row_actions
+		if ( $post_row_actions ) {
+			foreach ( $post_row_actions as $post_type ) {
+				add_filter( "{$post_type}_row_actions", [ $this, '_post_type_row_actions' ], 11, 2 );
+			}
+		}
+
+		// exclude post columns
+		if ( $post_type_exclude_thumb_columns ) {
+			foreach ( $post_type_exclude_thumb_columns as $post ) {
+				add_filter( "manage_{$post}_posts_columns", [ $this, '_manage_columns_exclude_header' ], 12, 1 );
+			}
+		}
+
+		// thumb terms
+		if ( $term_thumb_columns ) {
+			foreach ( $term_thumb_columns as $term ) {
+				add_filter( "manage_edit-{$term}_columns", [ $this, '_manage_term_columns_header' ], 11, 1 );
+				add_filter( "manage_{$term}_custom_column", [ $this, '_manage_term_columns_content' ], 11, 3 );
+			}
+		}
+
+		// customize post, page
+		add_filter( 'manage_posts_columns', [ $this, '_manage_columns_header' ], 11, 1 );
+		add_filter( 'manage_posts_custom_column', [ $this, '_manage_columns_content' ], 11, 2 );
+		add_filter( 'manage_pages_columns', [ $this, '_manage_columns_header' ], 5, 1 );
+		add_filter( 'manage_pages_custom_column', [ $this, '_manage_columns_content' ], 5, 2 );
+	}
+
+	// --------------------------------------------------
+
+	public function adminEnqueueScripts(): void {
+		$version = Helper::version();
+
+		Asset::enqueueCSS( 'admin.scss', [], $version );
+		Asset::enqueueJS( 'admin.js', [ 'jquery' ], $version, true, [ 'module', 'defer' ] );
+	}
+
+	// --------------------------------------------------
+
+	public function adminFooterScript(): void { ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                let postTitleInput = document.querySelector('input[name="post_title"]');
+                if (postTitleInput) {
+                    postTitleInput.setAttribute('required', 'required');
+                }
+
+                // popup confirmation for trash action
+                const links = document.querySelectorAll('a');
+                links.forEach(function (link) {
+                    const href = link.getAttribute('href');
+                    if (href && href.includes('action=trash')) {
+                        link.addEventListener('click', function (e) {
+                            const confirmAction = confirm('Are you sure you want to move this post to the trash?');
+                            if (!confirmAction) {
+                                e.preventDefault();
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
+		<?php
+	}
+
+	// --------------------------------------------------
+
+	public function blockEditorAssets(): void {
+		Asset::enqueueCSS( 'editor-style.scss', [], Helper::version() );
+	}
+
+	// --------------------------------------------------
+
+	public function adminNotices(): void {
+		$message = get_transient( '_clear_cache_message' );
+		if ( ! empty( $message ) ) {
+			Helper::messageSuccess( $message, false );
+
+			if ( ! isset( $_GET['clear_cache'] ) ) {
+				delete_transient( '_clear_cache_message' );
+			}
+		}
+	}
+
+	// --------------------------------------------------
+}

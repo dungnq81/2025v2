@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '38d3ce42f8f942199c50c39618f3ce08459221a9',
+        'reference' => 'e64c6947b7db771808a35505e9a08b88564c9717',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '38d3ce42f8f942199c50c39618f3ce08459221a9',
+            'reference' => 'e64c6947b7db771808a35505e9a08b88564c9717',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -226,7 +226,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => 'd2e1583e5f89f53f7882861c1639c14c9a154585',
+            'reference' => '19966d2f97bbc444bb176432754e33256a7d45bf',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(
@@ -666,7 +666,7 @@
         'wp-cli/wp-cli' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '901157f28a507e6dd1f2b26de80b27eea57339de',
+            'reference' => 'ee4fb67b12eb904527bde1c4a0a4d6538a14681a',
             'type' => 'library',
             'install_path' => __DIR__ . '/../wp-cli/wp-cli',
             'aliases' => array(

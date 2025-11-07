@@ -1,0 +1,109 @@
+<?php
+/**
+ * Class SingleEndpoints
+ *
+ * Registers and handles all REST API endpoints for single resources in WordPress
+ * (e.g., posts, pages, attachments).
+ *
+ * @author Gaudev
+ */
+
+namespace HD\API\Endpoints;
+
+use HD\API\AbstractAPI;
+use HD\Utilities\Helper;
+
+\defined( 'ABSPATH' ) || die;
+
+final class Single extends AbstractAPI {
+	public function __construct() {
+		$this->namespace = self::REST_NAMESPACE;
+		$this->rest_base = 'single';
+	}
+
+	/** ---------------------------------------- */
+
+	/**
+	 * Register custom REST routes.
+	 *
+	 * @return void
+	 */
+	protected function registerRoutes(): void {
+		register_rest_route(
+			$this->namespace,
+			"/{$this->rest_base}/track_views",
+			[
+				'methods'             => \WP_REST_Server::CREATABLE,
+				'callback'            => [ $this, 'trackViewsCallback' ],
+				'permission_callback' => [ $this, 'canTrackViews' ],
+				'args'                => [
+					'id' => [
+						'required'          => true,
+						'sanitize_callback' => 'absint',
+						'validate_callback' => fn( $v ) => $v > 0,
+					],
+				],
+			]
+		);
+	}
+
+	/** ---------------------------------------- */
+
+	/**
+	 * Permission callback with rate limiting.
+	 *
+	 * @return bool|\WP_Error
+	 */
+	public function canTrackViews(): bool|\WP_Error {
+		if ( ! $this->rateLimit( 'single_track_view', 30, 60 ) ) {
+			return new \WP_Error(
+				'too_many_requests',
+				__( 'Too many requests from your IP.', TEXT_DOMAIN ),
+				[ 'status' => 429 ]
+			);
+		}
+
+		return true;
+	}
+
+	/** ---------------------------------------- */
+
+	/**
+	 * Actual endpoint callback.
+	 *
+	 * @param $request
+	 *
+	 * @return \WP_Error|\WP_REST_Response
+	 */
+	public function trackViewsCallback( $request ): \WP_Error|\WP_REST_Response {
+		$nonce_check = $this->verifyNonce( $request );
+		if ( $nonce_check instanceof \WP_REST_Response ) {
+			return $nonce_check;
+		}
+
+		$id = absint( $request['id'] ?? 0 );
+		if ( ! $id || ! get_post( $id ) ) {
+			return $this->sendResponse( [
+				'success' => false,
+				'message' => 'Invalid post ID.',
+			], 400 );
+		}
+
+		$views        = (int) get_post_meta( $id, '_post_views', true );
+		$last_view    = (int) get_post_meta( $id, '_last_view_time', true );
+		$current_time = current_time( 'U', false );
+
+		if ( ( $current_time - $last_view ) > 300 ) { // 300 s
+			$views ++;
+			update_post_meta( $id, '_post_views', $views );
+			update_post_meta( $id, '_last_view_time', $current_time );
+		}
+
+		return $this->sendResponse( [
+			'success' => true,
+			'time'    => $current_time,
+			'views'   => $views,
+			'date'    => Helper::humanizeTime( $id ),
+		], 200 );
+	}
+}

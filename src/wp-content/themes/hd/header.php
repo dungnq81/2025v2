@@ -18,9 +18,9 @@
     /**
      * HOOK: wp_head
      *
-     * @see Hook::wp_head_action() - 1
-     * @see Hook::other_head_action() - 98
-     * @see Hook::external_fonts_action() - 99
+     * @see wp_head_action() - 1
+     * @see other_head_action() - 98
+     * @see external_fonts_action() - 99
      */
     wp_head();
 
@@ -39,7 +39,7 @@
     /**
      * HOOK: hd_header_before_action
      *
-     * @see Hook::off_canvas_menu_action() - 11
+     * @see off_canvas_menu_action() - 11
      */
     do_action( 'hd_header_before_action' );
 
@@ -50,7 +50,7 @@
 		/**
          * HOOK: hd_header_action
          *
-		 * @see Hook::construct_header_action() - 10
+		 * @see construct_header_action() - 10
 		 */
 		do_action( 'hd_header_action' );
 

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit9b89879d0ffdac5f0eb892fc5d415441
+class ComposerStaticInit08c9721484fe97e93c1817a096188475
 {
     public static $prefixLengthsPsr4 = array (
         'M' => 
@@ -29,46 +29,50 @@ class ComposerStaticInit9b89879d0ffdac5f0eb892fc5d415441
         ),
         'HD\\' => 
         array (
-            0 => __DIR__ . '/../..' . '/inc',
+            0 => __DIR__ . '/../..' . '/core',
         ),
     );
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'HD\\API\\API' => __DIR__ . '/../..' . '/inc/API/API.php',
-        'HD\\API\\AbstractAPI' => __DIR__ . '/../..' . '/inc/API/AbstractAPI.php',
-        'HD\\API\\Endpoints\\GlobalEndpoints' => __DIR__ . '/../..' . '/inc/API/Endpoints/GlobalEndpoints.php',
-        'HD\\API\\Endpoints\\PostEndpoints' => __DIR__ . '/../..' . '/inc/API/Endpoints/PostEndpoints.php',
-        'HD\\API\\Endpoints\\SingleEndpoints' => __DIR__ . '/../..' . '/inc/API/Endpoints/SingleEndpoints.php',
-        'HD\\Core\\Admin\\Admin' => __DIR__ . '/../..' . '/inc/Core/Admin/Admin.php',
-        'HD\\Core\\Ajax' => __DIR__ . '/../..' . '/inc/Core/Ajax.php',
-        'HD\\Core\\Customizer' => __DIR__ . '/../..' . '/inc/Core/Customizer.php',
-        'HD\\Core\\Frontend\\Hook' => __DIR__ . '/../..' . '/inc/Core/Frontend/Hook.php',
-        'HD\\Core\\Frontend\\Shortcode' => __DIR__ . '/../..' . '/inc/Core/Frontend/Shortcode.php',
-        'HD\\Core\\Optimizer' => __DIR__ . '/../..' . '/inc/Core/Optimizer.php',
-        'HD\\Core\\Theme' => __DIR__ . '/../..' . '/inc/Core/Theme.php',
-        'HD\\Integration\\ACF\\ACF' => __DIR__ . '/../..' . '/inc/Integration/ACF/ACF.php',
-        'HD\\Integration\\WooCommerce\\Helper' => __DIR__ . '/../..' . '/inc/Integration/WooCommerce/Helper.php',
-        'HD\\Integration\\WooCommerce\\WooCommerce' => __DIR__ . '/../..' . '/inc/Integration/WooCommerce/WooCommerce.php',
-        'HD\\Utilities\\Helpers\\Asset' => __DIR__ . '/../..' . '/inc/Utilities/Helpers/Asset.php',
-        'HD\\Utilities\\Helpers\\CSS' => __DIR__ . '/../..' . '/inc/Utilities/Helpers/CSS.php',
-        'HD\\Utilities\\Helpers\\Helper' => __DIR__ . '/../..' . '/inc/Utilities/Helpers/Helper.php',
-        'HD\\Utilities\\Navigation\\HorizontalNavWalker' => __DIR__ . '/../..' . '/inc/Utilities/Navigation/HorizontalNavWalker.php',
-        'HD\\Utilities\\Navigation\\VerticalNavWalker' => __DIR__ . '/../..' . '/inc/Utilities/Navigation/VerticalNavWalker.php',
-        'HD\\Utilities\\Traits\\Arr' => __DIR__ . '/../..' . '/inc/Utilities/Traits/Arr.php',
-        'HD\\Utilities\\Traits\\Base' => __DIR__ . '/../..' . '/inc/Utilities/Traits/Base.php',
-        'HD\\Utilities\\Traits\\Cast' => __DIR__ . '/../..' . '/inc/Utilities/Traits/Cast.php',
-        'HD\\Utilities\\Traits\\DateTime' => __DIR__ . '/../..' . '/inc/Utilities/Traits/DateTime.php',
-        'HD\\Utilities\\Traits\\Db' => __DIR__ . '/../..' . '/inc/Utilities/Traits/Db.php',
-        'HD\\Utilities\\Traits\\Encryption' => __DIR__ . '/../..' . '/inc/Utilities/Traits/Encryption.php',
-        'HD\\Utilities\\Traits\\File' => __DIR__ . '/../..' . '/inc/Utilities/Traits/File.php',
-        'HD\\Utilities\\Traits\\Singleton' => __DIR__ . '/../..' . '/inc/Utilities/Traits/Singleton.php',
-        'HD\\Utilities\\Traits\\Str' => __DIR__ . '/../..' . '/inc/Utilities/Traits/Str.php',
-        'HD\\Utilities\\Traits\\Url' => __DIR__ . '/../..' . '/inc/Utilities/Traits/Url.php',
-        'HD\\Utilities\\Traits\\Wp' => __DIR__ . '/../..' . '/inc/Utilities/Traits/Wp.php',
-        'HD\\Utilities\\Widgets\\Base\\AbstractWidget' => __DIR__ . '/../..' . '/inc/Utilities/Widgets/Base/AbstractWidget.php',
-        'HD\\Utilities\\Widgets\\RecentPostsWidget' => __DIR__ . '/../..' . '/inc/Utilities/Widgets/RecentPostsWidget.php',
-        'HD\\Utilities\\Widgets\\SearchWidget' => __DIR__ . '/../..' . '/inc/Utilities/Widgets/SearchWidget.php',
+        'HD\\API\\API' => __DIR__ . '/../..' . '/core/API/API.php',
+        'HD\\API\\AbstractAPI' => __DIR__ . '/../..' . '/core/API/AbstractAPI.php',
+        'HD\\API\\Endpoints\\Base' => __DIR__ . '/../..' . '/core/API/Endpoints/Base.php',
+        'HD\\API\\Endpoints\\Single' => __DIR__ . '/../..' . '/core/API/Endpoints/Single.php',
+        'HD\\Admin\\Admin' => __DIR__ . '/../..' . '/core/Admin/Admin.php',
+        'HD\\Admin\\MetaBox' => __DIR__ . '/../..' . '/core/Admin/MetaBox.php',
+        'HD\\Bootstrap' => __DIR__ . '/../..' . '/core/Bootstrap.php',
+        'HD\\Events\\AbstractEvent' => __DIR__ . '/../..' . '/core/Events/AbstractEvent.php',
+        'HD\\Events\\Event' => __DIR__ . '/../..' . '/core/Events/Event.php',
+        'HD\\Integration\\ACF\\ACF' => __DIR__ . '/../..' . '/core/Integration/ACF/ACF.php',
+        'HD\\Integration\\WooCommerce\\WooCommerce' => __DIR__ . '/../..' . '/core/Integration/WooCommerce/WooCommerce.php',
+        'HD\\Services\\AbstractService' => __DIR__ . '/../..' . '/core/Services/AbstractService.php',
+        'HD\\Services\\Modules\\Ajax' => __DIR__ . '/../..' . '/core/Services/Modules/Ajax.php',
+        'HD\\Services\\Modules\\Customizer' => __DIR__ . '/../..' . '/core/Services/Modules/Customizer.php',
+        'HD\\Services\\Modules\\Optimizer' => __DIR__ . '/../..' . '/core/Services/Modules/Optimizer.php',
+        'HD\\Services\\Service' => __DIR__ . '/../..' . '/core/Services/Service.php',
+        'HD\\Theme' => __DIR__ . '/../..' . '/core/Theme.php',
+        'HD\\Utilities\\Asset' => __DIR__ . '/../..' . '/core/Utilities/Asset.php',
+        'HD\\Utilities\\CSS' => __DIR__ . '/../..' . '/core/Utilities/CSS.php',
+        'HD\\Utilities\\Helper' => __DIR__ . '/../..' . '/core/Utilities/Helper.php',
+        'HD\\Utilities\\Navigation\\HorizontalNavWalker' => __DIR__ . '/../..' . '/core/Utilities/Navigation/HorizontalNavWalker.php',
+        'HD\\Utilities\\Navigation\\VerticalNavWalker' => __DIR__ . '/../..' . '/core/Utilities/Navigation/VerticalNavWalker.php',
+        'HD\\Utilities\\Shortcode\\AbstractShortcode' => __DIR__ . '/../..' . '/core/Utilities/Shortcode/AbstractShortcode.php',
+        'HD\\Utilities\\Shortcode\\Shortcode' => __DIR__ . '/../..' . '/core/Utilities/Shortcode/Shortcode.php',
+        'HD\\Utilities\\Traits\\Arr' => __DIR__ . '/../..' . '/core/Utilities/Traits/Arr.php',
+        'HD\\Utilities\\Traits\\Base' => __DIR__ . '/../..' . '/core/Utilities/Traits/Base.php',
+        'HD\\Utilities\\Traits\\Cast' => __DIR__ . '/../..' . '/core/Utilities/Traits/Cast.php',
+        'HD\\Utilities\\Traits\\DateTime' => __DIR__ . '/../..' . '/core/Utilities/Traits/DateTime.php',
+        'HD\\Utilities\\Traits\\Db' => __DIR__ . '/../..' . '/core/Utilities/Traits/Db.php',
+        'HD\\Utilities\\Traits\\Encryption' => __DIR__ . '/../..' . '/core/Utilities/Traits/Encryption.php',
+        'HD\\Utilities\\Traits\\File' => __DIR__ . '/../..' . '/core/Utilities/Traits/File.php',
+        'HD\\Utilities\\Traits\\Singleton' => __DIR__ . '/../..' . '/core/Utilities/Traits/Singleton.php',
+        'HD\\Utilities\\Traits\\Str' => __DIR__ . '/../..' . '/core/Utilities/Traits/Str.php',
+        'HD\\Utilities\\Traits\\Url' => __DIR__ . '/../..' . '/core/Utilities/Traits/Url.php',
+        'HD\\Utilities\\Traits\\Wp' => __DIR__ . '/../..' . '/core/Utilities/Traits/Wp.php',
+        'HD\\Utilities\\Widgets\\Base\\AbstractWidget' => __DIR__ . '/../..' . '/core/Utilities/Widgets/Base/AbstractWidget.php',
+        'HD\\Utilities\\Widgets\\RecentPostsWidget' => __DIR__ . '/../..' . '/core/Utilities/Widgets/RecentPostsWidget.php',
+        'HD\\Utilities\\Widgets\\SearchWidget' => __DIR__ . '/../..' . '/core/Utilities/Widgets/SearchWidget.php',
         'MatthiasMullie\\Minify\\CSS' => __DIR__ . '/..' . '/matthiasmullie/minify/src/CSS.php',
         'MatthiasMullie\\Minify\\Exception' => __DIR__ . '/..' . '/matthiasmullie/minify/src/Exception.php',
         'MatthiasMullie\\Minify\\Exceptions\\BasicException' => __DIR__ . '/..' . '/matthiasmullie/minify/src/Exceptions/BasicException.php',
@@ -85,9 +89,9 @@ class ComposerStaticInit9b89879d0ffdac5f0eb892fc5d415441
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit9b89879d0ffdac5f0eb892fc5d415441::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit9b89879d0ffdac5f0eb892fc5d415441::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit9b89879d0ffdac5f0eb892fc5d415441::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit08c9721484fe97e93c1817a096188475::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit08c9721484fe97e93c1817a096188475::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit08c9721484fe97e93c1817a096188475::$classMap;
 
         }, null, ClassLoader::class);
     }
