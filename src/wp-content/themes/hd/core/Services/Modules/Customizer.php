@@ -35,6 +35,7 @@ final class Customizer extends AbstractService {
 		if ( ! empty( $page_archive_post_types ) && is_array( $page_archive_post_types ) ) {
 			$this->page_archive_post_types = $page_archive_post_types;
 
+			add_action( 'init', [ $this, 'add_page_archive_rewrite' ] );
 			add_action( 'pre_get_posts', [ $this, 'handle_page_as_archive' ] );
 			add_filter( 'display_post_states', [ $this, 'add_archive_page_state' ] );
 		}
@@ -66,13 +67,37 @@ final class Customizer extends AbstractService {
 			if ( is_page( $page->ID ) ) {
 				$query->set( 'post_type', $type );
 				$query->set( 'posts_per_page', Helper::getOption( 'posts_per_page' ) );
+				$query->set( 'paged', max( 1, get_query_var( 'paged' ) ) );
+				$query->set( 'post_status', 'publish' );
 				$query->is_page              = false;
 				$query->is_archive           = true;
 				$query->is_post_type_archive = true;
+				$query->is_home              = false;
+				$query->is_singular          = false;
 				$query->set( 'pagename', '' );
 
 				break;
 			}
+		}
+	}
+
+	/** ---------------------------------------- */
+
+	/**
+	 * @return void
+	 */
+	public function add_page_archive_rewrite(): void {
+		foreach ( $this->page_archive_post_types as $type ) {
+			$page = get_page_by_path( $type );
+			if ( ! $page ) {
+				continue;
+			}
+
+			add_rewrite_rule(
+				'^' . $type . '/page/([0-9]+)/?',
+				'index.php?pagename=' . $type . '&paged=$matches[1]',
+				'top'
+			);
 		}
 	}
 
