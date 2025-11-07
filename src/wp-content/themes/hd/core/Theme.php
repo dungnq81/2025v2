@@ -137,7 +137,7 @@ final class Theme {
 	 * @return void
 	 */
 	public function registerWidgets(): void {
-		$widgets_dir = __DIR__ . '/Utilities/Widgets';
+		$widgets_dir = __DIR__ . DIRECTORY_SEPARATOR . 'Utilities' . DIRECTORY_SEPARATOR . 'Widgets';
 		$FQN         = '\\HD\\Utilities\\Widgets\\';
 
 		Helper::createDirectory( $widgets_dir );

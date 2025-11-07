@@ -19,7 +19,7 @@ final class Service {
 	/** ---------------------------------------- */
 
 	private function register_all(): void {
-		$modules_dir = __DIR__ . '/Modules';
+		$modules_dir = __DIR__ . DIRECTORY_SEPARATOR . 'Modules';
 		$FQN         = '\\HD\\Services\\Modules\\';
 
 		Helper::createDirectory( $modules_dir );

@@ -21,7 +21,7 @@ use Random\RandomException;
 
 \defined( 'ABSPATH' ) || die;
 
-require __DIR__ . '/hooks.php';
+require __DIR__ . DIRECTORY_SEPARATOR . 'hooks.php';
 
 final class WooCommerce {
     use Singleton;
@@ -136,7 +136,7 @@ final class WooCommerce {
      * @return void
      */
     public function registerWidgets(): void {
-        $widgets_dir = __DIR__ . '/Widgets';
+        $widgets_dir = __DIR__ . DIRECTORY_SEPARATOR . 'Widgets';
         $FQN         = '\\HD\\Integration\\WooCommerce\\Widgets\\';
 
         Helper::createDirectory( $widgets_dir );
