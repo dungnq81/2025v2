@@ -87,8 +87,11 @@ final class Asset {
 			return;
 		}
 
-		$imports = [ 'vendor.js' ];
-		$tmp     = self::_manifestResolve( $entry, $handle_prefix );
+		$imports  = [ 'vendor.js' ];
+		$resolved = [];
+		$added    = [];
+
+		$tmp = self::_manifestResolve( $entry, $handle_prefix );
 		if ( ! empty( $tmp['imports'] ) ) {
 			$imports = array_merge( $imports, (array) $tmp['imports'] );
 		}
@@ -97,11 +100,22 @@ final class Asset {
 		$links   = '';
 
 		foreach ( $imports as $import ) {
-			$resolve = self::_manifestResolve( $import );
-			if ( ! empty( $resolve['src'] ) ) {
-				$href  = esc_url( $resolve['src'] );
-				$links .= '<link rel="modulepreload" href="' . $href . '" as="script" type="module" crossorigin>';
+			if ( ! isset( $resolved[ $import ] ) ) {
+				$resolved[ $import ] = self::_manifestResolve( $import );
 			}
+
+			$resolve = $resolved[ $import ];
+			if ( empty( $resolve['src'] ) ) {
+				continue;
+			}
+
+			$href = esc_url( $resolve['src'] );
+			if ( isset( $added[ $href ] ) ) {
+				continue;
+			}
+
+			$added[ $href ] = true;
+			$links          .= sprintf( '<link rel="modulepreload" href="%s" as="script" type="module" crossorigin>', $href );
 		}
 
 		echo wp_kses( $links, [
@@ -111,7 +125,7 @@ final class Asset {
 				'as'          => [],
 				'type'        => [],
 				'crossorigin' => [],
-			]
+			],
 		] );
 	}
 
