@@ -1,0 +1,12 @@
+/* admin.scss */
+/* utils/_variables.scss */
+/* utils/_functions.scss */
+/** $string - svg */
+/** add unique id image url */
+/** https://webdesign.tutsplus.com/tutorials/an-introduction-to-error-handling-in-sass--cms-19996 */
+/** font size */
+/* admin.scss */
+/* utils/_mixins.scss */
+:where(#kk-star-ratings, .metabox-prefs label) .components-button {
+  margin: 0 !important;
+}

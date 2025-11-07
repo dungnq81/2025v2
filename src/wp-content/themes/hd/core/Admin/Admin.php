@@ -191,4 +191,140 @@ final class Admin {
 	}
 
 	// --------------------------------------------------
+
+	/**
+	 * @param $actions
+	 * @param $_object
+	 *
+	 * @return array
+	 */
+	public function _term_row_actions( $actions, $_object ): array {
+		return \HD_Helper::prepend( $actions, 'Id: ' . $_object->term_id, 'action_id' );
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param $actions
+	 * @param $_object
+	 *
+	 * @return mixed
+	 */
+	public function _post_type_row_actions( $actions, $_object ): mixed {
+		if ( ! in_array( $_object->post_type, [ 'product', 'site-review' ] ) ) {
+			$actions = \HD_Helper::prepend( $actions, 'Id:' . $_object->ID, 'action_id' );
+		}
+
+		return $actions;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param $columns
+	 *
+	 * @return array
+	 */
+	public function _manage_columns_header( $columns ): array {
+		$in = [
+			'post_thumb' => sprintf( '<span class="wc-image tips">%1$s</span>', __( 'Thumb', TEXT_DOMAIN ) ),
+		];
+
+		return \HD_Helper::insertBefore( 'title', $columns, $in );
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param $column_name
+	 * @param $post_id
+	 */
+	public function _manage_columns_content( $column_name, $post_id ): void {
+		switch ( $column_name ) {
+			case 'post_thumb':
+				$post_type = get_post_type( $post_id );
+				$thumbnail = \HD_Helper::postImageHTML( $post_id, 'thumbnail' );
+
+				if ( ! in_array( $post_type, [ 'video', 'product' ] ) ) {
+					if ( ! $thumbnail ) {
+						$thumbnail = \HD_Helper::placeholderSrc();
+					}
+					echo $thumbnail;
+				} elseif ( 'video' === $post_type ) {
+					if ( $thumbnail ) {
+						echo $thumbnail;
+					} elseif ( $url = \HD_Helper::getField( 'url', $post_id ) ) {
+						$img_src = \HD_Helper::youtubeImage( esc_url( $url ), 3 );
+						if ( $img_src ) {
+							echo '<img loading="lazy" alt="video" src="' . $img_src . '" />';
+						}
+					}
+				}
+
+				break;
+
+			default:
+				break;
+		}
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param $columns
+	 *
+	 * @return mixed
+	 */
+	public function _manage_columns_exclude_header( $columns ): mixed {
+		unset( $columns['post_thumb'] );
+
+		return $columns;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param $columns
+	 *
+	 * @return array|mixed
+	 */
+	public function _manage_term_columns_header( $columns ): mixed {
+		if ( \HD_Helper::isAcfActive() ) {
+			$thumb = [
+				'term_thumb' => sprintf( '<span class="wc-image tips">%1$s</span>', __( 'Thumb', TEXT_DOMAIN ) ),
+			];
+
+			$columns = \HD_Helper::insertBefore( 'name', $columns, $thumb );
+		}
+
+		return $columns;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * @param $out
+	 * @param $column
+	 * @param $term_id
+	 *
+	 * @return int|mixed|string|null
+	 */
+	public function _manage_term_columns_content( $out, $column, $term_id ): mixed {
+		switch ( $column ) {
+			case 'term_thumb':
+				$term_thumb = \HD_Helper::acfTermThumb( $term_id, $column, 'thumbnail', true );
+				if ( ! $term_thumb ) {
+					$term_thumb = \HD_Helper::placeholderSrc();
+				}
+
+				$out = $term_thumb;
+
+				return $out;
+
+			default:
+				return $out;
+		}
+	}
+
+	// --------------------------------------------------
 }

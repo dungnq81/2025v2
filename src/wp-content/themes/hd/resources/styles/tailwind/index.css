@@ -12,7 +12,7 @@
 
 /* theme `hd` */
 @source "../../../*.php";
-@source "../../../{inc,parts,templates,woocommerce}/**/*.php";
+@source "../../../{core,inc,parts,templates,woocommerce}/**/*.php";
 @source "../../../resources/scripts/**/*.js";
 @source "../../../resources/styles/tailwind/**/*.css";
 

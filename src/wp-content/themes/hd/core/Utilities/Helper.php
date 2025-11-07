@@ -760,9 +760,9 @@ final class Helper {
 	 * @return string
 	 */
 	public static function placeholderSrc( string $class = '', bool $img_wrap = true, bool $thumb = true ): string {
-		$src = ASSETS_URL . 'img/placeholder.png';
+		$src = THEME_URL . 'assets/img/placeholder.png';
 		if ( $thumb ) {
-			$src = ASSETS_URL . 'img/placeholder-320x320.png';
+			$src = THEME_URL . 'assets/img/placeholder-320x320.png';
 		}
 
 		if ( $img_wrap ) {
