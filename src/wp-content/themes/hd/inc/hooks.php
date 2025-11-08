@@ -101,20 +101,17 @@ function _masthead_top_header(): void {
     <div class="top-header c-light-bg border-t-[0] hidden md:block">
         <div class="u-container u-flex-x justify-between items-center gap-y-1 py-[8px]">
 			<?php if ( $post ) : ?>
-                <div class="top-items text-[12px]">
-                    <div class="flex gap-2 items-center">
-
-						<?= $acf_title ? '<span class="label rounded-sm px-2"' . $acf_style . '>' . $acf_title . '</span>' : '' ?>
-
-                        <span class="content flex items-center gap-1">
-                            <?= get_the_title( $post->ID ) ?> -
-                            <a class="flex items-center gap-1" href="<?= get_permalink( $post->ID ) ?>"
-                               title="<?= esc_attr__( 'Xem chi tiết', TEXT_DOMAIN ) ?>">
-                                <span class="dark:text-(--color-white) font-medium"><?= __( 'Xem chi tiết', TEXT_DOMAIN ) ?></span>
-                            </a>
-                        </span>
-                    </div>
+            <div class="top-items text-[12px]">
+                <div class="flex gap-2 items-center">
+                    <?= $acf_title ? '<span class="label rounded-sm px-2"' . $acf_style . '>' . $acf_title . '</span>' : '' ?>
+                    <span class="content flex items-center gap-1">
+                        <?= get_the_title( $post->ID ) ?> -
+                        <a class="flex items-center gap-1" href="<?= get_permalink( $post->ID ) ?>" title="<?= esc_attr__( 'Xem chi tiết', TEXT_DOMAIN ) ?>">
+                            <span class="dark:text-(--color-white) font-medium"><?= __( 'Xem chi tiết', TEXT_DOMAIN ) ?></span>
+                        </a>
+                    </span>
                 </div>
+            </div>
 			<?php endif; ?>
 
 			<?= Helper::doShortcode( 'horizontal_menu', [
@@ -176,14 +173,12 @@ function _masthead_header(): void {
 // ----------------------------------------
 
 add_action( 'masthead', '_masthead_bottom_header', 14 );
-function _masthead_bottom_header(): void {
-}
+function _masthead_bottom_header(): void {}
 
 // ----------------------------------------
 
 add_action( 'masthead', '_masthead_custom', 98 );
-function _masthead_custom(): void {
-}
+function _masthead_custom(): void {}
 
 // -----------------------------------------------
 // hd_header_after_action
@@ -223,9 +218,6 @@ function back_to_top(): void {
 // ----------------------------------------
 
 add_action( 'wp_footer', 'template_svg', 33 );
-function template_svg(): void {
-	Helper::blockTemplate( 'parts/blocks/svg' );
-}
 
 // ----------------------------------------
 
@@ -314,11 +306,11 @@ function _construct_footer_columns(): void {
 	?>
     <div id="footer-columns" class="footer-columns">
 		<?php if ( $img_desktop || $img_mobile ) : ?>
-            <div class="footer-cta u-container flex justify-center pt-10 md:pt-15 lg:pt-20">
-				<?= Helper::ACFLinkOpen( $link, 'block' ) ?>
-				<?= Helper::pictureHTML( 'block max-w-full h-auto', $img_desktop, $img_mobile, 'widescreen' ) ?>
-				<?= Helper::ACFLinkClose( $link ) ?>
-            </div>
+        <div class="footer-cta u-container flex justify-center pt-10 md:pt-15 lg:pt-20">
+            <?= Helper::ACFLinkOpen( $link, 'block' ) ?>
+            <?= Helper::pictureHTML( 'block max-w-full h-auto', $img_desktop, $img_mobile, 'widescreen' ) ?>
+            <?= Helper::ACFLinkClose( $link ) ?>
+        </div>
 		<?php endif; ?>
         <div class="u-container py-10 md:py-15 lg:py-20">
             <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
