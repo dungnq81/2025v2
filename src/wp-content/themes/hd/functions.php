@@ -39,7 +39,7 @@ if ( PHP_VERSION_ID < 80300 ) {
 }
 
 // Autoload classes (PSR-4 via composer)
-$autoload = __DIR__ . '/vendor/autoload.php';
+$autoload = __DIR__ . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'autoload.php';
 if ( ! file_exists( $autoload ) ) {
 	_static_error( 'HD Theme: missing vendor autoload file. Please run `composer install`.' );
 

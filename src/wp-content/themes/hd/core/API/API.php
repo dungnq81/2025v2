@@ -77,12 +77,12 @@ final class API extends AbstractAPI {
 	 * @return void
 	 */
 	public function initRestClasses(): void {
-		$dir = __DIR__ . '/Endpoints';
+		$dir = __DIR__ . DIRECTORY_SEPARATOR . 'Endpoints';
 		if ( ! is_dir( $dir ) ) {
 			return;
 		}
 
-		foreach ( glob( $dir . '/*.php', GLOB_NOSORT ) as $file ) {
+		foreach ( glob( $dir . DIRECTORY_SEPARATOR. '*.php', GLOB_NOSORT ) as $file ) {
 			$class_name = '\\HD\\API\\Endpoints\\' . basename( $file, '.php' );
 			if ( class_exists( $class_name ) && is_subclass_of( $class_name, \WP_REST_Controller::class ) ) {
 				$this->endpointClasses[] = new $class_name();

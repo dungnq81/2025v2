@@ -2377,7 +2377,7 @@ trait Wp {
 		}
 
 		// If there is pagination
-		if ( get_query_var( 'paged' ) ) {
+		if ( get_query_var( 'paged' ) && 1 < (int) get_query_var( 'paged' ) ) {
 			$breadcrumbs[] = $before . ' (' . __( 'trang', TEXT_DOMAIN ) . ' ' . get_query_var( 'paged' ) . ')' . $after;
 		}
 
