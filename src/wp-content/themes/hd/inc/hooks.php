@@ -247,10 +247,7 @@ function wp_footer_custom_js_action(): void {
                         const resp = await fetch(endpointURL, {
                             method: 'POST',
                             credentials: 'same-origin',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-WP-Nonce': window.hdConfig.restToken,
-                            },
+                            headers: {'Content-Type': 'application/json', 'X-WP-Nonce': window.hdConfig.restToken},
                             body: JSON.stringify({id: postID})
                         });
                         const json = await resp.json();
@@ -258,8 +255,7 @@ function wp_footer_custom_js_action(): void {
                             if (dateEl) dateEl.textContent = json.date;
                             if (viewsEl) viewsEl.textContent = json.views;
                         }
-                    } catch (err) {
-                    }
+                    } catch (err) {}
                 }
             }
             document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', track, {once: true}) : track();

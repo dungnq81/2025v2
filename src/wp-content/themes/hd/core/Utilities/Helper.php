@@ -84,64 +84,6 @@ final class Helper {
 	// -------------------------------------------------------------
 
 	/**
-	 * Conditionally adds an HTML attribute based on array membership.
-	 *
-	 * @param array $checked_arr
-	 * @param $current
-	 * @param bool $display
-	 * @param string $type
-	 *
-	 * @return string|null
-	 */
-	public static function inArrayChecked( array $checked_arr, $current, bool $display = true, string $type = 'checked' ): ?string {
-		$type   = preg_match( '/^[a-zA-Z0-9\-]+$/', $type ) ? $type : 'checked';
-		$result = in_array( $current, $checked_arr, false ) ? " $type='$type'" : '';
-
-		// Echo or return the result
-		if ( $display ) {
-			echo $result;
-
-			return null;
-		}
-
-		return $result;
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @param string $name
-	 * @param $value
-	 * @param int $minute
-	 * @param bool $httponly
-	 *
-	 * @return bool
-	 */
-	public static function addCookie( string $name, $value, int $minute = 720, bool $httponly = true ): bool {
-		if ( is_scalar( $value ) ) {
-			setcookie( $name, $value, time() + $minute * MINUTE_IN_SECONDS, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), $httponly );
-
-			return true;
-		}
-
-		return false;
-	}
-
-	// -------------------------------------------------------------
-
-	/**
-	 * @param string $name
-	 * @param bool $httponly
-	 *
-	 * @return void
-	 */
-	public static function removeCookie( string $name, bool $httponly = true ): void {
-		setcookie( $name, '', time() - 3600, COOKIEPATH, COOKIE_DOMAIN, is_ssl(), $httponly );
-	}
-
-	// -------------------------------------------------------------
-
-	/**
 	 * @param $file
 	 *
 	 * @return mixed
@@ -701,43 +643,6 @@ final class Helper {
 	// --------------------------------------------------
 
 	/**
-	 * A fallback when no navigation is selected by default.
-	 *
-	 * @param bool $container
-	 *
-	 * @return void
-	 */
-	public static function menuFallback( bool $container = false ): void {
-		echo '<div class="menu-fallback">';
-		if ( $container ) {
-			echo '<div class="container">';
-		}
-
-		/* translators: %1$s: link to menus, %2$s: link to customize. */
-		printf(
-			__( 'Please assign a menu to the primary menu location under %1$s or %2$s the design.', TEXT_DOMAIN ),
-			/* translators: %s: menu url */
-			sprintf(
-				__( '<a class="_blank" href="%s">Menus</a>', TEXT_DOMAIN ),
-				get_admin_url( get_current_blog_id(), 'nav-menus.php' )
-			),
-			/* translators: %s: customize url */
-			sprintf(
-				__( '<a class="_blank" href="%s">Customize</a>', TEXT_DOMAIN ),
-				get_admin_url( get_current_blog_id(), 'customize.php' )
-			)
-		);
-
-		if ( $container ) {
-			echo '</div>';
-		}
-
-		echo '</div>';
-	}
-
-	// --------------------------------------------------
-
-	/**
 	 * @param string $img
 	 *
 	 * @return string
@@ -771,63 +676,6 @@ final class Helper {
 		}
 
 		return $src;
-	}
-
-	// --------------------------------------------------
-
-	/**
-	 * @param string $str
-	 * @param string $attr
-	 * @param string $content_extra
-	 * @param bool $unique
-	 *
-	 * @return string
-	 */
-	public static function appendToAttribute( string $str, string $attr, string $content_extra, bool $unique = false ): string {
-		// Check if the attribute has single or double quotes.
-		if ( ( $start = stripos( $str, $attr . '="' ) ) !== false ) {
-			$quote = '"';
-		} elseif ( ( $start = stripos( $str, $attr . "='" ) ) !== false ) {
-			$quote = "'";
-		} else {
-			// Not found
-			return $str;
-		}
-
-		// Add a quote (for filtering purposes).
-		$attr          .= '=' . $quote;
-		$content_extra = trim( $content_extra );
-
-		if ( $unique ) {
-			$start += strlen( $attr );
-			$end   = strpos( $str, $quote, $start );
-
-			// Get the current content.
-			$content = explode( ' ', substr( $str, $start, $end - $start ) );
-
-			// Append extra content uniquely.
-			foreach ( explode( ' ', $content_extra ) as $class ) {
-				if ( ! empty( $class ) && ! in_array( $class, $content, false ) ) {
-					$content[] = $class;
-				}
-			}
-
-			// Remove duplicates and empty values.
-			$content        = array_unique( array_filter( $content ) );
-			$content        = implode( ' ', $content );
-			$before_content = substr( $str, 0, $start );
-			$after_content  = substr( $str, $end );
-			$str            = $before_content . $content . $after_content;
-		} else {
-			$str = preg_replace(
-				'/' . preg_quote( $attr, '/' ) . '/',
-				$attr . $content_extra . ' ',
-				$str,
-				1
-			);
-		}
-
-		return $str;
 	}
 
 	// --------------------------------------------------
