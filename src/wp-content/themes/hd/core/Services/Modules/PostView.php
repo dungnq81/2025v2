@@ -9,6 +9,7 @@ namespace HD\Services\Modules;
 
 use HD\Services\AbstractService;
 use HD\Utilities\DB;
+use HD\Utilities\Helper;
 
 \defined( 'ABSPATH' ) || die;
 
@@ -69,7 +70,7 @@ final class PostView extends AbstractService {
 				$this->table,
 				$record['id'],
 				[
-					'view_count' => (int) $record['last_view'] + 1,
+					'view_count' => (int) $record['view_count'] + 1,
 					'last_view'  => $now,
 				]
 			);
@@ -84,11 +85,7 @@ final class PostView extends AbstractService {
 	 * @return int
 	 */
 	public function get_total_views( int $post_id ): int {
-		$table = DB::backticked_table( $this->table );
-
-		return (int) DB::db()->get_var(
-			DB::db()->prepare( "SELECT SUM(view_count) FROM {$table} WHERE `post_id` = %d", $post_id )
-		);
+		return Helper::totalPostViews( $this->table, $post_id );
 	}
 
 	// -----------------------------------------

@@ -17,36 +17,36 @@ final class API extends AbstractAPI {
 
 	/* ---------- PRIVATE ------------------------------------------ */
 
-	/**
-	 * @var array<AbstractAPI|\WP_REST_Controller>
-	 */
 	private array $endpointClasses = [];
-
-	/**
-	 * @var array <string>
-	 */
 	private readonly array $blockedPostTypes;
-
-	/**
-	 * Allowlisted REST API namespaces for unauthenticated access.
-	 * (Plugins or custom endpoints that must work for guests)
-	 *
-	 * Example: contact-form-7/v1, hd/v1, etc.
-	 */
 	private readonly array $allowedNamespaces;
 
 	private function init(): void {
+		/**
+		 * Define RESTAPI_URL constant for easy access to the base REST API URL.
+		 */
+		define( 'RESTAPI_URL', untrailingslashit( $this->restApiUrl() ) . '/' );
+
+		/**
+		 * Blocked post types for REST API access.
+		 */
 		$this->blockedPostTypes = [
 			'post',
 			'page',
 			'attachment'
 		];
 
+		/**
+		 * Allowlisted REST API namespaces for unauthenticated
+		 */
 		$this->allowedNamespaces = [
 			self::REST_NAMESPACE,
 			'contact-form-7/v1',  // Contact Form 7
 		];
 
+		/**
+		 * Register hooks.
+		 */
 		add_action( 'init', [ $this, 'initRestClasses' ] );
 		add_action( 'rest_api_init', [ $this, 'register_routes' ] );
 		add_action( 'rest_api_init', [ $this, 'disableDefaultPostTypes' ], 20 );
@@ -58,10 +58,6 @@ final class API extends AbstractAPI {
 	/** ---------------------------------------- */
 
 	protected function registerRoutes(): void {
-		if ( ! defined( 'RESTAPI_URL' ) ) {
-			define( 'RESTAPI_URL', untrailingslashit( $this->restApiUrl() ) . '/' );
-		}
-
 		foreach ( $this->endpointClasses as $api ) {
 			if ( method_exists( $api, 'register_routes' ) ) {
 				$api->register_routes();
@@ -82,7 +78,7 @@ final class API extends AbstractAPI {
 			return;
 		}
 
-		foreach ( glob( $dir . DIRECTORY_SEPARATOR. '*.php', GLOB_NOSORT ) as $file ) {
+		foreach ( glob( $dir . DIRECTORY_SEPARATOR . '*.php', GLOB_NOSORT ) as $file ) {
 			$class_name = '\\HD\\API\\Endpoints\\' . basename( $file, '.php' );
 			if ( class_exists( $class_name ) && is_subclass_of( $class_name, \WP_REST_Controller::class ) ) {
 				$this->endpointClasses[] = new $class_name();

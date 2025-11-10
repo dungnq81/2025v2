@@ -32,13 +32,9 @@ echo \HD_Helper::breadCrumbBanner( $breadcrumb_bg, 'widescreen' );
                 <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3M3.223 14A9 9 0 1 0 12 3a9 9 0 0 0-8.294 5.5M7 9H3V5"/></svg>
                 <span class="date"><?= \HD_Helper::humanizeTime( $post->ID ) ?></span>
             </div>
-            <?php
-            $views = get_post_meta( $post->ID, '_post_views', true );
-            $views = $views ? (int) $views : 1;
-            ?>
             <div class="flex items-center gap-2">
                 <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6s4.03-6 9-6s9 4.8 9 6Z"/><path d="M15 12a3 3 0 1 1-6 0a3 3 0 0 1 6 0Z"/></g></svg>
-                <span class="views"><?= number_format_i18n( $views ) ?></span>
+                <span class="views"><?= number_format_i18n( \HD_Helper::totalPostViews( 'post_views', $post->ID ) ) ?></span>
             </div>
         </div>
         <article class="entry-content" <?= \HD_Helper::microdata( 'article' ) ?>>

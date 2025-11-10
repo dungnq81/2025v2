@@ -24,6 +24,22 @@ final class Helper {
 	// -------------------------------------------------------------
 
 	/**
+	 * @param string $table
+	 * @param int $post_id
+	 *
+	 * @return int
+	 */
+	public static function totalPostViews( string $table, int $post_id ): int {
+		$table_name = DB::backticked_table( $table );
+
+		return (int) DB::db()->get_var(
+			DB::db()->prepare( "SELECT SUM(view_count) FROM {$table_name} WHERE `post_id` = %d", $post_id )
+		);
+	}
+
+	// -------------------------------------------------------------
+
+	/**
 	 * @param string $version
 	 * @param string $recaptcha_response
 	 *

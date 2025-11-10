@@ -158,7 +158,7 @@ final class Theme {
 			'ajaxUrl'    => admin_url( 'admin-ajax.php', 'relative' ),
 			'baseUrl'    => Helper::siteURL( '/' ),
 			'themeUrl'   => THEME_URL,
-			'restApiUrl' => defined( 'RESTAPI_URL' ) ? RESTAPI_URL : esc_url_raw( rest_url() ),
+			'restApiUrl' => RESTAPI_URL,
 			'csrfToken'  => wp_create_nonce( 'wp_csrf_token' ),
 			'restToken'  => wp_create_nonce( 'wp_rest' ),
 			'lg'         => Helper::currentLanguage(),

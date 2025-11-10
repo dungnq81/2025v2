@@ -17,8 +17,6 @@ use HD\Utilities\Helper;
 \defined( 'ABSPATH' ) || die;
 
 final class Single extends AbstractAPI {
-	public const int RATE_TRACK_VIEW = 60; // 60 requests
-
 	public function __construct() {
 		$this->namespace = self::REST_NAMESPACE;
 		$this->rest_base = 'single';
