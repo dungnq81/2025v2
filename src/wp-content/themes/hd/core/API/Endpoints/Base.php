@@ -1,6 +1,6 @@
 <?php
 /**
- * Class GlobalEndpoints
+ * Class Base
  *
  * Registers and handles all REST API endpoints for global utilities,
  * such as lighthouse checks, site configuration, and notification hooks, v.v...

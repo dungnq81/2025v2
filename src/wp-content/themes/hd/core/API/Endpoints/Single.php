@@ -1,6 +1,6 @@
 <?php
 /**
- * Class SingleEndpoints
+ * Class Single
  *
  * Registers and handles all REST API endpoints for single resources in WordPress
  * (e.g., posts, pages, attachments).
@@ -11,11 +11,14 @@
 namespace HD\API\Endpoints;
 
 use HD\API\AbstractAPI;
+use HD\Services\Modules\PostView;
 use HD\Utilities\Helper;
 
 \defined( 'ABSPATH' ) || die;
 
 final class Single extends AbstractAPI {
+	public const int RATE_TRACK_VIEW = 60; // 60 requests
+
 	public function __construct() {
 		$this->namespace = self::REST_NAMESPACE;
 		$this->rest_base = 'single';
@@ -35,7 +38,7 @@ final class Single extends AbstractAPI {
 			[
 				'methods'             => \WP_REST_Server::CREATABLE,
 				'callback'            => [ $this, 'trackViewsCallback' ],
-				'permission_callback' => [ $this, 'canTrackViews' ],
+				'permission_callback' => '__return_true',
 				'args'                => [
 					'id' => [
 						'required'          => true,
@@ -50,32 +53,13 @@ final class Single extends AbstractAPI {
 	/** ---------------------------------------- */
 
 	/**
-	 * Permission callback with rate limiting.
-	 *
-	 * @return bool|\WP_Error
-	 */
-	public function canTrackViews(): bool|\WP_Error {
-		if ( ! $this->rateLimit( 'single_track_view', 30, 60 ) ) {
-			return new \WP_Error(
-				'too_many_requests',
-				__( 'Too many requests from your IP.', TEXT_DOMAIN ),
-				[ 'status' => 429 ]
-			);
-		}
-
-		return true;
-	}
-
-	/** ---------------------------------------- */
-
-	/**
 	 * Actual endpoint callback.
 	 *
-	 * @param $request
+	 * @param \WP_REST_Request $request
 	 *
 	 * @return \WP_Error|\WP_REST_Response
 	 */
-	public function trackViewsCallback( $request ): \WP_Error|\WP_REST_Response {
+	public function trackViewsCallback( \WP_REST_Request $request ): \WP_Error|\WP_REST_Response {
 		$nonce_check = $this->verifyNonce( $request );
 		if ( $nonce_check instanceof \WP_REST_Response ) {
 			return $nonce_check;
@@ -89,21 +73,28 @@ final class Single extends AbstractAPI {
 			], 400 );
 		}
 
-		$views        = (int) get_post_meta( $id, '_post_views', true );
-		$last_view    = (int) get_post_meta( $id, '_last_view_time', true );
-		$current_time = current_time( 'U', false );
+		$ip           = Helper::ipAddress();
+		$current_time = current_time( 'U', 0 );
 
-		if ( ( $current_time - $last_view ) > 300 ) { // 300 s
-			$views ++;
-			update_post_meta( $id, '_post_views', $views );
-			update_post_meta( $id, '_last_view_time', $current_time );
+		try {
+			$service = Helper::FQNLoadedInstance( PostView::class ) ?? new PostView();
+			$service->record_view( $id, $ip );
+			$total_views = $service->get_total_views( $id );
+		} catch ( \Throwable $e ) {
+			return $this->sendResponse( [
+				'success' => false,
+				'message' => 'Failed to record view: ' . $e->getMessage(),
+			], 500 );
 		}
 
 		return $this->sendResponse( [
 			'success' => true,
+			'post_id' => $id,
+			'ip'      => $ip,
 			'time'    => $current_time,
-			'views'   => $views,
+			'views'   => $total_views,
 			'date'    => Helper::humanizeTime( $id ),
+			'message' => 'View recorded successfully.',
 		], 200 );
 	}
 }

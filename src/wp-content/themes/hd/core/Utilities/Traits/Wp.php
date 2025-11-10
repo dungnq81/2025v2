@@ -14,11 +14,11 @@ trait Wp {
 	use File;
 	use Str;
 	use Url;
-	use Db;
 	use Encryption;
 
 	private static int $post_limit = - 1;
 	private static array $target_post_types = [];
+	private static array $fqn_loaded_instances = [];
 
 	// -------------------------------------------------------------
 
@@ -108,15 +108,16 @@ trait Wp {
 	 * @return void
 	 */
 	public static function FQNLoad( ?string $path, bool $require_path = false, bool $init_class = false, string $FQN = '\\', bool $is_widget = false ): void {
+		static $registered_widgets = [];
+
 		if ( empty( $path ) || ! is_dir( $path ) ) {
 			self::errorLog( "Invalid or inaccessible path: $path" );
 
 			return;
 		}
 
-		$files = glob( $path . '/*.php', GLOB_NOSORT ) ?: [];
+		$files = glob( $path . DIRECTORY_SEPARATOR . '*.php', GLOB_NOSORT ) ?: [];
 		foreach ( $files as $file_path ) {
-
 			// Skip unreadable files
 			if ( ! is_readable( $file_path ) ) {
 				self::errorLog( "Unreadable file skipped: $file_path" );
@@ -144,16 +145,32 @@ trait Wp {
 			// Initialize the class or register as widget if `$init_class` is true
 			if ( $init_class && class_exists( $filenameFQN ) ) {
 				try {
-					if ( $is_widget ) {
+					if ( $is_widget && ! isset( $registered_widgets[ $filenameFQN ] ) ) {
 						register_widget( $filenameFQN );
-					} else {
-						new $filenameFQN();
+						$registered_widgets[ $filenameFQN ] = true;
+					} else if ( ! isset( self::$fqn_loaded_instances[ $filenameFQN ] ) ) {
+						if ( method_exists( $filenameFQN, 'get_instance' ) ) {
+							self::$fqn_loaded_instances[ $filenameFQN ] = $filenameFQN::getInstance();
+						} else {
+							self::$fqn_loaded_instances[ $filenameFQN ] = new $filenameFQN();
+						}
 					}
 				} catch ( \Throwable $e ) {
 					self::errorLog( "Error initializing class $filenameFQN: " . $e->getMessage() );
 				}
 			}
 		}
+	}
+
+	// -------------------------------------------------------------
+
+	/**
+	 * @param string $class
+	 *
+	 * @return mixed|null
+	 */
+	public static function FQNLoadedInstance( string $class ): mixed {
+		return self::$fqn_loaded_instances[ $class ] ?? null;
 	}
 
 	// -------------------------------------------------------------

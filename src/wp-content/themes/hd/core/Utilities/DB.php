@@ -1,11 +1,35 @@
 <?php
+/**
+ * Theme DB Utilities
+ *
+ * @author Gaudev
+ */
 
-namespace HD\Utilities\Traits;
+namespace HD\Utilities;
 
 \defined( 'ABSPATH' ) || die;
 
-trait Db {
+final class DB {
 	private static array $schema_cache = [];
+	private static ?\wpdb $wpdb_instance = null;
+
+	// --------------------------------------------------
+
+	/**
+	 * Return the wpdb instance (cached or global).
+	 *
+	 * @return \wpdb
+	 */
+	public static function db(): \wpdb {
+		if ( self::$wpdb_instance instanceof \wpdb ) {
+			return self::$wpdb_instance;
+		}
+
+		global $wpdb;
+		self::$wpdb_instance = $wpdb;
+
+		return $wpdb;
+	}
 
 	// --------------------------------------------------
 
@@ -14,7 +38,7 @@ trait Db {
 	 *
 	 * @return string
 	 */
-	private static function sanitize_identifier( string $identifier ): string {
+	public static function sanitize_identifier( string $identifier ): string {
 		// EA suggestion: use \W for shorthand of [^A-Za-z0-9_]
 		return (string) preg_replace( '/\W/', '', $identifier );
 	}
@@ -26,11 +50,39 @@ trait Db {
 	 *
 	 * @return string
 	 */
-	private static function table_name_full( string $table ): string {
-		global $wpdb;
+	public static function table_name_full( string $table ): string {
 		$table = self::sanitize_identifier( $table );
 
-		return "{$wpdb->prefix}{$table}";
+		return self::db()->prefix . $table;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * Check if a table exists in the database.
+	 *
+	 * @param string $table_name Short table name (without prefix)
+	 *
+	 * @return bool
+	 */
+	public static function table_exists( string $table_name ): bool {
+		$table_full = self::table_name_full( $table_name );
+		$result     = self::db()->get_var(
+			self::db()->prepare( "SHOW TABLES LIKE %s", $table_full )
+		);
+
+		return $result === $table_full;
+	}
+
+	// --------------------------------------------------
+
+	/**
+	 * Helper to get charset/collation string from wpdb.
+	 *
+	 * @return string
+	 */
+	public static function get_charset_collate(): string {
+		return self::db()->get_charset_collate();
 	}
 
 	// --------------------------------------------------
@@ -40,7 +92,7 @@ trait Db {
 	 *
 	 * @return string
 	 */
-	private static function backticked_table( string $table ): string {
+	public static function backticked_table( string $table ): string {
 		return '`' . self::table_name_full( $table ) . '`';
 	}
 
@@ -51,7 +103,7 @@ trait Db {
 	 *
 	 * @return string
 	 */
-	private static function backticked_column( string $column ): string {
+	public static function backticked_column( string $column ): string {
 		$column = self::sanitize_identifier( $column );
 
 		return "`{$column}`";
@@ -67,8 +119,6 @@ trait Db {
 	 * @return array|\WP_Error
 	 */
 	public static function get_table_columns( string $table_name ): \WP_Error|array {
-		global $wpdb;
-
 		$cache_key = self::table_name_full( $table_name );
 		if ( isset( self::$schema_cache[ $cache_key ] ) ) {
 			return self::$schema_cache[ $cache_key ];
@@ -77,9 +127,9 @@ trait Db {
 		$table = self::backticked_table( $table_name );
 
 		// Use SHOW COLUMNS for better portability
-		$rows = $wpdb->get_results( "SHOW COLUMNS FROM {$table}", ARRAY_A );
+		$rows = self::db()->get_results( "SHOW COLUMNS FROM {$table}", ARRAY_A );
 		if ( $rows === null ) {
-			return new \WP_Error( 'db_describe_failed', $wpdb->last_error ?: 'Failed to describe table.' );
+			return new \WP_Error( 'db_describe_failed', self::db()->last_error ?: 'Failed to describe table.' );
 		}
 
 		$cols = array_map( static function ( $r ) {
@@ -99,11 +149,9 @@ trait Db {
 	 * @return bool|\WP_Error
 	 */
 	public static function begin_transaction(): \WP_Error|bool {
-		global $wpdb;
-
-		$res = $wpdb->query( 'START TRANSACTION' );
+		$res = self::db()->query( 'START TRANSACTION' );
 		if ( $res === false ) {
-			return new \WP_Error( 'transaction_start_failed', $wpdb->last_error ?: 'Failed to start transaction' );
+			return new \WP_Error( 'transaction_start_failed', self::db()->last_error ?: 'Failed to start transaction' );
 		}
 
 		return true;
@@ -115,11 +163,9 @@ trait Db {
 	 * @return bool|\WP_Error
 	 */
 	public static function commit_transaction(): bool|\WP_Error {
-		global $wpdb;
-
-		$res = $wpdb->query( 'COMMIT' );
+		$res = self::db()->query( 'COMMIT' );
 		if ( $res === false ) {
-			return new \WP_Error( 'transaction_commit_failed', $wpdb->last_error ?: 'Failed to commit transaction' );
+			return new \WP_Error( 'transaction_commit_failed', self::db()->last_error ?: 'Failed to commit transaction' );
 		}
 
 		return true;
@@ -131,11 +177,9 @@ trait Db {
 	 * @return bool|\WP_Error
 	 */
 	public static function rollback_transaction(): bool|\WP_Error {
-		global $wpdb;
-
-		$res = $wpdb->query( 'ROLLBACK' );
+		$res = self::db()->query( 'ROLLBACK' );
 		if ( $res === false ) {
-			return new \WP_Error( 'transaction_rollback_failed', $wpdb->last_error ?: 'Failed to rollback transaction' );
+			return new \WP_Error( 'transaction_rollback_failed', self::db()->last_error ?: 'Failed to rollback transaction' );
 		}
 
 		return true;
@@ -195,8 +239,6 @@ trait Db {
 	 * @return int|\WP_Error Insert ID on success or WP_Error on failure
 	 */
 	public static function insert_one_row( string $table_name, array $data, ?array $format = null ): \WP_Error|int {
-		global $wpdb;
-
 		if ( empty( $data ) ) {
 			return new \WP_Error( 'no_data', 'No data provided.' );
 		}
@@ -213,13 +255,13 @@ trait Db {
 		}
 
 		$table  = self::table_name_full( $table_name );
-		$result = $wpdb->insert( $table, $valid, $format ?? array_fill( 0, count( $valid ), '%s' ) );
+		$result = self::db()->insert( $table, $valid, $format ?? array_fill( 0, count( $valid ), '%s' ) );
 
 		if ( $result === false ) {
-			return new \WP_Error( 'insert_failed', $wpdb->last_error, [ 'query' => $wpdb->last_query ] );
+			return new \WP_Error( 'insert_failed', self::db()->last_error, [ 'query' => self::db()->last_query ] );
 		}
 
-		return (int) $wpdb->insert_id;
+		return self::db()->insert_id;
 	}
 
 	// --------------------------------------------------
@@ -234,8 +276,6 @@ trait Db {
 	 * @return int|\WP_Error Number of inserted rows on success or WP_Error on failure
 	 */
 	public static function bulk_insert_rows( string $table, array $rows, int $batch_size = 500 ): \WP_Error|int {
-		global $wpdb;
-
 		if ( empty( $rows ) ) {
 			return 0;
 		}
@@ -291,11 +331,11 @@ trait Db {
 				}
 
 				$sql      = "INSERT INTO {$table} ({$column_list}) VALUES " . implode( ', ', $placeholders );
-				$prepared = ! empty( $values ) ? $wpdb->prepare( $sql, $values ) : $sql;
-				$result   = $wpdb->query( $prepared );
+				$prepared = ! empty( $values ) ? self::db()->prepare( $sql, $values ) : $sql;
+				$result   = self::db()->query( $prepared );
 
 				if ( $result === false ) {
-					throw new \RuntimeException( $wpdb->last_error ?: 'Database insert failed.' );
+					throw new \RuntimeException( self::db()->last_error ?: 'Database insert failed.' );
 				}
 
 				$total_inserted += $result;
@@ -325,8 +365,6 @@ trait Db {
 	 * @return int|\WP_Error Number of rows updated or WP_Error
 	 */
 	public static function update_one_row( string $table_name, int|string $id, array $data, string $primary_key = 'id', ?array $format = null ): \WP_Error|int {
-		global $wpdb;
-
 		if ( empty( $data ) ) {
 			return new \WP_Error( 'no_data', 'No data provided for update.' );
 		}
@@ -343,7 +381,7 @@ trait Db {
 
 		$table = self::table_name_full( $table_name );
 
-		$result = $wpdb->update(
+		$result = self::db()->update(
 			$table,
 			$valid,
 			[ $primary_key => $id ],
@@ -352,7 +390,7 @@ trait Db {
 		);
 
 		if ( $result === false ) {
-			return new \WP_Error( 'update_failed', $wpdb->last_error, [ 'query' => $wpdb->last_query ] );
+			return new \WP_Error( 'update_failed', self::db()->last_error, [ 'query' => self::db()->last_query ] );
 		}
 
 		return (int) $result;
@@ -370,13 +408,11 @@ trait Db {
 	 * @return int|\WP_Error Number of rows deleted or WP_Error
 	 */
 	public static function delete_one_row( string $table_name, int|string $id, string $primary_key = 'id' ): \WP_Error|int {
-		global $wpdb;
-
 		$table  = self::table_name_full( $table_name );
-		$result = $wpdb->delete( $table, [ $primary_key => $id ], [ '%s' ] );
+		$result = self::db()->delete( $table, [ $primary_key => $id ], [ '%s' ] );
 
 		if ( $result === false ) {
-			return new \WP_Error( 'delete_failed', $wpdb->last_error, [ 'query' => $wpdb->last_query ] );
+			return new \WP_Error( 'delete_failed', self::db()->last_error, [ 'query' => self::db()->last_query ] );
 		}
 
 		return (int) $result;
@@ -385,26 +421,18 @@ trait Db {
 	// --------------------------------------------------
 
 	/**
-	 * Get a single row by primary key or conditions.
+	 * @param string $table
+	 * @param string $where_sql
+	 * @param array $params
 	 *
-	 * @param string $table_name
-	 * @param int|string|array $where
-	 * @param string $primary_key Used only if $where is scalar (default 'id')
-	 *
-	 * @return array|\WP_Error|null
+	 * @return array|null
 	 */
-	public static function get_one_row( string $table_name, int|string|array $where, string $primary_key = 'id' ): array|\WP_Error|null {
-		if ( ! is_array( $where ) ) {
-			$where = [ $primary_key => $where ];
-		}
+	public static function get_one( string $table, string $where_sql, array $params = [] ): ?array {
+		$table_full = self::backticked_table( $table );
+		$sql        = "SELECT * FROM {$table_full} WHERE {$where_sql} LIMIT 1";
+		$prepared   = self::db()->prepare( $sql, ...$params );
 
-		$result = self::get_rows( $table_name, $where, 1, 1 );
-
-		if ( is_wp_error( $result ) ) {
-			return $result;
-		}
-
-		return $result[0] ?? null;
+		return self::db()->get_row( $prepared, ARRAY_A );
 	}
 
 	// --------------------------------------------------
@@ -422,8 +450,6 @@ trait Db {
 	 * @return array|\WP_Error
 	 */
 	public static function get_rows( string $table_name, array $where = [], int $page = 1, int $per_page = 20, string $order_by = 'id', string $order = 'ASC' ): \WP_Error|array {
-		global $wpdb;
-
 		$cols = self::get_table_columns( $table_name );
 		if ( is_wp_error( $cols ) ) {
 			return $cols;
@@ -461,15 +487,15 @@ trait Db {
 		$values[]     = $per_page;
 
 		$sql      = "SELECT * FROM {$table}{$where_sql} ORDER BY " . self::backticked_column( $order_by ) . " {$order}" . $limit_clause;
-		$prepared = $wpdb->prepare( $sql, $values );
+		$prepared = self::db()->prepare( $sql, $values );
 
 		if ( $prepared === null ) {
 			return new \WP_Error( 'prepare_failed', 'Failed to prepare select query.' );
 		}
 
-		$rows = $wpdb->get_results( $prepared, ARRAY_A );
+		$rows = self::db()->get_results( $prepared, ARRAY_A );
 
-		return $rows ?? new \WP_Error( 'select_failed', $wpdb->last_error, [ 'query' => $wpdb->last_query ] );
+		return $rows ?? new \WP_Error( 'select_failed', self::db()->last_error, [ 'query' => self::db()->last_query ] );
 	}
 
 	// --------------------------------------------------
