@@ -10,10 +10,12 @@ namespace HD\Services\Modules;
 use HD\Services\AbstractService;
 use HD\Utilities\DB;
 use HD\Utilities\Helper;
+use HD\Utilities\Traits\Singleton;
 
 \defined( 'ABSPATH' ) || die;
 
 final class PostView extends AbstractService {
+	use Singleton;
 	// -----------------------------------------
 
 	protected const int VIEW_COOLDOWN = 240; // 4 minutes

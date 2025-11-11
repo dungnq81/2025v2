@@ -14,10 +14,12 @@ namespace HD\Services\Modules;
 
 use HD\Services\AbstractService;
 use HD\Utilities\Helper;
+use HD\Utilities\Traits\Singleton;
 
 \defined( 'ABSPATH' ) || die;
 
 final class Customizer extends AbstractService {
+	use Singleton;
 
 	/**
 	 * @var array <string>
@@ -26,7 +28,7 @@ final class Customizer extends AbstractService {
 
 	/** ---------------------------------------- */
 
-	public function __construct() {
+	protected function init(): void {
 		add_action( 'wp_before_admin_bar_render', [ $this, 'before_admin_bar_render' ] ); // admin-bar render
 		add_action( 'customize_register', [ $this, 'customizeRegister' ], 30 ); // Theme Customizer settings and controls.
 

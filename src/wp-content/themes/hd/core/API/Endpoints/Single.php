@@ -75,7 +75,7 @@ final class Single extends AbstractAPI {
 		$current_time = current_time( 'U', 0 );
 
 		try {
-			$service = Helper::FQNLoadedInstance( PostView::class ) ?? new PostView();
+			$service = PostView::get_instance();
 			$service->record_view( $id, $ip );
 			$total_views = $service->get_total_views( $id );
 		} catch ( \Throwable $e ) {

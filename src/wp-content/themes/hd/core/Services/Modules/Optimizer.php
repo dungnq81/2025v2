@@ -14,16 +14,18 @@ namespace HD\Services\Modules;
 
 use HD\Services\AbstractService;
 use HD\Utilities\Helper;
+use HD\Utilities\Traits\Singleton;
 
 \defined( 'ABSPATH' ) || die;
 
 final class Optimizer extends AbstractService {
+	use Singleton;
 
 	private array $lazy_styles = [];
 
 	/** ---------------------------------------- */
 
-	public function __construct() {
+	protected function init(): void {
 		$this->_cleanup();
 		$this->_optimizer();
 	}
