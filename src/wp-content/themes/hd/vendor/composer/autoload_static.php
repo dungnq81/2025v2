@@ -43,6 +43,7 @@ class ComposerStaticInit08c9721484fe97e93c1817a096188475
         'HD\\Admin\\MetaBox' => __DIR__ . '/../..' . '/core/Admin/MetaBox.php',
         'HD\\Bootstrap' => __DIR__ . '/../..' . '/core/Bootstrap.php',
         'HD\\Events\\AbstractEvent' => __DIR__ . '/../..' . '/core/Events/AbstractEvent.php',
+        'HD\\Events\\Cron' => __DIR__ . '/../..' . '/core/Events/Cron.php',
         'HD\\Events\\Event' => __DIR__ . '/../..' . '/core/Events/Event.php',
         'HD\\Integration\\ACF\\ACF' => __DIR__ . '/../..' . '/core/Integration/ACF/ACF.php',
         'HD\\Integration\\WooCommerce\\WooCommerce' => __DIR__ . '/../..' . '/core/Integration/WooCommerce/WooCommerce.php',
