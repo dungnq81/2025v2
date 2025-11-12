@@ -213,8 +213,6 @@ class DB {
 			require_once $upgrade_file; // @phpstan-ignore-line
 		}
 
-		$results = null;
-
 		$results = dbDelta( $schema );
 
 		if ( ! empty( $wpdb->last_error ) ) {

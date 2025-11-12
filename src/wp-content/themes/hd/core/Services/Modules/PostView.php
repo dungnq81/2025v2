@@ -93,24 +93,16 @@ final class PostView extends AbstractService {
 	// -----------------------------------------
 
 	private function ensure_tables_exist(): void {
-		if ( DB::table_exists( $this->table ) ) {
-			return;
-		}
-
-		require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-		$charset_collate = DB::get_charset_collate();
-
-		$sql = "CREATE TABLE " . DB::backticked_table( $this->table ) . " (
-			id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+		DB::create_table(
+			$this->table,
+			'id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 			post_id BIGINT UNSIGNED NOT NULL,
 			ip VARBINARY(45) NOT NULL,
 			last_view INT UNSIGNED NOT NULL,
 			view_count INT UNSIGNED DEFAULT 1,
 			UNIQUE KEY unique_view (post_id, ip),
-			KEY post_id_idx (post_id)
-		) ENGINE=InnoDB $charset_collate;";
-
-		dbDelta( $sql );
+			KEY post_id_idx (post_id)'
+		);
 	}
 
 	// -----------------------------------------

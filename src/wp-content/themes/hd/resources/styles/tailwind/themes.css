@@ -16,10 +16,16 @@
 
     /* Light mode */
     --text-color: #161616;
+    --text-white-color: #d4d4d4;
     --text-dark-color: #161616;
     --header-text-color: #161616;
+
     --text-color-1: #FE5242;
     --text-color-2: #0C8E39;
+    --text-color-10: rgba(254, 82, 66, 0.75);
+    --text-color-20: rgba(12, 142, 57, 0.75);
+    --text-color-100: rgba(254, 82, 66, 0.5);
+    --text-color-200: rgba(12, 142, 57, 0.5);
 
     --bg-color: #fefefe;
     --bg-light-color: #F5F5F5B2;
@@ -32,6 +38,7 @@
 /* Dark mode */
 .dark {
     --text-color: #d4d4d4;
+    --text-white-color: #d4d4d4;
     --text-dark-color: #161616;
     --header-text-color: #d4d4d4;
     --text-color-1: #FE5242;

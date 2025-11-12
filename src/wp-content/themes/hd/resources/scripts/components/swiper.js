@@ -214,8 +214,8 @@ const initSwiper = (el) => {
             const btnNext = document.createElement('div');
             btnPrev.className = `swiper-button swiper-button-prev ${classes.prev}`;
             btnNext.className = `swiper-button swiper-button-next ${classes.next}`;
-            btnPrev.innerHTML = `<svg><use href="#icon-arrow-left-outline"></use></svg>`;
-            btnNext.innerHTML = `<svg><use href="#icon-arrow-right-outline"></use></svg>`;
+            btnPrev.innerHTML = `<svg class="!h-6 !w-6"><use href="#icon-arrow-left-outline"></use></svg>`;
+            btnNext.innerHTML = `<svg class="!h-6 !w-6"><use href="#icon-arrow-right-outline"></use></svg>`;
             controls.append(btnPrev, btnNext);
         }
 

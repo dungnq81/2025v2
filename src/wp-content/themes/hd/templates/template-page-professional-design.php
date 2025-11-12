@@ -1,7 +1,7 @@
 <?php
 /**
- * The template for displaying `affordable website design`
- * Template Name: Thiết kế website giá rẻ
+ * The template for displaying `professional website design`
+ * Template Name: Thiết kế website chuyên nghiệp
  * Template Post Type: page
  *
  * @author Gaudev
@@ -10,7 +10,7 @@
 \defined( 'ABSPATH' ) || die;
 
 // header
-get_header( 'design-affordable' );
+get_header( 'professional-design' );
 
 if ( have_posts() ) {
 	the_post();
@@ -88,4 +88,4 @@ if ( ! empty( $faqs ) ) :
 <?php
 
 // footer
-get_footer( 'design-affordable' );
+get_footer( 'professional-design' );

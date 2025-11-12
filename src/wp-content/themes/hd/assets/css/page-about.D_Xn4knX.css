@@ -1,0 +1,126 @@
+/* partials/template/page-about.scss */
+/* utils/_variables.scss */
+/* utils/_functions.scss */
+/** $string - svg */
+/** add unique id image url */
+/** https://webdesign.tutsplus.com/tutorials/an-introduction-to-error-handling-in-sass--cms-19996 */
+/** font size */
+/* partials/template/page-about.scss */
+/* utils/_mixins.scss */
+.section.section-about-us .breadcrumbs {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute !important;
+  overflow-wrap: normal !important;
+  white-space: nowrap;
+  display: inline;
+}
+.section.section-about-us .section-teams .manager .swiper-slide .avatar {
+  background: radial-gradient(50% 50% at 50% 50%, #FFA59D 0%, #FE5242 100%);
+  border: 3.5px solid #FFFFFF;
+  box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+}
+.section.section-about-us .section-teams .manager .swiper-slide .avatar .cover {
+  position: relative;
+  padding-inline: 32px;
+}
+.section.section-about-us .section-history .swiper::before {
+  content: "";
+  background-image: linear-gradient(90deg, rgba(152, 152, 152, 0) 0%, #989898 53.37%, rgba(152, 152, 152, 0) 100%);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 1px;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  translate: 0 -50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.section.section-about-us .section-history .swiper-slide {
+  height: auto;
+}
+.section.section-about-us .section-history .swiper-slide {
+  width: calc(83.3333333333% - 0.125rem);
+}
+@media only screen and (min-width: 40rem) {
+  .section.section-about-us .section-history .swiper-slide {
+    width: calc(50% - 0.75rem);
+  }
+}
+@media only screen and (min-width: 64rem) {
+  .section.section-about-us .section-history .swiper-slide {
+    width: calc(33.3333333333% - 1rem);
+  }
+}
+.section.section-about-us .section-history .swiper-slide > .item::before {
+  content: "";
+  border: 1px solid #D2D2D2;
+  border-radius: 50%;
+  background-color: #fff;
+}
+.section.section-about-us .section-history .swiper-slide > .item::before {
+  position: absolute;
+  top: calc(50% - 0.625rem);
+  left: calc(50% - 0.625rem);
+}
+.section.section-about-us .section-history .swiper-slide > .item::before {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+.section.section-about-us .section-history .swiper-slide > .item::after {
+  content: "";
+  border-radius: 50%;
+}
+.section.section-about-us .section-history .swiper-slide > .item::after {
+  position: absolute;
+  top: calc(50% - 0.375rem);
+  left: calc(50% - 0.375rem);
+}
+.section.section-about-us .section-history .swiper-slide > .item::after {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+.section.section-about-us .section-history .swiper-slide.swiper-slide-active > .item::before {
+  border: 1px solid #0C8E39;
+}
+.section.section-about-us .section-history .swiper-slide.swiper-slide-active > .item::after {
+  background-color: #0C8E39;
+}
+.section.section-about-us .section-history .history-item > .item {
+  justify-content: center;
+  position: relative;
+  z-index: 2;
+  flex-wrap: nowrap;
+}
+.section.section-about-us .section-history .history-item > .item .content {
+  flex: 1 0 auto;
+  height: 50%;
+}
+.section.section-about-us .section-history .history-item > .item .thumbnail {
+  flex: 1 0 auto;
+  height: 50%;
+}
+.section.section-about-us .section-history .history-item:nth-child(odd) > .item .content {
+  padding-bottom: 40px;
+}
+.section.section-about-us .section-history .history-item:nth-child(odd) > .item .thumbnail {
+  padding-top: 40px;
+}
+.section.section-about-us .section-history .history-item:nth-child(even) > .item {
+  flex-direction: column-reverse;
+}
+.section.section-about-us .section-history .history-item:nth-child(even) > .item .content {
+  padding-top: 40px;
+}
+.section.section-about-us .section-history .history-item:nth-child(even) > .item .thumbnail {
+  padding-bottom: 40px;
+}

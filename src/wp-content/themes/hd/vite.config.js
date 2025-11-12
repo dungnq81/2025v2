@@ -21,7 +21,8 @@ const sassFiles = [
     'partials/template/extra',
     'partials/template/page-about',
     'partials/template/page-contact',
-    'partials/template/page-design-affordable',
+    'partials/template/page-affordable-design',
+    'partials/template/page-professional-design',
     'partials/template/page-home',
 
     // (entries)

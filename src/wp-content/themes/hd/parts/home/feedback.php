@@ -41,10 +41,10 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                     4.5 out of 5 based on <strong>Trustpilot</strong> reviews
                 </p>
                 <div class="swiper-controls flex flex-row gap-6">
-                    <button class="swiper-button swiper-button-prev c-swiper-button c-light-button !left-0 !mt-6 lg:!mt-8 !relative !w-11 !h-11">
+                    <button class="swiper-button swiper-button-prev c-swiper-button c-light-button !left-0 !mt-6 lg:!mt-8 !relative !w-10 !h-10">
                         <svg class="!h-6 !w-6" aria-hidden="true"><use href="#icon-arrow-left-outline"></use></svg>
                     </button>
-                    <button class="swiper-button swiper-button-next c-swiper-button c-light-button !right-0 !mt-6 lg:!mt-8 !relative !w-11 !h-11">
+                    <button class="swiper-button swiper-button-next c-swiper-button c-light-button !right-0 !mt-6 lg:!mt-8 !relative !w-10 !h-10">
                         <svg class="!h-6 !w-6" aria-hidden="true"><use href="#icon-arrow-right-outline"></use></svg>
                     </button>
                 </div>

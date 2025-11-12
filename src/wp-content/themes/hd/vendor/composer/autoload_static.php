@@ -45,6 +45,7 @@ class ComposerStaticInit08c9721484fe97e93c1817a096188475
         'HD\\Events\\AbstractEvent' => __DIR__ . '/../..' . '/core/Events/AbstractEvent.php',
         'HD\\Events\\Cron' => __DIR__ . '/../..' . '/core/Events/Cron.php',
         'HD\\Events\\Event' => __DIR__ . '/../..' . '/core/Events/Event.php',
+        'HD\\Events\\Handlers\\PostViewsCleaner' => __DIR__ . '/../..' . '/core/Events/Handlers/PostViewsCleaner.php',
         'HD\\Integration\\ACF\\ACF' => __DIR__ . '/../..' . '/core/Integration/ACF/ACF.php',
         'HD\\Integration\\WooCommerce\\WooCommerce' => __DIR__ . '/../..' . '/core/Integration/WooCommerce/WooCommerce.php',
         'HD\\Services\\AbstractService' => __DIR__ . '/../..' . '/core/Services/AbstractService.php',

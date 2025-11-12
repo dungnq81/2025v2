@@ -17,6 +17,7 @@ return array(
     'HD\\Events\\AbstractEvent' => $baseDir . '/core/Events/AbstractEvent.php',
     'HD\\Events\\Cron' => $baseDir . '/core/Events/Cron.php',
     'HD\\Events\\Event' => $baseDir . '/core/Events/Event.php',
+    'HD\\Events\\Handlers\\PostViewsCleaner' => $baseDir . '/core/Events/Handlers/PostViewsCleaner.php',
     'HD\\Integration\\ACF\\ACF' => $baseDir . '/core/Integration/ACF/ACF.php',
     'HD\\Integration\\WooCommerce\\WooCommerce' => $baseDir . '/core/Integration/WooCommerce/WooCommerce.php',
     'HD\\Services\\AbstractService' => $baseDir . '/core/Services/AbstractService.php',

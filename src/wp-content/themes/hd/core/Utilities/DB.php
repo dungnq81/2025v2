@@ -144,6 +144,40 @@ final class DB {
 	// --------------------------------------------------
 
 	/**
+	 * @param string $table
+	 * @param string $schema
+	 *
+	 * @return string[]|void|\WP_Error
+	 */
+	public static function create_table( string $table = '', string $schema = '' ) {
+		if ( ! $table
+		     || ! $schema
+		     || self::table_exists( $table )
+		) {
+			return;
+		}
+
+		$collate          = self::get_charset_collate();
+		$backticked_table = self::backticked_table( $table );
+		$schema           = "CREATE TABLE $backticked_table ( $schema ) ENGINE=InnoDB $collate;";
+
+		$upgrade_file = ABSPATH . 'wp-admin/includes/upgrade.php';
+		if ( file_exists( $upgrade_file ) ) {
+			require_once $upgrade_file;
+		}
+
+		$results = dbDelta( $schema );
+
+		if ( ! empty( self::db()->last_error ) ) {
+			return new \WP_Error( 'creating_table_failed', self::db()->last_error );
+		}
+
+		return $results;
+	}
+
+	// --------------------------------------------------
+
+	/**
 	 * Begin a transaction. Returns WP_Error on failure or true.
 	 *
 	 * @return bool|\WP_Error
@@ -476,6 +510,7 @@ final class DB {
 				$values[]        = (string) $val;
 			}
 		}
+
 		$where_sql = '';
 		if ( ! empty( $where_clauses ) ) {
 			$where_sql = ' WHERE ' . implode( ' AND ', $where_clauses );

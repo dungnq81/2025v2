@@ -27,4 +27,109 @@
             }
         }
     }
+
+    .section-history {
+        .swiper {
+            &::before {
+                content: '';
+                background-image: linear-gradient(90deg, rgba(152, 152, 152, 0) 0%, #989898 53.37%, rgba(152, 152, 152, 0) 100%);;
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+                height: 1px;
+                width: 100%;
+                position: absolute;
+                top: 50%;
+                translate: 0 -50%;
+                pointer-events: none;
+                z-index: 0;
+            }
+        }
+
+        .swiper-slide {
+            height: auto;
+            @include mixin.flex-self(1.2, 1, 12);
+
+            @include mixin.mq-min(sm) {
+                @include mixin.flex-self(2, 1, 24);
+            }
+
+            @include mixin.mq-min(lg) {
+                @include mixin.flex-self(3, 1, 24);
+            }
+
+            & > .item {
+                &::before {
+                    content: '';
+                    border: 1px solid #D2D2D2;
+                    border-radius: 50%;
+                    background-color: #fff;
+                    @include mixin.absolute-center-self(20);
+                }
+
+                &::after {
+                    content: '';
+                    border-radius: 50%;
+                    @include mixin.absolute-center-self(12);
+                }
+            }
+
+            &.swiper-slide-active {
+                & > .item {
+                    &::before {
+                        border: 1px solid vars.$text-color-2;
+                    }
+
+                    &::after {
+                        background-color: vars.$text-color-2;
+                    }
+                }
+            }
+        }
+
+        .history-item {
+            & > .item {
+                justify-content: center;
+                position: relative;
+                z-index: 2;
+                flex-wrap: nowrap;
+
+                .content {
+                    flex: 1 0 auto;
+                    height: 50%;
+                }
+
+                .thumbnail {
+                    flex: 1 0 auto;
+                    height: 50%;
+                }
+            }
+
+            &:nth-child(odd) {
+                & > .item {
+                    .content {
+                        padding-bottom: 40px;
+                    }
+
+                    .thumbnail {
+                        padding-top: 40px;
+                    }
+                }
+            }
+
+            &:nth-child(even) {
+                & > .item {
+                    flex-direction: column-reverse;
+
+                    .content {
+                        padding-top: 40px;
+                    }
+
+                    .thumbnail {
+                        padding-bottom: 40px;
+                    }
+                }
+            }
+        }
+    }
 }
