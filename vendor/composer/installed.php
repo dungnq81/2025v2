@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '31b0286d946ed5354769b7b6a8224fe137068674',
+        'reference' => 'fe5921174937f6455dd9751748faf189beb77f0d',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '31b0286d946ed5354769b7b6a8224fe137068674',
+            'reference' => 'fe5921174937f6455dd9751748faf189beb77f0d',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -38,9 +38,9 @@
             'dev_requirement' => true,
         ),
         'composer/composer' => array(
-            'pretty_version' => '2.8.12',
-            'version' => '2.8.12.0',
-            'reference' => '3e38919bc9a2c3c026f2151b5e56d04084ce8f0b',
+            'pretty_version' => '2.9.1',
+            'version' => '2.9.1.0',
+            'reference' => '35cb6d47d03b0cae52dc12d686f941365b20f08b',
             'type' => 'library',
             'install_path' => __DIR__ . '/./composer',
             'aliases' => array(),
@@ -226,7 +226,7 @@
         'roave/security-advisories' => array(
             'pretty_version' => 'dev-latest',
             'version' => 'dev-latest',
-            'reference' => '19966d2f97bbc444bb176432754e33256a7d45bf',
+            'reference' => '6c7e6e7ebf679f9228c82ec3f7a432b4e8df538e',
             'type' => 'metapackage',
             'install_path' => null,
             'aliases' => array(
@@ -666,7 +666,7 @@
         'wp-cli/wp-cli' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'ee4fb67b12eb904527bde1c4a0a4d6538a14681a',
+            'reference' => '2cc5992047c5e7ce1ae745e46ae0ab14352e3da0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../wp-cli/wp-cli',
             'aliases' => array(
