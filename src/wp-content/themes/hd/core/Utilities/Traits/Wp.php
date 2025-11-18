@@ -1357,7 +1357,7 @@ trait Wp {
 		if ( $custom_logo_id ) {
 			$custom_logo_attr = [
 				'class'   => 'custom-logo',
-				'loading' => false,
+				'loading' => 'eager',
 			];
 
 			$unlink_homepage_logo = (bool) get_theme_support( 'custom-logo', 'unlink-homepage-logo' );
@@ -1522,7 +1522,7 @@ trait Wp {
 		if ( $custom_logo_id ) {
 			$custom_logo_attr = [
 				'class'   => $theme . '-logo',
-				'loading' => 'lazy',
+				'loading' => 'eager',
 			];
 
 			/**

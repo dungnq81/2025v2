@@ -1,0 +1,37 @@
+/* partials/template/extra.scss */
+/* utils/_variables.scss */
+/* utils/_functions.scss */
+/** $string - svg */
+/** add unique id image url */
+/** https://webdesign.tutsplus.com/tutorials/an-introduction-to-error-handling-in-sass--cms-19996 */
+/** font size */
+/* partials/template/extra.scss */
+/* utils/_mixins.scss */
+.section-partners .swiper {
+  position: relative;
+}
+.section-partners .swiper::after, .section-partners .swiper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100px;
+  z-index: 2;
+}
+.section-partners .swiper::before {
+  left: 0;
+  background: linear-gradient(90deg, #fefefe 0%, rgba(254, 254, 254, 0) 100%);
+  pointer-events: none;
+}
+.section-partners .swiper::after {
+  right: 0;
+  background: linear-gradient(90deg, rgba(254, 254, 254, 0) 0%, #fefefe 100%);
+  pointer-events: none;
+}
+
+:where(.dark, .dark *) .partners .swiper::before {
+  background: linear-gradient(90deg, #161616 0%, rgba(22, 22, 22, 0) 100%);
+}
+:where(.dark, .dark *) .partners .swiper::after {
+  background: linear-gradient(90deg, rgba(22, 22, 22, 0) 0%, #161616 100%);
+}

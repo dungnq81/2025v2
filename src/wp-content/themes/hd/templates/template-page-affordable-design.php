@@ -27,7 +27,7 @@ if ( have_posts() ) {
             Có hợp đồng rõ ràng, bảo hành và hỗ trợ vận hành.
         </p>
         <div class="mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
-            <div class="relative rounded-3xl bg-white p-6 ring-1 ring-gray-300 shadow-2xl hover:ring-(--text-color-1) c-hover">
+            <div class="relative rounded-3xl bg-(--bg-color) p-6 ring-1 ring-gray-300 shadow-2xl hover:ring-(--text-color-1) c-hover">
                 <p class="font-semibold text-1 uppercase">Starter</p>
                 <div class="mt-3 flex items-baseline gap-2">
                     <span class="h3 font-extrabold">4.900.000</span>
@@ -78,7 +78,7 @@ if ( have_posts() ) {
                 </ul>
                 <a href="#" class="mt-6 inline-flex w-full items-center justify-center rounded-xl bg-(--text-color-1) px-4 py-2.5 font-semibold text-white">Chọn gói này</a>
             </div>
-            <div class="relative rounded-3xl bg-white p-6 ring-2 ring-(--text-color-1) shadow-2xl md:-translate-y-4 hover:md:-translate-y-5 c-hover">
+            <div class="relative rounded-3xl bg-(--bg-color) p-6 ring-2 ring-(--text-color-1) shadow-2xl md:-translate-y-4 hover:md:-translate-y-5 c-hover">
                 <span class="absolute -top-4 left-1/2 -translate-x-1/2 inline-flex items-center rounded-full bg-(--text-color-1) px-4 py-2 text-xs font-semibold text-white shadow-lg">Phổ biến</span>
                 <p class="font-semibold text-1 uppercase">PLUS</p>
                 <div class="mt-3 flex items-baseline gap-2">
@@ -130,7 +130,7 @@ if ( have_posts() ) {
                 </ul>
                 <a href="#" class="mt-6 inline-flex w-full items-center justify-center rounded-xl bg-(--text-color-1) px-4 py-2.5 font-semibold text-white">Chọn gói này</a>
             </div>
-            <div class="relative rounded-3xl bg-white p-6 ring-1 ring-gray-300 shadow-2xl hover:ring-(--text-color-1) c-hover">
+            <div class="relative rounded-3xl bg-(--bg-color) p-6 ring-1 ring-gray-300 shadow-2xl hover:ring-(--text-color-1) c-hover">
                 <p class="font-semibold text-1 uppercase">Pro</p>
                 <div class="mt-3 flex items-baseline gap-2">
                     <span class="h3 font-extrabold">13.900.000</span>
@@ -185,7 +185,7 @@ if ( have_posts() ) {
                 </ul>
                 <a href="#" class="mt-6 inline-flex w-full items-center justify-center rounded-xl bg-(--text-color-1) px-4 py-2.5 font-semibold text-white">Chọn gói này</a>
             </div>
-            <div class="relative rounded-3xl bg-white p-6 ring-1 ring-gray-300 hover:ring-(--text-color-1) shadow-2xl c-hover">
+            <div class="relative rounded-3xl bg-(--bg-color) p-6 ring-1 ring-gray-300 hover:ring-(--text-color-1) shadow-2xl c-hover">
                 <p class="font-semibold text-1 uppercase">BUSINESS</p>
                 <div class="mt-3 flex items-baseline gap-2">
                     <span class="h3 font-extrabold">23.900.000</span>
@@ -245,20 +245,108 @@ if ( have_posts() ) {
 </section>
 
 <!-- STEPS-->
-<section class="section section-steps py-20">
+<section class="section section-steps c-light-bg py-20">
     <div class="u-container">
         <h2 class="font-bold text-center">Quy trình <span class="text-1">thiết kế website</span> giá rẻ</h2>
         <p class="mb-0 text-center mx-auto pt-2 max-w-5xl text-gray-500">Minh bạch từng bước – bạn luôn nắm được tiến độ.</p>
         <p class="mb-0 p-fs-clamp-[15,17] text-center mx-auto pt-4 max-w-5xl">Để hiện thực hóa mọi ý tưởng kinh doanh trực tuyến của khách hàng bằng dịch vụ <b>thiết kế website giá rẻ</b>, chất lượng cao, <b><span class="hover:text-1">HD</span> <span class="hover:text-2">Agency</span></b> luôn tối ưu quy trình cung cấp dịch vụ bài bản, chuyên nghiệp nhất theo từng bước sau:</p>
-        <ol class="mt-20 space-y-15">
+        <ol class="mt-20 space-y-20 max-w-7xl mx-auto">
             <li class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-x-16 items-center">
                 <div class="order-2 md:order-1">
-                    <span class="inline-flex items-center gap-2 rounded-full bg-cream-50 ring-1 ring-brand-100 px-3 py-1 text-xs font-semibold">Bước 1</span>
-                    <h3 class="mt-3 text-xl font-semibold">Khảo sát &amp; xác định mục tiêu</h3>
-                    <p class="mt-2 text-gray-600 text-sm">Trao đổi tệp khách hàng, sản phẩm, mục tiêu chuyển đổi; chốt cấu trúc trang.</p>
+                    <span class="inline-flex items-center border border-(--text-color-1) text-1 rounded-full px-6 py-3 text-base font-semibold uppercase">Bước 1.</span>
+                    <p class="mt-6 mb-1 h6 text-gray-500 font-normal">Khảo sát &amp; xác định mục tiêu</p>
+                    <h3 class="text-1 font-bold h4">Tiếp nhận yêu cầu thiết kế từ khách hàng</h3>
+                    <div class="mt-4 text-base leading-[1.7]">
+                        <p>Lắng nghe nhu cầu từ khách hàng là bước đầu tiên giúp đội ngũ <b>HD</b> thấu hiểu mong muốn của khách hàng.</p>
+                        <p>Tại bước này, chúng tôi có thể xác định được ngành nghề kinh doanh, đối tượng khách hàng mục tiêu và những yêu cầu của khách hàng về website như giao diện, tính năng, nội dung….</p>
+                    </div>
                 </div>
                 <div class="order-1 md:order-2 text-center">
                     <img class="w-full max-w-[450px] inline-block rounded-[40px] ring-0 ring-gray-600 shadow-2xl" src="/images/steps/1.webp" alt="Khảo sát">
+                </div>
+            </li>
+            <li class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-x-16 items-center">
+                <div class="text-center">
+                    <img class="w-full max-w-[450px] inline-block rounded-[40px] ring-0 ring-gray-600 shadow-2xl" src="/images/steps/2.webp" alt="Wireframe">
+                </div>
+                <div>
+                    <span class="inline-flex items-center border border-(--text-color-1) text-1 rounded-full px-6 py-3 text-base font-semibold uppercase">Bước 2.</span>
+                    <p class="mt-6 mb-1 h6 text-gray-500 font-normal">Wireframe &amp; khung nội dung</p>
+                    <h3 class="text-1 font-bold h4">Tư vấn và lên ý tưởng khởi tạo website</h3>
+                    <div class="mt-4 text-base leading-[1.7]">
+                        <p>Tiến hành phân tích và đánh giá các thế mạnh, hạn chế của doanh nghiệp khách hàng so với đối thủ cạnh trạnh trên thị trường, hiểu được xu hướng thiết kế của ngành và phác thảo website sơ bộ.</p>
+                        <p>Tại bước này, khách hàng có thể hiểu website được hiển thị theo sơ đồ như thế nào, chứa các trang, chủ đề và nội dung chi tiết gì?</p>
+                    </div>
+                </div>
+            </li>
+            <li class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-x-16 items-center">
+                <div class="order-2 md:order-1">
+                    <span class="inline-flex items-center border border-(--text-color-1) text-1 rounded-full px-6 py-3 text-base font-semibold uppercase">Bước 3.</span>
+                    <p class="mt-6 mb-1 h6 text-gray-500 font-normal">Thiết kế UI</p>
+                    <h3 class="text-1 font-bold h4">Thiết kế giao diện website</h3>
+                    <div class="mt-4 text-base leading-[1.7]">
+                        <p>Sau khi thống nhất kế hoạch thiết kế website trọn gói giá rẻ, HD Agency sẽ cung cấp kho giao diện thiết kế có sẵn để khách hàng tham khảo và lựa chọn được giao diện web ưng ý nhất.</p>
+                        <p>Ngoài ra, chúng tôi cũng sẵn lòng thiết kế website theo yêu cầu khi khách hàng mong muốn sở hữu giao diện web riêng biệt, độc nhất. Dù khách hàng lựa chọn phương án thiết kế nào, HD Agency đều khẳng định thiết kế tỉ mỉ, trau chuốt từng chi tiết, đảm bảo thể hiện bản sắc thương hiệu và thu hút đối tượng khách hàng mục tiêu của doanh nghiệp.</p>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2 text-center">
+                    <img class="w-full max-w-[450px] inline-block rounded-[40px] ring-0 ring-gray-600 shadow-2xl" src="/images/steps/3.webp" alt="Thiết kế UI">
+                </div>
+            </li>
+            <li class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-x-16 items-center">
+                <div class="text-center">
+                    <img class="w-full max-w-[450px] inline-block rounded-[40px] ring-0 ring-gray-600 shadow-2xl" src="/images/steps/4.webp" alt="Kiểm thử & tối ưu">
+                </div>
+                <div>
+                    <span class="inline-flex items-center border border-(--text-color-1) text-1 rounded-full px-6 py-3 text-base font-semibold uppercase">Bước 4.</span>
+                    <p class="mt-6 mb-1 h6 text-gray-500 font-normal">Lập trình, tích hợp, kiểm thử & tối ưu</p>
+                    <h3 class="text-1 font-bold h4">Gửi bản thiết kế demo, chỉnh sửa và hoàn thiện</h3>
+                    <div class="mt-4 text-base leading-[1.7]">
+                        <p>HD sẽ tiến hành gửi bản demo thiết kế website cho khách hàng, tiếp nhận những góp ý và yêu cầu chỉnh sửa cụ thể.</p>
+                        <p>Chạy thử toàn bộ tính năng của trang web nhằm xác nhận chúng hoạt động ổn định và không xảy ra lỗi nào. Để khách hàng hoàn toàn tin tưởng sử dụng dịch vụ, chúng tôi cam kết hỗ trợ chỉnh sửa miễn phí cho đến khi khách hàng hoàn toàn hài lòng về bố cục, giao diện và tính năng của website.</p>
+                    </div>
+                </div>
+            </li>
+            <li class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-x-16 items-center">
+                <div class="order-2 md:order-1">
+                    <span class="inline-flex items-center border border-(--text-color-1) text-1 rounded-full px-6 py-3 text-base font-semibold uppercase">Bước 5.</span>
+                    <p class="mt-6 mb-1 h6 text-gray-500 font-normal">Cập nhật nội dung</p>
+                    <h3 class="text-1 font-bold h4">Hỗ trợ khách hàng cập nhật hoàn thiện website</h3>
+                    <div class="mt-4 text-base leading-[1.7]">
+                        <p>HD Agency còn miễn phí cập nhật bổ sung các nội dung nhằm giúp khách hàng cung cấp thông tin cơ bản ban đầu như nội dung giới thiệu, hình ảnh, video về doanh nghiệp.</p>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2 text-center">
+                    <img class="w-full max-w-[450px] inline-block rounded-[40px] ring-0 ring-gray-600 shadow-2xl" src="/images/steps/5.webp" alt="Cập nhật nội dung">
+                </div>
+            </li>
+            <li class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-x-16 items-center">
+                <div class="text-center">
+                    <img class="w-full max-w-[450px] inline-block rounded-[40px] ring-0 ring-gray-600 shadow-2xl" src="/images/steps/2.webp" alt="Bàn giao & hướng dẫn sử dụng">
+                </div>
+                <div>
+                    <span class="inline-flex items-center border border-(--text-color-1) text-1 rounded-full px-6 py-3 text-base font-semibold uppercase">Bước 6.</span>
+                    <p class="mt-6 mb-1 h6 text-gray-500 font-normal">Bàn giao & hướng dẫn sử dụng</p>
+                    <h3 class="text-1 font-bold h4">Hướng dẫn sử dụng và bàn giao cho khách hàng</h3>
+                    <div class="mt-4 text-base leading-[1.7]">
+                        <p>HD Agency sẽ có buổi trao đổi trực tiếp để bàn giao website và hướng dẫn khách hàng sử dụng trang web.</p>
+                        <p>Hướng dẫn khách hàng sử dụng hệ thống quản trị nội dung như cách đăng bài viết, đăng hình ảnh, cách cập nhật và chỉnh sửa nội dun.g</p>
+                        <p>Đặc biệt, để giúp khách hàng vận hành website dễ dàng hơn, HD Agency cũng cung cấp dịch vụ bảo trị website định kỳ, khắc phục các sự cố kỹ thuật và luôn cập nhật phiên bản website mới nhất.</p>
+                    </div>
+                </div>
+            </li>
+            <li class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-x-16 items-center">
+                <div class="order-2 md:order-1">
+                    <span class="inline-flex items-center border border-(--text-color-1) text-1 rounded-full px-6 py-3 text-base font-semibold uppercase">Bước 7.</span>
+                    <p class="mt-6 mb-1 h6 text-gray-500 font-normal">Bảo hành & đồng hành</p>
+                    <h3 class="text-1 font-bold h4">Tư vấn xây dựng kế hoạch phát triển website hiệu quả</h3>
+                    <div class="mt-4 text-base leading-[1.7]">
+                        <p>Sửa lỗi kỹ thuật, cập nhật nhỏ miễn phí trong thời hạn bảo hành.</p>
+                        <p>Cuối cùng, để giúp khách hàng phát triển website hiệu quả, chúng tôi sẽ tư vấn cho khách hàng các chiến lược marketing online hiệu quả như thiết kế Branding nhận diện thương hiệu, quảng bá bằng phương pháp chạy ads, SEO.</p>
+                    </div>
+                </div>
+                <div class="order-1 md:order-2 text-center">
+                    <img class="w-full max-w-[450px] inline-block rounded-[40px] ring-0 ring-gray-600 shadow-2xl" src="/images/steps/3.webp" alt="Bảo hành & đồng hành">
                 </div>
             </li>
         </ol>

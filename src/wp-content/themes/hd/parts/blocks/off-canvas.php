@@ -18,7 +18,7 @@ if ( ! $img_logo ) :
 		$txt_logo
 	);
 else :
-	$image = \HD_Helper::iconImageHTML( $img_logo, 'medium' );
+	$image = \HD_Helper::iconImageHTML( $img_logo, 'medium', [ 'loading' => 'eager' ] );
 	$html  = sprintf(
 		'<a href="%1$s" class="mobile-logo-link" rel="home">%2$s</a>',
 		\HD_Helper::home(),

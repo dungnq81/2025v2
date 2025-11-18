@@ -1,6 +1,6 @@
 import * as path from 'path';
-import { viteStaticCopy } from 'vite-plugin-static-copy';
-import { sharedConfig } from '../../../../vite.config.shared';
+import {viteStaticCopy} from 'vite-plugin-static-copy';
+import {sharedConfig} from '../../../../vite.config.shared';
 
 // THEME
 const dir = path.resolve(__dirname).replace(/\\/g, '/');
@@ -9,7 +9,7 @@ const assets = `${dir}/assets`;
 
 // COPY
 const directoriesToCopy = [
-    { src: `${resources}/img`, dest: '' }
+    {src: `${resources}/img`, dest: ''}
 ];
 
 // SASS
@@ -69,13 +69,8 @@ export default {
             output: {
                 entryFileNames: `js/[name].[hash].js`,
                 chunkFileNames: `js/[name].[hash].js`,
-                manualChunks (id) {
-                    if (
-                        id.includes('node_modules')
-                        || id.includes('styles/tailwind')
-                        || id.includes('scripts/3rd')
-                        || id.includes('styles/3rd')
-                    ) {
+                manualChunks(id) {
+                    if (id.includes('node_modules') || id.includes('styles/tailwind') || id.includes('scripts/3rd') || id.includes('styles/3rd')) {
                         return 'vendor';
                     }
                 },

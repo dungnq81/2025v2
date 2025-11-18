@@ -26,7 +26,7 @@
         "imagemin-pngquant": "^10.0.0",
         "imagemin-svgo": "^11.0.1",
         "postcss": "^8.5.6",
-        "sass": "^1.94.0",
+        "sass": "^1.94.1",
         "terser": "^5.44.1",
         "vite": "^7.2.2",
         "vite-plugin-static-copy": "^3.1.4"

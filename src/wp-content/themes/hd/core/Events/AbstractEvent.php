@@ -65,8 +65,6 @@ abstract class AbstractEvent {
 	 * @return void
 	 */
 	public function log( $message ): void {
-		if ( Helper::development() ) {
-			Helper::errorLog( '[' . static::class . '] ' . $message );
-		}
+		Helper::errorLog( '[' . static::class . '] ' . $message );
 	}
 }

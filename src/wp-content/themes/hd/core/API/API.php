@@ -165,9 +165,7 @@ final class API extends AbstractAPI {
 		// Block wp-json root and default wp/v2 endpoints for unauthenticated users
 		if ( ! is_user_logged_in() || ! current_user_can( 'edit_posts' ) ) {
 			if ( preg_match( '#^/wp-json(/wp/v2)?/?#', $request_uri ) ) {
-				if ( Helper::development() ) {
-					Helper::errorLog( "[REST Blocked] $request_uri" );
-				}
+				Helper::errorLog( "[REST Blocked] $request_uri" );
 
 				return new \WP_Error(
 					'rest_forbidden',
