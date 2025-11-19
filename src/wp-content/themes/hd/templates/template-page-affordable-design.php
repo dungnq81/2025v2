@@ -18,11 +18,39 @@ if ( have_posts() ) {
 
 ?>
 
+<!-- HERO -->
+<section class="section section-hero py-20">
+    <div class="u-container flex flex-col gap-10 items-stretch">
+        <div class="max-w-5xl mx-auto text-center">
+            <h1 class="mt-4 font-extrabold">
+                Tăng trưởng với <span class="c-text-gradient-2">Website chuẩn chuyển đổi</span>
+            </h1>
+            <div class="mt-6 p-fs-clamp-[15,17]">
+                <p>Tập trung vào mục tiêu <strong>chuyển đổi</strong>, nội dung bán hàng và trải nghiệm người dùng. Gói triển khai nhanh – chi phí hợp lý – bảo hành rõ ràng.</p>
+                <p><b>HD Agency</b> ra đời với sứ mệnh mang đến giải pháp <b><i>thiết kế website giá rẻ, chuyên nghiệp</i></b>, giúp mọi khách hàng dễ dàng sở hữu website chất lượng cao mà không cần lo lắng về chi phí.</p>
+            </div>
+            <div class="mt-10 flex flex-col sm:flex-row gap-3 lg:gap-6 justify-center">
+                <a href="#" class="u-inline-flex-center rounded-md px-5 py-3 font-semibold bg-(--text-color-1) text-white">
+                    Nhận tư vấn miễn phí
+                </a>
+                <a href="#" class="u-inline-flex-center rounded-md px-5 py-3 text-1 ring-1 border-(--text-color-1) font-semibold">
+                    Xem bảng giá
+                </a>
+            </div>
+        </div>
+        <div class="relative mx-auto w-full max-w-7xl mt-10">
+            <div class="rounded-[40px]">
+                <img class="h-full w-full object-cover block" height="1409" width="2389" src="/images/affordable/hero-1.webp" alt="Thiết kế web giá rẻ">
+            </div>
+        </div>
+    </div>
+</section>
+
 <!-- PRICES -->
-<section class="section section-prices py-20">
+<section class="section section-prices c-light-bg py-20">
     <div class="u-container">
-        <h2 class="font-bold text-center">Bảng giá <span class="text-1">thiết kế website</span> giá rẻ – trọn gói</h2>
-        <p class="mb-0 p-fs-clamp-[15,17] text-center mx-auto pt-6 max-w-5xl">
+        <h2 class="font-bold text-center">Bảng giá <span class="c-text-gradient-2">thiết kế website</span> giá rẻ – trọn gói</h2>
+        <p class="mb-0 p-fs-clamp-[15,17] text-center mx-auto mt-6 max-w-5xl">
             Bảng giá <b>thiết kế website giá rẻ</b> tại <b><span class="hover:text-1">HD</span> <span class="hover:text-2">Agency</span></b> luôn niêm yết bảng giá, công khai và minh bạch trong từng gói dịch vụ.
             Có hợp đồng rõ ràng, bảo hành và hỗ trợ vận hành.
         </p>
@@ -245,11 +273,11 @@ if ( have_posts() ) {
 </section>
 
 <!-- STEPS-->
-<section class="section section-steps c-light-bg py-20">
+<section class="section section-steps py-20">
     <div class="u-container">
-        <h2 class="font-bold text-center">Quy trình <span class="text-1">thiết kế website</span> giá rẻ</h2>
+        <h2 class="font-bold text-center">Quy trình <span class="c-text-gradient-2">thiết kế website</span> giá rẻ</h2>
         <p class="mb-0 text-center mx-auto pt-2 max-w-5xl text-gray-500">Minh bạch từng bước – bạn luôn nắm được tiến độ.</p>
-        <p class="mb-0 p-fs-clamp-[15,17] text-center mx-auto pt-4 max-w-5xl">Để hiện thực hóa mọi ý tưởng kinh doanh trực tuyến của khách hàng bằng dịch vụ <b>thiết kế website giá rẻ</b>, chất lượng cao, <b><span class="hover:text-1">HD</span> <span class="hover:text-2">Agency</span></b> luôn tối ưu quy trình cung cấp dịch vụ bài bản, chuyên nghiệp nhất theo từng bước sau:</p>
+        <p class="mb-0 p-fs-clamp-[15,17] text-center mx-auto mt-4 max-w-5xl">Để hiện thực hóa mọi ý tưởng kinh doanh trực tuyến của khách hàng bằng dịch vụ <b>thiết kế website giá rẻ</b>, chất lượng cao, <b><span class="hover:text-1">HD</span> <span class="hover:text-2">Agency</span></b> luôn tối ưu quy trình cung cấp dịch vụ bài bản, chuyên nghiệp nhất theo từng bước sau:</p>
         <ol class="mt-20 space-y-20 max-w-7xl mx-auto">
             <li class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-x-16 items-center">
                 <div class="order-2 md:order-1">
@@ -329,7 +357,7 @@ if ( have_posts() ) {
                     <p class="mt-6 mb-1 h6 text-gray-500 font-normal">Bàn giao & hướng dẫn sử dụng</p>
                     <h3 class="text-1 font-bold h4">Hướng dẫn sử dụng và bàn giao cho khách hàng</h3>
                     <div class="mt-4 text-base leading-[1.7]">
-                        <p>HD Agency sẽ có buổi trao đổi trực tiếp để bàn giao website và hướng dẫn khách hàng sử dụng trang web.</p>
+                        <p><b>HD Agency</b> sẽ có buổi trao đổi trực tiếp để bàn giao website và hướng dẫn khách hàng sử dụng trang web.</p>
                         <p>Hướng dẫn khách hàng sử dụng hệ thống quản trị nội dung như cách đăng bài viết, đăng hình ảnh, cách cập nhật và chỉnh sửa nội dun.g</p>
                         <p>Đặc biệt, để giúp khách hàng vận hành website dễ dàng hơn, HD Agency cũng cung cấp dịch vụ bảo trị website định kỳ, khắc phục các sự cố kỹ thuật và luôn cập nhật phiên bản website mới nhất.</p>
                     </div>
@@ -381,7 +409,9 @@ if ( ! empty( $faqs ) ) :
 ?>
 <section class="section section-faq py-20">
     <div class="u-container md:!max-w-4xl">
-        <h2 class="font-bold text-center">Câu hỏi thường gặp</h2>
+        <h2 class="font-bold text-center">
+            <span class="c-text-gradient-2">Câu hỏi thường gặp</span>
+        </h2>
         <p class="mb-0 p-fs-clamp-[15,17] text-center mx-auto pt-6">
             Trong quá trình hoạt động, <b><span class="hover:text-1">HD</span> <span class="hover:text-2">Agency</span></b> nhận thấy có một số thắc mắc phổ biến khi khách hàng sử dụng dịch vụ như:
         </p>

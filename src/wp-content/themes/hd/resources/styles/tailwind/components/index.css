@@ -72,6 +72,14 @@
         @apply absolute top-20 right-8 w-32 h-32 bg-[#000] rounded-full mix-blend-saturation filter blur-xl opacity-30;
     }
 
+    .c-text-gradient-1 {
+        @apply bg-gradient-to-r from-(--text-color-1) to-(--text-color-2) bg-clip-text text-transparent;
+    }
+
+    .c-text-gradient-2 {
+        @apply bg-gradient-to-r from-(--text-color-2) to-(--text-color-1) bg-clip-text text-transparent;
+    }
+
     /** Dark mode */
     :where(.dark, .dark *) {
         .c-light-bg {

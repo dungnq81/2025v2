@@ -150,10 +150,7 @@ final class DB {
 	 * @return string[]|void|\WP_Error
 	 */
 	public static function create_table( string $table = '', string $schema = '' ) {
-		if ( ! $table
-		     || ! $schema
-		     || self::table_exists( $table )
-		) {
+		if ( ! $table || ! $schema || self::table_exists( $table ) ) {
 			return;
 		}
 
