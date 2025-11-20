@@ -51,9 +51,10 @@ final class Helper {
 	 * @return void
 	 */
 	public static function errorLog( string $message, int $type = 0, ?string $dest = null, ?string $headers = null ): void {
-		$key = 'hd_error_log_' . md5( $message );
-		if ( empty( get_transient( $key ) ) ) {
-			set_transient( $key, 1, MINUTE_IN_SECONDS );
+		$key = 'hd_err_' . md5( $message );
+
+		if ( ! wp_cache_get( $key, 'hd_error_log_cache' ) && self::development() ) {
+			wp_cache_set( $key, 1, 'hd_error_log_cache', MINUTE_IN_SECONDS );
 
 			// Intentionally calling error_log for throttled logging.
 			error_log( $message, $type, $dest, $headers );
@@ -566,7 +567,7 @@ final class Helper {
 		// Remove the option from the appropriate context (multisite or not)
 		$removed = is_multisite() ? delete_site_option( $option ) : delete_option( $option );
 		if ( $removed ) {
-			delete_transient( $cache_key );
+			wp_cache_delete( $cache_key, 'hd_option_cache' );
 		}
 
 		return $removed;
@@ -595,7 +596,7 @@ final class Helper {
 		$updated = is_multisite() ? update_site_option( $option, $new_value ) : update_option( $option, $new_value, $autoload );
 
 		if ( $updated ) {
-			set_transient( $cache_key, $new_value, $cache_in_hours * HOUR_IN_SECONDS );
+			wp_cache_set( $cache_key, $new_value, 'hd_option_cache', $cache_in_hours * HOUR_IN_SECONDS );
 		}
 
 		return $updated;
@@ -619,13 +620,13 @@ final class Helper {
 		$site_id   = is_multisite() ? get_current_blog_id() : null;
 		$cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
 
-		$cached_value = get_transient( $cache_key );
-		if ( ! empty( $cached_value ) ) {
+		$cached_value = wp_cache_get( $cache_key, 'hd_option_cache' );
+		if ( $cached_value !== false ) {
 			return $cached_value;
 		}
 
 		$option_value = is_multisite() ? get_site_option( $option, $default ) : get_option( $option, $default );
-		set_transient( $cache_key, $option_value, $cache_in_hours * HOUR_IN_SECONDS );
+		wp_cache_set( $cache_key, $option_value, 'hd_option_cache', $cache_in_hours * HOUR_IN_SECONDS );
 
 		// Retrieve the option value
 		return $option_value;
@@ -649,7 +650,7 @@ final class Helper {
 		$cache_key      = "hd_theme_mod_{$mod_name_lower}";
 
 		set_theme_mod( $mod_name, $value );
-		set_transient( $cache_key, $value, $cache_in_hours * HOUR_IN_SECONDS );
+		wp_cache_set( $cache_key, $value, 'hd_theme_mod_cache', $cache_in_hours * HOUR_IN_SECONDS );
 
 		return true;
 	}
@@ -670,19 +671,15 @@ final class Helper {
 
 		$mod_name_lower = strtolower( $mod_name );
 		$cache_key      = "hd_theme_mod_{$mod_name_lower}";
-
-		$cached_value = get_transient( $cache_key );
+		$cached_value   = wp_cache_get( $cache_key, 'hd_theme_mod_cache' );
 		if ( ! empty( $cached_value ) ) {
 			return $cached_value;
 		}
 
-		$_mod = get_theme_mod( $mod_name, $default );
-		if ( ! is_string( $_mod ) && ! is_array( $_mod ) ) {
-			return $_mod; // Return early if not a string or array
-		}
-
+		$_mod      = get_theme_mod( $mod_name, $default );
 		$mod_value = is_ssl() ? str_replace( 'http://', 'https://', $_mod ) : $_mod;
-		set_transient( $cache_key, $mod_value, $cache_in_hours * HOUR_IN_SECONDS );
+
+		wp_cache_set( $cache_key, $mod_value, 'hd_theme_mod_cache', $cache_in_hours * HOUR_IN_SECONDS );
 
 		return $mod_value;
 	}
@@ -702,8 +699,7 @@ final class Helper {
 		}
 
 		$cache_key   = "hd_custom_post_{$post_type}";
-		$cached_data = get_transient( $cache_key );
-
+		$cached_data = wp_cache_get( $cache_key, 'hd_custom_post_cache' );
 		if ( ! empty( $cached_data ) ) {
 			return $cached_data;
 		}
@@ -744,7 +740,7 @@ final class Helper {
 				$cached_data = (object) $cached_data;
 			}
 
-			set_transient( $cache_key, $cached_data, $cache_in_hours * HOUR_IN_SECONDS );
+			wp_cache_set( $cache_key, $cached_data, 'hd_custom_post_cache', $cache_in_hours * HOUR_IN_SECONDS );
 		}
 
 		return $cached_data ?? null;
@@ -805,14 +801,14 @@ final class Helper {
 
 		$updated_post = get_post( $r );
 		$cache_key    = "hd_custom_post_{$post_type}";
-
-		$cached_data = [
+		$cached_data  = [
 			'ID'           => $updated_post->ID ?? 0,
 			'post_title'   => $updated_post->post_title ?? '',
 			'post_content' => $updated_post->post_content ?? '',
 			'post_excerpt' => $updated_post->post_excerpt ?? '',
 		];
-		set_transient( $cache_key, $cached_data, $cache_in_hours * HOUR_IN_SECONDS );
+
+		wp_cache_set( $cache_key, $cached_data, 'hd_custom_post_cache', $cache_in_hours * HOUR_IN_SECONDS );
 
 		return $cached_data;
 	}

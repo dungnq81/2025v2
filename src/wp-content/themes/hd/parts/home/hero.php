@@ -15,7 +15,7 @@ $id       = $args['id'] ?? 0;
 $id       = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 
 ?>
-<section id="section-<?= $id ?>" class="section section-hero py-10 lg:py-24">
+<section id="section-<?= $id ?>" class="section section-hero py-12 lg:py-24">
 	<div class="u-container grid pt-6 lg:gap-12 xl:gap-0 lg:grid-cols-12">
 		<div class="mr-auto place-self-center lg:col-span-7">
             <h2 class="max-w-3xl font-bold mb-6 p-fs-clamp-[38,58] leading-[1.3]">

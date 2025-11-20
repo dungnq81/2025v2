@@ -19,7 +19,7 @@ if ( have_posts() ) {
 ?>
 
 <!-- HERO -->
-<section class="section section-hero py-20">
+<section class="section section-hero py-12 lg:py-24">
     <div class="u-container flex flex-col gap-10 items-stretch">
         <div class="max-w-5xl mx-auto text-center">
             <h1 class="mt-4 font-extrabold">
@@ -42,12 +42,16 @@ if ( have_posts() ) {
             <div class="rounded-[40px]">
                 <img class="h-full w-full object-cover block" height="1409" width="2389" src="/images/affordable/hero-1.webp" alt="Thiết kế web giá rẻ">
             </div>
+            <div class="absolute -top-6 -right-6 rounded-md bg-white/95 px-4 py-3 ring-1 ring-gray-200 shadow-lg backdrop-blur">
+                <p class="text-xs text-gray-500 mb-2">Minh hoạ</p>
+                <p class="font-semibold text-sm">Giao diện đa ngành</p>
+            </div>
         </div>
     </div>
 </section>
 
 <!-- PRICES -->
-<section class="section section-prices c-light-bg py-20">
+<section class="section section-prices c-light-bg py-10 lg:py-20">
     <div class="u-container">
         <h2 class="font-bold text-center">Bảng giá <span class="c-text-gradient-2">thiết kế website</span> giá rẻ – trọn gói</h2>
         <p class="mb-0 p-fs-clamp-[15,17] text-center mx-auto mt-6 max-w-5xl">
@@ -273,7 +277,7 @@ if ( have_posts() ) {
 </section>
 
 <!-- STEPS-->
-<section class="section section-steps py-20">
+<section class="section section-steps py-10 lg:py-20">
     <div class="u-container">
         <h2 class="font-bold text-center">Quy trình <span class="c-text-gradient-2">thiết kế website</span> giá rẻ</h2>
         <p class="mb-0 text-center mx-auto pt-2 max-w-5xl text-gray-500">Minh bạch từng bước – bạn luôn nắm được tiến độ.</p>
@@ -407,7 +411,7 @@ $faqs = [
 
 if ( ! empty( $faqs ) ) :
 ?>
-<section class="section section-faq py-20">
+<section class="section section-faq py-10 lg:py-20">
     <div class="u-container md:!max-w-4xl">
         <h2 class="font-bold text-center">
             <span class="c-text-gradient-2">Câu hỏi thường gặp</span>
