@@ -393,4 +393,16 @@ trait Base {
 
 		return self::checkPluginActive( 'contact-form-7/wp-contact-form-7.php' );
 	}
+
+	// -------------------------------------------------------------
+
+	public static function isKKActive(): bool {
+		if ( defined( 'KK_STAR_RATINGS' ) || function_exists( 'kk_star_ratings' ) ) {
+			return true;
+		}
+
+		return self::checkPluginActive( 'kk-star-ratings/index.php' );
+	}
+
+	// -------------------------------------------------------------
 }

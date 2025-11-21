@@ -561,11 +561,11 @@ final class Helper {
 	 * @return void
 	 */
 	public static function clearAllCache(): void {
-		global $wpdb;
+		$options_table = DB::db()->options;
 
 		// Transients
-		$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s", '_transient_%' ) );
-		$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->options} WHERE option_name LIKE %s", '_transient_timeout_%' ) );
+		DB::db()->query( DB::db()->prepare( "DELETE FROM {$options_table} WHERE option_name LIKE %s", '_transient_%' ) );
+		DB::db()->query( DB::db()->prepare( "DELETE FROM {$options_table} WHERE option_name LIKE %s", '_transient_timeout_%' ) );
 
 		// Object cache (e.g., Redis or Memcached)
 		if ( function_exists( 'wp_cache_flush' ) ) {

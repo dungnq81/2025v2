@@ -213,9 +213,7 @@ final class Theme {
 		static $enqueued_hooks = [];
 
 		// template debug
-		if ( ( defined( 'SHOW_TEMPLATE_FILE' ) && \SHOW_TEMPLATE_FILE === true ) && Helper::development() ) {
-			dump( $template );
-		}
+//	    dump( $template );
 
 		$info      = pathinfo( $template );
 		$filename  = $info['filename'];

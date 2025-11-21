@@ -7,6 +7,8 @@
  * @author Gaudev
  */
 
+use HD\Utilities\Helper;
+
 \defined( 'ABSPATH' ) || die;
 
 // header
@@ -22,6 +24,9 @@ if ( have_posts() ) {
 <section class="section section-hero py-12 lg:py-24">
     <div class="u-container flex flex-col gap-10 items-stretch">
         <div class="max-w-5xl mx-auto text-center">
+            <p class="inline-flex items-center gap-2 rounded-full bg-cream-50 ring-1 ring-(--text-color-1)/40 bg-(--text-color-1)/8 px-6 py-3 text-xs md:text-base text-(--text-color-1)">
+                Thiết kế Website <strong class="font-semibold">"giá rẻ"</strong> – bùng nổ doanh thu
+            </p>
             <h1 class="mt-4 font-extrabold">
                 Tăng trưởng với <span class="c-text-gradient-2">Website chuẩn chuyển đổi</span>
             </h1>
@@ -29,6 +34,9 @@ if ( have_posts() ) {
                 <p>Tập trung vào mục tiêu <strong>chuyển đổi</strong>, nội dung bán hàng và trải nghiệm người dùng. Gói triển khai nhanh – chi phí hợp lý – bảo hành rõ ràng.</p>
                 <p><b>HD Agency</b> ra đời với sứ mệnh mang đến giải pháp <b><i>thiết kế website giá rẻ, chuyên nghiệp</i></b>, giúp mọi khách hàng dễ dàng sở hữu website chất lượng cao mà không cần lo lắng về chi phí.</p>
             </div>
+
+            <?php echo Helper::isKKActive() ? '<div class="mt-6 flex flex-row justify-center">' . kk_star_ratings() . '</div>' : ''; ?>
+
             <div class="mt-10 flex flex-col sm:flex-row gap-3 lg:gap-6 justify-center">
                 <a href="#" class="u-inline-flex-center rounded-md px-5 py-3 font-semibold bg-(--text-color-1) text-white">
                     Nhận tư vấn miễn phí

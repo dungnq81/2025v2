@@ -13,6 +13,7 @@
 namespace HD\Services\Modules;
 
 use HD\Services\AbstractService;
+use HD\Utilities\DB;
 use HD\Utilities\Helper;
 use HD\Utilities\Traits\Singleton;
 
@@ -354,16 +355,12 @@ final class Optimizer extends AbstractService {
 	 * @param $search
 	 * @param $wp_query
 	 *
-	 * @return mixed|string
+	 * @return string
 	 */
-	public function searchByTitle( $search, $wp_query ): mixed {
-		global $wpdb;
+	public function searchByTitle( $search, $wp_query ): string {
+		$post_table = DB::db()->posts;
 
 		if ( empty( $search ) ) {
-			return $search;
-		}
-
-		if ( ! extension_loaded( 'mbstring' ) ) {
 			return $search;
 		}
 
@@ -373,17 +370,17 @@ final class Optimizer extends AbstractService {
 		$search = $search_and = '';
 
 		foreach ( (array) $q['search_terms'] as $term ) {
-			$term = mb_strtolower( esc_sql( $wpdb->esc_like( $term ) ) );
+			$term = mb_strtolower( esc_sql( DB::db()->esc_like( $term ) ) );
 
 			$like       = "LIKE CONCAT('{$n}', CONVERT('{$term}', BINARY), '{$n}')";
-			$search     .= "{$search_and}(LOWER($wpdb->posts.post_title) {$like} OR LOWER($wpdb->posts.post_excerpt) {$like})";
+			$search     .= "{$search_and}(LOWER($post_table.post_title) {$like} OR LOWER($post_table.post_excerpt) {$like})";
 			$search_and = ' AND ';
 		}
 
 		if ( ! empty( $search ) ) {
 			$search = " AND ({$search}) ";
 			if ( ! is_user_logged_in() ) {
-				$search .= " AND ($wpdb->posts.post_password = '') ";
+				$search .= " AND ($post_table.post_password = '') ";
 			}
 		}
 

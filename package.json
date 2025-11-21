@@ -26,13 +26,13 @@
         "imagemin-pngquant": "^10.0.0",
         "imagemin-svgo": "^11.0.1",
         "postcss": "^8.5.6",
-        "sass": "^1.94.1",
+        "sass": "^1.94.2",
         "terser": "^5.44.1",
-        "vite": "^7.2.2",
+        "vite": "^7.2.4",
         "vite-plugin-static-copy": "^3.1.4"
     },
     "dependencies": {
-        "@fancyapps/ui": "^6.1.5",
+        "@fancyapps/ui": "^6.1.6",
         "current-device": "^0.10.2",
         "ensemble": "github:loltgt/ensemble",
         "ensemble-social-share": "github:loltgt/ensemble-social-share",

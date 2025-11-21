@@ -1,4 +1,4 @@
-import { A as Autoplay, a as Navigation, P as Pagination, T as Thumb, f as freeMode, G as Grid, b as Swiper, n as nanoid } from "./vendor.CWC3xaI2.js";
+import { A as Autoplay, a as Navigation, P as Pagination, T as Thumb, f as freeMode, G as Grid, b as Swiper, n as nanoid } from "./vendor.B4yKzmGG.js";
 const defaultModules = [
   Autoplay,
   Navigation,
@@ -224,4 +224,4 @@ const initAllSwipers = () => {
   document.querySelectorAll(".w-swiper").forEach(initSwiper);
 };
 document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", initAllSwipers, { once: true }) : initAllSwipers();
-//# sourceMappingURL=swiper.ZG0x4UOT.js.map
+//# sourceMappingURL=swiper.C7Qm1ASa.js.map
