@@ -58,6 +58,13 @@ if ( have_posts() ) {
     </div>
 </section>
 
+<!-- CORE VALUES -->
+<section class="section section-core-values c-text-1-bg py-10 lg:py-20">
+    <div class="u-container">
+
+    </div>
+</section>
+
 <!-- PRICES -->
 <section class="section section-prices c-light-bg py-10 lg:py-20">
     <div class="u-container">

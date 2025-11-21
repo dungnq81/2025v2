@@ -18,6 +18,7 @@ return array(
     'ad155f8f1cf0d418fe49e248db8c661b' => $vendorDir . '/react/promise/src/functions_include.php',
     '0d59ee240a4cd96ddbb4ff164fccea4d' => $vendorDir . '/symfony/polyfill-php73/bootstrap.php',
     '23c18046f52bef3eea034657bafda50f' => $vendorDir . '/symfony/polyfill-php81/bootstrap.php',
+    '9d2b9fc6db0f153a0a149fefb182415e' => $vendorDir . '/symfony/polyfill-php84/bootstrap.php',
     'ac949ce40a981819ba132473518a9a31' => $vendorDir . '/wp-cli/wp-config-transformer/src/WPConfigTransformer.php',
     '8a0ad02df6a5087f2c380f8fd52db273' => $vendorDir . '/wp-cli/cache-command/cache-command.php',
     'b66d29757fcb2fb7a9608d068e3716b0' => $vendorDir . '/wp-cli/checksum-command/checksum-command.php',

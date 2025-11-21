@@ -19,6 +19,7 @@ class ComposerStaticInite60c3a3543eca2df66299bad6f35ee23
         'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
         '0d59ee240a4cd96ddbb4ff164fccea4d' => __DIR__ . '/..' . '/symfony/polyfill-php73/bootstrap.php',
         '23c18046f52bef3eea034657bafda50f' => __DIR__ . '/..' . '/symfony/polyfill-php81/bootstrap.php',
+        '9d2b9fc6db0f153a0a149fefb182415e' => __DIR__ . '/..' . '/symfony/polyfill-php84/bootstrap.php',
         'ac949ce40a981819ba132473518a9a31' => __DIR__ . '/..' . '/wp-cli/wp-config-transformer/src/WPConfigTransformer.php',
         '8a0ad02df6a5087f2c380f8fd52db273' => __DIR__ . '/..' . '/wp-cli/cache-command/cache-command.php',
         'b66d29757fcb2fb7a9608d068e3716b0' => __DIR__ . '/..' . '/wp-cli/checksum-command/checksum-command.php',
@@ -62,6 +63,7 @@ class ComposerStaticInite60c3a3543eca2df66299bad6f35ee23
         ),
         'S' => 
         array (
+            'Symfony\\Polyfill\\Php84\\' => 23,
             'Symfony\\Polyfill\\Php81\\' => 23,
             'Symfony\\Polyfill\\Php80\\' => 23,
             'Symfony\\Polyfill\\Php73\\' => 23,
@@ -145,6 +147,10 @@ class ComposerStaticInite60c3a3543eca2df66299bad6f35ee23
         'WP_CLI\\Embeds\\' => 
         array (
             0 => __DIR__ . '/..' . '/wp-cli/embed-command/src',
+        ),
+        'Symfony\\Polyfill\\Php84\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-php84',
         ),
         'Symfony\\Polyfill\\Php81\\' => 
         array (
@@ -676,6 +682,7 @@ class ComposerStaticInite60c3a3543eca2df66299bad6f35ee23
         'Cron_Event_Command' => __DIR__ . '/..' . '/wp-cli/cron-command/src/Cron_Event_Command.php',
         'Cron_Schedule_Command' => __DIR__ . '/..' . '/wp-cli/cron-command/src/Cron_Schedule_Command.php',
         'DB_Command' => __DIR__ . '/..' . '/wp-cli/db-command/src/DB_Command.php',
+        'Deprecated' => __DIR__ . '/..' . '/symfony/polyfill-php84/Resources/stubs/Deprecated.php',
         'Dotenv\\Dotenv' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Dotenv.php',
         'Dotenv\\Exception\\ExceptionInterface' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Exception/ExceptionInterface.php',
         'Dotenv\\Exception\\InvalidEncodingException' => __DIR__ . '/..' . '/vlucas/phpdotenv/src/Exception/InvalidEncodingException.php',
@@ -1144,6 +1151,7 @@ class ComposerStaticInite60c3a3543eca2df66299bad6f35ee23
         'React\\Promise\\Internal\\RejectedPromise' => __DIR__ . '/..' . '/react/promise/src/Internal/RejectedPromise.php',
         'React\\Promise\\Promise' => __DIR__ . '/..' . '/react/promise/src/Promise.php',
         'React\\Promise\\PromiseInterface' => __DIR__ . '/..' . '/react/promise/src/PromiseInterface.php',
+        'ReflectionConstant' => __DIR__ . '/..' . '/symfony/polyfill-php84/Resources/stubs/ReflectionConstant.php',
         'ReturnTypeWillChange' => __DIR__ . '/..' . '/symfony/polyfill-php81/Resources/stubs/ReturnTypeWillChange.php',
         'Rewrite_Command' => __DIR__ . '/..' . '/wp-cli/rewrite-command/src/Rewrite_Command.php',
         'Role_Command' => __DIR__ . '/..' . '/wp-cli/role-command/src/Role_Command.php',
@@ -1443,6 +1451,7 @@ class ComposerStaticInite60c3a3543eca2df66299bad6f35ee23
         'Symfony\\Polyfill\\Php80\\Php80' => __DIR__ . '/..' . '/symfony/polyfill-php80/Php80.php',
         'Symfony\\Polyfill\\Php80\\PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/PhpToken.php',
         'Symfony\\Polyfill\\Php81\\Php81' => __DIR__ . '/..' . '/symfony/polyfill-php81/Php81.php',
+        'Symfony\\Polyfill\\Php84\\Php84' => __DIR__ . '/..' . '/symfony/polyfill-php84/Php84.php',
         'Taxonomy_Command' => __DIR__ . '/..' . '/wp-cli/entity-command/src/Taxonomy_Command.php',
         'Term_Command' => __DIR__ . '/..' . '/wp-cli/entity-command/src/Term_Command.php',
         'Term_Meta_Command' => __DIR__ . '/..' . '/wp-cli/entity-command/src/Term_Meta_Command.php',
