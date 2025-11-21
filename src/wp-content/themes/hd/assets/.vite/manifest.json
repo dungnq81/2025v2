@@ -1,13 +1,9 @@
 {
-  "_vendor.BhzdBXF2.css": {
-    "file": "css/vendor.BhzdBXF2.css",
-    "src": "_vendor.BhzdBXF2.css"
-  },
-  "_vendor.DTOnSHA7.js": {
-    "file": "js/vendor.DTOnSHA7.js",
+  "_vendor.IqWbkLLg.js": {
+    "file": "js/vendor.IqWbkLLg.js",
     "name": "vendor",
     "css": [
-      "css/vendor.BhzdBXF2.css"
+      "css/vendor.RNFxR3Pc.css"
     ],
     "assets": [
       "fonts/SVN-Poppins-Light.woff2",
@@ -29,6 +25,10 @@
       "fonts/SVN-Poppins-BoldItalic.ttf",
       "fonts/SVN-Poppins-BoldItalic.otf"
     ]
+  },
+  "_vendor.RNFxR3Pc.css": {
+    "file": "css/vendor.RNFxR3Pc.css",
+    "src": "_vendor.RNFxR3Pc.css"
   },
   "src/wp-content/themes/hd/resources/fonts/SVN-Poppins/OTF/SVN-Poppins-Bold.otf": {
     "file": "fonts/SVN-Poppins-Bold.otf",
@@ -119,21 +119,21 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/components/social-share.js": {
-    "file": "js/social-share.CiEMYVbF.js",
+    "file": "js/social-share.DptEwWvh.js",
     "name": "social-share",
     "src": "src/wp-content/themes/hd/resources/scripts/components/social-share.js",
     "isEntry": true,
     "imports": [
-      "_vendor.DTOnSHA7.js"
+      "_vendor.IqWbkLLg.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/swiper.js": {
-    "file": "js/swiper.BJbU4459.js",
+    "file": "js/swiper.DoGy32NZ.js",
     "name": "swiper",
     "src": "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
     "isEntry": true,
     "imports": [
-      "_vendor.DTOnSHA7.js"
+      "_vendor.IqWbkLLg.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/components/template/extra.js": {
@@ -161,12 +161,12 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/index.js": {
-    "file": "js/index.DfBEwcsS.js",
+    "file": "js/index.CmS0JzP2.js",
     "name": "index",
     "src": "src/wp-content/themes/hd/resources/scripts/index.js",
     "isEntry": true,
     "imports": [
-      "_vendor.DTOnSHA7.js",
+      "_vendor.IqWbkLLg.js",
       "src/wp-content/themes/hd/resources/scripts/components/swiper.js",
       "src/wp-content/themes/hd/resources/scripts/components/social-share.js"
     ]

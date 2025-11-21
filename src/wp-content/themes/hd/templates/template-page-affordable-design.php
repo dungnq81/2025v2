@@ -61,6 +61,7 @@ if ( have_posts() ) {
 <!-- CORE VALUES -->
 <section class="section section-core-values c-text-1-bg py-10 lg:py-20">
     <div class="u-container">
+        <h2 class="font-bold h4 text-center"><i class="text-1">Tăng doanh thu 200%</i> với lợi ích từ việc <i class="c-text-gradient-2">thiết kế Website giá rẻ</i></h2>
 
     </div>
 </section>

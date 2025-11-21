@@ -17,7 +17,7 @@ const sassFiles = [
     // (partials)
     'partials/woocommerce',
 
-    // (template)
+    // (partials/template)
     'partials/template/extra',
     'partials/template/page-about',
     'partials/template/page-contact',
@@ -39,7 +39,7 @@ const jsFiles = [
     'components/swiper',
     'components/woocommerce',
 
-    // (template)
+    // (components/template)
     'components/template/extra',
     'components/template/page-home',
     'components/template/page-design-affordable',
