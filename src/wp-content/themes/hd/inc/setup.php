@@ -214,7 +214,7 @@ function hd_settings_filter_callback( array $arr ): array {
 		//
 		'defer_style'             => [
 			'dashicons',
-			'admin-bar',
+			//'admin-bar',
 			'contact-form-7',
 			'kk-star-ratings',
 		],
