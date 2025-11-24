@@ -17,24 +17,103 @@ Options -Indexes
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # Block Amazon bots
-    RewriteCond %{HTTP_USER_AGENT} amazonbot [NC,OR]
-    RewriteCond %{HTTP_USER_AGENT} amazon-route53-health-check [NC,OR]
-    RewriteCond %{HTTP_USER_AGENT} (alexa|aws) [NC]
-    RewriteRule .* - [F,L]
+    #------------------------------
+    # 0) WHITELIST – (Google, Meta, Bing, Apple....)
+    #------------------------------
+    RewriteCond %{HTTP_USER_AGENT} (googlebot|google|bingbot|applebot) [NC,OR]
+    RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit|facebot|meta-externalagent) [NC]
+    RewriteRule ^ - [L]
 
-    # Block other known bots
-    RewriteCond %{HTTP_USER_AGENT} (ahrefs|semrush|mj12|dotbot|megaindex) [NC]
-    RewriteRule .* - [F,L]
+    #------------------------------
+    # 1) BLOCK AI CRAWLERS
+    #------------------------------
+    RewriteCond %{HTTP_USER_AGENT} (gptbot|gpt\-crawler|anthropic|claudebot|perplexity|pplx|google-extended) [NC]
+    RewriteRule ^ - [F,L]
 
-    # RATE LIMIT BOTS
+    #------------------------------
+    # 2) BLOCK BAD SEO BOTS / SCRAPERS
+    #------------------------------
+    RewriteCond %{HTTP_USER_AGENT} (ahrefs|semrush|mj12|dotbot|megaindex|seoscanners|crawler4j|python-requests|zgrab|nikto|sqlmap|blexbot|blex|seranking) [NC]
+    RewriteRule ^ - [F,L]
+
+    # Bad generic scraping tools
+    RewriteCond %{HTTP_USER_AGENT} (curl|wget|python|urllib|okhttp|libwww|httpclient|http\ client) [NC]
+    RewriteRule ^ - [F,L]
+
+    #------------------------------
+    # 3) BLOCK AMAZON / AWS BOTS
+    #------------------------------
+    RewriteCond %{HTTP_USER_AGENT} (amazonbot|amazon-route53-health-check|alexa|aws) [NC]
+    RewriteRule ^ - [F,L]
+
+    #------------------------------
+    # 4) BLOCK CHINA SPIDERS
+    #------------------------------
+    RewriteCond %{HTTP_USER_AGENT} (baiduspider|360spider|sogou|yisouspider|bytespider) [NC]
+    RewriteRule ^ - [F,L]
+
+    #------------------------------
+    # 5) BLOCK RUSSIAN SPIDERS
+    #------------------------------
+    RewriteCond %{HTTP_USER_AGENT} (yandex|mail\.ru) [NC]
+    RewriteRule ^ - [F,L]
+
+    #------------------------------
+    # 6) BLOCK EMPTY USER AGENT
+    #------------------------------
+    RewriteCond %{HTTP_USER_AGENT} ^$
+    RewriteRule ^ - [F,L]
+
+    #------------------------------
+    # 7) BLOCK BY IP RANGES (China / Russia / OpenAI)
+    #------------------------------
+
+    # OpenAI / Azure (AI Crawlers)
+    RewriteCond %{REMOTE_ADDR} ^20\. [OR]
+    RewriteCond %{REMOTE_ADDR} ^40\.
+    RewriteRule ^ - [F,L]
+
+    # China
+    RewriteCond %{REMOTE_ADDR} ^36\. [OR]
+    RewriteCond %{REMOTE_ADDR} ^42\. [OR]
+    RewriteCond %{REMOTE_ADDR} ^58\. [OR]
+    RewriteCond %{REMOTE_ADDR} ^101\. [OR]
+    RewriteCond %{REMOTE_ADDR} ^110\. [OR]
+    RewriteCond %{REMOTE_ADDR} ^111\. [OR]
+    RewriteCond %{REMOTE_ADDR} ^112\. [OR]
+    RewriteCond %{REMOTE_ADDR} ^113\. [OR]
+    RewriteCond %{REMOTE_ADDR} ^123\.
+    RewriteRule ^ - [F,L]
+
+    # Russia
+    RewriteCond %{REMOTE_ADDR} ^5\. [OR]
+    RewriteCond %{REMOTE_ADDR} ^31\. [OR]
+    RewriteCond %{REMOTE_ADDR} ^37\. [OR]
+    RewriteCond %{REMOTE_ADDR} ^46\. [OR]
+    RewriteCond %{REMOTE_ADDR} ^78\. [OR]
+    RewriteCond %{REMOTE_ADDR} ^94\.
+    RewriteRule ^ - [F,L]
+
+    #------------------------------
+    # 8) PROTECT WP-LOGIN / XMLRPC AGAINST BOT ATTACKS
+    #------------------------------
+    RewriteCond %{REQUEST_URI} /(wp-login\.php|xmlrpc\.php)$ [NC]
+    RewriteCond %{HTTP_USER_AGENT} (bot|crawl|spider|scanner|python|curl|wget|libwww) [NC]
+    RewriteRule ^ - [F,L]
+
+    #------------------------------
+    # 9) RATE LIMIT BOTS
+    #------------------------------
     RewriteCond %{HTTP_USER_AGENT} (bot|crawler|spider) [NC]
-    RewriteRule .* - [E=THROTTLE:5/60]
+    RewriteRule ^ - [E=THROTTLE:10/60]
 
-    # Redirect HTTP to HTTPS
-    RewriteCond %{HTTPS} !=on
+    #------------------------------
+    # Redirect HTTP → HTTPS
+    #------------------------------
+    RewriteCond %{HTTPS} off
     RewriteCond %{HTTP:X-Forwarded-Proto} !https
     RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
 </IfModule>
 # END Theme
 

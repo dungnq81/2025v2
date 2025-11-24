@@ -13,29 +13,31 @@ namespace HD\Utilities\Traits;
 
 trait Singleton {
 
-	/** @var static|null */
-	protected static $instance = null;
+    /** @var static|null */
+    protected static $instance = null;
 
-	/**
-	 * @return static
-	 */
-	final public static function get_instance(): static {
-		if ( ! isset( static::$instance ) ) {
-			static::$instance = new static();
-		}
+    /**
+     * @return static
+     */
+    final public static function get_instance(): static {
+        if ( ! isset( static::$instance ) ) {
+            static::$instance = new static();
+        }
 
-		return static::$instance;
-	}
+        return static::$instance;
+    }
 
-	private function __construct() {
-		$this->init();
-	}
+    private function __construct() {
+        $this->init();
+    }
 
-	protected function init(): void {}
+    protected function init(): void {
+    }
 
-	final public function __clone(): void {}
+    final public function __clone(): void {
+    }
 
-	final public function __wakeup(): void {
-		throw new \RuntimeException( 'Cannot unserialize singleton.' );
-	}
+    final public function __wakeup(): void {
+        throw new \RuntimeException( 'Cannot unserialize singleton.' );
+    }
 }
