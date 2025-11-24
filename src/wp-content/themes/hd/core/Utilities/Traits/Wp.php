@@ -16,7 +16,7 @@ trait Wp {
     use Url;
     use Encryption;
 
-    private static int $post_limit = - 1;
+    private static int $post_limit = 20;
     private static array $target_post_types = [];
 
     // -------------------------------------------------------------

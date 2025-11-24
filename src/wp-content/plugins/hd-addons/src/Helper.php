@@ -894,46 +894,57 @@ final class Helper {
 		// Clear all WordPress transients
 		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_%'" );
 		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_transient_timeout_%'" );
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_site_transient_%'" );
+		$wpdb->query( "DELETE FROM {$wpdb->options} WHERE option_name LIKE '_site_transient_timeout_%'" );
 
 		// Clear object cache (e.g., Redis or Memcached)
 		if ( function_exists( 'wp_cache_flush' ) ) {
 			wp_cache_flush();
 		}
 
-		// WP-Rocket cache
-		if ( self::checkPluginActive( 'wp-rocket/wp-rocket.php' ) ) {
-			$actions = [
-				'save_post',            // Save a post
-				'deleted_post',         // Delete a post
-				'trashed_post',         // Empty Trashed post
-				'edit_post',            // Edit a post - includes leaving comments
-				'delete_attachment',    // Delete an attachment - includes re-uploading
-				'switch_theme',         // Change theme
-			];
+        // WP-ROCKET
+        if ( \function_exists( 'rocket_clean_domain' ) && self::checkPluginActive( 'wp-rocket/wp-rocket.php' ) ) {
+            \rocket_clean_domain();
+        }
 
-			// Add the action for each event
-			foreach ( $actions as $event ) {
-				add_action( $event, static function () {
-					\function_exists( 'rocket_clean_domain' ) && \rocket_clean_domain();
-				} );
-			}
-		}
+        // FlyingPress
+        if ( \class_exists( \FlyingPress\Purge::class ) && self::checkPluginActive( 'flying-press/flying-press.php' ) ) {
+             \FlyingPress\Purge::purge_everything();
+        }
 
-		// Clear FlyingPress cache
-		if (
-			class_exists( \FlyingPress\Purge::class ) ||
-			self::checkPluginActive( 'flying-press/flying-press.php' )
-		) {
-			\FlyingPress\Purge::purge_everything();
-		}
+        // LiteSpeed Cache
+        if ( class_exists( \LiteSpeed\Purge::class ) && self::checkPluginActive( 'litespeed-cache/litespeed-cache.php' ) ) {
+             \LiteSpeed\Purge::purge_all();
+        }
 
-		// LiteSpeed cache
-		if (
-			class_exists( \LiteSpeed\Purge::class ) ||
-			self::checkPluginActive( 'litespeed-cache/litespeed-cache.php' )
-		) {
-			\LiteSpeed\Purge::purge_all();
-		}
+        // W3 Total Cache
+        if ( \function_exists( 'w3tc_flush_all' ) && self::checkPluginActive( 'w3-total-cache/w3-total-cache.php' ) ) {
+             \w3tc_flush_all();
+        }
+
+        // WP Super Cache
+        if ( \function_exists( 'wp_cache_clear_cache' ) && self::checkPluginActive( 'wp-super-cache/wp-cache.php' ) ) {
+             \wp_cache_clear_cache();
+        }
+
+        // Swift Performance
+        if ( self::checkPluginActive( 'swift-performance/performance.php' ) ) {
+            do_action( 'swift_performance_clear_cache' );
+        }
+
+        // NitroPack
+        if ( \class_exists( \NitroPack\SDK\NitroPack::class ) && self::checkPluginActive( 'nitropack/main.php' ) ) {
+            try {
+                $nitro = \NitroPack\SDK\NitroPack::getInstance();
+                $nitro->purgeCache();
+            } catch ( \Exception $e ) {
+            }
+        }
+
+        // Hummingbird
+        if ( self::checkPluginActive( 'hummingbird-performance/wp-hummingbird.php' ) ) {
+            do_action( 'wphb_clear_cache' );
+        }
 	}
 
 	// --------------------------------------------------
