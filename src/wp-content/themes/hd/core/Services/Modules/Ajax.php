@@ -8,7 +8,8 @@ use HD\Utilities\Traits\Singleton;
 \defined( 'ABSPATH' ) || die;
 
 final class Ajax extends AbstractService {
-	use Singleton;
+    use Singleton;
 
-	protected function init(): void {}
+    protected function init(): void {
+    }
 }

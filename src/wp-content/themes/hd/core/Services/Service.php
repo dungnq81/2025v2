@@ -8,23 +8,23 @@ use HD\Utilities\Traits\Singleton;
 \defined( 'ABSPATH' ) || die;
 
 final class Service {
-	use Singleton;
+    use Singleton;
 
-	/** ---------------------------------------- */
+    /** ---------------------------------------- */
 
-	private function init(): void {
-		$this->register_all();
-	}
+    private function init(): void {
+        $this->register_all();
+    }
 
-	/** ---------------------------------------- */
+    /** ---------------------------------------- */
 
-	private function register_all(): void {
-		$modules_dir = __DIR__ . DIRECTORY_SEPARATOR . 'Modules';
-		$FQN         = '\\HD\\Services\\Modules\\';
+    private function register_all(): void {
+        $modules_dir = __DIR__ . DIRECTORY_SEPARATOR . 'Modules';
+        $FQN         = '\\HD\\Services\\Modules\\';
 
-		Helper::createDirectory( $modules_dir );
-		Helper::FQNLoad( $modules_dir, false, true, $FQN );
-	}
+        Helper::createDirectory( $modules_dir );
+        Helper::FQNLoad( $modules_dir, false, true, $FQN );
+    }
 
-	/** ---------------------------------------- */
+    /** ---------------------------------------- */
 }

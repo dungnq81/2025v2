@@ -12,9 +12,10 @@ use HD\Utilities\Traits\Singleton;
 \defined( 'ABSPATH' ) || die;
 
 final class MetaBox {
-	use Singleton;
+    use Singleton;
 
-	/* ---------- CONSTRUCT ---------------------------------------- */
+    /* ---------- CONSTRUCT ---------------------------------------- */
 
-	private function init(): void {}
+    private function init(): void {
+    }
 }
