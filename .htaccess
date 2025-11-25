@@ -18,20 +18,20 @@ Options -Indexes
     RewriteEngine On
 
     #------------------------------
-    # 0) WHITELIST – (Google, Meta, Bing, Apple....)
+    # WHITELIST – (Google, Meta, Bing, Apple....)
     #------------------------------
     RewriteCond %{HTTP_USER_AGENT} (googlebot|google|bingbot|applebot) [NC,OR]
     RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit|facebot|meta-externalagent) [NC]
     RewriteRule ^ - [L]
 
     #------------------------------
-    # 1) BLOCK AI CRAWLERS
+    # BLOCK AI CRAWLERS
     #------------------------------
     RewriteCond %{HTTP_USER_AGENT} (gptbot|gpt\-crawler|anthropic|claudebot|perplexity|pplx|google-extended) [NC]
     RewriteRule ^ - [F,L]
 
     #------------------------------
-    # 2) BLOCK BAD SEO BOTS / SCRAPERS
+    # BLOCK BAD SEO BOTS / SCRAPERS
     #------------------------------
     RewriteCond %{HTTP_USER_AGENT} (ahrefs|semrush|mj12|dotbot|megaindex|seoscanners|crawler4j|python-requests|zgrab|nikto|sqlmap|blexbot|blex|seranking) [NC]
     RewriteRule ^ - [F,L]
@@ -41,31 +41,31 @@ Options -Indexes
     RewriteRule ^ - [F,L]
 
     #------------------------------
-    # 3) BLOCK AMAZON / AWS BOTS
+    # BLOCK AMAZON / AWS BOTS
     #------------------------------
     RewriteCond %{HTTP_USER_AGENT} (amazonbot|amazon-route53-health-check|alexa|aws) [NC]
     RewriteRule ^ - [F,L]
 
     #------------------------------
-    # 4) BLOCK CHINA SPIDERS
+    # BLOCK CHINA SPIDERS
     #------------------------------
     RewriteCond %{HTTP_USER_AGENT} (baiduspider|360spider|sogou|yisouspider|bytespider) [NC]
     RewriteRule ^ - [F,L]
 
     #------------------------------
-    # 5) BLOCK RUSSIAN SPIDERS
+    # BLOCK RUSSIAN SPIDERS
     #------------------------------
     RewriteCond %{HTTP_USER_AGENT} (yandex|mail\.ru) [NC]
     RewriteRule ^ - [F,L]
 
     #------------------------------
-    # 6) BLOCK EMPTY USER AGENT
+    # BLOCK EMPTY USER AGENT
     #------------------------------
     RewriteCond %{HTTP_USER_AGENT} ^$
     RewriteRule ^ - [F,L]
 
     #------------------------------
-    # 7) BLOCK BY IP RANGES (China / Russia / OpenAI)
+    # BLOCK BY IP RANGES (China / Russia / OpenAI)
     #------------------------------
 
     # OpenAI / Azure (AI Crawlers)
@@ -95,14 +95,14 @@ Options -Indexes
     RewriteRule ^ - [F,L]
 
     #------------------------------
-    # 8) PROTECT WP-LOGIN / XMLRPC AGAINST BOT ATTACKS
+    # PROTECT WP-LOGIN / XMLRPC AGAINST BOT ATTACKS
     #------------------------------
     RewriteCond %{REQUEST_URI} /(wp-login\.php|xmlrpc\.php)$ [NC]
     RewriteCond %{HTTP_USER_AGENT} (bot|crawl|spider|scanner|python|curl|wget|libwww) [NC]
     RewriteRule ^ - [F,L]
 
     #------------------------------
-    # 9) RATE LIMIT BOTS
+    # RATE LIMIT BOTS
     #------------------------------
     RewriteCond %{HTTP_USER_AGENT} (bot|crawler|spider) [NC]
     RewriteRule ^ - [E=THROTTLE:10/60]

@@ -1,3 +1,9 @@
-path: /var/www/html/src
+path: src
 server:
-    docroot: /var/www/html
+    docroot: .
+
+@local:
+    path: src
+    url: "${WP_HOME}"
+
+# vendor/bin/wp @local plugin list

@@ -37,11 +37,25 @@ if ( have_posts() ) {
 
             <?php echo Helper::isKKActive() ? '<div class="mt-6 flex flex-row justify-center">' . kk_star_ratings() . '</div>' : ''; ?>
 
-            <div class="mt-10 flex flex-col sm:flex-row gap-3 lg:gap-6 justify-center">
-                <a href="#" class="u-inline-flex-center rounded-md px-5 py-3 font-semibold bg-(--text-color-1) text-white">
+            <div class="mt-15 u-flex-center flex-col sm:flex-row gap-3 lg:gap-6 text-sm text-gray-600">
+                <div class="u-flex-center gap-3">
+                    <span class="u-inline-flex-center size-8 rounded-full bg-(--text-color-2)/8 text-2 ring-1 ring-(--text-color-2)/32">
+                        <svg class="size-4" aria-hidden="true"><use href="#icon-check-circle-solid"></use></svg>
+                    </span>
+                    <p>Tăng trưởng rõ rệt sau 60–90 ngày nhờ tối ưu nội dung &amp; CTA.</p>
+                </div>
+                <div class="u-flex-center gap-3">
+                    <span class="u-inline-flex-center size-8 rounded-full bg-(--text-color-2)/8 text-2 ring-1 ring-(--text-color-2)/32">
+                        <svg class="size-4" aria-hidden="true"><use href="#icon-check-circle-solid"></use></svg>
+                    </span>
+                    <p>Thiết kế responsive, tốc độ nhanh, dễ quản trị.</p>
+                </div>
+            </div>
+            <div class="mt-10 flex flex-col sm:flex-row gap-3 lg:gap-6 justify-center" data-smooth-scroll>
+                <a title="Nhận tư vấn miễn phí" href="#" class="u-inline-flex-center rounded-md px-6 py-4 font-semibold bg-(--text-color-1) text-white">
                     Nhận tư vấn miễn phí
                 </a>
-                <a href="#" class="u-inline-flex-center rounded-md px-5 py-3 text-1 ring-1 border-(--text-color-1) font-semibold">
+                <a title="Xem bảng giá" href="#section-prices" class="u-inline-flex-center rounded-md px-6 py-4 text-1 ring-1 border-(--text-color-1) font-semibold">
                     Xem bảng giá
                 </a>
             </div>
@@ -62,12 +76,101 @@ if ( have_posts() ) {
 <section class="section section-core-values c-text-1-bg py-10 lg:py-20">
     <div class="u-container">
         <h2 class="font-bold h4 text-center"><i class="text-1">Tăng doanh thu 200%</i> với lợi ích từ việc <i class="c-text-gradient-2">thiết kế Website giá rẻ</i></h2>
+        <div class="mt-10 flex flex-wrap justify-center gap-6">
+            <div class="w-full md:w-[calc((100%-3rem)/3)] rounded-2xl border border-gray-200 dark:border-gray-700 c-hover hover:border-(--text-color-1)/32 bg-(--bg-color) p-6 shadow-xl">
+                <div class="u-inline-flex-center size-20 rounded-xl bg-(--text-color-1)/8 ring-1 ring-(--text-color-1)/32">
+                    <img class="size-12" width="93" height="94" src="/images/icons/tiet-kiem.webp" alt="Tiết kiệm ngân sách">
+                </div>
+                <h3 class="h6 mt-6 font-bold">Tiết kiệm ngân sách quảng cáo</h3>
+                <div class="mt-2 text-[15px] text-gray-600 dark:text-gray-400">
+                    <p>Xây dựng một trang website chính là cách giúp chủ doanh nghiệp quảng bá thương hiệu nhanh chóng, hiệu quả. Tuy nhiên, chi phí thiết kế là một trong những yếu tố mà mọi khách hàng đều quan tâm. Vì đó, dịch vụ <b>thiết kế website giá rẻ</b> ngày càng phổ biến và được sử dụng rộng rãi.</p>
+                </div>
+            </div>
+            <div class="w-full md:w-[calc((100%-3rem)/3)] rounded-2xl border border-gray-200 dark:border-gray-700 c-hover hover:border-(--text-color-1)/32 bg-(--bg-color) p-6 shadow-xl">
+                <div class="u-inline-flex-center size-20 rounded-xl bg-(--text-color-1)/8 ring-1 ring-(--text-color-1)/32">
+                    <img class="size-12" width="83" height="82" src="/images/icons/hieu-suat.webp" alt="Tăng cường hiệu suất kinh doanh">
+                </div>
+                <h3 class="h6 mt-6 font-bold">Tăng cường hiệu suất kinh doanh</h3>
+                <div class="mt-2 text-[15px] text-gray-600 dark:text-gray-400">
+                    <p>Một trang web chuyên nghiệp và tối ưu hóa sẽ giúp nâng cao hiệu suất kinh doanh của doanh nghiệp. Khách hàng sẽ dễ dàng tìm thấy thông tin sản phẩm và dịch vụ, từ đó tăng khả năng tương tác và giao dịch. Điều này có thể dẫn đến tăng doanh số bán hàng và mở rộng cơ hội kinh doanh.</p>
+                </div>
+            </div>
+            <div class="w-full md:w-[calc((100%-3rem)/3)] rounded-2xl border border-gray-200 dark:border-gray-700 c-hover hover:border-(--text-color-1)/32 bg-(--bg-color) p-6 shadow-xl">
+                <div class="u-inline-flex-center size-20 rounded-xl bg-(--text-color-1)/8 ring-1 ring-(--text-color-1)/32">
+                    <img class="size-12" width="80" height="69" src="/images/icons/nhanh-chong.webp" alt="Nhanh chóng">
+                </div>
+                <h3 class="h6 mt-6 font-bold">Nhanh chóng sở hữu website</h3>
+                <div class="mt-2 text-[15px] text-gray-600 dark:text-gray-400">
+                    <p>Với dịch vụ này, quy trình thiết kế web theo yêu cầu giá rẻ thường được tối giản để tiết kiệm thời gian và chi phí. Nhờ vậy, doanh nghiệp có thể nhanh chóng sở hữu website cho riêng mình mà không cần chờ đợi quá lâu.</p>
+                </div>
+            </div>
+            <div class="w-full md:w-[calc((100%-3rem)/3)] rounded-2xl border border-gray-200 dark:border-gray-700 c-hover hover:border-(--text-color-1)/32 bg-(--bg-color) p-6 shadow-xl">
+                <div class="u-inline-flex-center size-20 rounded-xl bg-(--text-color-1)/8 ring-1 ring-(--text-color-1)/32">
+                    <img class="size-12" width="93" height="90" src="/images/icons/nhu-cau.webp" alt="Nhu cầu cơ bản">
+                </div>
+                <h3 class="h6 mt-6 font-bold">Phù hợp với nhu cầu cơ bản</h3>
+                <div class="mt-2 text-[15px] text-gray-600 dark:text-gray-400">
+                    <p>Nếu doanh nghiệp không có nhu cầu cài đặt các tính năng cao cấp, đòi hỏi chi phí lớn, làm website giá rẻ có thể đáp ứng các yêu cầu cơ bản của doanh nghiệp như giới thiệu thông tin, sản phẩm, dịch vụ, liên hệ với khách hàng.</p>
+                </div>
+            </div>
+            <div class="w-full md:w-[calc((100%-3rem)/3)] rounded-2xl border border-gray-200 dark:border-gray-700 c-hover hover:border-(--text-color-1)/32 bg-(--bg-color) p-6 shadow-xl">
+                <div class="u-inline-flex-center size-20 rounded-xl bg-(--text-color-1)/8 ring-1 ring-(--text-color-1)/32">
+                    <img class="size-12" width="81" height="78" src="/images/icons/de-dang.webp" alt="Dễ dàng quản lý">
+                </div>
+                <h3 class="h6 mt-6 font-bold">Dễ dàng quản lý website</h3>
+                <div class="mt-2 text-[15px] text-gray-600 dark:text-gray-400">
+                    <p>Hầu hết các website giá rẻ đều được thiết kế với giao diện dễ sử dụng, giúp doanh nghiệp có thể tự cập nhật nội dung khi cần thiết. Ngoài ra, họ cũng có thể quản lý website một cách dễ dàng mà không cần nhiều kiến thức kỹ thuật chuyên môn.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
+<!-- DOCS -->
+<section class="section section-docs py-10 lg:py-20">
+    <div class="u-container">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-x-20 items-center max-w-7xl mx-auto">
+            <div>
+                <h2 class="font-bold">Bộ tài liệu triển khai đầy đủ <span class="c-text-gradient-2">từ giao diện đến nội dung</span></h2>
+                <p class="mb-0 p-fs-clamp-[15,17] mt-6 text-gray-600 dark:text-gray-400">
+                    Nhận ngay bộ guideline <span class="text-1 font-medium">nội dung/CTA</span>, <span class="text-1 font-medium">checklist SEO onpage</span>, <span class="text-1 font-medium">hướng dẫn quản trị</span> và tài khoản theo dõi chỉ số để bạn vận hành mượt mà.
+                </p>
+                <ul class="mt-10 space-y-3 md:space-y-4 md:pl-2 text-[15px]">
+                    <li class="flex gap-3 items-center group">
+                        <span class="u-inline-flex-center size-5 rounded-full bg-(--text-color-2)/8 text-2">
+                            <svg class="size-4" aria-hidden="true"><use href="#icon-check-circle-solid"></use></svg>
+                        </span>
+                        <span class="font-medium group-hover:text-2">Wireframe theo phễu chuyển đổi</span>
+                    </li>
+                    <li class="flex gap-3 items-center group">
+                        <span class="u-inline-flex-center size-5 rounded-full bg-(--text-color-2)/8 text-2">
+                            <svg class="size-4" aria-hidden="true"><use href="#icon-check-circle-solid"></use></svg>
+                        </span>
+                        <span class="font-medium group-hover:text-2">Template nội dung/landing</span>
+                    </li>
+                    <li class="flex gap-3 items-center group">
+                        <span class="u-inline-flex-center size-5 rounded-full bg-(--text-color-2)/8 text-2">
+                            <svg class="size-4" aria-hidden="true"><use href="#icon-check-circle-solid"></use></svg>
+                        </span>
+                        <span class="font-medium group-hover:text-2">Checklist SEO &amp; tốc độ</span>
+                    </li>
+                    <li class="flex gap-3 items-center group">
+                         <span class="u-inline-flex-center size-5 rounded-full bg-(--text-color-2)/8 text-2">
+                            <svg class="size-4" aria-hidden="true"><use href="#icon-check-circle-solid"></use></svg>
+                        </span>
+                        <span class="font-medium group-hover:text-2">Hướng dẫn quản trị &amp; đo lường</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="relative">
+
+            </div>
+        </div>
     </div>
 </section>
 
 <!-- PRICES -->
-<section class="section section-prices c-light-bg py-10 lg:py-20">
+<section id="section-prices" class="section section-prices c-light-bg py-10 lg:py-20">
     <div class="u-container">
         <h2 class="font-bold text-center">Bảng giá <span class="c-text-gradient-2">thiết kế website</span> giá rẻ – trọn gói</h2>
         <p class="mb-0 p-fs-clamp-[15,17] text-center mx-auto mt-6 max-w-5xl">

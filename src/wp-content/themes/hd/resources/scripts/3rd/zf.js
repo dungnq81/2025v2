@@ -51,7 +51,7 @@ import { AccordionMenu } from 'foundation-sites/js/foundation.accordionMenu';
 import { OffCanvas } from 'foundation-sites/js/foundation.offcanvas';
 //import { Reveal } from 'foundation-sites/js/foundation.reveal';
 //import { Tooltip } from 'foundation-sites/js/foundation.tooltip';
-//import { SmoothScroll } from 'foundation-sites/js/foundation.smoothScroll';
+import { SmoothScroll } from 'foundation-sites/js/foundation.smoothScroll';
 //import { Magellan } from 'foundation-sites/js/foundation.magellan';
 //import { Sticky } from 'foundation-sites/js/foundation.sticky';
 //import { Toggler } from 'foundation-sites/js/foundation.toggler';
@@ -70,7 +70,7 @@ const plugins = [
     { plugin: OffCanvas, name: 'OffCanvas' },
     //{ plugin: Reveal, name: 'Reveal' },
     //{ plugin: Tooltip, name: 'Tooltip' },
-    //{ plugin: SmoothScroll, name: 'SmoothScroll' },
+    { plugin: SmoothScroll, name: 'SmoothScroll' },
     //{ plugin: Magellan, name: 'Magellan' },
     //{ plugin: Sticky, name: 'Sticky' },
     //{ plugin: Toggler, name: 'Toggler' },
