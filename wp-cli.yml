@@ -6,4 +6,5 @@ server:
     path: src
     url: "${WP_HOME}"
 
+# vendor/bin/wp plugin list
 # vendor/bin/wp @local plugin list

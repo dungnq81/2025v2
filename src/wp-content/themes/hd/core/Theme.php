@@ -213,7 +213,7 @@ final class Theme {
         static $enqueued_hooks = [];
 
         // template debug
-//	    dump( $template );
+        // dump( $template );
 
         $info      = pathinfo( $template );
         $filename  = $info['filename'];

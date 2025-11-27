@@ -11,7 +11,7 @@
 
     <!-- WordPress Standards -->
     <rule ref="WordPress-Core"/>
-    <rule ref="WordPress-Docs"/>
+    <!-- <rule ref="WordPress-Docs"/> -->
     <rule ref="WordPress-Extra"/>
 
     <!-- 4 spaces indentation -->

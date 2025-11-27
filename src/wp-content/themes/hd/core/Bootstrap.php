@@ -37,7 +37,7 @@ final class Bootstrap {
         // Initialize theme.
         ( Theme::get_instance() );
 
-        //  Clear cache
+        // Clear cache
         add_action( 'init', [ $this, 'clearCache' ] );
     }
 
@@ -53,7 +53,7 @@ final class Bootstrap {
             Helper::clearAllCache();
             set_transient( '_clear_cache_message', __( 'Cache has been successfully cleared.', TEXT_DOMAIN ), 30 );
 
-            echo <<<HTML
+            echo <<<'HTML'
                 <script>
                     const currentUrl = window.location.href;
                     if (currentUrl.includes('clear_cache=1')) {

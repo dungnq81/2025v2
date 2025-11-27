@@ -87,9 +87,7 @@ if ( env( 'DATABASE_URL' ) ) {
     Config::define( 'DB_HOST', isset( $dsn->port ) ? "{$dsn->host}:{$dsn->port}" : $dsn->host );
 }
 
-/**
- * Authentication Unique Keys and Salts
- */
+/** Authentication Unique Keys and Salts */
 Config::define( 'AUTH_KEY', env( 'AUTH_KEY' ) );
 Config::define( 'SECURE_AUTH_KEY', env( 'SECURE_AUTH_KEY' ) );
 Config::define( 'LOGGED_IN_KEY', env( 'LOGGED_IN_KEY' ) );
@@ -103,12 +101,20 @@ Config::define( 'NONCE_SALT', env( 'NONCE_SALT' ) );
  * Custom Settings
  */
 
+/** Multisite */
+//if ( env( 'WP_ALLOW_MULTISITE' ) ) {
+//    Config::define( 'WP_ALLOW_MULTISITE', env( 'WP_ALLOW_MULTISITE' ) );
+//    Config::define( 'MULTISITE', true );
+//    Config::define( 'SUBDOMAIN_INSTALL', false );
+//    Config::define( 'DOMAIN_CURRENT_SITE', env( 'WP_DOMAIN' ) ?? '' );
+//    Config::define( 'PATH_CURRENT_SITE', '/' );
+//    Config::define( 'SITE_ID_CURRENT_SITE', 1 );
+//    Config::define( 'BLOG_ID_CURRENT_SITE', 1 );
+//}
+
 /** Disable plugin and theme updates and installation from the admin */
 Config::define( 'DISALLOW_FILE_EDIT', true );
 Config::define( 'DISALLOW_FILE_MODS', false );
-
-/** Multisite */
-Config::define( 'WP_ALLOW_MULTISITE', env( 'WP_ALLOW_MULTISITE' ) ?? false );
 
 /** Force SSL for admin */
 Config::define( 'FORCE_SSL_ADMIN', env( 'FORCE_SSL_ADMIN' ) ?? true );

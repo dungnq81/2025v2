@@ -9,7 +9,7 @@
  */
 
 const THEME_VERSION = '1.11.0';
-const TEXT_DOMAIN   = 'hd2026';
+const TEXT_DOMAIN   = 'hd';
 const AUTHOR        = 'Gaudev';
 
 define( 'THEME_PATH', untrailingslashit( get_template_directory() ) . DIRECTORY_SEPARATOR ); // **\wp-content\themes\**\
