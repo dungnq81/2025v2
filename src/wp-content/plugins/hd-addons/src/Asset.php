@@ -10,265 +10,265 @@ namespace Addons;
  * @author Gaudev
  */
 final class Asset {
-	// ----------------------------------------
+    // ----------------------------------------
 
-	/**
-	 * @param string|null $entry
-	 * @param string $handle_prefix
-	 *
-	 * @return string
-	 */
-	public static function handle( ?string $entry = null, string $handle_prefix = 'addon-' ): string {
-		if ( ! $entry ) {
-			return '';
-		}
+    /**
+     * @param string|null $entry
+     * @param string $handle_prefix
+     *
+     * @return string
+     */
+    public static function handle( ?string $entry = null, string $handle_prefix = 'addon-' ): string {
+        if ( ! $entry ) {
+            return '';
+        }
 
-		$resolve = Helper::manifestResolve( $entry, $handle_prefix );
+        $resolve = Helper::manifestResolve( $entry, $handle_prefix );
 
-		return ! empty( $resolve['handle'] ) ? $resolve['handle'] : '';
-	}
+        return ! empty( $resolve['handle'] ) ? $resolve['handle'] : '';
+    }
 
-	// ----------------------------------------
+    // ----------------------------------------
 
-	/**
-	 * @param string|null $entry
-	 * @param array $deps
-	 * @param string|bool|null $ver
-	 * @param string $media
-	 *
-	 * @return void
-	 */
-	public static function enqueueCSS(
-		?string $entry = null,
-		array $deps = [],
-		string|bool|null $ver = null,
-		string $media = 'all'
-	): void {
-		$resolve = Helper::manifestResolve( $entry );
-		if ( empty( $resolve ) ) {
-			return;
-		}
+    /**
+     * @param string|null $entry
+     * @param array $deps
+     * @param string|bool|null $ver
+     * @param string $media
+     *
+     * @return void
+     */
+    public static function enqueueCSS(
+        ?string $entry = null,
+        array $deps = [],
+        string|bool|null $ver = null,
+        string $media = 'all'
+    ): void {
+        $resolve = Helper::manifestResolve( $entry );
+        if ( empty( $resolve ) ) {
+            return;
+        }
 
-		$resolve['deps']  = $deps;
-		$resolve['ver']   = $ver;
-		$resolve['media'] = $media;
+        $resolve['deps']  = $deps;
+        $resolve['ver']   = $ver;
+        $resolve['media'] = $media;
 
-		self::enqueueStyle( $resolve );
-	}
+        self::enqueueStyle( $resolve );
+    }
 
-	// ----------------------------------------
+    // ----------------------------------------
 
-	/**
-	 * @param string|null $entry
-	 * @param array $deps
-	 * @param string|bool|null $ver
-	 * @param bool $in_footer
-	 * @param array $extra
-	 *
-	 * @return void
-	 */
-	public static function enqueueJS(
-		?string $entry = null,
-		array $deps = [],
-		string|bool|null $ver = null,
-		bool $in_footer = true,
-		array $extra = []
-	): void {
-		$resolve = Helper::manifestResolve( $entry );
-		if ( empty( $resolve ) ) {
-			return;
-		}
+    /**
+     * @param string|null $entry
+     * @param array $deps
+     * @param string|bool|null $ver
+     * @param bool $in_footer
+     * @param array $extra
+     *
+     * @return void
+     */
+    public static function enqueueJS(
+        ?string $entry = null,
+        array $deps = [],
+        string|bool|null $ver = null,
+        bool $in_footer = true,
+        array $extra = []
+    ): void {
+        $resolve = Helper::manifestResolve( $entry );
+        if ( empty( $resolve ) ) {
+            return;
+        }
 
-		$resolve['deps']      = $deps;
-		$resolve['ver']       = $ver;
-		$resolve['in_footer'] = $in_footer;
-		$resolve['extra']     = $extra;
+        $resolve['deps']      = $deps;
+        $resolve['ver']       = $ver;
+        $resolve['in_footer'] = $in_footer;
+        $resolve['extra']     = $extra;
 
-		self::enqueueScript( $resolve );
-	}
+        self::enqueueScript( $resolve );
+    }
 
-	// ----------------------------------------
+    // ----------------------------------------
 
-	/**
-	 * @param string|array $handle
-	 * @param string|bool|null $src
-	 * @param array $deps
-	 * @param string|bool|null $ver
-	 * @param string $media
-	 *
-	 * @return void
-	 */
-	public static function enqueueStyle(
-		string|array $handle,
-		string|bool|null $src = null,
-		array $deps = [],
-		string|bool|null $ver = null,
-		string $media = 'all'
-	): void {
-		if ( is_array( $handle ) ) {
-			$args = wp_parse_args( $handle, [
-				'handle' => '',
-				'src'    => null,
-				'deps'   => [],
-				'ver'    => null,
-				'media'  => 'all',
-			] );
-		} else {
-			$args = [
-				'handle' => $handle,
-				'src'    => $src,
-				'deps'   => $deps,
-				'ver'    => $ver,
-				'media'  => $media,
-			];
-		}
+    /**
+     * @param string|array $handle
+     * @param string|bool|null $src
+     * @param array $deps
+     * @param string|bool|null $ver
+     * @param string $media
+     *
+     * @return void
+     */
+    public static function enqueueStyle(
+        string|array $handle,
+        string|bool|null $src = null,
+        array $deps = [],
+        string|bool|null $ver = null,
+        string $media = 'all'
+    ): void {
+        if ( is_array( $handle ) ) {
+            $args = wp_parse_args( $handle, [
+                'handle' => '',
+                'src'    => null,
+                'deps'   => [],
+                'ver'    => null,
+                'media'  => 'all',
+            ] );
+        } else {
+            $args = [
+                'handle' => $handle,
+                'src'    => $src,
+                'deps'   => $deps,
+                'ver'    => $ver,
+                'media'  => $media,
+            ];
+        }
 
-		if ( empty( $args['handle'] ) || empty( $args['src'] ) ) {
-			return;
-		}
+        if ( empty( $args['handle'] ) || empty( $args['src'] ) ) {
+            return;
+        }
 
-		if ( ! wp_style_is( $args['handle'], 'registered' ) ) {
-			wp_register_style( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['media'] );
-		}
+        if ( ! wp_style_is( $args['handle'], 'registered' ) ) {
+            wp_register_style( $args['handle'], $args['src'], $args['deps'], $args['ver'], $args['media'] );
+        }
 
-		wp_enqueue_style( $args['handle'] );
-	}
+        wp_enqueue_style( $args['handle'] );
+    }
 
-	// ----------------------------------------
+    // ----------------------------------------
 
-	/**
-	 * @param string|array $handle
-	 * @param string|bool|null $src
-	 * @param array $deps
-	 * @param string|bool|null $ver
-	 * @param bool $in_footer
-	 * @param array $extra - Ex. [ 'module', 'defer' ]
-	 *
-	 * @return void
-	 */
-	public static function enqueueScript(
-		string|array $handle,
-		string|bool|null $src = null,
-		array $deps = [],
-		string|bool|null $ver = null,
-		bool $in_footer = true,
-		array $extra = []
-	): void {
-		if ( is_array( $handle ) ) {
-			$args = wp_parse_args( $handle, [
-				'handle'    => '',
-				'src'       => null,
-				'url'       => null,
-				'deps'      => [],
-				'ver'       => null,
-				'in_footer' => true,
-				'extra'     => [],
-				'attr'     => [],
-			] );
+    /**
+     * @param string|array $handle
+     * @param string|bool|null $src
+     * @param array $deps
+     * @param string|bool|null $ver
+     * @param bool $in_footer
+     * @param array $extra - Ex. [ 'module', 'defer' ]
+     *
+     * @return void
+     */
+    public static function enqueueScript(
+        string|array $handle,
+        string|bool|null $src = null,
+        array $deps = [],
+        string|bool|null $ver = null,
+        bool $in_footer = true,
+        array $extra = []
+    ): void {
+        if ( is_array( $handle ) ) {
+            $args = wp_parse_args( $handle, [
+                'handle'    => '',
+                'src'       => null,
+                'url'       => null,
+                'deps'      => [],
+                'ver'       => null,
+                'in_footer' => true,
+                'extra'     => [],
+                'attr'      => [],
+            ] );
 
-			// url
-			if ( empty( $args['src'] ) && ! empty( $args['url'] ) ) {
-				$args['src'] = $args['url'];
-			}
+            // url
+            if ( empty( $args['src'] ) && ! empty( $args['url'] ) ) {
+                $args['src'] = $args['url'];
+            }
 
-			// attr
-			if ( ! empty( $args['attr'] ) && empty( $args['extra'] ) ) {
-				$args['extra'] = $args['attr'];
-			}
-		} else {
-			$args = [
-				'handle'    => $handle,
-				'src'       => $src,
-				'deps'      => $deps,
-				'ver'       => $ver,
-				'in_footer' => $in_footer,
-				'extra'     => $extra,
-			];
-		}
+            // attr
+            if ( ! empty( $args['attr'] ) && empty( $args['extra'] ) ) {
+                $args['extra'] = $args['attr'];
+            }
+        } else {
+            $args = [
+                'handle'    => $handle,
+                'src'       => $src,
+                'deps'      => $deps,
+                'ver'       => $ver,
+                'in_footer' => $in_footer,
+                'extra'     => $extra,
+            ];
+        }
 
-		// Validate
-		if ( empty( $args['handle'] ) || empty( $args['src'] ) ) {
-			return;
-		}
+        // Validate
+        if ( empty( $args['handle'] ) || empty( $args['src'] ) ) {
+            return;
+        }
 
-		if ( ! wp_script_is( $args['handle'], 'registered' ) ) {
-			wp_register_script( $args['handle'], $args['src'], $args['deps'], $args['ver'], (bool) $args['in_footer'] );
-		}
+        if ( ! wp_script_is( $args['handle'], 'registered' ) ) {
+            wp_register_script( $args['handle'], $args['src'], $args['deps'], $args['ver'], (bool) $args['in_footer'] );
+        }
 
-		wp_enqueue_script( $args['handle'] );
+        wp_enqueue_script( $args['handle'] );
 
-		if ( ! empty( $args['extra'] ) ) {
-			wp_script_add_data( $args['handle'], 'addon', $args['extra'] );
-		}
-	}
+        if ( ! empty( $args['extra'] ) ) {
+            wp_script_add_data( $args['handle'], 'addon', $args['extra'] );
+        }
+    }
 
-	// ----------------------------------------
+    // ----------------------------------------
 
-	/**
-	 * @param string $handle
-	 * @param string $object_name
-	 * @param array|null|bool $l10n
-	 *
-	 * @return void
-	 */
-	public static function localize(
-		string $handle,
-		string $object_name,
-		array|bool|null $l10n
-	): void {
-		if ( empty( $object_name ) || empty( $l10n ) ) {
-			return;
-		}
+    /**
+     * @param string $handle
+     * @param string $object_name
+     * @param array|null|bool $l10n
+     *
+     * @return void
+     */
+    public static function localize(
+        string $handle,
+        string $object_name,
+        array|bool|null $l10n
+    ): void {
+        if ( empty( $object_name ) || empty( $l10n ) ) {
+            return;
+        }
 
-		if ( wp_script_is( $handle, 'registered' ) || wp_script_is( $handle, 'enqueued' ) ) {
-			wp_localize_script( $handle, $object_name, $l10n );
-		}
-	}
+        if ( wp_script_is( $handle, 'registered' ) || wp_script_is( $handle, 'enqueued' ) ) {
+            wp_localize_script( $handle, $object_name, $l10n );
+        }
+    }
 
-	// ----------------------------------------
+    // ----------------------------------------
 
-	/**
-	 * @param string $handle
-	 * @param string|bool|null $css
-	 *
-	 * @return void
-	 */
-	public static function inlineStyle( string $handle, string|null|bool $css ): void {
-		if ( empty( $css ) ) {
-			return;
-		}
+    /**
+     * @param string $handle
+     * @param string|bool|null $css
+     *
+     * @return void
+     */
+    public static function inlineStyle( string $handle, string|null|bool $css ): void {
+        if ( empty( $css ) ) {
+            return;
+        }
 
-		if ( wp_style_is( $handle, 'registered' ) || wp_style_is( $handle, 'enqueued' ) ) {
-			wp_add_inline_style( $handle, $css );
-		} else {
-			$fallback = 'addon-inline-style-' . md5( $handle );
-			wp_register_style( $fallback, false );
-			wp_enqueue_style( $fallback );
-			wp_add_inline_style( $fallback, $css );
-		}
-	}
+        if ( wp_style_is( $handle, 'registered' ) || wp_style_is( $handle, 'enqueued' ) ) {
+            wp_add_inline_style( $handle, $css );
+        } else {
+            $fallback = 'addon-inline-style-' . md5( $handle );
+            wp_register_style( $fallback, false );
+            wp_enqueue_style( $fallback );
+            wp_add_inline_style( $fallback, $css );
+        }
+    }
 
-	// ----------------------------------------
+    // ----------------------------------------
 
-	/**
-	 * @param string $handle
-	 * @param string|bool|null $code
-	 * @param string $position
-	 *
-	 * @return void
-	 */
-	public static function inlineScript( string $handle, string|null|bool $code, string $position = 'after' ): void {
-		if ( empty( $code ) ) {
-			return;
-		}
+    /**
+     * @param string $handle
+     * @param string|bool|null $code
+     * @param string $position
+     *
+     * @return void
+     */
+    public static function inlineScript( string $handle, string|null|bool $code, string $position = 'after' ): void {
+        if ( empty( $code ) ) {
+            return;
+        }
 
-		if ( wp_script_is( $handle, 'registered' ) || wp_script_is( $handle, 'enqueued' ) ) {
-			wp_add_inline_script( $handle, $code, $position );
-		} else {
-			$fallback = 'addon-inline-script-' . md5( $handle );
-			wp_register_script( $fallback, false );
-			wp_enqueue_script( $fallback );
-			wp_add_inline_script( $fallback, $code, $position );
-		}
-	}
+        if ( wp_script_is( $handle, 'registered' ) || wp_script_is( $handle, 'enqueued' ) ) {
+            wp_add_inline_script( $handle, $code, $position );
+        } else {
+            $fallback = 'addon-inline-script-' . md5( $handle );
+            wp_register_script( $fallback, false );
+            wp_enqueue_script( $fallback );
+            wp_add_inline_script( $fallback, $code, $position );
+        }
+    }
 }

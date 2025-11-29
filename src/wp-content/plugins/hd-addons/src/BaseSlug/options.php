@@ -1,9 +1,12 @@
 <?php
 // options.php
 
+use Addons\Helper;
+
 defined( 'ABSPATH' ) || exit;
 
-$base_slug_options   = \Addons\Helper::getOption( 'base_slug__options' );
+$is_network          = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
+$base_slug_options   = Helper::getOption( 'base_slug__options', [], $is_network );
 $base_slug_post_type = $base_slug_options['base_slug_post_type'] ?? [];
 $base_slug_taxonomy  = $base_slug_options['base_slug_taxonomy'] ?? [];
 
@@ -28,7 +31,7 @@ $base_slug_taxonomy  = $base_slug_options['base_slug_taxonomy'] ?? [];
         ?>
         <div class="option">
             <label class="controls">
-                <input type="checkbox" class="checkbox" name="base_slug_taxonomy[]" value="<?php echo esc_attr( $taxonomy->name ); ?>" <?php \Addons\Helper::inArrayChecked( $base_slug_taxonomy, $taxonomy->name ); ?>>
+                <input type="checkbox" class="checkbox" name="base_slug_taxonomy[]" value="<?php echo esc_attr( $taxonomy->name ); ?>" <?php Helper::inArrayChecked( $base_slug_taxonomy, $taxonomy->name ); ?>>
             </label>
             <div class="explain"><?php echo $label; ?></div>
         </div>
@@ -60,7 +63,7 @@ $base_slug_taxonomy  = $base_slug_options['base_slug_taxonomy'] ?? [];
         ?>
         <div class="option">
             <label class="controls">
-                <input type="checkbox" class="checkbox" name="base_slug_post_type[]" value="<?php echo esc_attr( $post_type->name ); ?>" <?php \Addons\Helper::inArrayChecked( $base_slug_post_type, $post_type->name ); ?>>
+                <input type="checkbox" class="checkbox" name="base_slug_post_type[]" value="<?php echo esc_attr( $post_type->name ); ?>" <?php Helper::inArrayChecked( $base_slug_post_type, $post_type->name ); ?>>
             </label>
             <div class="explain"><?php echo $label; ?></div>
         </div>

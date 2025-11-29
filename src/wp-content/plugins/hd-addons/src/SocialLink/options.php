@@ -1,10 +1,13 @@
 <?php
 // options.php
 
+use Addons\Helper;
+
 \defined( 'ABSPATH' ) || exit;
 
-$social_options       = \Addons\Helper::getOption( 'social_link__options' );
-$social_follows_links = \Addons\Helper::filterSettingOptions( 'social_follows_links', [] );
+$is_network           = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
+$social_options       = Helper::getOption( 'social_link__options', [], $is_network );
+$social_follows_links = Helper::filterSettingOptions( 'social_follows_links', [] );
 
 ?>
 <div class="container flex flex-x gap sm-up-1 lg-up-2">
@@ -34,7 +37,7 @@ $social_follows_links = \Addons\Helper::filterSettingOptions( 'social_follows_li
                 <label for="<?= esc_attr( $key ) ?>">
 	                <?php
 
-	                if ( \Addons\Helper::isUrl( $icon ) || str_starts_with( $icon, 'data:' ) ) {
+	                if ( Helper::isUrl( $icon ) || str_starts_with( $icon, 'data:' ) ) {
 		                echo '<img src="' . $icon . '" alt="' . esc_attr( $name ) . '">';
 	                } elseif ( str_starts_with( $icon, '<svg' ) || str_starts_with( $icon, '<i' ) ) {
 		                echo $icon;

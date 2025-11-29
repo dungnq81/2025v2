@@ -1,9 +1,12 @@
 <?php
 // options.php
 
+use Addons\Helper;
+
 defined( 'ABSPATH' ) || exit;
 
-$custom_sorting_options = \Addons\Helper::getOption( 'custom_sorting__options', [] );
+$is_network             = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
+$custom_sorting_options = Helper::getOption( 'custom_sorting__options', [], $is_network );
 $order_post_type        = $custom_sorting_options['order_post_type'] ?? [];
 $order_taxonomy         = $custom_sorting_options['order_taxonomy'] ?? [];
 
@@ -40,7 +43,7 @@ $order_taxonomy         = $custom_sorting_options['order_taxonomy'] ?? [];
         ?>
         <div class="option">
             <label class="controls">
-                <input type="checkbox" class="checkbox" name="order_post_type[]" value="<?php echo esc_attr( $post_type->name ); ?>" <?php \Addons\Helper::inArrayChecked( $order_post_type, $post_type->name ); ?>>
+                <input type="checkbox" class="checkbox" name="order_post_type[]" value="<?php echo esc_attr( $post_type->name ); ?>" <?php Helper::inArrayChecked( $order_post_type, $post_type->name ); ?>>
             </label>
             <div class="explain"><?php echo $label; ?></div>
         </div>
@@ -69,7 +72,7 @@ $order_taxonomy         = $custom_sorting_options['order_taxonomy'] ?? [];
         ?>
         <div class="option">
             <label class="controls">
-                <input type="checkbox" class="checkbox" name="order_taxonomy[]" value="<?php echo esc_attr( $taxonomy->name ); ?>" <?php \Addons\Helper::inArrayChecked( $order_taxonomy, $taxonomy->name ); ?>>
+                <input type="checkbox" class="checkbox" name="order_taxonomy[]" value="<?php echo esc_attr( $taxonomy->name ); ?>" <?php Helper::inArrayChecked( $order_taxonomy, $taxonomy->name ); ?>>
             </label>
             <div class="explain"><?php echo $label; ?></div>
         </div>

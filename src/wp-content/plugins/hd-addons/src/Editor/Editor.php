@@ -2,6 +2,8 @@
 
 namespace Addons\Editor;
 
+use Addons\Helper;
+
 \defined( 'ABSPATH' ) || exit;
 
 final class Editor {
@@ -10,7 +12,8 @@ final class Editor {
 	// ------------------------------------------------------
 
 	public function __construct() {
-		$this->editor_options = \Addons\Helper::getOption( 'editor__options' );
+        $is_network           = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
+        $this->editor_options = Helper::getOption( 'editor__options', [], $is_network );
 
 		( new TinyMCE() );
 

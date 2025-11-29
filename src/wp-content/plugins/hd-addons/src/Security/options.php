@@ -1,9 +1,12 @@
 <?php
 // options.php
 
+use Addons\Helper;
+
 \defined( 'ABSPATH' ) || exit;
 
-$security_options  = \Addons\Helper::getOption( 'security__options' );
+$is_network        = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
+$security_options  = Helper::getOption( 'security__options', [], $is_network );
 $comments_off      = $security_options['comments_off'] ?? false;
 $xmlrpc_off        = $security_options['xmlrpc_off'] ?? false;
 $hide_wp_version   = $security_options['hide_wp_version'] ?? false;

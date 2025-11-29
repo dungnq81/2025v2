@@ -1,9 +1,11 @@
 <?php
 // options.php
 
+use Addons\Helper;
+
 \defined( 'ABSPATH' ) || exit;
 
-$aspect_ratio_settings = \Addons\Helper::filterSettingOptions( 'aspect_ratio', [] );
+$aspect_ratio_settings = Helper::filterSettingOptions( 'aspect_ratio', [] );
 $no_data_message       = __( 'No data available or configuration for this feature has not been set.', ADDONS_TEXTDOMAIN );
 
 ?>
@@ -21,7 +23,8 @@ $no_data_message       = __( 'No data available or configuration for this featur
 			break;
 		}
 
-		$aspect_ratio_options = \Addons\Helper::getOption( 'aspect_ratio__options' );
+        $is_network           = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
+		$aspect_ratio_options = Helper::getOption( 'aspect_ratio__options', [], $is_network );
 		$width                = $aspect_ratio_options[ 'as-' . $ar . '-width' ] ?? '';
 		$height               = $aspect_ratio_options[ 'as-' . $ar . '-height' ] ?? '';
 

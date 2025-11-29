@@ -107,7 +107,8 @@ final class GlobalSetting {
         }
 
         check_ajax_referer( '_wpnonce_settings_form_' . get_current_user_id() );
-        $data = $_POST['_data'] ?? [];
+        $data       = $_POST['_data'] ?? [];
+        $is_network = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
 
         /** ---------------------------------------- */
 
@@ -121,9 +122,9 @@ final class GlobalSetting {
         }
 
         if ( $global_setting_options ) {
-            Helper::updateOption( 'global_setting__options', $global_setting_options );
+            Helper::updateOption( 'global_setting__options', $global_setting_options, $is_network );
         } else {
-            Helper::removeOption( 'global_setting__options' );
+            Helper::removeOption( 'global_setting__options', $is_network );
         }
 
         /** ---------------------------------------- */
@@ -141,9 +142,9 @@ final class GlobalSetting {
             }
 
             if ( $aspect_ratio_options ) {
-                Helper::updateOption( 'aspect_ratio__options', $aspect_ratio_options );
+                Helper::updateOption( 'aspect_ratio__options', $aspect_ratio_options, $is_network );
             } else {
-                Helper::removeOption( 'aspect_ratio__options' );
+                Helper::removeOption( 'aspect_ratio__options', $is_network );
             }
         }
 
@@ -166,9 +167,9 @@ final class GlobalSetting {
             }
 
             if ( $editor_options ) {
-                Helper::updateOption( 'editor__options', $editor_options );
+                Helper::updateOption( 'editor__options', $editor_options, $is_network );
             } else {
-                Helper::removeOption( 'editor__options' );
+                Helper::removeOption( 'editor__options', $is_network );
             }
         }
 
@@ -205,9 +206,9 @@ final class GlobalSetting {
             }
 
             if ( $optimizer_options ) {
-                Helper::updateOption( 'optimizer__options', $optimizer_options );
+                Helper::updateOption( 'optimizer__options', $optimizer_options, $is_network );
             } else {
-                Helper::removeOption( 'optimizer__options' );
+                Helper::removeOption( 'optimizer__options', $is_network );
             }
         }
 
@@ -232,9 +233,9 @@ final class GlobalSetting {
             }
 
             if ( $security_options ) {
-                Helper::updateOption( 'security__options', $security_options );
+                Helper::updateOption( 'security__options', $security_options, $is_network );
             } else {
-                Helper::removeOption( 'security__options' );
+                Helper::removeOption( 'security__options', $is_network );
             }
 
             // Remove readme.html
@@ -266,14 +267,14 @@ final class GlobalSetting {
             $user_id             = get_current_user_id();
 
             if ( ! in_array( $user_id, $privileged_user_ids, true ) ) {
-                $_options                                         = Helper::getOption( 'login_security__options' );
+                $_options                                         = Helper::getOption( 'login_security__options', false, $is_network );
                 $login_security_options['custom_login_uri']       = $_options['custom_login_uri'] ?? '';
                 $login_security_options['login_otp_verification'] = $_options['login_otp_verification'] ?? '';
                 $login_security_options['login_ips_access']       = $_options['login_ips_access'] ?? [];
                 $login_security_options['disable_ips_access']     = $_options['disable_ips_access'] ?? [];
             }
 
-            Helper::updateOption( 'login_security__options', $login_security_options );
+            Helper::updateOption( 'login_security__options', $login_security_options, $is_network );
         }
 
         /** ---------------------------------------- */
@@ -293,9 +294,9 @@ final class GlobalSetting {
             }
 
             if ( $social_link_options ) {
-                Helper::updateOption( 'social_link__options', $social_link_options );
+                Helper::updateOption( 'social_link__options', $social_link_options, $is_network );
             } else {
-                Helper::removeOption( 'social_link__options' );
+                Helper::removeOption( 'social_link__options', $is_network );
             }
         }
 
@@ -320,9 +321,9 @@ final class GlobalSetting {
             }
 
             if ( $contact_link_options ) {
-                Helper::updateOption( 'contact_link__options', $contact_link_options );
+                Helper::updateOption( 'contact_link__options', $contact_link_options, $is_network );
             } else {
-                Helper::removeOption( 'contact_link__options' );
+                Helper::removeOption( 'contact_link__options', $is_network );
             }
         }
 
@@ -343,9 +344,9 @@ final class GlobalSetting {
             }
 
             if ( $file_options ) {
-                Helper::updateOption( 'file__options', $file_options );
+                Helper::updateOption( 'file__options', $file_options, $is_network );
             } else {
-                Helper::removeOption( 'file__options' );
+                Helper::removeOption( 'file__options', $is_network );
             }
         }
 
@@ -370,10 +371,10 @@ final class GlobalSetting {
             }
 
             if ( $custom_base_slug_options ) {
-                Helper::updateOption( 'base_slug__options', $custom_base_slug_options );
+                Helper::updateOption( 'base_slug__options', $custom_base_slug_options, $is_network );
                 ( new BaseSlug() )->flush_rules();
             } else {
-                Helper::removeOption( 'base_slug__options' );
+                Helper::removeOption( 'base_slug__options', $is_network );
                 ( new BaseSlug() )->reset_all();
             }
         }
@@ -395,9 +396,9 @@ final class GlobalSetting {
             }
 
             if ( $email_options ) {
-                Helper::updateOption( 'custom_email_to__options', $email_options );
+                Helper::updateOption( 'custom_email_to__options', $email_options, $is_network );
             } else {
-                Helper::removeOption( 'custom_email_to__options' );
+                Helper::removeOption( 'custom_email_to__options', $is_network );
             }
         }
 
@@ -422,10 +423,10 @@ final class GlobalSetting {
             }
 
             if ( $custom_order_options ) {
-                Helper::updateOption( 'custom_sorting__options', $custom_order_options );
+                Helper::updateOption( 'custom_sorting__options', $custom_order_options, $is_network );
                 ( new CustomSorting() )->update_options();
             } else {
-                Helper::removeOption( 'custom_sorting__options' );
+                Helper::removeOption( 'custom_sorting__options', $is_network );
                 ( new CustomSorting() )->reset_all();
             }
         }
@@ -452,9 +453,9 @@ final class GlobalSetting {
             }
 
             if ( $recaptcha_options ) {
-                Helper::updateOption( 'recaptcha__options', $recaptcha_options );
+                Helper::updateOption( 'recaptcha__options', $recaptcha_options, $is_network );
             } else {
-                Helper::removeOption( 'recaptcha__options' );
+                Helper::removeOption( 'recaptcha__options', $is_network );
             }
         }
 
@@ -475,9 +476,9 @@ final class GlobalSetting {
             }
 
             if ( $woocommerce_options ) {
-                Helper::updateOption( 'woocommerce__options', $woocommerce_options );
+                Helper::updateOption( 'woocommerce__options', $woocommerce_options, $is_network );
             } else {
-                Helper::removeOption( 'woocommerce__options' );
+                Helper::removeOption( 'woocommerce__options', $is_network );
             }
         }
 

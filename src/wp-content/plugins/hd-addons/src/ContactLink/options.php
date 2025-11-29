@@ -1,9 +1,12 @@
 <?php
 // options.php
 
+use Addons\Helper;
+
 \defined( 'ABSPATH' ) || exit;
 
-$contact_link_options = \Addons\Helper::getOption( 'contact_link__options' );
+$is_network           = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
+$contact_link_options = \Addons\Helper::getOption( 'contact_link__options', [], $is_network );
 $contact_links        = \Addons\Helper::filterSettingOptions( 'contact_links', [] );
 
 ?>

@@ -1,14 +1,17 @@
 <?php
 // options-content.php
 
+use Addons\Helper;
+
 \defined( 'ABSPATH' ) || exit;
 
 ?>
 <div id="_content" class="tabs-content">
     <h2 class="hidden-text"></h2>
 	<?php
-	$menu_options           = \Addons\Helper::loadYaml( ADDONS_PATH . 'config.yaml' );
-	$global_setting_options = \Addons\Helper::getOption( 'global_setting__options' );
+    $is_network             = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
+	$menu_options           = Helper::loadYaml( ADDONS_PATH . 'config.yaml' );
+	$global_setting_options = Helper::getOption( 'global_setting__options', [], $is_network );
 	$i                      = 0;
 
 	foreach ( $menu_options as $current_slug => $value ) {
@@ -17,7 +20,7 @@
 		$current_description = ! empty( $value['description'] ) ? __( $value['description'], ADDONS_TEXTDOMAIN ) : '';
 
 		// WooCommerce
-		if ( (string) $current_slug === 'woocommerce' && ! \Addons\Helper::isWoocommerceActive() ) {
+		if ( (string) $current_slug === 'woocommerce' && ! Helper::isWoocommerceActive() ) {
 			continue;
 		}
 
@@ -33,7 +36,7 @@
 			echo '<h2>' . $current_title . '</h2>';
 			echo '<div class="desc">' . $current_description . '</div>';
 
-			$option_file = ADDONS_PATH . 'src/' . \Addons\Helper::capitalizedSlug( $current_slug, true ) . '/options.php';
+			$option_file = ADDONS_PATH . 'src/' . Helper::capitalizedSlug( $current_slug, true ) . '/options.php';
 			file_exists( $option_file ) && include $option_file;
 
 			?>

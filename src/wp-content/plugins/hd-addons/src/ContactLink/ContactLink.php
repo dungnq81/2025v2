@@ -7,23 +7,23 @@ use Addons\Helper;
 \defined( 'ABSPATH' ) || exit;
 
 final class ContactLink {
+    private bool $is_network;
+
 	// ------------------------------------------------------
 
-	public function __construct() {
-		/**
-		 * @var array $shortcodes
-		 */
-		$shortcodes = [
-			'contact_link' => [ $this, 'contact_link' ],
-		];
+    public function __construct() {
+        $this->is_network = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
+        $shortcodes       = [
+            'contact_link' => [ $this, 'contact_link' ],
+        ];
 
-		foreach ( $shortcodes as $shortcode => $function ) {
-			add_shortcode( $shortcode, $function );
-		}
+        foreach ( $shortcodes as $shortcode => $function ) {
+            add_shortcode( $shortcode, $function );
+        }
 
-		add_action( 'wp_footer', [ $this, 'add_this_contact_link' ], 30 );
-		add_filter( 'hd_footer_class_filter', [ $this, 'modify_footer_class' ] );
-	}
+        add_action( 'wp_footer', [ $this, 'add_this_contact_link' ], 30 );
+        add_filter( 'hd_footer_class_filter', [ $this, 'modify_footer_class' ] );
+    }
 
 	// ------------------------------------------------------
 
@@ -33,7 +33,7 @@ final class ContactLink {
 	 * @return mixed|string
 	 */
 	public function modify_footer_class( $default_class ): mixed {
-		$contact_link_option = Helper::getOption( 'contact_link__options', [] );
+		$contact_link_option = Helper::getOption( 'contact_link__options', [], $this->is_network );
 		$flag                = false;
 
 		foreach ( $contact_link_option as $option ) {
@@ -79,7 +79,7 @@ final class ContactLink {
 
 		ob_start();
 
-		$contact_options = Helper::getOption( 'contact_link__options' );
+		$contact_options = Helper::getOption( 'contact_link__options', [], $this->is_network );
 		$contact_links   = Helper::filterSettingOptions( 'contact_links', [] );
 
 		if ( $contact_options ) {
