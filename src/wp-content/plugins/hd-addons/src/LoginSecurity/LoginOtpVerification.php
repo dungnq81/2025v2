@@ -2,6 +2,7 @@
 
 namespace Addons\LoginSecurity;
 
+use Addons\Helper;
 use Random\RandomException;
 
 \defined( 'ABSPATH' ) || exit;
@@ -380,7 +381,8 @@ class LoginOtpVerification {
 	 * @return bool
 	 */
 	private function _isEnabled(): bool {
-		$opt = \Addons\Helper::getOption( 'login_security__options' );
+        $is_network = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
+        $opt        = \Addons\Helper::getOption( 'login_security__options', [], $is_network );
 
 		return ! empty( $opt['login_otp_verification'] );
 	}

@@ -137,7 +137,7 @@ final class Faker {
         foreach ( $options as $option_name => $new_value ) {
             $current_value = Helper::getOption( $option_name, false, $this->is_network );
             if ( $current_value === false || $current_value !== $new_value ) {
-                Helper::updateOption( $option_name, $new_value );
+                Helper::updateOption( $option_name, $new_value, $this->is_network );
             }
         }
     }

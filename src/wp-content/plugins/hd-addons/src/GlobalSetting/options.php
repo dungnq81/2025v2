@@ -1,10 +1,13 @@
 <?php
 // options.php
 
+use Addons\Helper;
+
 \defined( 'ABSPATH' ) || exit;
 
-$menu_options           = \Addons\Helper::loadYaml( ADDONS_PATH . 'config.yaml' );
-$global_setting_options = \Addons\Helper::getOption( 'global_setting__options' );
+$is_network             = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
+$menu_options           = Helper::loadYaml( ADDONS_PATH . 'config.yaml' );
+$global_setting_options = Helper::getOption( 'global_setting__options', [], $is_network );
 $current_slug           = $current_slug ?? 'global_setting';
 
 ?>
@@ -19,7 +22,7 @@ $current_slug           = $current_slug ?? 'global_setting';
 		}
 
         // WooCommerce
-        if ( (string) $slug === 'woocommerce' && ! \Addons\Helper::isWoocommerceActive() ) {
+        if ( (string) $slug === 'woocommerce' && ! Helper::isWoocommerceActive() ) {
             continue;
         }
     ?>

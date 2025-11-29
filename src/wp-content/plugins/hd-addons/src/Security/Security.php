@@ -2,6 +2,8 @@
 
 namespace Addons\Security;
 
+use Addons\Helper;
+
 \defined( 'ABSPATH' ) || exit;
 
 final class Security {
@@ -12,7 +14,8 @@ final class Security {
 	/* ---------- CONSTRUCT ----------------------------------------------- */
 
 	public function __construct() {
-		$this->securityOptions = \Addons\Helper::getOption( 'security__options' );
+        $is_network            = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
+        $this->securityOptions = Helper::getOption( 'security__options', [], $is_network );
 
 		$comments_off      = $this->securityOptions['comments_off'] ?? false;
 		$xmlrpc_off        = $this->securityOptions['xmlrpc_off'] ?? false;
@@ -47,7 +50,7 @@ final class Security {
 	 * @return array
 	 */
 	public function hidePluginInstall( array $plugins ): array {
-		$security    = \Addons\Helper::filterSettingOptions( 'security', [] );
+		$security    = Helper::filterSettingOptions( 'security', [] );
 		$allowed_ids = $security['allowed_users_ids_show_plugins'] ?? [];
 
 		if ( ! is_array( $allowed_ids ) ) {
@@ -78,7 +81,7 @@ final class Security {
 			return;
 		}
 
-		$security   = \Addons\Helper::filterSettingOptions( 'security', [] );
+		$security   = Helper::filterSettingOptions( 'security', [] );
 		$hidden_ids = $security['disallowed_users_ids_delete_account'] ?? [];
 
 		if ( empty( $hidden_ids ) || ! is_array( $hidden_ids ) ) {
@@ -106,7 +109,7 @@ final class Security {
 	 * @return void
 	 */
 	public function preventDeletionUser( $user_id ): void {
-		$security   = \Addons\Helper::filterSettingOptions( 'security', [] );
+		$security   = Helper::filterSettingOptions( 'security', [] );
 		$hidden_ids = $security['disallowed_users_ids_delete_account'] ?? [];
 
 		if ( ! is_array( $hidden_ids ) ) {
@@ -114,7 +117,7 @@ final class Security {
 		}
 
 		if ( in_array( $user_id, $hidden_ids, false ) ) {
-			\Addons\Helper::wpDie(
+			Helper::wpDie(
 				__( 'You cannot delete this admin account.', ADDONS_TEXTDOMAIN ),
 				__( 'Error', ADDONS_TEXTDOMAIN ),
 				[ 'response' => 403 ]
@@ -130,7 +133,7 @@ final class Security {
 	 * @return mixed
 	 */
 	public function preventDeletionAccounts( $allcaps, $cap, $args ): mixed {
-		$security   = \Addons\Helper::filterSettingOptions( 'security', [] );
+		$security   = Helper::filterSettingOptions( 'security', [] );
 		$hidden_ids = $security['disallowed_users_ids_delete_account'] ?? [];
 
 		if ( ! is_array( $hidden_ids ) ) {
@@ -155,7 +158,7 @@ final class Security {
 	 * @return mixed
 	 */
 	public function restrictPluginInstall( $allcaps, $caps, $args ): mixed {
-		$security    = \Addons\Helper::filterSettingOptions( 'security', [] );
+		$security    = Helper::filterSettingOptions( 'security', [] );
 		$allowed_ids = $security['allowed_users_ids_install_plugins'] ?? [];
 
 		if ( ! is_array( $allowed_ids ) ) {
@@ -183,7 +186,7 @@ final class Security {
 	 * @return void
 	 */
 	public function disableFeed(): void {
-		\Addons\Helper::redirect( trailingslashit( esc_url( network_home_url() ) ) );
+		Helper::redirect( trailingslashit( esc_url( network_home_url() ) ) );
 	}
 
 	/**

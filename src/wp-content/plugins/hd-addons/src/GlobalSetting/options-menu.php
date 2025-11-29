@@ -1,6 +1,8 @@
 <?php
 // options-menu.php
 
+use Addons\Helper;
+
 \defined( 'ABSPATH' ) || exit;
 
 ?>
@@ -16,8 +18,9 @@
     </div>
     <ul class="ul-menu-list">
 		<?php
-		$menu_options           = \Addons\Helper::loadYaml( ADDONS_PATH . 'config.yaml' );
-		$global_setting_options = \Addons\Helper::getOption( 'global_setting__options' );
+        $is_network             = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
+        $menu_options           = \Addons\Helper::loadYaml( ADDONS_PATH . 'config.yaml' );
+        $global_setting_options = \Addons\Helper::getOption( 'global_setting__options', [], $is_network );
 
 		$i = 0;
 
