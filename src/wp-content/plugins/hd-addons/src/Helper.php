@@ -550,87 +550,94 @@ final class Helper {
 
 	// --------------------------------------------------
 
-	/**
-	 * @param string $option
-	 *
-	 * @return bool
-	 */
-	public static function removeOption( string $option ): bool {
-		$option = strtolower( trim( $option ) );
-		if ( empty( $option ) ) {
-			return false;
-		}
+    /**
+     * @param string $option
+     * @param bool $network
+     *
+     * @return bool
+     */
+    public static function removeOption( string $option, bool $network = false ): bool {
+        $option = strtolower( trim( $option ) );
+        if ( empty( $option ) ) {
+            return false;
+        }
 
-		$site_id   = is_multisite() ? get_current_blog_id() : null;
-		$cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
+        $site_id   = $network ? 0 : get_current_blog_id();
+        $cache_key = "hd_option_{$site_id}_{$option}";
 
-		// Remove the option from the appropriate context (multisite or not)
-		$removed = is_multisite() ? delete_site_option( $option ) : delete_option( $option );
-		if ( $removed ) {
-			wp_cache_delete( $cache_key, 'hd_option_cache' );
-		}
+        $removed = $network
+            ? delete_site_option( $option )
+            : delete_option( $option );
 
-		return $removed;
-	}
+        if ( $removed ) {
+            wp_cache_delete( $cache_key, 'hd_option_cache' );
+        }
 
-	// --------------------------------------------------
-
-	/**
-	 * @param string $option
-	 * @param mixed $new_value
-	 * @param int $cache_in_hours
-	 * @param bool|null $autoload
-	 *
-	 * @return bool
-	 */
-	public static function updateOption( string $option, mixed $new_value, int $cache_in_hours = 12, ?bool $autoload = null ): bool {
-		$option = strtolower( trim( $option ) );
-		if ( empty( $option ) ) {
-			return false;
-		}
-
-		$site_id   = is_multisite() ? get_current_blog_id() : null;
-		$cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
-
-		// Update the option in the appropriate context (multisite or not)
-		$updated = is_multisite() ? update_site_option( $option, $new_value ) : update_option( $option, $new_value, $autoload );
-
-		if ( $updated ) {
-			wp_cache_set( $cache_key, $new_value, 'hd_option_cache', $cache_in_hours * HOUR_IN_SECONDS );
-		}
-
-		return $updated;
-	}
+        return $removed;
+    }
 
 	// --------------------------------------------------
 
-	/**
-	 * @param string $option
-	 * @param mixed $default
-	 * @param int $cache_in_hours
-	 *
-	 * @return mixed
-	 */
-	public static function getOption( string $option, mixed $default = false, int $cache_in_hours = 12 ): mixed {
-		$option = strtolower( trim( $option ) );
-		if ( empty( $option ) ) {
-			return $default;
-		}
+    /**
+     * @param string $option
+     * @param mixed $new_value
+     * @param bool $network
+     * @param int $cache_in_hours
+     * @param bool|null $autoload
+     *
+     * @return bool
+     */
+    public static function updateOption( string $option, mixed $new_value, bool $network = false, int $cache_in_hours = 12, ?bool $autoload = null ): bool {
+        $option = strtolower( trim( $option ) );
+        if ( empty( $option ) ) {
+            return false;
+        }
 
-		$site_id   = is_multisite() ? get_current_blog_id() : null;
-		$cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
+        $site_id   = $network ? 0 : get_current_blog_id();
+        $cache_key = "hd_option_{$site_id}_{$option}";
+        $updated   = $network
+            ? update_site_option( $option, $new_value )
+            : update_option( $option, $new_value, $autoload );
 
-		$cached_value = wp_cache_get( $cache_key, 'hd_option_cache' );
-		if ( $cached_value !== false ) {
-			return $cached_value;
-		}
+        if ( $updated ) {
+            wp_cache_set( $cache_key, $new_value, 'hd_option_cache', $cache_in_hours * HOUR_IN_SECONDS );
+        }
 
-		$option_value = is_multisite() ? get_site_option( $option, $default ) : get_option( $option, $default );
-		wp_cache_set( $cache_key, $option_value, 'hd_option_cache', $cache_in_hours * HOUR_IN_SECONDS );
+        return $updated;
+    }
 
-		// Retrieve the option value
-		return $option_value;
-	}
+	// --------------------------------------------------
+
+    /**
+     * @param string $option
+     * @param mixed $default
+     * @param bool $network
+     * @param int $cache_in_hours
+     *
+     * @return mixed
+     */
+    public static function getOption( string $option, mixed $default = false, bool $network = false, int $cache_in_hours = 12 ): mixed {
+        $option = strtolower( trim( $option ) );
+        if ( empty( $option ) ) {
+            return $default;
+        }
+
+        $site_id   = $network ? 0 : get_current_blog_id();
+        $cache_key = "hd_option_{$site_id}_{$option}";
+        $cached    = wp_cache_get( $cache_key, 'hd_option_cache' );
+        if ( $cached !== false ) {
+            return $cached;
+        }
+
+        $value = $network
+            ? get_site_option( $option, $default )
+            : get_option( $option, $default );
+
+        wp_cache_set( $cache_key, $value, 'hd_option_cache', $cache_in_hours * HOUR_IN_SECONDS );
+
+        // Retrieve the option value
+        return $value;
+    }
 
 	// --------------------------------------------------
 
@@ -1027,16 +1034,6 @@ final class Helper {
 		return '127.0.0.1';
 	}
 
-	// -------------------------------------------------------------
-
-	/**
-	 * @return bool
-	 */
-	public static function isMobile(): bool {
-		// Fallback to WordPress function
-		return wp_is_mobile();
-	}
-
 	/**
 	 * Check if a plugin is installed by getting all plugins from the plugins dir
 	 *
@@ -1065,7 +1062,6 @@ final class Helper {
 	// -------------------------------------------------------------
 
 	private static function _ensurePlugin(): void {
-		// Ensure required functions are available
 		if ( ! \function_exists( 'is_plugin_active' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/plugin.php';
 		}
@@ -1081,17 +1077,29 @@ final class Helper {
 	 * @return bool
 	 */
 	public static function checkPluginActive( string $plugin_file ): bool {
-		self::_ensurePlugin();
-
-		if (
-			function_exists( 'is_plugin_active_for_network' ) &&
-			is_multisite() && is_plugin_active_for_network( $plugin_file )
-		) {
+		if ( is_multisite() && is_plugin_active_for_network( $plugin_file ) ) {
 			return true;
 		}
 
+        self::_ensurePlugin();
+
 		return is_plugin_active( $plugin_file );
 	}
+
+	// -------------------------------------------------------------
+
+    /**
+     * @param string $plugin_file
+     *
+     * @return bool
+     */
+    public static function checkNetworkActive( string $plugin_file ): bool {
+        if ( ! is_multisite() ) {
+            return false;
+        }
+
+        return is_plugin_active_for_network( $plugin_file );
+    }
 
 	// -------------------------------------------------------------
 
@@ -1112,103 +1120,64 @@ final class Helper {
 	 * @return bool
 	 */
 	public static function isWoocommerceActive(): bool {
-		if (
-			\function_exists( 'WC' ) ||
-			\function_exists( 'wc_get_container' ) ||
-			\defined( 'WC_VERSION' ) ||
-			\defined( 'WC_ABSPATH' ) ||
-			\class_exists( \WooCommerce::class )
-		) {
-			return true;
-		}
+        if ( function_exists( 'WC' ) || class_exists( \WooCommerce::class ) ) {
+            return true;
+        }
 
 		return self::checkPluginActive( 'woocommerce/woocommerce.php' );
 	}
 
 	// -------------------------------------------------------------
 
-	/**
-	 * @return bool
-	 */
-	public static function isAcfActive(): bool {
-		if (
-			\function_exists( 'acf' ) ||
-			\class_exists( \ACF::class )
-		) {
-			return true;
-		}
+    public static function isAcfActive(): bool {
+        if ( function_exists( 'acf' ) || class_exists( \ACF::class ) ) {
+            return true;
+        }
 
-		return self::checkPluginActive( 'secure-custom-fields/secure-custom-fields.php' ) ||
-		       self::checkPluginActive( 'advanced-custom-fields-pro/acf.php' ) ||
-		       self::checkPluginActive( 'advanced-custom-fields/acf.php' );
-	}
+        return self::checkPluginActive( 'advanced-custom-fields-pro/acf.php' )
+               || self::checkPluginActive( 'advanced-custom-fields/acf.php' );
+    }
 
 	// -------------------------------------------------------------
 
-	/**
-	 * @return bool
-	 */
-	public static function isAcfProActive(): bool {
-		if (
-			\defined( 'ACF_PRO' ) ||
-			\class_exists( \acf_pro::class )
-		) {
-			return true;
-		}
+    public static function isAcfProActive(): bool {
+        if ( defined( 'ACF_PRO' ) || class_exists( \acf_pro::class ) ) {
+            return true;
+        }
 
-		return self::checkPluginActive( 'advanced-custom-fields-pro/acf.php' );
-	}
+        return self::checkPluginActive( 'advanced-custom-fields-pro/acf.php' );
+    }
 
 	// -------------------------------------------------------------
 
-	/**
-	 * @return bool
-	 */
-	public static function isPolylangActive(): bool {
-		if (
-			\defined( 'POLYLANG_BASENAME' ) ||
-			\defined( 'POLYLANG' ) ||
-			\defined( 'POLYLANG_PRO' )
-		) {
-			return true;
-		}
+    public static function isPolylangActive(): bool {
+        if ( defined( 'POLYLANG' ) || defined( 'POLYLANG_PRO' ) ) {
+            return true;
+        }
 
-		return self::checkPluginActive( 'polylang/polylang.php' ) ||
-		       self::checkPluginActive( 'polylang-pro/polylang.php' );
-	}
+        return self::checkPluginActive( 'polylang/polylang.php' )
+               || self::checkPluginActive( 'polylang-pro/polylang.php' );
+    }
 
 	// -------------------------------------------------------------
 
-	/**
-	 * @return bool
-	 */
-	public static function isRankMathActive(): bool {
-		if (
-			\class_exists( \RankMath::class ) ||
-			\class_exists( \RankMathPro::class )
-		) {
-			return true;
-		}
+    public static function isRankMathActive(): bool {
+        if ( class_exists( \RankMath::class ) ) {
+            return true;
+        }
 
-		return self::checkPluginActive( 'seo-by-rank-math/rank-math.php' ) ||
-		       self::checkPluginActive( 'seo-by-rank-math-pro/rank-math-pro.php' );
-	}
+        return self::checkPluginActive( 'seo-by-rank-math/rank-math.php' );
+    }
 
 	// -------------------------------------------------------------
 
-	/**
-	 * @return bool
-	 */
-	public static function isCf7Active(): bool {
-		if (
-			\defined( 'WPCF7_PLUGIN_BASENAME' ) ||
-			\class_exists( \WPCF7::class )
-		) {
-			return true;
-		}
+    public static function isCf7Active(): bool {
+        if ( defined( 'WPCF7_PLUGIN_BASENAME' ) || class_exists( \WPCF7::class ) ) {
+            return true;
+        }
 
-		return self::checkPluginActive( 'contact-form-7/wp-contact-form-7.php' );
-	}
+        return self::checkPluginActive( 'contact-form-7/wp-contact-form-7.php' );
+    }
 
 	// -------------------------------------------------------------
 
@@ -1305,58 +1274,63 @@ final class Helper {
 	 * @return mixed
 	 */
 	public static function manifest(): mixed {
-		static $cache = [];
+        static $cache = [];
 
-		$manifest_base = rtrim( ADDONS_PATH, '/\\' ) . '/assets/';
-		$key           = 'manifest-auto:filtered';
+        $manifest_base = rtrim( ADDONS_PATH, '/\\' ) . '/assets/';
+        $manifest_path = $manifest_base . '.vite/manifest.json';
+        $key           = 'manifest:' . md5( $manifest_path );
 
-		if ( isset( $cache[ $key ] ) ) {
-			return $cache[ $key ];
-		}
+        if ( isset( $cache[ $key ] ) ) {
+            return $cache[ $key ];
+        }
 
-		$candidates  = [ $manifest_base . '.vite/manifest.json' ];
-		$rawManifest = null;
+        if ( ! is_readable( $manifest_path ) || ! is_file( $manifest_path ) ) {
+            return $cache[ $key ] = [];
+        }
 
-		foreach ( $candidates as $path ) {
-			if ( ! is_readable( $path ) || ! is_file( $path ) ) {
-				continue;
-			}
+        // transient + filemtime
+        $transient_key = 'theme_manifest_filtered_' . md5( $manifest_path );
+        $file_mtime    = filemtime( $manifest_path ) ?: 0;
+        $cached        = get_transient( $transient_key );
 
-			$data = wp_json_file_decode( $path, [ 'associative' => true, 'depth' => 512 ] );
-			if ( is_wp_error( $data ) ) {
-				error_log( '[manifest] JSON decode error at ' . $path . ': ' . $data->get_error_message() );
-				continue;
-			}
+        if ( is_array( $cached ) && ( $cached['mtime'] ?? 0 ) === $file_mtime ) {
+            return $cache[ $key ] = $cached['data'] ?? [];
+        }
 
-			if ( is_array( $data ) ) {
-				$rawManifest = $data;
-				break;
-			}
-		}
+        // parse JSON
+        $data = wp_json_file_decode( $manifest_path, [ 'associative' => true, 'depth' => 512 ] );
+        if ( is_wp_error( $data ) ) {
+            self::errorLog( '[manifest] JSON decode error at ' . $manifest_path . ': ' . $data->get_error_message() );
 
-		// check $rawManifest
-		if ( ! is_array( $rawManifest ) ) {
-			return $cache[ $key ] = [];
-		}
+            return $cache[ $key ] = [];
+        }
 
-		$filtered = [];
-		foreach ( $rawManifest as $entryKey => $entry ) {
-			if ( ! is_array( $entry ) ) {
-				continue;
-			}
+        if ( ! is_array( $data ) ) {
+            return $cache[ $key ] = [];
+        }
 
-			$isVendor = ( preg_match( '/^_?vendor\..+\.(js|css)$/', (string) $entryKey ) === 1 );
-			$isEntry  = ! empty( $entry['isEntry'] );
+        // manifest filter
+        $filtered = [];
+        foreach ( $data as $entryKey => $entry ) {
+            if ( ! is_array( $entry ) ) {
+                continue;
+            }
 
-			if ( ! $isVendor && ! $isEntry ) {
-				continue;
-			}
+            $isVendor = preg_match( '/^_?vendor\..+\.(js|css)$/', (string) $entryKey ) === 1;
+            $isEntry  = ! empty( $entry['isEntry'] );
 
-			$keepFields            = [ 'file', 'name', 'src', 'css', 'isEntry' ];
-			$filtered[ $entryKey ] = array_intersect_key( $entry, array_flip( $keepFields ) );
-		}
+            if ( ! $isVendor && ! $isEntry ) {
+                continue;
+            }
 
-		return $cache[ $key ] = $filtered;
+            $keepFields            = [ 'file', 'name', 'src', 'css', 'isEntry', 'imports' ];
+            $filtered[ $entryKey ] = array_intersect_key( $entry, array_flip( $keepFields ) );
+        }
+
+        // transient cache (1 day)
+        set_transient( $transient_key, [ 'mtime' => $file_mtime, 'data' => $filtered ], DAY_IN_SECONDS );
+
+        return $cache[ $key ] = $filtered;
 	}
 
 	// -------------------------------------------------------------
@@ -1370,168 +1344,206 @@ final class Helper {
 	 * @return array
 	 */
 	public static function manifestResolve( ?string $entry = null, string $handle_prefix = 'addon-' ): array {
-		if ( ! is_string( $entry ) || ! trim( $entry ) ) {
-			return [];
-		}
+        static $resolveCache = [];
 
-		$manifest = self::manifest();
-		if ( ! $manifest ) {
-			return [];
-		}
+        if ( ! is_string( $entry ) || ! trim( $entry ) ) {
+            return [];
+        }
 
-		//.
-		$normalizePath = static function ( string $p ): string {
-			$p = str_replace( '\\', '/', $p );
-			$p = preg_replace( '#^\./#', '', $p );
-			$p = preg_replace( '#/+#', '/', $p );
+        $key = md5( $entry . $handle_prefix );
+        if ( isset( $resolveCache[ $key ] ) ) {
+            return $resolveCache[ $key ];
+        }
 
-			return trim( $p, '/' );
-		};
+        $manifest = self::manifest();
+        if ( ! $manifest ) {
+            return $resolveCache[ $key ] = [];
+        }
 
-		$makeSlugFromPath = static function ( string $pathNoExt ): string {
-			$pathNoExt = str_replace( '\\', '/', $pathNoExt );
-			$pathNoExt = preg_replace( '#/+#', '/', $pathNoExt );
-			$pathNoExt = trim( $pathNoExt, '/' );
-			$slug      = strtolower( preg_replace( '/[^a-z0-9]+/i', '-', $pathNoExt ) );
-			$slug      = trim( $slug, '-' );
+        // --- Helper closures ---
+        $makeSlugFromPath = static function ( string $pathNoExt ): string {
+            $pathNoExt = str_replace( '\\', '/', $pathNoExt );
+            $pathNoExt = preg_replace( '#/+#', '/', $pathNoExt );
+            $pathNoExt = trim( $pathNoExt, '/' );
+            $slug      = strtolower( preg_replace( '/[^a-z0-9]+/i', '-', $pathNoExt ) );
+            $slug      = trim( $slug, '-' );
 
-			return $slug ?: 'entry';
-		};
+            return $slug ?: 'entry';
+        };
 
-		$makeHandle = static function ( $b, $kind ) use ( $handle_prefix ) {
-			return $handle_prefix . $b . '-' . $kind;
-		};
+        $makeHandle = static function ( $b, $kind ) use ( $handle_prefix ) {
+            return $handle_prefix . $b . '-' . $kind;
+        };
 
-		$entry = trim( $entry );
-		$entry = $normalizePath( $entry );
+        // --- Normalize input ---
+        $entry = trim( $entry );
+        $entry = self::normalizePath( $entry );
 
-		// --- Vendor JS ---
-		if ( $entry === 'vendor.js' ) {
-			foreach ( $manifest as $k => $v ) {
-				if ( is_array( $v ) && preg_match( '/^_?vendor\..+\.js$/', $k ) ) {
-					$file = $v['file'] ?? '';
-					if ( ! $file ) {
-						return [];
-					}
+        // --- Vendor JS ---
+        if ( preg_match( '/^_?vendor(\..+)?\.js$/', $entry ) ) {
+            foreach ( $manifest as $k => $v ) {
+                if ( is_array( $v ) && preg_match( '/^_?vendor\..+\.js$/', $k ) ) {
+                    $file = $v['file'] ?? '';
+                    if ( ! $file ) {
+                        return $resolveCache[ $key ] = [];
+                    }
 
-					return [
-						'handle' => $makeHandle( 'vendor', 'js' ),
-						'src'    => ADDONS_URL . 'assets/' . $file,
-						'file'   => $v['src'] ?? '',
-					];
-				}
-			}
+                    return $resolveCache[ $key ] = [
+                        'handle' => $makeHandle( 'vendor', 'js' ),
+                        'src'    => ADDONS_URL . 'assets/' . $file,
+                        'file'   => $v['src'] ?? '',
+                    ];
+                }
+            }
 
-			return [];
-		}
+            return $resolveCache[ $key ] = [];
+        }
 
-		// --- Vendor CSS ---
-		if ( $entry === 'vendor.css' ) {
-			foreach ( $manifest as $k => $v ) {
-				if ( is_array( $v ) && preg_match( '/^_?vendor\..+\.css$/', $k ) ) {
-					$file = $v['file'] ?? '';
-					if ( ! $file ) {
-						return [];
-					}
+        // --- Vendor CSS ---
+        if ( preg_match( '/^_?vendor(\..+)?\.css$/', $entry ) ) {
+            foreach ( $manifest as $k => $v ) {
+                if ( is_array( $v ) && preg_match( '/^_?vendor\..+\.css$/', $k ) ) {
+                    $file = $v['file'] ?? '';
+                    if ( ! $file ) {
+                        return $resolveCache[ $key ] = [];
+                    }
 
-					return [
-						'handle' => $makeHandle( 'vendor', 'css' ),
-						'src'    => ADDONS_URL . 'assets/' . $file,
-						'file'   => $v['src'] ?? '',
-					];
-				}
-			}
+                    return $resolveCache[ $key ] = [
+                        'handle' => $makeHandle( 'vendor', 'css' ),
+                        'src'    => ADDONS_URL . 'assets/' . $file,
+                        'file'   => $v['src'] ?? '',
+                    ];
+                }
+            }
 
-			// fallback
-			foreach ( $manifest as $k => $v ) {
-				if ( ! empty( $v['css'][0] ) && preg_match( '/^_?vendor\..+\.js$/', $k ) ) {
-					return [
-						'handle' => $makeHandle( 'vendor', 'css' ),
-						'src'    => ADDONS_URL . 'assets/' . $v['css'][0],
-					];
-				}
-			}
+            // fallback
+            foreach ( $manifest as $k => $v ) {
+                if ( ! empty( $v['css'][0] ) && preg_match( '/^_?vendor\..+\.js$/', $k ) ) {
+                    return $resolveCache[ $key ] = [
+                        'handle' => $makeHandle( 'vendor', 'css' ),
+                        'src'    => ADDONS_URL . 'assets/' . $v['css'][0],
+                    ];
+                }
+            }
 
-			return [];
-		}
+            return $resolveCache[ $key ] = [];
+        }
 
-		// --- Entries ---
-		$ext       = strtolower( pathinfo( $entry, PATHINFO_EXTENSION ) );
-		$pathNoExt = preg_replace( '/\.' . preg_quote( $ext, '/' ) . '$/i', '', $entry );
-		$baseSlug  = $makeSlugFromPath( $pathNoExt );
-		$isCss     = in_array( $ext, [ 'css', 'scss' ], true );
-		$isJs      = ( $ext === 'js' );
+        // --- Regular Entries ---
+        $ext       = strtolower( pathinfo( $entry, PATHINFO_EXTENSION ) );
+        $pathNoExt = preg_replace( '/\.' . preg_quote( $ext, '/' ) . '$/i', '', $entry );
+        $baseSlug  = $makeSlugFromPath( $pathNoExt );
+        $isCss     = in_array( $ext, [ 'css', 'scss' ], true );
+        $isJs      = ( $ext === 'js' );
 
-		$srcTailCandidates = [];
-		if ( $isCss ) {
-			$srcTailCandidates[] = $pathNoExt . '.scss';
-			$srcTailCandidates[] = $pathNoExt . '.css';
-		} elseif ( $isJs ) {
-			$srcTailCandidates[] = $pathNoExt . '.js';
-		} else {
-			return [];
-		}
+        $srcTailCandidates = [];
+        if ( $isCss ) {
+            $srcTailCandidates[] = $pathNoExt . '.scss';
+            $srcTailCandidates[] = $pathNoExt . '.css';
+        } elseif ( $isJs ) {
+            $srcTailCandidates[] = $pathNoExt . '.js';
+        } else {
+            return $resolveCache[ $key ] = [];
+        }
 
-		$found = null;
-		foreach ( $manifest as $k => $item ) {
-			if (
-				! is_array( $item ) ||
-				empty( $item['isEntry'] ) ||
-				empty( $item['src'] ) ||
-				! is_string( $item['src'] ) ||
-				preg_match( '/^_?vendor\..+\.(js|css)$/', $k )
-			) {
-				continue;
-			}
+        $found = null;
+        foreach ( $manifest as $k => $item ) {
+            if ( ! is_array( $item )
+                 || empty( $item['isEntry'] )
+                 || empty( $item['src'] )
+                 || ! is_string( $item['src'] )
+                 || preg_match( '/^_?vendor\..+\.(js|css)$/', $k )
+            ) {
+                continue;
+            }
 
-			foreach ( $srcTailCandidates as $tail ) {
-				if ( str_ends_with( $item['src'], $tail ) ) {
-					$found = $item;
-					break 2;
-				}
-			}
-		}
+            foreach ( $srcTailCandidates as $tail ) {
+                if ( str_ends_with( $item['src'], $tail ) ) {
+                    $found = $item;
+                    break 2;
+                }
+            }
+        }
 
-		if ( ! $found ) {
-			return [];
-		}
+        if ( ! $found ) {
+            return $resolveCache[ $key ] = [];
+        }
 
-		// --- JS ---
-		if ( $isJs ) {
-			$handle = $makeHandle( $baseSlug, 'js' );
+        // --- JS entry ---
+        if ( $isJs ) {
+            $handle = $makeHandle( $baseSlug, 'js' );
 
-			if ( ! empty( $found['file'] ) ) {
-				return [
-					'handle' => $handle,
-					'src'    => ADDONS_URL . 'assets/' . $found['file'],
-					'file'   => $found['src'] ?? '',
-				];
-			}
-		}
+            if ( ! empty( $found['file'] ) ) {
+                return $resolveCache[ $key ] = [
+                    'handle'  => $handle,
+                    'src'     => ADDONS_URL . 'assets/' . $found['file'],
+                    'file'    => $found['src'] ?? '',
+                    'imports' => $found['imports'] ?? [],
+                ];
+            }
+        }
 
-		// --- CSS ---
-		if ( $isCss ) {
-			$handle = $makeHandle( $baseSlug, 'css' );
+        // --- CSS entry ---
+        if ( $isCss ) {
+            $handle = $makeHandle( $baseSlug, 'css' );
 
-			if ( ! empty( $found['css'][0] ) ) {
-				return [
-					'handle' => $handle,
-					'src'    => ADDONS_URL . 'assets/' . $found['css'][0],
-					'file'   => $found['src'] ?? '',
-				];
-			}
+            if ( ! empty( $found['css'][0] ) ) {
+                return $resolveCache[ $key ] = [
+                    'handle' => $handle,
+                    'src'    => ADDONS_URL . 'assets/' . $found['css'][0],
+                    'file'   => $found['src'] ?? '',
+                ];
+            }
 
-			if ( ! empty( $found['file'] ) ) {
-				return [
-					'handle' => $handle,
-					'src'    => ADDONS_URL . 'assets/' . $found['file'],
-					'file'   => $found['src'] ?? '',
-				];
-			}
-		}
+            if ( ! empty( $found['file'] ) ) {
+                return $resolveCache[ $key ] = [
+                    'handle' => $handle,
+                    'src'    => ADDONS_URL . 'assets/' . $found['file'],
+                    'file'   => $found['src'] ?? '',
+                ];
+            }
+        }
 
-		return [];
+        return $resolveCache[ $key ] = [];
 	}
+
+	// -------------------------------------------------------------
+
+    /**
+     * @param string $path
+     *
+     * @return string
+     */
+    public static function normalizePath( string $path ): string {
+        $path  = str_replace( '\\', '/', $path );
+        $parts = explode( '/', $path );
+        $stack = [];
+
+        foreach ( $parts as $part ) {
+            if ( $part === '' || $part === '.' ) {
+                continue;
+            }
+            if ( $part === '..' ) {
+                if ( ! empty( $stack ) ) {
+                    array_pop( $stack );
+                }
+            } else {
+                $stack[] = $part;
+            }
+        }
+
+        $normalized = implode( '/', $stack );
+
+        if ( preg_match( '/^[A-Za-z]:/', $path ) ) {
+            return $normalized;
+        }
+
+        if ( str_starts_with( $path, '/' ) ) {
+            return '/' . $normalized;
+        }
+
+        return $normalized;
+    }
 
 	// -------------------------------------------------------------
 }

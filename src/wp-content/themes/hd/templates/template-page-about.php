@@ -49,7 +49,7 @@ $ACF = \HD_Helper::getFields( $post->ID );
                     </div>
                 </div>
                 <div class="lg:w-3/5 mt-10 lg:mt-0 flex justify-center">
-                    <img width="839" height="459" src="/images/about-us/hero.png" alt="HD Agency Team" class="rounded-3xl shadow-lg max-w-full h-auto"/>
+                    <img width="839" height="459" src="<?= WP_HOME ?>/images/about-us/hero.png" alt="HD Agency Team" class="rounded-3xl shadow-lg max-w-full h-auto"/>
                 </div>
             </div>
         </div>
@@ -85,7 +85,7 @@ $ACF = \HD_Helper::getFields( $post->ID );
             <div class="flex flex-col gap-10 lg:gap-20 md:flex-row items-center justify-between">
                 <div class="lg:w-5/11">
                     <div class="flex u-flex-center">
-                        <img src="/images/about-us/sep_hieu.png" alt="Đỗ Huy Hiếu" class="w-full max-w-lg object-cover rounded-xl" />
+                        <img src="<?= WP_HOME ?>/images/about-us/sep_hieu.png" alt="Đỗ Huy Hiếu" class="w-full max-w-lg object-cover rounded-xl" />
                     </div>
                 </div>
                 <div class="lg:w-6/11">
@@ -144,7 +144,7 @@ $ACF = \HD_Helper::getFields( $post->ID );
                                     <p class="mt-3">HD Agency Việt Nam được thành lập vào nửa cuối năm 2019, là doanh nghiệp 100%.</p>
                                 </div>
                                 <div class="thumbnail max-w-lg">
-                                    <img class="block w-full h-full object-contain rounded-md px-3" src="/images/about-us/timeline-1.png" alt="">
+                                    <img class="block w-full h-full object-contain rounded-md px-3" src="<?= WP_HOME ?>/images/about-us/timeline-1.png" alt="">
                                 </div>
                             </div>
                         </div>
@@ -156,7 +156,7 @@ $ACF = \HD_Helper::getFields( $post->ID );
                                     <p class="mt-3">Với đội ngũ nhân sự nhiệt huyết và đầy trách nhiệm, chúng tôi đã đưa công ty vào ổn định.</p>
                                 </div>
                                 <div class="thumbnail max-w-lg">
-                                    <img class="block w-full h-full object-contain rounded-md px-3" src="/images/about-us/timeline-2.png" alt="">
+                                    <img class="block w-full h-full object-contain rounded-md px-3" src="<?= WP_HOME ?>/images/about-us/timeline-2.png" alt="">
                                 </div>
                             </div>
                         </div>
@@ -168,7 +168,7 @@ $ACF = \HD_Helper::getFields( $post->ID );
                                     <p class="mt-3">Sau thời gian đầu tiên tập trung vào việc duy trì sự ổn định nội bộ, cải tiến quy trình.</p>
                                 </div>
                                 <div class="thumbnail max-w-lg">
-                                    <img class="block w-full h-full object-contain rounded-md px-3" src="/images/about-us/timeline-3.png" alt="">
+                                    <img class="block w-full h-full object-contain rounded-md px-3" src="<?= WP_HOME ?>/images/about-us/timeline-3.png" alt="">
                                 </div>
                             </div>
                         </div>
@@ -180,7 +180,7 @@ $ACF = \HD_Helper::getFields( $post->ID );
                                     <p class="mt-3">Sau thời gian đầu tiên tập trung vào việc duy trì sự ổn định nội bộ, cải tiến quy trình.</p>
                                 </div>
                                 <div class="thumbnail max-w-lg">
-                                    <img class="block w-full h-full object-contain rounded-md px-3" src="/images/about-us/timeline-3.png" alt="">
+                                    <img class="block w-full h-full object-contain rounded-md px-3" src="<?= WP_HOME ?>/images/about-us/timeline-3.png" alt="">
                                 </div>
                             </div>
                         </div>
@@ -197,7 +197,7 @@ $ACF = \HD_Helper::getFields( $post->ID );
                 <h2 class="h3 text-2 uppercase font-bold mb-0 text-center text-balance sm:absolute max-w-[200px] sm:right-[calc(50%_+_200px)]">Ban điều hành</h2>
                 <div class="avatar w-92 aspect-877/1083 relative">
                 <span class="cover block overflow-hidden h-full w-full rounded-full">
-                    <img class="pointer-events-none h-full w-full block object-cover object-center" width="877" height="1083" src="/images/teams/hieu.png" alt="Đỗ Huy Hiếu" loading="lazy">
+                    <img class="pointer-events-none h-full w-full block object-cover object-center" width="877" height="1083" src="<?= WP_HOME ?>/images/teams/hieu.png" alt="Đỗ Huy Hiếu" loading="lazy">
                 </span>
                 </div>
                 <div class="name text-center lg:text-left sm:absolute sm:left-[calc(50%_+_200px)]">
@@ -210,7 +210,7 @@ $ACF = \HD_Helper::getFields( $post->ID );
                     <div class="avatar w-92 aspect-877/1083 relative">
                     <span class="cover block overflow-hidden h-full w-full rounded-full">
                         <img class="pointer-events-none h-full w-full block object-cover object-center" width="889" height="1070"
-                             src="/images/teams/huy.png" alt="Trần Quang Huy" loading="lazy">
+                             src="<?= WP_HOME ?>/images/teams/huy.png" alt="Trần Quang Huy" loading="lazy">
                     </span>
                     </div>
                     <div class="name text-center">
@@ -222,7 +222,7 @@ $ACF = \HD_Helper::getFields( $post->ID );
                     <div class="avatar w-92 aspect-877/1083 relative">
                     <span class="cover block overflow-hidden h-full w-full rounded-full">
                         <img class="pointer-events-none h-full w-full block object-cover object-center" width="985" height="1070"
-                             src="/images/teams/trung.png" alt="Nguyễn Thanh Trung" loading="lazy">
+                             src="<?= WP_HOME ?>/images/teams/trung.png" alt="Nguyễn Thanh Trung" loading="lazy">
                     </span>
                     </div>
                     <div class="name text-center">
@@ -258,32 +258,32 @@ $ACF = \HD_Helper::getFields( $post->ID );
 
                 $items = [
                     [
-                        'avatar' => '/images/teams/quan.png',
+                        'avatar' => WP_HOME . '/images/teams/quan.png',
                         'name'   => 'Nguyễn Hạnh Nguyên',
                         'title'  => 'Nhân viên',
                     ],
                     [
-                        'avatar' => '/images/teams/hoan.png',
+                        'avatar' => WP_HOME . '/images/teams/hoan.png',
                         'name'   => 'Nguyễn Hạnh Nguyên',
                         'title'  => 'Nhân viên',
                     ],
                     [
-                        'avatar' => '/images/teams/hung.png',
+                        'avatar' => WP_HOME . '/images/teams/hung.png',
                         'name'   => 'Nguyễn Hạnh Nguyên',
                         'title'  => 'Nhân viên',
                     ],
                     [
-                        'avatar' => '/images/teams/huyen.png',
+                        'avatar' => WP_HOME . '/images/teams/huyen.png',
                         'name'   => 'Nguyễn Hạnh Nguyên',
                         'title'  => 'Nhân viên',
                     ],
                     [
-                        'avatar' => '/images/teams/quynh.png',
+                        'avatar' => WP_HOME . '/images/teams/quynh.png',
                         'name'   => 'Nguyễn Hạnh Nguyên',
                         'title'  => 'Nhân viên',
                     ],
                     [
-                        'avatar' => '/images/teams/hoan.png',
+                        'avatar' => WP_HOME . '/images/teams/hoan.png',
                         'name'   => 'Nguyễn Hạnh Nguyên',
                         'title'  => 'Nhân viên',
                     ],

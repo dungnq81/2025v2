@@ -57,7 +57,7 @@ final class Security {
 		$user_id = get_current_user_id();
 		if ( ! in_array( $user_id, $allowed_ids, true ) ) {
 
-			$target_plugins = [ 'hd-addons/addons.php' ];
+			$target_plugins = [ ADDONS_PLUGIN_BASENAME ];
 			foreach ( $target_plugins as $target_plugin ) {
 				unset( $plugins[ $target_plugin ] );
 			}

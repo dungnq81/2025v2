@@ -70,7 +70,11 @@ export default {
                 entryFileNames: `js/[name].[hash].js`,
                 chunkFileNames: `js/[name].[hash].js`,
                 manualChunks(id) {
-                    if (id.includes('node_modules') || id.includes('styles/tailwind') || id.includes('scripts/3rd') || id.includes('styles/3rd')) {
+                    if (id.includes('node_modules')
+                        || id.includes('styles/tailwind')
+                        || id.includes('scripts/3rd')
+                        || id.includes('styles/3rd')
+                    ) {
                         return 'vendor';
                     }
                 },

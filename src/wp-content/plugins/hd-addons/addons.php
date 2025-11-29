@@ -17,8 +17,9 @@ defined( 'ABSPATH' ) || exit;
 const ADDONS_VERSION    = '1.11.0';
 const ADDONS_TEXTDOMAIN = 'hd-addon';
 
-define( 'ADDONS_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) . DIRECTORY_SEPARATOR );
-define( 'ADDONS_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) . '/' );
+define( 'ADDONS_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) . DIRECTORY_SEPARATOR ); // /**/wp-content/plugins/hd-addons/
+define( 'ADDONS_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) . '/' ); // https://**/wp-content/plugins/hd-addons/
+define( 'ADDONS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) ); // hd-addons/addons.php
 
 add_action( 'plugins_loaded', '_addons_init', 10 );
 function _addons_init(): void {

@@ -52,7 +52,7 @@ final class LazyLoad {
 		}
 
 		// Bail if the current browser runs on a mobile device and the lazy-load on mobile is deactivated.
-		if ( ! $lazyload_mobile && \Addons\Helper::isMobile() ) {
+		if ( ! $lazyload_mobile && wp_is_mobile() ) {
 			return;
 		}
 

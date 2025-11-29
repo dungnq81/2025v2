@@ -182,39 +182,14 @@ trait Base {
     // --------------------------------------------------
 
     /**
-     * @return bool
-     */
-    public static function isMobile(): bool {
-        // Fallback to WordPress function
-        return wp_is_mobile();
-    }
-
-    // --------------------------------------------------
-
-    /**
      * @param string $version
      *
      * @return bool
      */
-    public static function isPhp( string $version = '8.2' ): bool {
+    public static function isPhp( string $version = '8.3' ): bool {
         static $cache = [];
 
         return $cache[ $version ] ??= version_compare( PHP_VERSION, $version, '>=' );
-    }
-
-    // --------------------------------------------------
-
-    /**
-     * @param mixed $input
-     *
-     * @return bool
-     */
-    public static function isInteger( mixed $input ): bool {
-        if ( is_int( $input ) ) {
-            return true;
-        }
-
-        return is_string( $input ) && filter_var( $input, FILTER_VALIDATE_INT ) !== false;
     }
 
     // --------------------------------------------------
@@ -231,21 +206,6 @@ trait Base {
 
         // Check for numeric and boolean values, and use empty() for others
         return ! is_numeric( $value ) && ! is_bool( $value ) && empty( $value );
-    }
-
-    // -------------------------------------------------------------
-
-    /**
-     * Determines whether the current request is a WP_CLI request.
-     *
-     * This function checks if the WP_CLI constant is defined and true,
-     * indicating that the code is being executed in the context of
-     * the WordPress Command Line Interface.
-     *
-     * @return bool True if the current request is a WP_CLI request, false otherwise.
-     */
-    public static function isWpCli(): bool {
-        return defined( 'WP_CLI' ) && \WP_CLI;
     }
 
     // -------------------------------------------------------------
@@ -304,17 +264,28 @@ trait Base {
      * @return bool
      */
     public static function checkPluginActive( string $plugin_file ): bool {
-        self::ensurePluginFunctions();
-
-        if (
-            \function_exists( 'is_plugin_active_for_network' )
-            && \is_multisite()
-            && \is_plugin_active_for_network( $plugin_file )
-        ) {
+        if ( \is_multisite() && \is_plugin_active_for_network( $plugin_file ) ) {
             return true;
         }
 
+        self::ensurePluginFunctions();
+
         return \is_plugin_active( $plugin_file );
+    }
+
+    // -------------------------------------------------------------
+
+    /**
+     * @param string $plugin_file
+     *
+     * @return bool
+     */
+    public static function checkNetworkActive( string $plugin_file ): bool {
+        if ( ! is_multisite() ) {
+            return false;
+        }
+
+        return is_plugin_active_for_network( $plugin_file );
     }
 
     // -------------------------------------------------------------

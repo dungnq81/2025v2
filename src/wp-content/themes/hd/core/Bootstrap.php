@@ -49,11 +49,11 @@ final class Bootstrap {
      * @return void
      */
     public function clearCache(): void {
-        if ( isset( $_GET['clear_cache'] ) ) {
+        if ( ! empty( $_GET['clear_cache'] ) ) {
             Helper::clearAllCache();
             set_transient( '_clear_cache_message', __( 'Cache has been successfully cleared.', TEXT_DOMAIN ), 30 );
 
-            echo <<<'HTML'
+            echo <<<HTML
                 <script>
                     const currentUrl = window.location.href;
                     if (currentUrl.includes('clear_cache=1')) {

@@ -34,6 +34,11 @@ trait Wp {
         $hook_name  = 'enqueue_assets_blocks_' . $block_slug;
         do_action( $hook_name );
 
+        // Disable cache inside The Loop
+        if ( function_exists( 'in_the_loop' ) && in_the_loop() ) {
+            $use_cache = false;
+        }
+
         if ( ! $use_cache ) {
             ob_start();
             get_template_part( $slug, null, $args );
@@ -46,7 +51,7 @@ trait Wp {
         $cached_output = wp_cache_get( $cache_key, 'hd_block_cache' );
 
         if ( $cached_output !== false && is_string( $cached_output ) && $cached_output !== '' ) {
-            if ( mb_strlen( $cached_output, 'UTF-8' ) <= 1024 * 30 ) { // 30kb
+            if ( mb_strlen( $cached_output, 'UTF-8' ) <= 1024 * 10 ) { // 10kb
                 echo $cached_output;
 
                 return;
@@ -60,7 +65,7 @@ trait Wp {
         get_template_part( $slug, null, $args );
         $output = ob_get_clean();
 
-        if ( ! empty( $output ) && mb_strlen( $output, 'UTF-8' ) <= 1024 * 30 ) {
+        if ( ! empty( $output ) && mb_strlen( $output, 'UTF-8' ) <= 1024 * 10 ) {
             wp_cache_set( $cache_key, $output, 'hd_block_cache', $cache_in_hours * HOUR_IN_SECONDS );
         }
 
@@ -627,29 +632,32 @@ trait Wp {
     /**
      * @param string $option
      * @param mixed $default
+     * @param bool $network
      * @param int $cache_in_hours
      *
      * @return mixed
      */
-    public static function getOption( string $option, mixed $default = false, int $cache_in_hours = 12 ): mixed {
+    public static function getOption( string $option, mixed $default = false, bool $network = false, int $cache_in_hours = 12 ): mixed {
         $option = strtolower( trim( $option ) );
         if ( empty( $option ) ) {
             return $default;
         }
 
-        $site_id   = is_multisite() ? get_current_blog_id() : null;
-        $cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
-
-        $cached_value = wp_cache_get( $cache_key, 'hd_option_cache' );
-        if ( $cached_value !== false ) {
-            return $cached_value;
+        $site_id   = $network ? 0 : get_current_blog_id();
+        $cache_key = "hd_option_{$site_id}_{$option}";
+        $cached    = wp_cache_get( $cache_key, 'hd_option_cache' );
+        if ( $cached !== false ) {
+            return $cached;
         }
 
-        $option_value = is_multisite() ? get_site_option( $option, $default ) : get_option( $option, $default );
-        wp_cache_set( $cache_key, $option_value, 'hd_option_cache', $cache_in_hours * HOUR_IN_SECONDS );
+        $value = $network
+            ? get_site_option( $option, $default )
+            : get_option( $option, $default );
+
+        wp_cache_set( $cache_key, $value, 'hd_option_cache', $cache_in_hours * HOUR_IN_SECONDS );
 
         // Retrieve the option value
-        return $option_value;
+        return $value;
     }
 
     // -------------------------------------------------------------
@@ -657,22 +665,23 @@ trait Wp {
     /**
      * @param string $option
      * @param mixed $new_value
+     * @param bool $network
      * @param int $cache_in_hours
      * @param bool|null $autoload
      *
      * @return bool
      */
-    public static function updateOption( string $option, mixed $new_value, int $cache_in_hours = 12, ?bool $autoload = null ): bool {
+    public static function updateOption( string $option, mixed $new_value, bool $network = false, int $cache_in_hours = 12, ?bool $autoload = null ): bool {
         $option = strtolower( trim( $option ) );
         if ( empty( $option ) ) {
             return false;
         }
 
-        $site_id   = is_multisite() ? get_current_blog_id() : null;
-        $cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
-
-        // Update the option in the appropriate context (multisite or not)
-        $updated = is_multisite() ? update_site_option( $option, $new_value ) : update_option( $option, $new_value, $autoload );
+        $site_id   = $network ? 0 : get_current_blog_id();
+        $cache_key = "hd_option_{$site_id}_{$option}";
+        $updated   = $network
+            ? update_site_option( $option, $new_value )
+            : update_option( $option, $new_value, $autoload );
 
         if ( $updated ) {
             wp_cache_set( $cache_key, $new_value, 'hd_option_cache', $cache_in_hours * HOUR_IN_SECONDS );
@@ -685,20 +694,23 @@ trait Wp {
 
     /**
      * @param string $option
+     * @param bool $network
      *
      * @return bool
      */
-    public static function removeOption( string $option ): bool {
+    public static function removeOption( string $option, bool $network = false ): bool {
         $option = strtolower( trim( $option ) );
         if ( empty( $option ) ) {
             return false;
         }
 
-        $site_id   = is_multisite() ? get_current_blog_id() : null;
-        $cache_key = $site_id ? "hd_site_option_{$site_id}_{$option}" : "hd_option_{$option}";
+        $site_id   = $network ? 0 : get_current_blog_id();
+        $cache_key = "hd_option_{$site_id}_{$option}";
 
-        // Remove the option from the appropriate context (multisite or not)
-        $removed = is_multisite() ? delete_site_option( $option ) : delete_option( $option );
+        $removed = $network
+            ? delete_site_option( $option )
+            : delete_option( $option );
+
         if ( $removed ) {
             wp_cache_delete( $cache_key, 'hd_option_cache' );
         }
@@ -1013,7 +1025,7 @@ trait Wp {
     /**
      * Query posts by multiple terms.
      *
-     * @param array|null $term_ids
+     * @param mixed $term_ids
      * @param string|bool $post_type
      * @param string $taxonomy
      * @param int|null $limit
@@ -1027,7 +1039,7 @@ trait Wp {
      * @return \WP_Query|false|array
      */
     public static function queryByTerms(
-        ?array $term_ids,
+        mixed $term_ids,
         string|bool $post_type = 'post',
         string $taxonomy = '',
         ?int $limit = 12,
@@ -1038,12 +1050,12 @@ trait Wp {
         string $order = 'DESC',
         int $cache_expire = 600,
     ): \WP_Query|false|array {
-        $term_ids    = array_values( array_unique( array_map( 'intval', $term_ids ) ) );
-        $exclude_ids = array_values( array_unique( array_map( 'intval', $exclude_ids ) ) );
-
-        if ( empty( $term_ids ) ) {
+        if ( empty( $term_ids ) || ! is_array( $term_ids ) ) {
             return false;
         }
+
+        $term_ids    = array_values( array_unique( array_map( 'intval', $term_ids ) ) );
+        $exclude_ids = array_values( array_unique( array_map( 'intval', $exclude_ids ) ) );
 
         if ( ! $taxonomy ) {
             $taxonomy = ( $post_type === 'product' ) ? 'product_cat' : 'category';
@@ -1193,6 +1205,7 @@ trait Wp {
     ): \WP_Query|false|array {
         $exclude_ids    = array_values( array_unique( array_map( 'intval', $exclude_ids ) ) );
         $posts_per_page = max( (int) $posts_per_page, - 1 );
+
         if ( $posts_per_page === - 1 ) {
             $posts_per_page = 100;
         }
@@ -1585,11 +1598,10 @@ trait Wp {
      * @param mixed|null $post
      * @param string|null $class
      * @param string|null $default_tag
-     * @param string|null $fa_glyph
      *
      * @return string|null
      */
-    public static function postExcerpt( mixed $post = null, ?string $class = 'excerpt', ?string $default_tag = 'div', ?string $fa_glyph = '' ): ?string {
+    public static function postExcerpt( mixed $post = null, ?string $class = 'excerpt', ?string $default_tag = 'p' ): ?string {
         $post = get_post( $post );
         if ( ! $post || ! self::stripSpace( $post->post_excerpt ) ) {
             return null;
@@ -1597,16 +1609,11 @@ trait Wp {
 
         $open  = '';
         $close = '';
-        $glyph = '';
-
-        if ( $fa_glyph ) {
-            $glyph = ' data-fa="' . $fa_glyph . '"';
-        }
 
         if ( $class ) {
             $tag = $default_tag ?? 'div';
 
-            $open  = '<' . $tag . ' class="' . $class . '"' . $glyph . '>';
+            $open  = '<' . $tag . ' class="' . $class . '">';
             $close = '</' . $tag . '>';
         }
 

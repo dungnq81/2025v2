@@ -119,7 +119,7 @@ Options -Indexes
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-    RewriteBase /
+    RewriteBase /webhd/
     RewriteRule ^index\.php$ - [L]
 
     # Add trailing slash to /wp-admin
@@ -135,7 +135,7 @@ Options -Indexes
     RewriteRule ^([_0-9a-zA-Z-]+/)?(.*\.php)$ src/$2 [L]
 
     # load index.php in root
-    RewriteRule . /index.php [L]
+    RewriteRule . index.php [L]
 </IfModule>
 # END Theme
 

@@ -114,10 +114,7 @@ final class Theme {
         global $wp_widget_factory;
 
         // Remove the styling added to the header for recent comments
-        remove_action( 'wp_head', [
-            $wp_widget_factory->widgets['WP_Widget_Recent_Comments'],
-            'recent_comments_style',
-        ] );
+        remove_action( 'wp_head', [ $wp_widget_factory->widgets['WP_Widget_Recent_Comments'], 'recent_comments_style', ] );
 
         // Unregister all default WordPress widgets
         foreach ( $wp_widget_factory->widgets as $class => $widget ) {

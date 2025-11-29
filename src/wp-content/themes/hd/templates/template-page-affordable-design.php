@@ -62,7 +62,7 @@ if ( have_posts() ) {
         </div>
         <div class="relative mx-auto w-full max-w-7xl mt-10">
             <div class="rounded-[40px]">
-                <img class="h-full w-full object-cover block" height="1409" width="2389" src="/images/affordable/hero-1.webp" alt="Thiết kế web giá rẻ">
+                <img class="h-full w-full object-cover block" height="1409" width="2389" src="<?= WP_HOME ?>/images/affordable/hero-1.webp" alt="Thiết kế web giá rẻ">
             </div>
             <div class="absolute -top-6 -right-6 rounded-md bg-white/95 px-4 py-3 ring-1 ring-gray-200 shadow-lg backdrop-blur">
                 <p class="text-xs text-gray-500 mb-2">Minh hoạ</p>
@@ -79,7 +79,7 @@ if ( have_posts() ) {
         <div class="mt-10 flex flex-wrap justify-center gap-6">
             <div class="w-full md:w-[calc((100%-3rem)/3)] rounded-2xl border border-gray-200 dark:border-gray-700 c-hover hover:border-(--text-color-1)/32 bg-(--bg-color) p-6 shadow-xl">
                 <div class="u-inline-flex-center size-20 rounded-xl bg-(--text-color-1)/8 ring-1 ring-(--text-color-1)/32">
-                    <img class="size-12" width="93" height="94" src="/images/icons/tiet-kiem.webp" alt="Tiết kiệm ngân sách">
+                    <img class="size-12" width="93" height="94" src="<?= WP_HOME ?>/images/icons/tiet-kiem.webp" alt="Tiết kiệm ngân sách">
                 </div>
                 <h3 class="h6 mt-6 font-bold">Tiết kiệm ngân sách quảng cáo</h3>
                 <div class="mt-2 text-[15px] text-gray-600 dark:text-gray-400">
@@ -88,7 +88,7 @@ if ( have_posts() ) {
             </div>
             <div class="w-full md:w-[calc((100%-3rem)/3)] rounded-2xl border border-gray-200 dark:border-gray-700 c-hover hover:border-(--text-color-1)/32 bg-(--bg-color) p-6 shadow-xl">
                 <div class="u-inline-flex-center size-20 rounded-xl bg-(--text-color-1)/8 ring-1 ring-(--text-color-1)/32">
-                    <img class="size-12" width="83" height="82" src="/images/icons/hieu-suat.webp" alt="Tăng cường hiệu suất kinh doanh">
+                    <img class="size-12" width="83" height="82" src="<?= WP_HOME ?>/images/icons/hieu-suat.webp" alt="Tăng cường hiệu suất kinh doanh">
                 </div>
                 <h3 class="h6 mt-6 font-bold">Tăng cường hiệu suất kinh doanh</h3>
                 <div class="mt-2 text-[15px] text-gray-600 dark:text-gray-400">
@@ -97,7 +97,7 @@ if ( have_posts() ) {
             </div>
             <div class="w-full md:w-[calc((100%-3rem)/3)] rounded-2xl border border-gray-200 dark:border-gray-700 c-hover hover:border-(--text-color-1)/32 bg-(--bg-color) p-6 shadow-xl">
                 <div class="u-inline-flex-center size-20 rounded-xl bg-(--text-color-1)/8 ring-1 ring-(--text-color-1)/32">
-                    <img class="size-12" width="80" height="69" src="/images/icons/nhanh-chong.webp" alt="Nhanh chóng">
+                    <img class="size-12" width="80" height="69" src="<?= WP_HOME ?>/images/icons/nhanh-chong.webp" alt="Nhanh chóng">
                 </div>
                 <h3 class="h6 mt-6 font-bold">Nhanh chóng sở hữu website</h3>
                 <div class="mt-2 text-[15px] text-gray-600 dark:text-gray-400">
@@ -106,7 +106,7 @@ if ( have_posts() ) {
             </div>
             <div class="w-full md:w-[calc((100%-3rem)/3)] rounded-2xl border border-gray-200 dark:border-gray-700 c-hover hover:border-(--text-color-1)/32 bg-(--bg-color) p-6 shadow-xl">
                 <div class="u-inline-flex-center size-20 rounded-xl bg-(--text-color-1)/8 ring-1 ring-(--text-color-1)/32">
-                    <img class="size-12" width="93" height="90" src="/images/icons/nhu-cau.webp" alt="Nhu cầu cơ bản">
+                    <img class="size-12" width="93" height="90" src="<?= WP_HOME ?>/images/icons/nhu-cau.webp" alt="Nhu cầu cơ bản">
                 </div>
                 <h3 class="h6 mt-6 font-bold">Phù hợp với nhu cầu cơ bản</h3>
                 <div class="mt-2 text-[15px] text-gray-600 dark:text-gray-400">
@@ -115,7 +115,7 @@ if ( have_posts() ) {
             </div>
             <div class="w-full md:w-[calc((100%-3rem)/3)] rounded-2xl border border-gray-200 dark:border-gray-700 c-hover hover:border-(--text-color-1)/32 bg-(--bg-color) p-6 shadow-xl">
                 <div class="u-inline-flex-center size-20 rounded-xl bg-(--text-color-1)/8 ring-1 ring-(--text-color-1)/32">
-                    <img class="size-12" width="81" height="78" src="/images/icons/de-dang.webp" alt="Dễ dàng quản lý">
+                    <img class="size-12" width="81" height="78" src="<?= WP_HOME ?>/images/icons/de-dang.webp" alt="Dễ dàng quản lý">
                 </div>
                 <h3 class="h6 mt-6 font-bold">Dễ dàng quản lý website</h3>
                 <div class="mt-2 text-[15px] text-gray-600 dark:text-gray-400">
@@ -413,12 +413,12 @@ if ( have_posts() ) {
                     </div>
                 </div>
                 <div class="order-1 md:order-2 text-center">
-                    <img class="w-full max-w-[450px] inline-block rounded-[40px] ring-0 ring-gray-600 shadow-2xl" src="/images/steps/1.webp" alt="Khảo sát">
+                    <img class="w-full max-w-[450px] inline-block rounded-[40px] ring-0 ring-gray-600 shadow-2xl" src="<?= WP_HOME ?>/images/steps/1.webp" alt="Khảo sát">
                 </div>
             </li>
             <li class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-x-16 items-center">
                 <div class="text-center">
-                    <img class="w-full max-w-[450px] inline-block rounded-[40px] ring-0 ring-gray-600 shadow-2xl" src="/images/steps/2.webp" alt="Wireframe">
+                    <img class="w-full max-w-[450px] inline-block rounded-[40px] ring-0 ring-gray-600 shadow-2xl" src="<?= WP_HOME ?>/images/steps/2.webp" alt="Wireframe">
                 </div>
                 <div>
                     <span class="inline-flex items-center border border-(--text-color-1) text-1 rounded-full px-6 py-3 text-base font-semibold uppercase">Bước 2.</span>
@@ -441,12 +441,12 @@ if ( have_posts() ) {
                     </div>
                 </div>
                 <div class="order-1 md:order-2 text-center">
-                    <img class="w-full max-w-[450px] inline-block rounded-[40px] ring-0 ring-gray-600 shadow-2xl" src="/images/steps/3.webp" alt="Thiết kế UI">
+                    <img class="w-full max-w-[450px] inline-block rounded-[40px] ring-0 ring-gray-600 shadow-2xl" src="<?= WP_HOME ?>/images/steps/3.webp" alt="Thiết kế UI">
                 </div>
             </li>
             <li class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-x-16 items-center">
                 <div class="text-center">
-                    <img class="w-full max-w-[450px] inline-block rounded-[40px] ring-0 ring-gray-600 shadow-2xl" src="/images/steps/4.webp" alt="Kiểm thử & tối ưu">
+                    <img class="w-full max-w-[450px] inline-block rounded-[40px] ring-0 ring-gray-600 shadow-2xl" src="<?= WP_HOME ?>/images/steps/4.webp" alt="Kiểm thử & tối ưu">
                 </div>
                 <div>
                     <span class="inline-flex items-center border border-(--text-color-1) text-1 rounded-full px-6 py-3 text-base font-semibold uppercase">Bước 4.</span>
@@ -468,12 +468,12 @@ if ( have_posts() ) {
                     </div>
                 </div>
                 <div class="order-1 md:order-2 text-center">
-                    <img class="w-full max-w-[450px] inline-block rounded-[40px] ring-0 ring-gray-600 shadow-2xl" src="/images/steps/5.webp" alt="Cập nhật nội dung">
+                    <img class="w-full max-w-[450px] inline-block rounded-[40px] ring-0 ring-gray-600 shadow-2xl" src="<?= WP_HOME ?>/images/steps/5.webp" alt="Cập nhật nội dung">
                 </div>
             </li>
             <li class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-x-16 items-center">
                 <div class="text-center">
-                    <img class="w-full max-w-[450px] inline-block rounded-[40px] ring-0 ring-gray-600 shadow-2xl" src="/images/steps/2.webp" alt="Bàn giao & hướng dẫn sử dụng">
+                    <img class="w-full max-w-[450px] inline-block rounded-[40px] ring-0 ring-gray-600 shadow-2xl" src="<?= WP_HOME ?>/images/steps/2.webp" alt="Bàn giao & hướng dẫn sử dụng">
                 </div>
                 <div>
                     <span class="inline-flex items-center border border-(--text-color-1) text-1 rounded-full px-6 py-3 text-base font-semibold uppercase">Bước 6.</span>
@@ -497,7 +497,7 @@ if ( have_posts() ) {
                     </div>
                 </div>
                 <div class="order-1 md:order-2 text-center">
-                    <img class="w-full max-w-[450px] inline-block rounded-[40px] ring-0 ring-gray-600 shadow-2xl" src="/images/steps/3.webp" alt="Bảo hành & đồng hành">
+                    <img class="w-full max-w-[450px] inline-block rounded-[40px] ring-0 ring-gray-600 shadow-2xl" src="<?= WP_HOME ?>/images/steps/3.webp" alt="Bảo hành & đồng hành">
                 </div>
             </li>
         </ol>

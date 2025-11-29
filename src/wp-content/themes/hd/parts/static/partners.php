@@ -14,112 +14,112 @@ $desc  = ! empty( $args['title'] ) ? $args['desc'] : '';
         <?php
         $items_1 = [
 	        [
-		        'img'    => '/images/partners/1/cropped-logo-inminhkhang-1.webp',
+		        'img'    => WP_HOME . '/images/partners/1/cropped-logo-inminhkhang-1.webp',
 		        'width'  => '1000',
 		        'height' => '448',
                 'alt'    => '',
 		        'link'   => ''
 	        ],
 	        [
-		        'img'    => '/images/partners/1/cropped-logo-inthanhtien.webp',
+		        'img'    => WP_HOME . '/images/partners/1/cropped-logo-inthanhtien.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
 	        [
-		        'img'    => '/images/partners/1/logo-allian.webp',
+		        'img'    => WP_HOME . '/images/partners/1/logo-allian.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
 	        [
-		        'img'    => '/images/partners/1/logo-CND.webp',
+		        'img'    => WP_HOME . '/images/partners/1/logo-CND.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
 	        [
-		        'img'    => '/images/partners/1/logo-dona-gift.webp',
+		        'img'    => WP_HOME . '/images/partners/1/logo-dona-gift.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
 	        [
-		        'img'    => '/images/partners/1/logo-etech.webp',
+		        'img'    => WP_HOME . '/images/partners/1/logo-etech.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
 	        [
-		        'img'    => '/images/partners/1/logo-gafo-milk.webp',
+		        'img'    => WP_HOME . '/images/partners/1/logo-gafo-milk.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
 	        [
-		        'img'    => '/images/partners/1/logo-green-nutri.webp',
+		        'img'    => WP_HOME . '/images/partners/1/logo-green-nutri.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
 	        [
-		        'img'    => '/images/partners/1/logo-hacsan.webp',
+		        'img'    => WP_HOME . '/images/partners/1/logo-hacsan.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
 	        [
-		        'img'    => '/images/partners/1/logo-hmg.webp',
+		        'img'    => WP_HOME . '/images/partners/1/logo-hmg.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
 	        [
-		        'img'    => '/images/partners/1/logo-khai-phuc.webp',
+		        'img'    => WP_HOME . '/images/partners/1/logo-khai-phuc.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
 	        [
-		        'img'    => '/images/partners/1/logo-kovamara.webp',
+		        'img'    => WP_HOME . '/images/partners/1/logo-kovamara.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
 	        [
-		        'img'    => '/images/partners/1/logo-me-since.webp',
+		        'img'    => WP_HOME . '/images/partners/1/logo-me-since.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
 	        [
-		        'img'    => '/images/partners/1/logo-Rart.webp',
+		        'img'    => WP_HOME . '/images/partners/1/logo-Rart.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
 	        [
-		        'img'    => '/images/partners/1/logo-saigon-milk.webp',
+		        'img'    => WP_HOME . '/images/partners/1/logo-saigon-milk.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
 	        [
-		        'img'    => '/images/partners/1/logo-tu-van-ACC.webp',
+		        'img'    => WP_HOME . '/images/partners/1/logo-tu-van-ACC.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
@@ -129,140 +129,140 @@ $desc  = ! empty( $args['title'] ) ? $args['desc'] : '';
 
         $items_2 = [
 	        [
-		        'img'    => '/images/partners/2/logo-bb-racing.webp',
+		        'img'    => WP_HOME . '/images/partners/2/logo-bb-racing.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
 	        [
-		        'img'    => '/images/partners/2/logo-bidridco.webp',
+		        'img'    => WP_HOME . '/images/partners/2/logo-bidridco.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
             [
-		        'img'    => '/images/partners/2/logo-breaktalk.webp',
+		        'img'    => WP_HOME . '/images/partners/2/logo-breaktalk.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
             [
-		        'img'    => '/images/partners/2/logo-dochi-office.webp',
+		        'img'    => WP_HOME . '/images/partners/2/logo-dochi-office.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
             [
-		        'img'    => '/images/partners/2/logo-dona-tourist-1.webp',
+		        'img'    => WP_HOME . '/images/partners/2/logo-dona-tourist-1.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
             [
-		        'img'    => '/images/partners/2/logo-du-lich-hoan-my-1.webp',
+		        'img'    => WP_HOME . '/images/partners/2/logo-du-lich-hoan-my-1.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
             [
-		        'img'    => '/images/partners/2/logo-em-biet-doc-1.webp',
+		        'img'    => WP_HOME . '/images/partners/2/logo-em-biet-doc-1.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
             [
-		        'img'    => '/images/partners/2/logo-gocons.png',
+		        'img'    => WP_HOME . '/images/partners/2/logo-gocons.png',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
             [
-		        'img'    => '/images/partners/2/logo-hucons.webp',
+		        'img'    => WP_HOME . '/images/partners/2/logo-hucons.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
             [
-		        'img'    => '/images/partners/2/logo-metalix.webp',
+		        'img'    => WP_HOME . '/images/partners/2/logo-metalix.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
             [
-		        'img'    => '/images/partners/2/logo-new.webp',
+		        'img'    => WP_HOME . '/images/partners/2/logo-new.webp',
 		        'width'  => '150',
 		        'height' => '118',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
             [
-		        'img'    => '/images/partners/2/logo-nu-cuoi-duyen.webp',
+		        'img'    => WP_HOME . '/images/partners/2/logo-nu-cuoi-duyen.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
             [
-		        'img'    => '/images/partners/2/logo-thanh-tam.webp',
+		        'img'    => WP_HOME . '/images/partners/2/logo-thanh-tam.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
             [
-		        'img'    => '/images/partners/2/LOGO-TRIBECO.webp',
+		        'img'    => WP_HOME . '/images/partners/2/LOGO-TRIBECO.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
             [
-		        'img'    => '/images/partners/2/logo-v-holding.webp',
+		        'img'    => WP_HOME . '/images/partners/2/logo-v-holding.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
             [
-		        'img'    => '/images/partners/2/logo-viet-my.webp',
+		        'img'    => WP_HOME . '/images/partners/2/logo-viet-my.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
             [
-		        'img'    => '/images/partners/2/logobitex-768x448-6028.webp',
+		        'img'    => WP_HOME . '/images/partners/2/logobitex-768x448-6028.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
             [
-		        'img'    => '/images/partners/2/logocafe-control-768x448-3725.webp',
+		        'img'    => WP_HOME . '/images/partners/2/logocafe-control-768x448-3725.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
             [
-		        'img'    => '/images/partners/2/logodaidongtien-768x448-71611.webp',
+		        'img'    => WP_HOME . '/images/partners/2/logodaidongtien-768x448-71611.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
 		        'link'   => ''
 	        ],
             [
-		        'img'    => '/images/partners/2/logomitsubishi.webp',
+		        'img'    => WP_HOME . '/images/partners/2/logomitsubishi.webp',
 		        'width'  => '1000',
 		        'height' => '448',
 		        'alt'    => '',
