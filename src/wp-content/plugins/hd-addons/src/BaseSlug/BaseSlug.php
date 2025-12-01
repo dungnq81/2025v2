@@ -11,13 +11,10 @@ final class BaseSlug {
     private mixed $base_slug_post_type;
     private mixed $base_slug_taxonomy;
 
-    private bool $is_network;
-
     // ------------------------------------------------------
 
     public function __construct() {
-        $this->is_network          = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
-        $base_slug_options         = Helper::getOption( 'base_slug__options', [], $this->is_network );
+        $base_slug_options         = Helper::getOption( 'base_slug__options', [] );
         $this->base_slug_post_type = $base_slug_options['base_slug_post_type'] ?? [];
         $this->base_slug_taxonomy  = $base_slug_options['base_slug_taxonomy'] ?? [];
 
@@ -277,7 +274,7 @@ final class BaseSlug {
             'base_slug_taxonomy'  => [],
         ];
 
-        Helper::updateOption( 'base_slug__options', $custom_base_slug_options, $this->is_network );
+        Helper::updateOption( 'base_slug__options', $custom_base_slug_options );
 
         $this->flush_rules();
     }

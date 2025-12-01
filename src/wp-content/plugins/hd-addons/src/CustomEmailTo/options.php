@@ -5,8 +5,7 @@ use Addons\Helper;
 
 \defined( 'ABSPATH' ) || exit;
 
-$is_network           = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
-$emails_options       = \Addons\Helper::getOption( 'custom_email_to__options', [], $is_network );
+$emails_options       = \Addons\Helper::getOption( 'custom_email_to__options', [] );
 $filter_custom_emails = \Addons\Helper::filterSettingOptions( 'custom_emails', [] );
 
 ?>

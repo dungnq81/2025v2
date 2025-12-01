@@ -7,8 +7,7 @@ defined( 'ABSPATH' ) || exit;
 
 $upload_max_filesize    = ( ini_get( 'upload_max_filesize' ) !== false ) ? ini_get( 'upload_max_filesize' ) : '2M';
 $upload_max_filesize_MB = Helper::convertToMB( $upload_max_filesize );
-$is_network             = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
-$file_options           = Helper::getOption( 'file__options', [], $is_network );
+$file_options           = Helper::getOption( 'file__options', [] );
 $upload_size_limit      = $file_options['upload_size_limit'] ?? '';
 $svgs                   = $file_options['svgs'] ?? 'disable';
 $svg_options            = [

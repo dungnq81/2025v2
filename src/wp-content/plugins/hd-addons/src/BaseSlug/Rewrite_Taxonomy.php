@@ -11,8 +11,7 @@ class Rewrite_Taxonomy {
     private mixed $base_slug_taxonomy;
 
     public function __construct() {
-        $is_network               = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
-        $custom_base_slug_options = Helper::getOption( 'base_slug__options', [], $is_network );
+        $custom_base_slug_options = Helper::getOption( 'base_slug__options', [] );
         $this->base_slug_taxonomy = $custom_base_slug_options['base_slug_taxonomy'] ?? [];
     }
 

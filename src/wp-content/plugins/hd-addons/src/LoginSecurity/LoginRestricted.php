@@ -12,12 +12,9 @@ class LoginRestricted {
 	public ?array $allowlist_ips = [];
 	public ?array $blocked_ips = [];
 
-    private bool $is_network;
-
 	/* ---------- CONSTRUCT ----------------------------------------------- */
 
     public function __construct() {
-        $this->is_network = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
         add_action( 'login_init', [ $this, 'restrictLoginToIps' ], PHP_INT_MIN );
     }
 
@@ -42,7 +39,7 @@ class LoginRestricted {
 			}
 
 			// Update the total blocked logins counter.
-			Helper::updateOption( '_security_total_blocked_logins', (int) Helper::getOption( '_security_total_blocked_logins', 0, $this->is_network ) + 1, $this->is_network );
+			Helper::updateOption( '_security_total_blocked_logins', (int) Helper::getOption( '_security_total_blocked_logins', 0 ) + 1 );
 
 			Helper::errorLog( 'Restricted login page: access currently not permitted - ' . $user_ip );
 			Helper::wpDie(
@@ -61,7 +58,7 @@ class LoginRestricted {
 			foreach ( $this->blocked_ips as $blocked_ip ) {
 				if ( $this->_ipInRange( $user_ip, $blocked_ip ) ) {
 					// Update the total blocked logins counter.
-					Helper::updateOption( '_security_total_blocked_logins', (int) Helper::getOption( '_security_total_blocked_logins', 0, $this->is_network ) + 1, $this->is_network );
+					Helper::updateOption( '_security_total_blocked_logins', (int) Helper::getOption( '_security_total_blocked_logins', 0 ) + 1 );
 
 					Helper::errorLog( 'Restricted login page: access currently not permitted - ' . $user_ip );
 					Helper::wpDie(
@@ -86,7 +83,7 @@ class LoginRestricted {
 	 * @return bool
 	 */
 	private function _restricted(): bool {
-		$_options             = Helper::getOption( 'login_security__options', [], $this->is_network );
+		$_options             = Helper::getOption( 'login_security__options', [] );
 		$custom_allowlist_ips = $_options['login_ips_access'] ?? [];
 		$custom_blocked_ips   = $_options['disable_ips_access'] ?? [];
 

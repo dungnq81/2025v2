@@ -42,8 +42,7 @@ final class SocialLink {
 
 		ob_start();
 
-        $is_network           = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
-        $social_options       = Helper::getOption( 'social_link__options', [], $is_network );
+        $social_options       = Helper::getOption( 'social_link__options', [] );
         $social_follows_links = Helper::filterSettingOptions( 'social_follows_links', [] );
 
 		if ( $social_options ) {

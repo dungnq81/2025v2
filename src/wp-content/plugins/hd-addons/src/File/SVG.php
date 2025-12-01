@@ -23,8 +23,7 @@ final class SVG {
     // ------------------------------------------------------
 
     public function __construct() {
-        $is_network       = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
-        $file_options     = Helper::getOption( 'file__options', [], $is_network );
+        $file_options     = Helper::getOption( 'file__options', [] );
         $this->svg_option = $file_options['svgs'] ?? 'disable';
 
         if ( $this->svg_option !== 'disable' ) {

@@ -9,11 +9,9 @@ use Addons\Helper;
 
 class Rewrite_PostType {
     private mixed $base_slug_post_type;
-    private bool $is_network;
 
     public function __construct() {
-        $this->is_network          = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
-        $custom_base_slug_options  = Helper::getOption( 'base_slug__options', [], $this->is_network );
+        $custom_base_slug_options  = Helper::getOption( 'base_slug__options', [] );
         $this->base_slug_post_type = $custom_base_slug_options['base_slug_post_type'] ?? [];
     }
 
@@ -37,7 +35,7 @@ class Rewrite_PostType {
         global $wp_post_types;
 
         foreach ( $wp_post_types as $type => $custom_post ) {
-            if ( $type !== $post->post_type || ! Helper::getOption( 'permalink_structure', false, $this->is_network ) ) {
+            if ( $type !== $post->post_type || ! Helper::getOption( 'permalink_structure' ) ) {
                 continue;
             }
 

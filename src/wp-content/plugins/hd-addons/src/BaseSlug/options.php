@@ -5,8 +5,7 @@ use Addons\Helper;
 
 defined( 'ABSPATH' ) || exit;
 
-$is_network          = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
-$base_slug_options   = Helper::getOption( 'base_slug__options', [], $is_network );
+$base_slug_options   = Helper::getOption( 'base_slug__options', [] );
 $base_slug_post_type = $base_slug_options['base_slug_post_type'] ?? [];
 $base_slug_taxonomy  = $base_slug_options['base_slug_taxonomy'] ?? [];
 

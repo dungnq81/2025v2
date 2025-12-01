@@ -92,10 +92,9 @@ final class AspectRatio {
      * @return array|string
      */
     private function _aspect_ratio_option( string $post_type, string $option = '' ): array|string {
-        $is_network           = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
         $post_type            = $post_type ?: 'post';
         $option               = $option ?: 'aspect_ratio__options';
-        $aspect_ratio_options = Helper::getOption( $option, [], $is_network );
+        $aspect_ratio_options = Helper::getOption( $option, [] );
         $width                = $aspect_ratio_options[ 'as-' . $post_type . '-width' ] ?? '';
         $height               = $aspect_ratio_options[ 'as-' . $post_type . '-height' ] ?? '';
 

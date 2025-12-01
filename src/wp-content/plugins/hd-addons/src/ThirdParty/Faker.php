@@ -7,13 +7,9 @@ use Addons\Helper;
 \defined( 'ABSPATH' ) || exit;
 
 final class Faker {
-    private bool $is_network;
-
     // -------------------------------------------------------------
 
     public function __construct() {
-        $this->is_network = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
-
         //add_filter( 'pre_http_request', [ $this, 'acf_license_request' ], 10, 3 ); // ACF pro
         add_action( 'wp_loaded', [ $this, 'wordfence_pre' ], 99 );                 // Wordfence Security
         //add_action( 'wp_loaded', [ $this, 'cf7_gsc_pro' ], 99 );                   // CF7 Google Sheet Connector Pro
@@ -35,7 +31,7 @@ final class Faker {
         }
 
         // Check update request
-        $acf_update_check_disabled = Helper::getOption( '_acf_update_check_disabled', true, $this->is_network );
+        $acf_update_check_disabled = Helper::getOption( '_acf_update_check_disabled', true );
         if (
             $acf_update_check_disabled
             && str_contains( $url, 'https://connect.advancedcustomfields.com/v2/plugins/update-check' )
@@ -135,9 +131,9 @@ final class Faker {
         ];
 
         foreach ( $options as $option_name => $new_value ) {
-            $current_value = Helper::getOption( $option_name, false, $this->is_network );
+            $current_value = Helper::getOption( $option_name );
             if ( $current_value === false || $current_value !== $new_value ) {
-                Helper::updateOption( $option_name, $new_value, $this->is_network );
+                Helper::updateOption( $option_name, $new_value );
             }
         }
     }
@@ -158,9 +154,9 @@ final class Faker {
         ];
 
         foreach ( $options as $option_name => $new_value ) {
-            $current_value = Helper::getOption( $option_name, false, $this->is_network );
+            $current_value = Helper::getOption( $option_name );
             if ( $current_value === false || $current_value !== $new_value ) {
-                Helper::updateOption( $option_name, $new_value, $this->is_network );
+                Helper::updateOption( $option_name, $new_value );
             }
         }
     }

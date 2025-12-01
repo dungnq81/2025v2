@@ -5,9 +5,8 @@ use Addons\Helper;
 
 \defined( 'ABSPATH' ) || exit;
 
-$is_network             = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
 $menu_options           = Helper::loadYaml( ADDONS_PATH . 'config.yaml' );
-$global_setting_options = Helper::getOption( 'global_setting__options', [], $is_network );
+$global_setting_options = Helper::getOption( 'global_setting__options', [] );
 $current_slug           = $current_slug ?? 'global_setting';
 
 ?>

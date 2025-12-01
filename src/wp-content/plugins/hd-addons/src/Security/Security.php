@@ -14,8 +14,7 @@ final class Security {
 	/* ---------- CONSTRUCT ----------------------------------------------- */
 
 	public function __construct() {
-        $is_network            = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
-        $this->securityOptions = Helper::getOption( 'security__options', [], $is_network );
+        $this->securityOptions = Helper::getOption( 'security__options', [] );
 
 		$comments_off      = $this->securityOptions['comments_off'] ?? false;
 		$xmlrpc_off        = $this->securityOptions['xmlrpc_off'] ?? false;

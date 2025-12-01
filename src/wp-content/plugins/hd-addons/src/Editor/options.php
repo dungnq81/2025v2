@@ -5,8 +5,7 @@ use Addons\Helper;
 
 \defined( 'ABSPATH' ) || exit;
 
-$is_network                             = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
-$editor_options                         = Helper::getOption( 'editor__options', [], $is_network );
+$editor_options                         = Helper::getOption( 'editor__options', [] );
 $use_widgets_block_editor_off           = $editor_options['use_widgets_block_editor_off'] ?? '';
 $gutenberg_use_widgets_block_editor_off = $editor_options['gutenberg_use_widgets_block_editor_off'] ?? '';
 $use_block_editor_for_post_type_off     = $editor_options['use_block_editor_for_post_type_off'] ?? '';

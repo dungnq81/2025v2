@@ -28,13 +28,10 @@ class LoginAttempts {
 		20 => '20',
 	];
 
-    private bool $is_network;
-
 	// --------------------------------------------------
 
 	public function __construct() {
-        $this->is_network           = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
-		$_options                   = Helper::getOption( 'login_security__options', [], $this->is_network );
+		$_options                   = Helper::getOption( 'login_security__options', [] );
 		$this->limit_login_attempts = (int) ( $_options['limit_login_attempts'] ?? 0 );
 
 		// Bail if optimization is disabled.
@@ -56,7 +53,7 @@ class LoginAttempts {
 		$user_ip = Helper::ipAddress();
 
 		// Get login attempts data.
-		$login_attempts = Helper::getOption( '_security_unsuccessful_login', [], $this->is_network );
+		$login_attempts = Helper::getOption( '_security_unsuccessful_login', [] );
 
 		// Bail if the user doesn't have attempts.
 		if ( empty( $login_attempts[ $user_ip ]['timestamp'] ) ) {
@@ -65,7 +62,7 @@ class LoginAttempts {
 
 		// Bail if ip has reached the login attempts limit.
 		if ( $login_attempts[ $user_ip ]['timestamp'] > time() ) {
-			Helper::updateOption( '_security_total_blocked_logins', Helper::getOption( '_security_total_blocked_logins', 0 ) + 1, $this->is_network );
+			Helper::updateOption( '_security_total_blocked_logins', Helper::getOption( '_security_total_blocked_logins', 0 ) + 1 );
 			Helper::errorLog( 'Too many incorrect login attempts. - ' . $user_ip );
 			Helper::wpDie(
 				esc_html__( 'Access to login page is currently restricted because of too many incorrect login attempts.', ADDONS_TEXTDOMAIN ),
@@ -84,7 +81,7 @@ class LoginAttempts {
 			$login_attempts[ $user_ip ]['timestamp'] < time()
 		) {
 			unset( $login_attempts[ $user_ip ] );
-			Helper::updateOption( '_security_unsuccessful_login', $login_attempts, $this->is_network );
+			Helper::updateOption( '_security_unsuccessful_login', $login_attempts );
 		}
 	}
 
@@ -118,7 +115,7 @@ class LoginAttempts {
 		$user_ip = Helper::ipAddress();
 
 		// Get the login attempts data.
-		$login_attempts = Helper::getOption( '_security_unsuccessful_login', [], $this->is_network );
+		$login_attempts = Helper::getOption( '_security_unsuccessful_login', [] );
 
 		// Add the ip to the list if it does not exist.
 		if ( ! array_key_exists( $user_ip, $login_attempts ) ) {
@@ -169,7 +166,7 @@ class LoginAttempts {
 		}
 
 		// Update the login attempts data.
-		Helper::updateOption( '_security_unsuccessful_login', $login_attempts, $this->is_network );
+		Helper::updateOption( '_security_unsuccessful_login', $login_attempts );
 
 		return $error;
 	}
@@ -178,7 +175,7 @@ class LoginAttempts {
 
 	public function resetLoginAttempts(): void {
 		$user_ip        = Helper::ipAddress();
-		$login_attempts = Helper::getOption( '_security_unsuccessful_login', [], $this->is_network );
+		$login_attempts = Helper::getOption( '_security_unsuccessful_login', [] );
 
 		// Bail if the IP doesn't exist in the unsuccessful logins.
 		if ( ! array_key_exists( $user_ip, $login_attempts ) ) {
@@ -186,6 +183,6 @@ class LoginAttempts {
 		}
 
 		unset( $login_attempts[ $user_ip ] );
-		Helper::updateOption( '_security_unsuccessful_login', $login_attempts, $this->is_network );
+		Helper::updateOption( '_security_unsuccessful_login', $login_attempts );
 	}
 }

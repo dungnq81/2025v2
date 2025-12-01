@@ -23,8 +23,7 @@ $no_data_message       = __( 'No data available or configuration for this featur
 			break;
 		}
 
-        $is_network           = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
-		$aspect_ratio_options = Helper::getOption( 'aspect_ratio__options', [], $is_network );
+		$aspect_ratio_options = Helper::getOption( 'aspect_ratio__options', [] );
 		$width                = $aspect_ratio_options[ 'as-' . $ar . '-width' ] ?? '';
 		$height               = $aspect_ratio_options[ 'as-' . $ar . '-height' ] ?? '';
 

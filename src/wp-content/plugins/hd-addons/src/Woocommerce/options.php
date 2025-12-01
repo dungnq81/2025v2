@@ -5,8 +5,7 @@ use Addons\Helper;
 
 \defined( 'ABSPATH' ) || exit;
 
-$is_network              = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
-$woocommerce_options     = Helper::getOption( 'woocommerce__options', [], $is_network );
+$woocommerce_options     = Helper::getOption( 'woocommerce__options', [] );
 $woocommerce_jsonld      = $woocommerce_options['woocommerce_jsonld'] ?? '';
 $woocommerce_default_css = $woocommerce_options['woocommerce_default_css'] ?? '';
 

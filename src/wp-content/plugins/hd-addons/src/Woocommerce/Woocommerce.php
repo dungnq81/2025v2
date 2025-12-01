@@ -9,13 +9,11 @@ use Addons\Helper;
 final class Woocommerce {
 
 	public mixed $woocommerce_options = [];
-    private bool $is_network;
 
 	// --------------------------------------------------
 
 	public function __construct() {
-        $this->is_network          = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
-		$this->woocommerce_options = Helper::getOption( 'woocommerce__options', [], $this->is_network );
+		$this->woocommerce_options = Helper::getOption( 'woocommerce__options', [] );
 
 		// Remove the default WooCommerce 3 JSON/LD structured data format
 		if ( $this->woocommerce_options['woocommerce_jsonld'] ?? '' ) {
@@ -59,7 +57,7 @@ final class Woocommerce {
 
 	public function enqueue_block_assets(): void {
 		// Remove woocommerce blocks styles
-		$editor_options = Helper::getOption( 'editor__options', [], $this->is_network );
+		$editor_options = Helper::getOption( 'editor__options', [] );
 
 		if ( $editor_options['block_style_off'] ?? '' ) {
 			wp_deregister_style( 'wc-blocks-style' );

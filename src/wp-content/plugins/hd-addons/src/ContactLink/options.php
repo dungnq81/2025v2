@@ -5,8 +5,7 @@ use Addons\Helper;
 
 \defined( 'ABSPATH' ) || exit;
 
-$is_network           = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
-$contact_link_options = \Addons\Helper::getOption( 'contact_link__options', [], $is_network );
+$contact_link_options = \Addons\Helper::getOption( 'contact_link__options', [] );
 $contact_links        = \Addons\Helper::filterSettingOptions( 'contact_links', [] );
 
 ?>

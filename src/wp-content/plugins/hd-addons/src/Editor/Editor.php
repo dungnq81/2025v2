@@ -12,8 +12,7 @@ final class Editor {
 	// ------------------------------------------------------
 
 	public function __construct() {
-        $is_network           = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
-        $this->editor_options = Helper::getOption( 'editor__options', [], $is_network );
+        $this->editor_options = Helper::getOption( 'editor__options', [] );
 
 		( new TinyMCE() );
 

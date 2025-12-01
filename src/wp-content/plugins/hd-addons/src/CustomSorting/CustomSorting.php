@@ -17,13 +17,9 @@ final class CustomSorting {
     private mixed $order_post_type;
     private mixed $order_taxonomy;
 
-    private bool $is_network;
-
     // ------------------------------------------------------
 
     public function __construct() {
-        $this->is_network = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
-
         if ( ! Helper::getThemeMod( '_custom_sorting_' ) ) {
             global $wpdb;
 
@@ -36,7 +32,7 @@ final class CustomSorting {
         }
 
         // Check custom order
-        $custom_sorting_options = Helper::getOption( 'custom_sorting__options', [], $this->is_network );
+        $custom_sorting_options = Helper::getOption( 'custom_sorting__options', [] );
 
         $this->order_post_type = $custom_sorting_options['order_post_type'] ?? [];
         $this->order_taxonomy  = $custom_sorting_options['order_taxonomy'] ?? [];
@@ -625,7 +621,7 @@ final class CustomSorting {
             'order_taxonomy'  => [],
         ];
 
-        Helper::updateOption( 'custom_sorting__options', $custom_order_options, $this->is_network );
+        Helper::updateOption( 'custom_sorting__options', $custom_order_options );
         Helper::setThemeMod( '_custom_sorting_', 0 );
     }
 }

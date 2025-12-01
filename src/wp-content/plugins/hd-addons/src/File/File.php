@@ -30,8 +30,7 @@ final class File {
      * @return float|int
      */
     public function custom_upload_size_limit( $size ): float|int {
-        $is_network        = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
-        $file_options      = Helper::getOption( 'file__options', [], $is_network );
+        $file_options      = Helper::getOption( 'file__options', [] );
         $upload_size_limit = $file_options['upload_size_limit'] ?? 0;
 
         if ( (int) $upload_size_limit > 0 ) {

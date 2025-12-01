@@ -5,8 +5,7 @@ use Addons\Helper;
 
 defined( 'ABSPATH' ) || exit;
 
-$is_network             = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
-$custom_sorting_options = Helper::getOption( 'custom_sorting__options', [], $is_network );
+$custom_sorting_options = Helper::getOption( 'custom_sorting__options', [] );
 $order_post_type        = $custom_sorting_options['order_post_type'] ?? [];
 $order_taxonomy         = $custom_sorting_options['order_taxonomy'] ?? [];
 

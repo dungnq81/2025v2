@@ -15,8 +15,7 @@ final class Xmlrpc {
     public function disable(): void {
         // Disable XMLRPC authentication and related functions
         if ( is_admin() ) {
-            $is_network = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
-            Helper::updateOption( 'default_ping_status', 'closed', $is_network );
+            Helper::updateOption( 'default_ping_status', 'closed' );
         }
 
         add_filter( 'xmlrpc_enabled', '__return_false' );

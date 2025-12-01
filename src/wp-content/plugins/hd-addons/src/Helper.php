@@ -552,14 +552,18 @@ final class Helper {
 
     /**
      * @param string $option
-     * @param bool $network
+     * @param bool|null $network
      *
      * @return bool
      */
-    public static function removeOption( string $option, bool $network = false ): bool {
+    public static function removeOption( string $option, ?bool $network = null ): bool {
         $option = strtolower( trim( $option ) );
         if ( empty( $option ) ) {
             return false;
+        }
+
+        if ( is_null( $network ) ) {
+            $network = self::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
         }
 
         $site_id   = $network ? 0 : get_current_blog_id();
@@ -581,16 +585,20 @@ final class Helper {
     /**
      * @param string $option
      * @param mixed $new_value
-     * @param bool $network
+     * @param bool|null $network
      * @param int $cache_in_hours
      * @param bool|null $autoload
      *
      * @return bool
      */
-    public static function updateOption( string $option, mixed $new_value, bool $network = false, int $cache_in_hours = 12, ?bool $autoload = null ): bool {
+    public static function updateOption( string $option, mixed $new_value, ?bool $network = null, int $cache_in_hours = 12, ?bool $autoload = null ): bool {
         $option = strtolower( trim( $option ) );
         if ( empty( $option ) ) {
             return false;
+        }
+
+        if ( is_null( $network ) ) {
+            $network = self::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
         }
 
         $site_id   = $network ? 0 : get_current_blog_id();
@@ -611,15 +619,19 @@ final class Helper {
     /**
      * @param string $option
      * @param mixed $default
-     * @param bool $network
+     * @param bool|null $network
      * @param int $cache_in_hours
      *
      * @return mixed
      */
-    public static function getOption( string $option, mixed $default = false, bool $network = false, int $cache_in_hours = 12 ): mixed {
+    public static function getOption( string $option, mixed $default = false, ?bool $network = null, int $cache_in_hours = 12 ): mixed {
         $option = strtolower( trim( $option ) );
         if ( empty( $option ) ) {
             return $default;
+        }
+
+        if ( is_null( $network ) ) {
+            $network = self::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
         }
 
         $site_id   = $network ? 0 : get_current_blog_id();

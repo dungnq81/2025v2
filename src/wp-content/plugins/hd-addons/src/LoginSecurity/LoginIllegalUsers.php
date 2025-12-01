@@ -18,8 +18,7 @@ class LoginIllegalUsers {
 	// --------------------------------------------------
 
 	public function __construct() {
-        $is_network = Helper::checkNetworkActive( ADDONS_PLUGIN_BASENAME );
-        $_options   = Helper::getOption( 'login_security__options', [], $is_network );
+        $_options   = Helper::getOption( 'login_security__options', [] );
         if ( $_options['illegal_users'] ?? '' ) {
             add_action( 'illegal_user_logins', [ $this, 'getIllegalUsernames' ] );
         }
