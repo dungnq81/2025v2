@@ -149,7 +149,7 @@ final class Asset {
         }
 
         $href = esc_url( $resolve['src'] );
-        $tag  = sprintf( '<link rel="preload" href="%s" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">', $href );
+        $tag  = sprintf( '<link rel="preload" href="%s" as="style" onload="this.rel=\'stylesheet\'">', $href );
 
         echo wp_kses( $tag, [
             'link' => [
@@ -194,11 +194,15 @@ final class Asset {
         // CSS dependencies
         if ( ! empty( $resolve['css'] ) && is_array( $resolve['css'] ) ) {
             foreach ( $resolve['css'] as $key => $cssFile ) {
-                $handle = preg_replace( '/-js$/', '-' . $key . '-css', $resolve['handle'] );
-                $src    = THEME_URL . 'assets/' . $cssFile;
+
+                $replacement = 0 === $key ? '-css' : '-' . $key . '-css';
+                $handle      = preg_replace( '/-js$/', $replacement, $resolve['handle'] );
+                $src         = THEME_URL . 'assets/' . $cssFile;
 
                 if ( 'index.js' === $entry ) {
                     $deps = [ self::handle( 'vendor.css' ) ];
+                } elseif ( 'admin.js' === $entry ) {
+                    $deps = [];
                 } else {
                     $deps = [ self::handle( 'index.css' ) ];
                 }

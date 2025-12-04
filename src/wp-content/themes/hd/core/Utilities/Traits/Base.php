@@ -241,14 +241,14 @@ trait Base {
         $plugin_file = ltrim( $plugin_file, '/' );
         $path        = WP_PLUGIN_DIR . '/' . $plugin_file;
 
-        if ( file_exists( $path ) ) {
+        if ( is_file( $path ) ) {
             return true;
         }
 
         if ( defined( 'WPMU_PLUGIN_DIR' ) ) {
             $mu_path = WPMU_PLUGIN_DIR . '/' . basename( $plugin_file );
 
-            return file_exists( $mu_path );
+            return is_file( $mu_path );
         }
 
         return false;

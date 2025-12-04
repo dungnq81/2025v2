@@ -177,7 +177,7 @@ final class Theme {
         /** CSS */
         Asset::enqueueCSS( 'vendor.css', [], $version );
         Asset::enqueueCSS( 'index.scss', [ Asset::handle( 'vendor.css' ) ], $version );
-        Asset::enqueueCSS( 'extra.scss', [ Asset::handle( 'index.css' ) ], $version );
+        Asset::enqueueCSS( 'extra.scss', [ Asset::handle( 'index.scss' ) ], $version );
 
         /** JS */
         Asset::enqueueJS( 'preflight.js', [], $version, false );
@@ -232,7 +232,6 @@ final class Theme {
 
                 $scss = "components/templates/{$template_slug}.scss";
                 $js   = "components/templates/{$template_slug}.js";
-
                 Asset::enqueueCSS( $scss, [ Asset::handle( 'index.scss' ) ], $version );
                 Asset::enqueueJS( $js, [ Asset::handle( 'index.js' ) ], $version, true, [ 'module', 'defer' ] );
 

@@ -10,6 +10,5 @@ use HD\Utilities\Traits\Singleton;
 final class Ajax extends AbstractService {
     use Singleton;
 
-    protected function init(): void {
-    }
+    protected function init(): void {}
 }

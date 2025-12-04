@@ -159,7 +159,7 @@ final class DB {
         $schema           = "CREATE TABLE $backticked_table ( $schema ) ENGINE=InnoDB $collate;";
 
         $upgrade_file = ABSPATH . 'wp-admin/includes/upgrade.php';
-        if ( file_exists( $upgrade_file ) ) {
+        if ( is_file( $upgrade_file ) ) {
             require_once $upgrade_file;
         }
 

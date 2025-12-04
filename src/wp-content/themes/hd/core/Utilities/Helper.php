@@ -681,7 +681,7 @@ final class Helper {
      * @return string
      */
     public static function pixelImg( string $img = '' ): string {
-        if ( file_exists( $img ) ) {
+        if ( is_file( $img ) ) {
             return $img;
         }
 

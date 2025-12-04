@@ -26,5 +26,11 @@ Config::define( 'DISABLED_PLUGINS', [
 	'wp-rocket/wp-rocket.php',
 	'flying-press/flying-press.php',
 	'litespeed-cache/litespeed-cache.php',
+	'hummingbird-performance/wp-hummingbird.php',
+	'swift-performance/performance.php',
+	'wp-super-cache/wp-cache.php',
+	'w3-total-cache/w3-total-cache.php',
+	'nitropack/main.php',
 	'wp-asset-clean-up-pro/wpacu.php',
+	'perfmatters/perfmatters.php',
 ] );

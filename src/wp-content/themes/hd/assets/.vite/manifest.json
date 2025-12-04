@@ -1,13 +1,9 @@
 {
-  "_vendor.B3DVYF7b.css": {
-    "file": "css/vendor.B3DVYF7b.css",
-    "src": "_vendor.B3DVYF7b.css"
-  },
-  "_vendor.CRwrlrkT.js": {
-    "file": "js/vendor.CRwrlrkT.js",
+  "_vendor.BOtI93I8.js": {
+    "file": "js/vendor.BOtI93I8.js",
     "name": "vendor",
     "css": [
-      "css/vendor.B3DVYF7b.css"
+      "css/vendor.Bh5M2ypY.css"
     ],
     "assets": [
       "fonts/SVN-Poppins-Light.woff2",
@@ -30,6 +26,10 @@
       "fonts/SVN-Poppins-BoldItalic.otf"
     ]
   },
+  "_vendor.Bh5M2ypY.css": {
+    "file": "css/vendor.Bh5M2ypY.css",
+    "src": "_vendor.Bh5M2ypY.css"
+  },
   "src/wp-content/themes/hd/resources/components/fancybox.js": {
     "file": "js/fancybox.Au5_-oDA.js",
     "name": "fancybox",
@@ -46,12 +46,12 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/components/swiper.js": {
-    "file": "js/swiper.B-lMQX_K.js",
+    "file": "js/swiper.BAutUjiV.js",
     "name": "swiper",
     "src": "src/wp-content/themes/hd/resources/components/swiper.js",
     "isEntry": true,
     "imports": [
-      "_vendor.CRwrlrkT.js"
+      "_vendor.BOtI93I8.js"
     ],
     "css": [
       "css/swiper.BzJmWzbi.css"
@@ -206,12 +206,12 @@
     "isEntry": true
   },
   "src/wp-content/themes/hd/resources/scripts/index.js": {
-    "file": "js/index.DPtTaXra.js",
+    "file": "js/index.BF6SNwJW.js",
     "name": "index",
     "src": "src/wp-content/themes/hd/resources/scripts/index.js",
     "isEntry": true,
     "imports": [
-      "_vendor.CRwrlrkT.js"
+      "_vendor.BOtI93I8.js"
     ]
   },
   "src/wp-content/themes/hd/resources/scripts/preflight.js": {

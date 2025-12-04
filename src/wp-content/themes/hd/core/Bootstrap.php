@@ -27,7 +27,7 @@ final class Bootstrap {
             'template-tags.php',
         ];
         foreach ( $includes as $file ) {
-            if ( ! \file_exists( THEME_PATH . 'inc' . DIRECTORY_SEPARATOR . $file ) ) {
+            if ( ! \is_file( THEME_PATH . 'inc' . DIRECTORY_SEPARATOR . $file ) ) {
                 continue;
             }
 

@@ -180,7 +180,7 @@ if ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && 'https' === $_SERVER['HTTP_X
 }
 
 $env_config = __DIR__ . '/environments/' . WP_ENV . '.php';
-if ( file_exists( $env_config ) ) {
+if ( is_file( $env_config ) ) {
     require_once $env_config;
 }
 

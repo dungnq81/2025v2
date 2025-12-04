@@ -29,7 +29,7 @@ function wp_head_action(): void {
 add_action( 'wp_head', 'other_head_action', 98 );
 function other_head_action(): void {
     // Manifest
-    if ( file_exists( ABSPATH . 'manifest.json' ) ) {
+    if ( is_file( ABSPATH . 'manifest.json' ) ) {
         printf( '<link rel="manifest" href="%s" />', esc_url( home_url( 'manifest.json' ) ) );
     }
 

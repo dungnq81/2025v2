@@ -43,7 +43,7 @@ function _addons_init(): void {
 
     // Composer autoload
     $autoload = ADDONS_PATH . 'vendor/autoload.php';
-    if ( ! file_exists( $autoload ) ) {
+    if ( ! is_file( $autoload ) ) {
         add_action( 'admin_notices', static function () {
             printf(
                 '<div class="notice notice-error"><p>%s</p></div>',

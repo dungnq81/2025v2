@@ -132,7 +132,7 @@ trait File {
             return $fs->exists( $path ) && $fs->delete( $path, false, 'f' );
         }
 
-        return file_exists( $path ) && unlink( $path );
+        return is_file( $path ) && unlink( $path );
     }
 
     // --------------------------------------------------

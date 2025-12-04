@@ -14,9 +14,7 @@ import '../styles/tailwind/index.css';
 import '../styles/3rd/_index.scss';
 
 const run = async () => {
-    //
     // init
-    //
     scriptLoader();
     initMenu();
     stickyBar();
