@@ -12,6 +12,10 @@
  * ###Requires ### Plugins: advanced-custom-fields-pro
  */
 
+use Addons\Activator;
+use Addons\Addons;
+use Addons\Helper;
+
 defined( 'ABSPATH' ) || exit;
 
 const ADDONS_VERSION    = '1.11.0';
@@ -53,9 +57,9 @@ function _addons_init(): void {
     require_once $autoload; // composer dump-autoload -o --classmap-authoritative
 
     // Activation / Deactivation / Uninstall
-    register_activation_hook( __FILE__, [ \Addons\Activator::class, 'activation' ] );
-    register_deactivation_hook( __FILE__, [ \Addons\Activator::class, 'deactivation' ] );
-    register_uninstall_hook( __FILE__, [ \Addons\Activator::class, 'uninstall' ] );
+    register_activation_hook( __FILE__, [ Activator::class, 'activation' ] );
+    register_deactivation_hook( __FILE__, [ Activator::class, 'deactivation' ] );
+    register_uninstall_hook( __FILE__, [ Activator::class, 'uninstall' ] );
 
     // Bootstrap
     _addons_bootstrap();
@@ -65,17 +69,17 @@ function _addons_init(): void {
  * @return void
  */
 function _addons_bootstrap(): void {
-    if ( ! \Addons\Helper::isAcfActive() ) {
+    if ( ! Helper::isAcfActive() ) {
         _acf_requirement_notice();
 
         return;
     }
 
     try {
-        ( new \Addons\Addons() );
+        ( new Addons() );
     } catch ( \Throwable $e ) {
-        \Addons\Helper::errorLog( '[HD‑Addons] ' . $e->getMessage() );
-        if ( \Addons\Helper::version() ) {
+        Helper::errorLog( '[HD‑Addons] ' . $e->getMessage() );
+        if ( Helper::version() ) {
             add_action( 'admin_notices', static function () use ( $e ) {
                 printf(
                     '<div class="notice notice-error"><p>%s</p></div>',

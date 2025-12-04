@@ -12,41 +12,35 @@ const directoriesToCopy = [
     {src: `${resources}/img`, dest: ''}
 ];
 
+// JS
+const jsFiles = [
+    'preflight',
+    'admin',
+    'index',
+    'extra',
+];
+
 // SASS
 const sassFiles = [
-    // (partials)
-    'partials/woocommerce',
-
-    // (partials/template)
-    'partials/template/extra',
-    'partials/template/page-about',
-    'partials/template/page-contact',
-    'partials/template/page-affordable-design',
-    'partials/template/page-professional-design',
-    'partials/template/page-home',
-
-    // (entries)
     'admin',
     'editor-style',
     'index',
+    'extra',
 ];
 
-// JS
-const jsFiles = [
-    // (components)
-    'components/preflight',
-    'components/social-share',
-    'components/swiper',
-    'components/woocommerce',
+// COMPONENTS
+const comFiles = [
+    'fancybox.js',
+    'social-share.js',
+    'swiper.js',
+    'woocommerce.js',
 
-    // (components/template)
-    'components/template/extra',
-    'components/template/page-home',
-    'components/template/page-design-affordable',
-
-    // (entries)
-    'admin',
-    'index',
+    // (templates)
+    'templates/page-about.scss',
+    'templates/page-affordable-design.scss',
+    'templates/page-contact.scss',
+    'templates/page-home.scss',
+    'templates/page-professional-design.scss',
 ];
 
 export default {
@@ -65,11 +59,20 @@ export default {
             input: [
                 ...sassFiles.map((file) => `${resources}/styles/${file}.scss`),
                 ...jsFiles.map((file) => `${resources}/scripts/${file}.js`),
+                ...comFiles.map((file) => `${resources}/components/${file}`),
             ],
             output: {
                 entryFileNames: `js/[name].[hash].js`,
                 chunkFileNames: `js/[name].[hash].js`,
                 manualChunks(id) {
+                    if (id.includes('node_modules/swiper')
+                        || id.includes('node_modules/ensemble')
+                        || id.includes('node_modules/ensemble-social-share')
+                        || id.includes('node_modules/@fancyapps/ui')
+                    ) {
+                        return;
+                    }
+
                     if (id.includes('node_modules')
                         || id.includes('styles/tailwind')
                         || id.includes('scripts/3rd')

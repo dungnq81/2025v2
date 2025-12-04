@@ -158,6 +158,8 @@ function hd_settings_filter_callback( array $arr ): array {
             // Exclude thumb post_type columns.
             'post_type_exclude_thumb_columns' => [
                 'page',
+                'filter-set',
+                'wpcf7_contact_form',
             ],
         ],
 
@@ -442,10 +444,6 @@ function hd_settings_filter_callback( array $arr ): array {
         $arr_new['admin_list_table']['term_row_actions'][]                = 'product_cat';
         $arr_new['admin_list_table']['post_type_exclude_thumb_columns'][] = 'product';
         $arr_new['post_type_terms']['product']                            = 'product_cat';
-    }
-
-    if ( Helper::isCf7Active() ) {
-        $arr_new['admin_list_table']['post_type_exclude_thumb_columns'][] = 'wpcf7_contact_form';
     }
 
     // --------------------------------------------------

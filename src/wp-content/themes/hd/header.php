@@ -64,7 +64,7 @@
     do_action( 'hd_header_after_action' );
 
     ?>
-    <div class="main site-content" id="site-content">
+    <main class="main site-content" id="site-content">
         <?php
 
         /**

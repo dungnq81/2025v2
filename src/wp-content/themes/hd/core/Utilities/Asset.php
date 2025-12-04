@@ -164,35 +164,6 @@ final class Asset {
     // ----------------------------------------
 
     /**
-     * Enqueue CSS by manifest entry
-     *
-     * @param string|null $entry
-     * @param array $deps
-     * @param string|bool|null $ver
-     * @param string $media
-     *
-     * @return void
-     */
-    public static function enqueueCSS( ?string $entry = null, array $deps = [], string|bool|null $ver = null, string $media = 'all' ): void {
-        if ( empty( $entry ) ) {
-            return;
-        }
-
-        $resolve = self::_manifestResolve( $entry );
-        if ( empty( $resolve ) ) {
-            return;
-        }
-
-        $resolve['deps']  = $deps;
-        $resolve['ver']   = $ver;
-        $resolve['media'] = $media;
-
-        self::enqueueStyle( $resolve );
-    }
-
-    // ----------------------------------------
-
-    /**
      * Enqueue JS by manifest entry
      *
      * @param string|null $entry
@@ -219,6 +190,57 @@ final class Asset {
         $resolve['extra']     = $extra;
 
         self::enqueueScript( $resolve );
+
+        // CSS dependencies
+        if ( ! empty( $resolve['css'] ) && is_array( $resolve['css'] ) ) {
+            foreach ( $resolve['css'] as $key => $cssFile ) {
+                $handle = preg_replace( '/-js$/', '-' . $key . '-css', $resolve['handle'] );
+                $src    = THEME_URL . 'assets/' . $cssFile;
+
+                if ( 'index.js' === $entry ) {
+                    $deps = [ self::handle( 'vendor.css' ) ];
+                } else {
+                    $deps = [ self::handle( 'index.css' ) ];
+                }
+
+                self::enqueueStyle( [
+                    'handle' => $handle,
+                    'src'    => $src,
+                    'deps'   => $deps,
+                    'ver'    => $ver,
+                    'media'  => 'all',
+                ] );
+            }
+        }
+    }
+
+    // ----------------------------------------
+
+    /**
+     * Enqueue CSS by manifest entry
+     *
+     * @param string|null $entry
+     * @param array $deps
+     * @param string|bool|null $ver
+     * @param string $media
+     *
+     * @return void
+     */
+    public static function enqueueCSS( ?string $entry = null, array $deps = [], string|bool|null $ver = null, string $media = 'all' ): void {
+        if ( empty( $entry ) ) {
+            return;
+        }
+
+        $resolve = self::_manifestResolve( $entry );
+        if ( empty( $resolve ) ) {
+            return;
+        }
+
+        $resolve['deps']  = $deps;
+        $resolve['ver']   = $ver;
+        $resolve['media'] = $media;
+
+        self::enqueueStyle( $resolve );
     }
 
     // ----------------------------------------
@@ -416,7 +438,7 @@ final class Asset {
     /**
      *  Resolve a given asset entry from the Vite manifest.
      *
-     * @param string|null $entry \Ex: 'components/template/home.js', 'index.scss', 'vendor.js', 'vendor.css'.
+     * @param string|null $entry \Ex: 'components/templates/home.js', 'index.scss', 'vendor.js', 'vendor.css'.
      * @param string $handle_prefix
      *
      * @return array
@@ -467,9 +489,11 @@ final class Asset {
                     }
 
                     return $resolveCache[ $key ] = [
+                        'ext'    => 'js',
                         'handle' => $makeHandle( 'vendor', 'js' ),
                         'src'    => THEME_URL . 'assets/' . $file,
                         'file'   => $v['src'] ?? '',
+                        'css'    => $v['css'] ?? [],
                     ];
                 }
             }
@@ -487,6 +511,7 @@ final class Asset {
                     }
 
                     return $resolveCache[ $key ] = [
+                        'ext'    => 'css',
                         'handle' => $makeHandle( 'vendor', 'css' ),
                         'src'    => THEME_URL . 'assets/' . $file,
                         'file'   => $v['src'] ?? '',
@@ -498,6 +523,7 @@ final class Asset {
             foreach ( $manifest as $k => $v ) {
                 if ( ! empty( $v['css'][0] ) && preg_match( '/^_?vendor\..+\.js$/', $k ) ) {
                     return $resolveCache[ $key ] = [
+                        'ext'    => 'css',
                         'handle' => $makeHandle( 'vendor', 'css' ),
                         'src'    => THEME_URL . 'assets/' . $v['css'][0],
                     ];
@@ -553,10 +579,12 @@ final class Asset {
 
             if ( ! empty( $found['file'] ) ) {
                 return $resolveCache[ $key ] = [
+                    'ext'     => 'js',
                     'handle'  => $handle,
                     'src'     => THEME_URL . 'assets/' . $found['file'],
                     'file'    => $found['src'] ?? '',
                     'imports' => $found['imports'] ?? [],
+                    'css'     => $found['css'] ?? [],
                 ];
             }
         }
@@ -567,6 +595,7 @@ final class Asset {
 
             if ( ! empty( $found['css'][0] ) ) {
                 return $resolveCache[ $key ] = [
+                    'ext'    => 'css',
                     'handle' => $handle,
                     'src'    => THEME_URL . 'assets/' . $found['css'][0],
                     'file'   => $found['src'] ?? '',
@@ -575,6 +604,7 @@ final class Asset {
 
             if ( ! empty( $found['file'] ) ) {
                 return $resolveCache[ $key ] = [
+                    'ext'    => 'css',
                     'handle' => $handle,
                     'src'    => THEME_URL . 'assets/' . $found['file'],
                     'file'   => $found['src'] ?? '',

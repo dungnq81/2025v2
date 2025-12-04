@@ -162,17 +162,12 @@ final class Theme {
             'lang'       => [ 'view_more' => __( 'Xem thêm', TEXT_DOMAIN ) ],
         ];
 
+        ! empty( $recaptcha_options['recaptcha_v2_site_key'] ) && $l10n['reCaptcha_v2'] = $recaptcha_options['recaptcha_v2_site_key'];
+        ! empty( $recaptcha_options['recaptcha_v3_site_key'] ) && $l10n['reCaptcha_v3'] = $recaptcha_options['recaptcha_v3_site_key'];
+
         if ( Helper::isWoocommerceActive() ) {
             $l10n['wcAjaxUrl']             = Helper::home( '/?wc-ajax=%%endpoint%%' );
             $l10n['lang']['added_to_cart'] = __( 'Đã thêm vào giỏ hàng', TEXT_DOMAIN );
-        }
-
-        if ( ! empty( $recaptcha_options['recaptcha_v2_site_key'] ) ) {
-            $l10n['reCaptcha_v2'] = $recaptcha_options['recaptcha_v2_site_key'];
-        }
-
-        if ( ! empty( $recaptcha_options['recaptcha_v3_site_key'] ) ) {
-            $l10n['reCaptcha_v3'] = $recaptcha_options['recaptcha_v3_site_key'];
         }
 
         /** Inline Js */
@@ -182,16 +177,21 @@ final class Theme {
         /** CSS */
         Asset::enqueueCSS( 'vendor.css', [], $version );
         Asset::enqueueCSS( 'index.scss', [ Asset::handle( 'vendor.css' ) ], $version );
+        Asset::enqueueCSS( 'extra.scss', [ Asset::handle( 'index.css' ) ], $version );
 
         /** JS */
-        Asset::enqueueJS( 'components/preflight.js', [], $version, false );
+        Asset::enqueueJS( 'preflight.js', [], $version, false );
         Asset::enqueueJS( 'index.js', [ 'jquery-core' ], $version, true, [ 'module', 'defer' ] );
+        Asset::enqueueJS( 'extra.js', [ Asset::handle( 'index.js' ) ], $version, true, [ 'module', 'defer' ] );
+
+        /** COMPONENTS */
+        Asset::enqueueJS( 'components/swiper.js', [ Asset::handle( 'index.js' ) ], $version, true, [ 'module', 'defer' ] );
+        Asset::enqueueJS( 'components/fancybox.js', [ Asset::handle( 'index.js' ) ], $version, true, [ 'module', 'defer' ] );
+        Asset::enqueueJS( 'components/social-share.js', [ Asset::handle( 'index.js' ) ], $version, true, [ 'module', 'defer' ] );
 
         /** Comments */
         if ( is_singular() && comments_open() && Helper::getOption( 'thread_comments' ) ) {
             wp_enqueue_script( 'comment-reply' );
-        } else {
-            wp_dequeue_script( 'comment-reply' );
         }
     }
 
@@ -221,23 +221,20 @@ final class Theme {
         }
 
         // Remove 'template-'
-        $_template_slug = substr( $filename, strlen( 'template-' ) );
-        $hook_name      = 'enqueue_assets_template_' . sanitize_key( str_replace( '-', '_', $_template_slug ) );
+        $template_slug = substr( $filename, strlen( 'template-' ) );
+        $hook_name     = 'enqueue_assets_template_' . sanitize_key( str_replace( '-', '_', $template_slug ) );
 
         if ( ! in_array( $hook_name, $enqueued_hooks, true ) ) {
 
             // dynamic hook - enqueue style/script
-            add_action( 'wp_enqueue_scripts', static function () use ( $_template_slug, $hook_name ) {
+            add_action( 'wp_enqueue_scripts', static function () use ( $template_slug, $hook_name ) {
                 $version = Helper::version();
-                $names   = [ 'extra', $_template_slug ];
 
-                foreach ( $names as $name ) {
-                    $scss = "partials/template/{$name}.scss";
-                    $js   = "components/template/{$name}.js";
+                $scss = "components/templates/{$template_slug}.scss";
+                $js   = "components/templates/{$template_slug}.js";
 
-                    Asset::enqueueCSS( $scss, [ Asset::handle( 'index.scss' ) ], $version );
-                    Asset::enqueueJS( $js, [ Asset::handle( 'index.js' ) ], $version, true, [ 'module', 'defer' ] );
-                }
+                Asset::enqueueCSS( $scss, [ Asset::handle( 'index.scss' ) ], $version );
+                Asset::enqueueJS( $js, [ Asset::handle( 'index.js' ) ], $version, true, [ 'module', 'defer' ] );
 
                 // dynamic hook
                 do_action( 'enqueue_assets_template_extra' );

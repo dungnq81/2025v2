@@ -134,7 +134,7 @@ Options -Indexes
     RewriteRule ^([_0-9a-zA-Z-]+/)?(wp-(content|admin|includes).*) src/$2 [L]
     RewriteRule ^([_0-9a-zA-Z-]+/)?(.*\.php)$ src/$2 [L]
 
-    # load index.php in root
+    # index.php
     RewriteRule . index.php [L]
 </IfModule>
 # END Theme

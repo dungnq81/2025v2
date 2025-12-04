@@ -163,7 +163,20 @@ if ( have_posts() ) {
                 </ul>
             </div>
             <div class="relative">
-
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="rounded-xl overflow-hidden ring-1 ring-gray-200 shadow-xl">
+                        <img src="<?= WP_HOME ?>/images/affordable/photo-1556157382-97eda2d62296.avif" alt="Workshop nội dung" class="w-full h-full object-cover">
+                    </div>
+                    <div class="rounded-xl overflow-hidden ring-1 ring-gray-200 shadow-xl translate-y-6">
+                        <img src="<?= WP_HOME ?>/images/affordable/photo-1519389950473-47ba0277781c.avif" alt="Thiết kế layout" class="w-full h-full object-cover">
+                    </div>
+                    <div class="rounded-xl overflow-hidden ring-1 ring-gray-200 shadow-xl -translate-y-8">
+                        <img src="<?= WP_HOME ?>/images/affordable/photo-1521737604893-d14cc237f11d.avif" alt="Tối ưu SEO" class="w-full h-full object-cover">
+                    </div>
+                    <div class="rounded-xl overflow-hidden ring-1 ring-gray-200 shadow-xl">
+                        <img src="<?= WP_HOME ?>/images/affordable/photo-1522202176988-66273c2fd55f.avif" alt="Đào tạo &amp; bàn giao" class="w-full h-full object-cover">
+                    </div>
+                </div>
             </div>
         </div>
     </div>

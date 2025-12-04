@@ -2,19 +2,19 @@
 import $ from 'jquery';
 
 // Import Foundation core and utilities
-import { Foundation } from 'foundation-sites/js/foundation.core';
+import {Foundation} from 'foundation-sites/js/foundation.core';
 import * as CoreUtils from 'foundation-sites/js/foundation.core.utils';
 
 // Foundation Utilities
-import { Keyboard } from 'foundation-sites/js/foundation.util.keyboard';
-import { Box } from 'foundation-sites/js/foundation.util.box';
-import { Nest } from 'foundation-sites/js/foundation.util.nest';
-import { MediaQuery } from 'foundation-sites/js/foundation.util.mediaQuery';
-import { Touch } from 'foundation-sites/js/foundation.util.touch';
-import { Triggers } from 'foundation-sites/js/foundation.util.triggers';
-import { Move, Motion } from 'foundation-sites/js/foundation.util.motion';
-import { onImagesLoaded } from 'foundation-sites/js/foundation.util.imageLoader';
-import { Timer } from 'foundation-sites/js/foundation.util.timer';
+import {Keyboard} from 'foundation-sites/js/foundation.util.keyboard';
+import {Box} from 'foundation-sites/js/foundation.util.box';
+import {Nest} from 'foundation-sites/js/foundation.util.nest';
+import {MediaQuery} from 'foundation-sites/js/foundation.util.mediaQuery';
+import {Touch} from 'foundation-sites/js/foundation.util.touch';
+import {Triggers} from 'foundation-sites/js/foundation.util.triggers';
+import {Move, Motion} from 'foundation-sites/js/foundation.util.motion';
+import {onImagesLoaded} from 'foundation-sites/js/foundation.util.imageLoader';
+import {Timer} from 'foundation-sites/js/foundation.util.timer';
 
 // Assign Foundation utilities
 Object.assign(Foundation, {
@@ -42,45 +42,45 @@ Triggers.init($, Foundation);
 MediaQuery._init();
 
 // Import and initialize Foundation plugins
-import { Dropdown } from 'foundation-sites/js/foundation.dropdown';
-import { DropdownMenu } from 'foundation-sites/js/foundation.dropdownMenu';
-import { Accordion } from 'foundation-sites/js/foundation.accordion';
-import { AccordionMenu } from 'foundation-sites/js/foundation.accordionMenu';
+import {Dropdown} from 'foundation-sites/js/foundation.dropdown';
+import {DropdownMenu} from 'foundation-sites/js/foundation.dropdownMenu';
+import {Accordion} from 'foundation-sites/js/foundation.accordion';
+import {AccordionMenu} from 'foundation-sites/js/foundation.accordionMenu';
 //import { ResponsiveMenu } from 'foundation-sites/js/foundation.responsiveMenu';
 //import { ResponsiveToggle } from 'foundation-sites/js/foundation.responsiveToggle';
-import { OffCanvas } from 'foundation-sites/js/foundation.offcanvas';
+import {OffCanvas} from 'foundation-sites/js/foundation.offcanvas';
 //import { Reveal } from 'foundation-sites/js/foundation.reveal';
 //import { Tooltip } from 'foundation-sites/js/foundation.tooltip';
-import { SmoothScroll } from 'foundation-sites/js/foundation.smoothScroll';
+import {SmoothScroll} from 'foundation-sites/js/foundation.smoothScroll';
 //import { Magellan } from 'foundation-sites/js/foundation.magellan';
 //import { Sticky } from 'foundation-sites/js/foundation.sticky';
 //import { Toggler } from 'foundation-sites/js/foundation.toggler';
 //import { Equalizer } from 'foundation-sites/js/foundation.equalizer';
 //import { Interchange } from 'foundation-sites/js/foundation.interchange';
 //import { Abide } from 'foundation-sites/js/foundation.abide';
-import { Tabs } from 'foundation-sites/js/foundation.tabs';
+import {Tabs} from 'foundation-sites/js/foundation.tabs';
 
 const plugins = [
-    { plugin: Dropdown, name: 'Dropdown' },
-    { plugin: DropdownMenu, name: 'DropdownMenu' },
-    { plugin: Accordion, name: 'Accordion' },
-    { plugin: AccordionMenu, name: 'AccordionMenu' },
+    {plugin: Dropdown, name: 'Dropdown'},
+    {plugin: DropdownMenu, name: 'DropdownMenu'},
+    {plugin: Accordion, name: 'Accordion'},
+    {plugin: AccordionMenu, name: 'AccordionMenu'},
     //{ plugin: ResponsiveMenu, name: 'ResponsiveMenu' },
     //{ plugin: ResponsiveToggle, name: 'ResponsiveToggle' },
-    { plugin: OffCanvas, name: 'OffCanvas' },
+    {plugin: OffCanvas, name: 'OffCanvas'},
     //{ plugin: Reveal, name: 'Reveal' },
     //{ plugin: Tooltip, name: 'Tooltip' },
-    { plugin: SmoothScroll, name: 'SmoothScroll' },
+    {plugin: SmoothScroll, name: 'SmoothScroll'},
     //{ plugin: Magellan, name: 'Magellan' },
     //{ plugin: Sticky, name: 'Sticky' },
     //{ plugin: Toggler, name: 'Toggler' },
     //{ plugin: Equalizer, name: 'Equalizer' },
     //{ plugin: Interchange, name: 'Interchange' },
     //{ plugin: Abide, name: 'Abide' },
-    { plugin: Tabs, name: 'Tabs' },
+    {plugin: Tabs, name: 'Tabs'},
 ];
 
-plugins.forEach(({ plugin, name }) => {
+plugins.forEach(({plugin, name}) => {
     Foundation.plugin(plugin, name);
 });
 

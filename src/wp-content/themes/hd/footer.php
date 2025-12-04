@@ -14,7 +14,7 @@
 do_action( 'hd_site_content_after_action' );
 
 ?>
-</div><!-- #site-content -->
+</main><!-- #site-content -->
 <?php
 
 /**

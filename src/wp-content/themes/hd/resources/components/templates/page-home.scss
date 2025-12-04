@@ -1,0 +1,174 @@
+// components/templates/page-home.scss
+
+@use '../../styles/utils/variables' as vars;
+@use '../../styles/utils/functions' as func;
+@use '../../styles/utils/mixins' as mixin;
+
+//
+// Home layout.
+
+.section.section-recent-posts {
+    .swiper {
+        .swiper-slide {
+            height: auto;
+            @include mixin.flex-self(1.2, 1, 12);
+
+            @include mixin.mq-min(sm) {
+                @include mixin.flex-self(2, 1, 24);
+            }
+
+            @include mixin.mq-min(lg) {
+                @include mixin.flex-self(3, 1, 24);
+            }
+        }
+    }
+}
+
+.section.section-feedback {
+    .swiper {
+        .swiper-slide {
+            height: auto;
+            @include mixin.flex-self(1.2, 1, 12);
+
+            @include mixin.mq-min(sm) {
+                @include mixin.flex-self(2, 1, 24);
+            }
+        }
+    }
+}
+
+.section.section-press {
+    .swiper {
+        .swiper-slide {
+            height: auto;
+            @include mixin.flex-self(1.2, 1, 12);
+
+            @include mixin.mq-min(sm) {
+                @include mixin.flex-self(2, 1, 24);
+            }
+
+            @include mixin.mq-min(md) {
+                @include mixin.flex-self(3, 1, 24);
+            }
+        }
+    }
+
+    .swiper-controls {
+        //.swiper-pagination {
+        //    .swiper-pagination-bullet {
+        //        background-color: var(--text-color);
+        //    }
+        //}
+
+        .swiper-button {
+            background-color: #fefefe;
+            border: 1px solid #00000014;
+            box-shadow: inset 0 0 12px #0000000d;
+            border-radius: var(--radius-md);
+            color: var(--text-color);
+            @include mixin.flex-center;
+            @include mixin.box(44);
+
+            @include mixin.mq-max(sm) {
+                display: none;
+            }
+
+            svg {
+                @include mixin.box(24);
+            }
+
+            &:hover {
+                border-color: var(--text-color-1);
+                color: var(--text-color-1);
+            }
+
+            &.swiper-button-prev {
+                left: 0;
+            }
+
+            &.swiper-button-next {
+                right: 0;
+            }
+        }
+    }
+}
+
+.section.section-services {
+    .tabs {
+        scrollbar-width: thin;
+
+        .tabs-title {
+            & > a {
+                &:hover {
+                    border-color: var(--text-color-1);
+                    box-shadow: 0 4px 29px -9px var(--text-color-1);
+                }
+
+                &:focus, &[aria-selected=true] {
+                    color: var(--text-color);
+                    border-color: var(--text-color-1);
+                    box-shadow: 0 4px 29px -9px var(--text-color-1);
+                }
+            }
+
+            &.is-active {
+                & > a {
+                    background-color: var(--text-color-1);
+                    color: var(--color-white);
+                    border-color: var(--text-color-1);
+                    box-shadow: 0 4px 29px -9px var(--text-color-1);
+                }
+            }
+        }
+    }
+}
+
+.section.section-services-extra {
+    .tabs {
+        .tabs-title {
+            & > a {
+                &:hover {
+                    border-color: var(--text-color-1);
+                }
+            }
+
+            &.is-active {
+                & > a {
+                    color: var(--color-white);
+                    border-color: var(--text-color-1);
+                    box-shadow: 0 4px 29px -9px var(--text-color-1);
+                    background-color: var(--text-color-1);
+                }
+            }
+        }
+    }
+}
+
+.section.section-projects {
+    .swiper {
+        .swiper-slide {
+            height: auto;
+            @include mixin.flex-self(1, 1, 12);
+
+            @include mixin.mq-min(sm) {
+                @include mixin.flex-self(2, 1, 24);
+            }
+        }
+    }
+}
+
+//
+// dark mode
+//
+
+:where(.dark, .dark *) {
+    .section.section-press {
+        .swiper-controls {
+            .swiper-button {
+                background-color: #1d1d1d;
+                border: 1px solid #ffffff0f;
+                box-shadow: inset 0 0 12px #ffffff0a;
+            }
+        }
+    }
+}
