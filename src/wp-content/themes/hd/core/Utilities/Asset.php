@@ -204,7 +204,7 @@ final class Asset {
                 } elseif ( 'admin.js' === $entry ) {
                     $deps = [];
                 } else {
-                    $deps = [ self::handle( 'index.css' ) ];
+                    $deps = [ self::handle( 'index.scss' ) ];
                 }
 
                 self::enqueueStyle( [

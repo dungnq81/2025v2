@@ -89,10 +89,11 @@ $id       = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
         <?php if ( $bg ) : ?>
 		<div class="mt-6 -mx-3 sm:mx-0 lg:mt-0 lg:col-span-5 flex relative">
 
-			<?= \HD_Helper::attachmentImageHTML( $bg, 'medium', [
-				'class' => 'w-full h-auto max-w-lg mx-auto',
-				'alt'   => 'Hero ' . $bg,
-			] ) ?>
+            <?= \HD_Helper::attachmentImageHTML( $bg, 'medium', [
+                'class'   => 'w-full h-auto max-w-lg mx-auto',
+                'loading' => 'eager',
+                'alt'     => 'Hero ' . $bg,
+            ] ) ?>
 
 			<span class="c-hero-dot-1"></span>
 			<span class="c-hero-dot-2"></span>
