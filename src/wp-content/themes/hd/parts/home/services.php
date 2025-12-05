@@ -19,9 +19,9 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 			XÂY DỰNG WEBSITE <strong class="text-1">CHUYÊN NGHIỆP</strong> & ĐƯA RA CÁC GIẢI PHÁP CHUYÊN SÂU VỀ LĨNH VỰC <strong class="text-1">DIGITAL MARKETING</strong>
 			<i class="block text-sm sm:text-center text-balance mt-3">Thiết kế WEBSITE, SEO, Sáng tạo nội dung website & Fanpage, Google Ads, Facebook Ads …</i>
 		</p>
-		<ul class="tabs flex flex-row flex-nowrap pb-3 lg:pb-0 lg:justify-center gap-4 mt-16 xl:px-20 lg:mb-8 lg:gap-8 snap-x snap-mandatory overflow-x-auto" data-tabs id="services-tabs-<?=$id?>">
+		<ul class="tabs flex flex-row flex-nowrap pb-3 lg:pb-0 lg:justify-center gap-4 mt-8 xl:px-20 xl:py-8 lg:mb-8 lg:gap-8 snap-x snap-mandatory overflow-x-auto" data-tabs id="services-tabs-<?=$id?>">
 			<li class="tabs-title snap-start is-active">
-                <a class="p-6 h-full flex items-center gap-4 c-light-button c-hover rounded-md hover:text-[#000] dark:hover:text-white" href="#thiet-ke-website" aria-selected="true" title="Thiết kế website">
+                <a aria-selected="true" class="p-6 h-full flex items-center gap-4 c-light-button c-hover rounded-md hover:text-[#000] dark:hover:text-white" href="#thiet-ke-website" title="Thiết kế website">
                     <svg class="w-10 h-10 relative" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 13.74a2 2 0 0 1-2 0L2.5 8.87a1 1 0 0 1 0-1.74L11 2.26a2 2 0 0 1 2 0l8.5 4.87a1 1 0 0 1 0 1.74z"/><path d="m20 14.285 1.5.845a1 1 0 0 1 0 1.74L13 21.74a2 2 0 0 1-2 0l-8.5-4.87a1 1 0 0 1 0-1.74l1.5-.845"/></svg>
                     <h3 class="uppercase font-bold whitespace-nowrap p-fs-clamp-[16,20]">Thiết kế website</h3>
                 </a>
@@ -39,7 +39,7 @@ $id               = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                 </a>
             </li>
 		</ul>
-		<div class="tabs-content pt-12 lg:pt-24 lg:pb-12 xl:px-20" data-tabs-content="services-tabs-<?=$id?>">
+		<div class="tabs-content lg:pt-12 lg:pb-12 xl:px-20" data-tabs-content="services-tabs-<?=$id?>">
 			<div class="tabs-panel is-active" id="thiet-ke-website">
                 <div class="flex flex-col md:flex-row gap-10 lg:gap-20 items-center">
                     <?php

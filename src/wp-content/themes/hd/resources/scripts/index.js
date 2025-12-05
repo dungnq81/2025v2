@@ -1,7 +1,8 @@
 // index.js
 
-import device from 'current-device';
+//import device from 'current-device';
 import Foundation from './3rd/zf.js';
+import FX from './3rd/fx.js';
 
 import './utils/global.js';
 import scriptLoader from './utils/script-loader.js';
@@ -14,6 +15,8 @@ import '../styles/tailwind/index.css';
 import '../styles/3rd/_index.scss';
 
 const run = async () => {
+    FX.init();
+
     // init
     scriptLoader();
     initMenu();

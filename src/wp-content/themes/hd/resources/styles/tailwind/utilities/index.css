@@ -1,5 +1,6 @@
 /* tailwind/utilities/index.css */
 
+@import "./animate.css";
 @import "./heading.css";
 @import "./flexbox.css";
 @import "./grid.css";

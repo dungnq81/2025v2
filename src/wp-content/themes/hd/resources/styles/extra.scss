@@ -7,6 +7,21 @@
 //
 // Extra layout.
 
+.breadcrumbs-bg {
+    height: 250px;
+    max-height: fit-content;
+    position: relative;
+    overflow: hidden;
+
+    & > img {
+        object-fit: cover;
+        object-position: center;
+        height: 100%;
+        width: 100%;
+        display: block;
+    }
+}
+
 //
 // dark mode
 //

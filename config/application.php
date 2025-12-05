@@ -56,7 +56,7 @@ if ( ! env( 'WP_ENVIRONMENT_TYPE' ) && in_array( WP_ENV, [ 'production', 'stagin
 Config::define( 'WP_HOME', env( 'WP_HOME' ) );
 Config::define( 'WP_SITEURL', env( 'WP_SITEURL' ) );
 
-/** recheck */
+/** URLs recheck */
 defined( 'WP_HOME' ) || define( 'WP_HOME', env( 'WP_HOME' ) );
 defined( 'WP_SITEURL' ) || define( 'WP_SITEURL', env( 'WP_SITEURL' ) );
 

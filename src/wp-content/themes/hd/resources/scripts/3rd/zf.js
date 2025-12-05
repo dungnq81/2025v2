@@ -58,7 +58,7 @@ import {SmoothScroll} from 'foundation-sites/js/foundation.smoothScroll';
 //import { Equalizer } from 'foundation-sites/js/foundation.equalizer';
 //import { Interchange } from 'foundation-sites/js/foundation.interchange';
 //import { Abide } from 'foundation-sites/js/foundation.abide';
-import {Tabs} from 'foundation-sites/js/foundation.tabs';
+//import {Tabs} from 'foundation-sites/js/foundation.tabs';
 
 const plugins = [
     {plugin: Dropdown, name: 'Dropdown'},
@@ -70,14 +70,14 @@ const plugins = [
     {plugin: OffCanvas, name: 'OffCanvas'},
     //{ plugin: Reveal, name: 'Reveal' },
     //{ plugin: Tooltip, name: 'Tooltip' },
-    {plugin: SmoothScroll, name: 'SmoothScroll'},
+    //{plugin: SmoothScroll, name: 'SmoothScroll'},
     //{ plugin: Magellan, name: 'Magellan' },
     //{ plugin: Sticky, name: 'Sticky' },
     //{ plugin: Toggler, name: 'Toggler' },
     //{ plugin: Equalizer, name: 'Equalizer' },
     //{ plugin: Interchange, name: 'Interchange' },
     //{ plugin: Abide, name: 'Abide' },
-    {plugin: Tabs, name: 'Tabs'},
+    //{plugin: Tabs, name: 'Tabs'},
 ];
 
 plugins.forEach(({plugin, name}) => {

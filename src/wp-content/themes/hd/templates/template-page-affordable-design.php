@@ -51,11 +51,11 @@ if ( have_posts() ) {
                     <p>Thiết kế responsive, tốc độ nhanh, dễ quản trị.</p>
                 </div>
             </div>
-            <div class="mt-10 flex flex-col sm:flex-row gap-3 lg:gap-6 justify-center" data-smooth-scroll>
+            <div class="mt-10 flex flex-col sm:flex-row gap-3 lg:gap-6 justify-center">
                 <a title="Nhận tư vấn miễn phí" href="#" class="u-inline-flex-center rounded-md px-6 py-4 font-semibold bg-(--text-color-1) text-white">
                     Nhận tư vấn miễn phí
                 </a>
-                <a title="Xem bảng giá" href="#section-prices" class="u-inline-flex-center rounded-md px-6 py-4 text-1 ring-1 border-(--text-color-1) font-semibold">
+                <a data-fx-scroll data-fx-offset="40" title="Xem bảng giá" href="#section-prices" class="u-inline-flex-center rounded-md px-6 py-4 text-1 ring-1 border-(--text-color-1) font-semibold">
                     Xem bảng giá
                 </a>
             </div>

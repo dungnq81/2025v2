@@ -13,7 +13,7 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
 ?>
 <section id="section-<?= $id ?>" class="section section-services-extra relative py-10 lg:py-20">
 	<div class="u-container">
-		<h2 class="font-bold">... và các dịch vụ cốt lõi khác</h2>
+		<h2 class="font-bold">Các dịch vụ cốt lõi khác</h2>
         <p class="max-w-4xl mb-0 p-fs-clamp-[15,17] pt-4">
             Mở rộng cung cấp các dịch vụ chuyên sâu về Digital Marketing như: SEO web, Sáng tạo nội dung – hình ảnh, Facebook Ads, Google Ads, Hosting – Tên miền, đăng ký website với Bộ Công Thương…
         </p>

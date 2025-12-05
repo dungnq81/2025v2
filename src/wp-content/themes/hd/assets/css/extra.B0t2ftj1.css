@@ -1,0 +1,22 @@
+/* extra.scss */
+/* utils/_variables.scss */
+/* utils/_functions.scss */
+/** $string - svg */
+/** add unique id image url */
+/** https://webdesign.tutsplus.com/tutorials/an-introduction-to-error-handling-in-sass--cms-19996 */
+/** font size */
+/* extra.scss */
+/* utils/_mixins.scss */
+.breadcrumbs-bg {
+  height: 250px;
+  max-height: fit-content;
+  position: relative;
+  overflow: hidden;
+}
+.breadcrumbs-bg > img {
+  object-fit: cover;
+  object-position: center;
+  height: 100%;
+  width: 100%;
+  display: block;
+}

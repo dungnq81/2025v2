@@ -1,0 +1,1 @@
+{"version":3,"file":"woocommerce.VcoSfChw.js","sources":["../../resources/components/woocommerce.js"],"sourcesContent":["// components/woocommerce.js\n\nimport './woocommerce.scss';\n\njQuery(function ($) {});\n"],"names":[],"mappings":"AAIA,OAAO,SAAU,GAAG;AAAC,CAAC;"}

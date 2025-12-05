@@ -66,6 +66,7 @@
 
 @mixin hidden-text {
     & {
+        pointer-events: none;
         border: 0;
         clip: rect(0, 0, 0, 0);
         clip-path: inset(50%);
