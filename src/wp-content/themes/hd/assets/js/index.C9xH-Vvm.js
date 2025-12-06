@@ -1,4 +1,4 @@
-import { F as FX } from "./vendor.vSkBiAF0.js";
+import { F as FX } from "./vendor.Dgl7ETwd.js";
 (() => {
   if (window.__globalInit) return;
   window.__globalInit = true;
@@ -453,7 +453,7 @@ async function setupCookieConsent(userOptions = {}) {
   _mo.observe(document.body, { childList: true, subtree: true });
 }
 const run = async () => {
-  FX.init();
+  await FX.init();
   scriptLoader();
   initMenu();
   stickyBar();
@@ -464,4 +464,4 @@ const run = async () => {
   });
 };
 document.readyState === "loading" ? document.addEventListener("DOMContentLoaded", run, { once: true }) : run();
-//# sourceMappingURL=index.4hyqExmC.js.map
+//# sourceMappingURL=index.C9xH-Vvm.js.map

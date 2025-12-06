@@ -15,7 +15,7 @@ import '../styles/tailwind/index.css';
 import '../styles/3rd/_index.scss';
 
 const run = async () => {
-    FX.init();
+    await FX.init();
 
     // init
     scriptLoader();

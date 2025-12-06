@@ -54,7 +54,7 @@ if ( empty( $faqs ) ) {
             Đặt câu hỏi của bạn
 			<svg class="w-5 h-5" aria-hidden="true"><use href="#icon-arrow-right-outline"></use></svg>
 		</a>
-		<ul class="accordion accordion-faq max-w-4xl mx-auto pt-4 sm:pt-10" data-accordion data-multi-expand="true" data-allow-all-closed="true">
+		<ul class="accordion accordion-faq max-w-4xl mx-auto pt-4 sm:pt-10" data-fx-accordion data-multi-expand="true" data-allow-all-closed="true">
             <?php foreach ( $faqs as $faq ) :
                 $question = trim( $faq['question'] ?? '' );
                 $answer   = trim( $faq['answer'] ?? '' );
@@ -62,13 +62,13 @@ if ( empty( $faqs ) ) {
                     continue;
                 }
             ?>
-            <li class="accordion-item py-4 md:px-6 md:my-3 rounded-md" data-accordion-item>
+            <li class="accordion-item py-4 md:px-6 md:my-3 rounded-md" data-fx-accordion-item>
 				<a href="#" class="accordion-title relative p-fs-clamp-[16,18] flex font-bold pr-8" aria-label="<?= esc_attr( $question ) ?>">
                     <?= esc_html( $question ) ?>
 					<svg class="w-6 h-6 minus absolute" aria-hidden="true"><use href="#icon-circle-minus-outline"></use></svg>
 					<svg class="w-6 h-6 plus absolute" aria-hidden="true"><use href="#icon-circle-plus-outline"></use></svg>
 				</a>
-				<div class="accordion-content text-base pt-5" data-tab-content>
+				<div data-fx-accordion-content class="accordion-content text-base">
                     <?= wp_kses_post( $answer ) ?>
 				</div>
 			</li>

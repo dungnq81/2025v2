@@ -42,16 +42,16 @@ Triggers.init($, Foundation);
 MediaQuery._init();
 
 // Import and initialize Foundation plugins
-import {Dropdown} from 'foundation-sites/js/foundation.dropdown';
+//import {Dropdown} from 'foundation-sites/js/foundation.dropdown';
 import {DropdownMenu} from 'foundation-sites/js/foundation.dropdownMenu';
-import {Accordion} from 'foundation-sites/js/foundation.accordion';
+//import {Accordion} from 'foundation-sites/js/foundation.accordion';
 import {AccordionMenu} from 'foundation-sites/js/foundation.accordionMenu';
 //import { ResponsiveMenu } from 'foundation-sites/js/foundation.responsiveMenu';
 //import { ResponsiveToggle } from 'foundation-sites/js/foundation.responsiveToggle';
 import {OffCanvas} from 'foundation-sites/js/foundation.offcanvas';
 //import { Reveal } from 'foundation-sites/js/foundation.reveal';
 //import { Tooltip } from 'foundation-sites/js/foundation.tooltip';
-import {SmoothScroll} from 'foundation-sites/js/foundation.smoothScroll';
+//import {SmoothScroll} from 'foundation-sites/js/foundation.smoothScroll';
 //import { Magellan } from 'foundation-sites/js/foundation.magellan';
 //import { Sticky } from 'foundation-sites/js/foundation.sticky';
 //import { Toggler } from 'foundation-sites/js/foundation.toggler';
@@ -61,9 +61,9 @@ import {SmoothScroll} from 'foundation-sites/js/foundation.smoothScroll';
 //import {Tabs} from 'foundation-sites/js/foundation.tabs';
 
 const plugins = [
-    {plugin: Dropdown, name: 'Dropdown'},
+    //{plugin: Dropdown, name: 'Dropdown'},
     {plugin: DropdownMenu, name: 'DropdownMenu'},
-    {plugin: Accordion, name: 'Accordion'},
+    //{plugin: Accordion, name: 'Accordion'},
     {plugin: AccordionMenu, name: 'AccordionMenu'},
     //{ plugin: ResponsiveMenu, name: 'ResponsiveMenu' },
     //{ plugin: ResponsiveToggle, name: 'ResponsiveToggle' },

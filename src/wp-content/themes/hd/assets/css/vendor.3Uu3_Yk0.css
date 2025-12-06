@@ -84,6 +84,7 @@
     --color-gray-500: oklch(55.1% .027 264.364);
     --color-gray-600: oklch(44.6% .03 256.802);
     --color-gray-700: oklch(37.3% .034 259.733);
+    --color-black: #000;
     --color-white: #fff;
     --spacing: .25rem;
     --container-md: 28rem;
@@ -862,10 +863,6 @@
     pointer-events: none;
   }
 
-  .collapse {
-    visibility: collapse;
-  }
-
   .visible {
     visibility: visible;
   }
@@ -960,10 +957,6 @@
 
   .bottom-0 {
     bottom: calc(var(--spacing) * 0);
-  }
-
-  .bottom-3 {
-    bottom: calc(var(--spacing) * 3);
   }
 
   .bottom-18 {
@@ -1592,8 +1585,23 @@
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
 
+  .-translate-x-full {
+    --tw-translate-x: -100%;
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+
+  .translate-x-0 {
+    --tw-translate-x: calc(var(--spacing) * 0);
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+
   .translate-x-\[-50\%\] {
     --tw-translate-x: -50%;
+    translate: var(--tw-translate-x) var(--tw-translate-y);
+  }
+
+  .translate-x-full {
+    --tw-translate-x: 100%;
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
 
@@ -1955,6 +1963,10 @@
     background-color: #f1f1f1;
   }
 
+  .bg-black {
+    background-color: var(--color-black);
+  }
+
   .bg-white\/95 {
     background-color: #fffffff2;
   }
@@ -2123,10 +2135,6 @@
     padding-top: calc(var(--spacing) * 4);
   }
 
-  .pt-5 {
-    padding-top: calc(var(--spacing) * 5);
-  }
-
   .pt-6 {
     padding-top: calc(var(--spacing) * 6);
   }
@@ -2211,6 +2219,10 @@
 
   .p-fs-clamp-\[12\,13\] {
     font-size: clamp(.75rem, .705357rem + .111607vw, .8125rem);
+  }
+
+  .p-fs-clamp-\[15\,16\] {
+    font-size: clamp(.9375rem, .892857rem + .111607vw, 1rem);
   }
 
   .p-fs-clamp-\[15\,17\] {
@@ -2819,10 +2831,6 @@
   }
 
   @media (min-width: 64rem) {
-    .lg\:right-\[4vw\] {
-      right: 4vw;
-    }
-
     .lg\:col-span-2 {
       grid-column: span 2 / span 2;
     }
@@ -3578,40 +3586,40 @@
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url("../fonts/SVN-Poppins-Light.woff2?v=uidatpk") format("woff2"), url("../fonts/SVN-Poppins-Light.ttf?v=uidatpk") format("truetype"), url("../fonts/SVN-Poppins-Light.otf?v=uidatpk") format("opentype");
+  src: url("../fonts/SVN-Poppins-Light.woff2?v=uq4h2up") format("woff2"), url("../fonts/SVN-Poppins-Light.ttf?v=uq4h2up") format("truetype"), url("../fonts/SVN-Poppins-Light.otf?v=uq4h2up") format("opentype");
 }
 @font-face {
   font-family: "Poppins";
   font-style: italic;
   font-weight: 300;
   font-display: swap;
-  src: url("../fonts/SVN-Poppins-LightItalic.woff2?v=uidatpm") format("woff2"), url("../fonts/SVN-Poppins-LightItalic.ttf?v=uidatpm") format("truetype"), url("../fonts/SVN-Poppins-LightItalic.otf?v=uidatpm") format("opentype");
+  src: url("../fonts/SVN-Poppins-LightItalic.woff2?v=uq4h2v9") format("woff2"), url("../fonts/SVN-Poppins-LightItalic.ttf?v=uq4h2v9") format("truetype"), url("../fonts/SVN-Poppins-LightItalic.otf?v=uq4h2v9") format("opentype");
 }
 @font-face {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  src: url("../fonts/SVN-Poppins-Medium.woff2?v=uidatpx") format("woff2"), url("../fonts/SVN-Poppins-Medium.ttf?v=uidatpx") format("truetype"), url("../fonts/SVN-Poppins-Medium.otf?v=uidatpx") format("opentype");
+  src: url("../fonts/SVN-Poppins-Medium.woff2?v=uq4h2vw") format("woff2"), url("../fonts/SVN-Poppins-Medium.ttf?v=uq4h2vw") format("truetype"), url("../fonts/SVN-Poppins-Medium.otf?v=uq4h2vw") format("opentype");
 }
 @font-face {
   font-family: "Poppins";
   font-style: italic;
   font-weight: 500;
   font-display: swap;
-  src: url("../fonts/SVN-Poppins-MediumItalic.woff2?v=uidatqa") format("woff2"), url("../fonts/SVN-Poppins-MediumItalic.ttf?v=uidatqa") format("truetype"), url("../fonts/SVN-Poppins-MediumItalic.otf?v=uidatqa") format("opentype");
+  src: url("../fonts/SVN-Poppins-MediumItalic.woff2?v=uq4h2we") format("woff2"), url("../fonts/SVN-Poppins-MediumItalic.ttf?v=uq4h2we") format("truetype"), url("../fonts/SVN-Poppins-MediumItalic.otf?v=uq4h2we") format("opentype");
 }
 @font-face {
   font-family: "Poppins";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url("../fonts/SVN-Poppins-Bold.woff2?v=uidatqi") format("woff2"), url("../fonts/SVN-Poppins-Bold.ttf?v=uidatqi") format("truetype"), url("../fonts/SVN-Poppins-Bold.otf?v=uidatqi") format("opentype");
+  src: url("../fonts/SVN-Poppins-Bold.woff2?v=uq4h2wo") format("woff2"), url("../fonts/SVN-Poppins-Bold.ttf?v=uq4h2wo") format("truetype"), url("../fonts/SVN-Poppins-Bold.otf?v=uq4h2wo") format("opentype");
 }
 @font-face {
   font-family: "Poppins";
   font-style: italic;
   font-weight: 700;
   font-display: swap;
-  src: url("../fonts/SVN-Poppins-BoldItalic.woff2?v=uidatqj") format("woff2"), url("../fonts/SVN-Poppins-BoldItalic.ttf?v=uidatqj") format("truetype"), url("../fonts/SVN-Poppins-BoldItalic.otf?v=uidatqj") format("opentype");
+  src: url("../fonts/SVN-Poppins-BoldItalic.woff2?v=uq4h2wq") format("woff2"), url("../fonts/SVN-Poppins-BoldItalic.ttf?v=uq4h2wq") format("truetype"), url("../fonts/SVN-Poppins-BoldItalic.otf?v=uq4h2wq") format("opentype");
 }

@@ -7501,9 +7501,9 @@ Triggers.Initializers.addClosemeListener = function(pluginName) {
     $(window).off(listeners2).on(listeners2, Triggers.Listeners.Global.closeMeListener);
   }
 };
-function debounceGlobalListener(debounce, trigger, listener) {
+function debounceGlobalListener(debounce, trigger2, listener) {
   let timer, args = Array.prototype.slice.call(arguments, 3);
-  $(window).on(trigger, function() {
+  $(window).on(trigger2, function() {
     if (timer) {
       clearTimeout(timer);
     }
@@ -7675,529 +7675,6 @@ function hyphenate(str) {
 function getPluginName(obj) {
   return hyphenate(obj.className);
 }
-const POSITIONS = ["left", "right", "top", "bottom"];
-const VERTICAL_ALIGNMENTS = ["top", "bottom", "center"];
-const HORIZONTAL_ALIGNMENTS = ["left", "right", "center"];
-const ALIGNMENTS = {
-  "left": VERTICAL_ALIGNMENTS,
-  "right": VERTICAL_ALIGNMENTS,
-  "top": HORIZONTAL_ALIGNMENTS,
-  "bottom": HORIZONTAL_ALIGNMENTS
-};
-function nextItem(item, array) {
-  var currentIdx = array.indexOf(item);
-  if (currentIdx === array.length - 1) {
-    return array[0];
-  } else {
-    return array[currentIdx + 1];
-  }
-}
-class Positionable extends Plugin {
-  /**
-   * Abstract class encapsulating the tether-like explicit positioning logic
-   * including repositioning based on overlap.
-   * Expects classes to define defaults for vOffset, hOffset, position,
-   * alignment, allowOverlap, and allowBottomOverlap. They can do this by
-   * extending the defaults, or (for now recommended due to the way docs are
-   * generated) by explicitly declaring them.
-   *
-   **/
-  _init() {
-    this.triedPositions = {};
-    this.position = this.options.position === "auto" ? this._getDefaultPosition() : this.options.position;
-    this.alignment = this.options.alignment === "auto" ? this._getDefaultAlignment() : this.options.alignment;
-    this.originalPosition = this.position;
-    this.originalAlignment = this.alignment;
-  }
-  _getDefaultPosition() {
-    return "bottom";
-  }
-  _getDefaultAlignment() {
-    switch (this.position) {
-      case "bottom":
-      case "top":
-        return rtl() ? "right" : "left";
-      case "left":
-      case "right":
-        return "bottom";
-    }
-  }
-  /**
-   * Adjusts the positionable possible positions by iterating through alignments
-   * and positions.
-   * @function
-   * @private
-   */
-  _reposition() {
-    if (this._alignmentsExhausted(this.position)) {
-      this.position = nextItem(this.position, POSITIONS);
-      this.alignment = ALIGNMENTS[this.position][0];
-    } else {
-      this._realign();
-    }
-  }
-  /**
-   * Adjusts the dropdown pane possible positions by iterating through alignments
-   * on the current position.
-   * @function
-   * @private
-   */
-  _realign() {
-    this._addTriedPosition(this.position, this.alignment);
-    this.alignment = nextItem(this.alignment, ALIGNMENTS[this.position]);
-  }
-  _addTriedPosition(position, alignment) {
-    this.triedPositions[position] = this.triedPositions[position] || [];
-    this.triedPositions[position].push(alignment);
-  }
-  _positionsExhausted() {
-    var isExhausted = true;
-    for (var i = 0; i < POSITIONS.length; i++) {
-      isExhausted = isExhausted && this._alignmentsExhausted(POSITIONS[i]);
-    }
-    return isExhausted;
-  }
-  _alignmentsExhausted(position) {
-    return this.triedPositions[position] && this.triedPositions[position].length === ALIGNMENTS[position].length;
-  }
-  // When we're trying to center, we don't want to apply offset that's going to
-  // take us just off center, so wrap around to return 0 for the appropriate
-  // offset in those alignments.  TODO: Figure out if we want to make this
-  // configurable behavior... it feels more intuitive, especially for tooltips, but
-  // it's possible someone might actually want to start from center and then nudge
-  // slightly off.
-  _getVOffset() {
-    return this.options.vOffset;
-  }
-  _getHOffset() {
-    return this.options.hOffset;
-  }
-  _setPosition($anchor, $element, $parent) {
-    if ($anchor.attr("aria-expanded") === "false") {
-      return false;
-    }
-    if (!this.options.allowOverlap) {
-      this.position = this.originalPosition;
-      this.alignment = this.originalAlignment;
-    }
-    $element.offset(Box.GetExplicitOffsets($element, $anchor, this.position, this.alignment, this._getVOffset(), this._getHOffset()));
-    if (!this.options.allowOverlap) {
-      var minOverlap = 1e8;
-      var minCoordinates = { position: this.position, alignment: this.alignment };
-      while (!this._positionsExhausted()) {
-        let overlap = Box.OverlapArea($element, $parent, false, false, this.options.allowBottomOverlap);
-        if (overlap === 0) {
-          return;
-        }
-        if (overlap < minOverlap) {
-          minOverlap = overlap;
-          minCoordinates = { position: this.position, alignment: this.alignment };
-        }
-        this._reposition();
-        $element.offset(Box.GetExplicitOffsets($element, $anchor, this.position, this.alignment, this._getVOffset(), this._getHOffset()));
-      }
-      this.position = minCoordinates.position;
-      this.alignment = minCoordinates.alignment;
-      $element.offset(Box.GetExplicitOffsets($element, $anchor, this.position, this.alignment, this._getVOffset(), this._getHOffset()));
-    }
-  }
-}
-Positionable.defaults = {
-  /**
-   * Position of positionable relative to anchor. Can be left, right, bottom, top, or auto.
-   * @option
-   * @type {string}
-   * @default 'auto'
-   */
-  position: "auto",
-  /**
-   * Alignment of positionable relative to anchor. Can be left, right, bottom, top, center, or auto.
-   * @option
-   * @type {string}
-   * @default 'auto'
-   */
-  alignment: "auto",
-  /**
-   * Allow overlap of container/window. If false, dropdown positionable first
-   * try to position as defined by data-position and data-alignment, but
-   * reposition if it would cause an overflow.
-   * @option
-   * @type {boolean}
-   * @default false
-   */
-  allowOverlap: false,
-  /**
-   * Allow overlap of only the bottom of the container. This is the most common
-   * behavior for dropdowns, allowing the dropdown to extend the bottom of the
-   * screen but not otherwise influence or break out of the container.
-   * @option
-   * @type {boolean}
-   * @default true
-   */
-  allowBottomOverlap: true,
-  /**
-   * Number of pixels the positionable should be separated vertically from anchor
-   * @option
-   * @type {number}
-   * @default 0
-   */
-  vOffset: 0,
-  /**
-   * Number of pixels the positionable should be separated horizontally from anchor
-   * @option
-   * @type {number}
-   * @default 0
-   */
-  hOffset: 0
-};
-class Dropdown extends Positionable {
-  /**
-   * Creates a new instance of a dropdown.
-   * @class
-   * @name Dropdown
-   * @param {jQuery} element - jQuery object to make into a dropdown.
-   *        Object should be of the dropdown panel, rather than its anchor.
-   * @param {Object} options - Overrides to the default plugin settings.
-   */
-  _setup(element, options) {
-    this.$element = element;
-    this.options = $.extend({}, Dropdown.defaults, this.$element.data(), options);
-    this.className = "Dropdown";
-    Touch.init($);
-    Triggers.init($);
-    this._init();
-    Keyboard.register("Dropdown", {
-      "ENTER": "toggle",
-      "SPACE": "toggle",
-      "ESCAPE": "close"
-    });
-  }
-  /**
-   * Initializes the plugin by setting/checking options and attributes, adding helper variables, and saving the anchor.
-   * @function
-   * @private
-   */
-  _init() {
-    var $id = this.$element.attr("id");
-    this.$anchors = $(`[data-toggle="${$id}"]`).length ? $(`[data-toggle="${$id}"]`) : $(`[data-open="${$id}"]`);
-    this.$anchors.attr({
-      "aria-controls": $id,
-      "data-is-focus": false,
-      "data-yeti-box": $id,
-      "aria-haspopup": true,
-      "aria-expanded": false
-    });
-    this._setCurrentAnchor(this.$anchors.first());
-    if (this.options.parentClass) {
-      this.$parent = this.$element.parents("." + this.options.parentClass);
-    } else {
-      this.$parent = null;
-    }
-    if (typeof this.$element.attr("aria-labelledby") === "undefined") {
-      if (typeof this.$currentAnchor.attr("id") === "undefined") {
-        this.$currentAnchor.attr("id", GetYoDigits(6, "dd-anchor"));
-      }
-      this.$element.attr("aria-labelledby", this.$currentAnchor.attr("id"));
-    }
-    this.$element.attr({
-      "aria-hidden": "true",
-      "data-yeti-box": $id,
-      "data-resize": $id
-    });
-    super._init();
-    this._events();
-  }
-  _getDefaultPosition() {
-    var position = this.$element[0].className.match(/(top|left|right|bottom)/g);
-    if (position) {
-      return position[0];
-    } else {
-      return "bottom";
-    }
-  }
-  _getDefaultAlignment() {
-    var horizontalPosition = /float-(\S+)/.exec(this.$currentAnchor.attr("class"));
-    if (horizontalPosition) {
-      return horizontalPosition[1];
-    }
-    return super._getDefaultAlignment();
-  }
-  /**
-   * Sets the position and orientation of the dropdown pane, checks for collisions if allow-overlap is not true.
-   * Recursively calls itself if a collision is detected, with a new position class.
-   * @function
-   * @private
-   */
-  _setPosition() {
-    this.$element.removeClass(`has-position-${this.position} has-alignment-${this.alignment}`);
-    super._setPosition(this.$currentAnchor, this.$element, this.$parent);
-    this.$element.addClass(`has-position-${this.position} has-alignment-${this.alignment}`);
-  }
-  /**
-   * Make it a current anchor.
-   * Current anchor as the reference for the position of Dropdown panes.
-   * @param {HTML} el - DOM element of the anchor.
-   * @function
-   * @private
-   */
-  _setCurrentAnchor(el) {
-    this.$currentAnchor = $(el);
-  }
-  /**
-   * Adds event listeners to the element utilizing the triggers utility library.
-   * @function
-   * @private
-   */
-  _events() {
-    var _this = this, hasTouch = "ontouchstart" in window || typeof window.ontouchstart !== "undefined";
-    this.$element.on({
-      "open.zf.trigger": this.open.bind(this),
-      "close.zf.trigger": this.close.bind(this),
-      "toggle.zf.trigger": this.toggle.bind(this),
-      "resizeme.zf.trigger": this._setPosition.bind(this)
-    });
-    this.$anchors.off("click.zf.trigger").on("click.zf.trigger", function(e) {
-      _this._setCurrentAnchor(this);
-      if (
-        // if forceFollow false, always prevent default action
-        _this.options.forceFollow === false || // if forceFollow true and hover option true, only prevent default action on 1st click
-        // on 2nd click (dropown opened) the default action (e.g. follow a href) gets executed
-        hasTouch && _this.options.hover && _this.$element.hasClass("is-open") === false
-      ) {
-        e.preventDefault();
-      }
-    });
-    if (this.options.hover) {
-      this.$anchors.off("mouseenter.zf.dropdown mouseleave.zf.dropdown").on("mouseenter.zf.dropdown", function() {
-        _this._setCurrentAnchor(this);
-        var bodyData = $("body").data();
-        if (typeof bodyData.whatinput === "undefined" || bodyData.whatinput === "mouse") {
-          clearTimeout(_this.timeout);
-          _this.timeout = setTimeout(function() {
-            _this.open();
-            _this.$anchors.data("hover", true);
-          }, _this.options.hoverDelay);
-        }
-      }).on("mouseleave.zf.dropdown", ignoreMousedisappear(function() {
-        clearTimeout(_this.timeout);
-        _this.timeout = setTimeout(function() {
-          _this.close();
-          _this.$anchors.data("hover", false);
-        }, _this.options.hoverDelay);
-      }));
-      if (this.options.hoverPane) {
-        this.$element.off("mouseenter.zf.dropdown mouseleave.zf.dropdown").on("mouseenter.zf.dropdown", function() {
-          clearTimeout(_this.timeout);
-        }).on("mouseleave.zf.dropdown", ignoreMousedisappear(function() {
-          clearTimeout(_this.timeout);
-          _this.timeout = setTimeout(function() {
-            _this.close();
-            _this.$anchors.data("hover", false);
-          }, _this.options.hoverDelay);
-        }));
-      }
-    }
-    this.$anchors.add(this.$element).on("keydown.zf.dropdown", function(e) {
-      var $target = $(this);
-      Keyboard.handleKey(e, "Dropdown", {
-        open: function() {
-          if ($target.is(_this.$anchors) && !$target.is("input, textarea")) {
-            _this.open();
-            _this.$element.attr("tabindex", -1).focus();
-            e.preventDefault();
-          }
-        },
-        close: function() {
-          _this.close();
-          _this.$anchors.focus();
-        }
-      });
-    });
-  }
-  /**
-   * Adds an event handler to the body to close any dropdowns on a click.
-   * @function
-   * @private
-   */
-  _addBodyHandler() {
-    var $body = $(document.body).not(this.$element), _this = this;
-    $body.off("click.zf.dropdown tap.zf.dropdown").on("click.zf.dropdown tap.zf.dropdown", function(e) {
-      if (_this.$anchors.is(e.target) || _this.$anchors.find(e.target).length) {
-        return;
-      }
-      if (_this.$element.is(e.target) || _this.$element.find(e.target).length) {
-        return;
-      }
-      _this.close();
-      $body.off("click.zf.dropdown tap.zf.dropdown");
-    });
-  }
-  /**
-   * Opens the dropdown pane, and fires a bubbling event to close other dropdowns.
-   * @function
-   * @fires Dropdown#closeme
-   * @fires Dropdown#show
-   */
-  open() {
-    this.$element.trigger("closeme.zf.dropdown", this.$element.attr("id"));
-    this.$anchors.addClass("hover").attr({ "aria-expanded": true });
-    this.$element.addClass("is-opening");
-    this._setPosition();
-    this.$element.removeClass("is-opening").addClass("is-open").attr({ "aria-hidden": false });
-    if (this.options.autoFocus) {
-      var $focusable = Keyboard.findFocusable(this.$element);
-      if ($focusable.length) {
-        $focusable.eq(0).focus();
-      }
-    }
-    if (this.options.closeOnClick) {
-      this._addBodyHandler();
-    }
-    if (this.options.trapFocus) {
-      Keyboard.trapFocus(this.$element);
-    }
-    this.$element.trigger("show.zf.dropdown", [this.$element]);
-  }
-  /**
-   * Closes the open dropdown pane.
-   * @function
-   * @fires Dropdown#hide
-   */
-  close() {
-    if (!this.$element.hasClass("is-open")) {
-      return false;
-    }
-    this.$element.removeClass("is-open").attr({ "aria-hidden": true });
-    this.$anchors.removeClass("hover").attr("aria-expanded", false);
-    this.$element.trigger("hide.zf.dropdown", [this.$element]);
-    if (this.options.trapFocus) {
-      Keyboard.releaseFocus(this.$element);
-    }
-  }
-  /**
-   * Toggles the dropdown pane's visibility.
-   * @function
-   */
-  toggle() {
-    if (this.$element.hasClass("is-open")) {
-      if (this.$anchors.data("hover")) return;
-      this.close();
-    } else {
-      this.open();
-    }
-  }
-  /**
-   * Destroys the dropdown.
-   * @function
-   */
-  _destroy() {
-    this.$element.off(".zf.trigger").hide();
-    this.$anchors.off(".zf.dropdown");
-    $(document.body).off("click.zf.dropdown tap.zf.dropdown");
-  }
-}
-Dropdown.defaults = {
-  /**
-   * Class that designates bounding container of Dropdown (default: window)
-   * @option
-   * @type {?string}
-   * @default null
-   */
-  parentClass: null,
-  /**
-   * Amount of time to delay opening a submenu on hover event.
-   * @option
-   * @type {number}
-   * @default 250
-   */
-  hoverDelay: 250,
-  /**
-   * Allow submenus to open on hover events
-   * @option
-   * @type {boolean}
-   * @default false
-   */
-  hover: false,
-  /**
-   * Don't close dropdown when hovering over dropdown pane
-   * @option
-   * @type {boolean}
-   * @default false
-   */
-  hoverPane: false,
-  /**
-   * Number of pixels between the dropdown pane and the triggering element on open.
-   * @option
-   * @type {number}
-   * @default 0
-   */
-  vOffset: 0,
-  /**
-   * Number of pixels between the dropdown pane and the triggering element on open.
-   * @option
-   * @type {number}
-   * @default 0
-   */
-  hOffset: 0,
-  /**
-   * Position of dropdown. Can be left, right, bottom, top, or auto.
-   * @option
-   * @type {string}
-   * @default 'auto'
-   */
-  position: "auto",
-  /**
-   * Alignment of dropdown relative to anchor. Can be left, right, bottom, top, center, or auto.
-   * @option
-   * @type {string}
-   * @default 'auto'
-   */
-  alignment: "auto",
-  /**
-   * Allow overlap of container/window. If false, dropdown will first try to position as defined by data-position and data-alignment, but reposition if it would cause an overflow.
-   * @option
-   * @type {boolean}
-   * @default false
-   */
-  allowOverlap: false,
-  /**
-   * Allow overlap of only the bottom of the container. This is the most common
-   * behavior for dropdowns, allowing the dropdown to extend the bottom of the
-   * screen but not otherwise influence or break out of the container.
-   * @option
-   * @type {boolean}
-   * @default true
-   */
-  allowBottomOverlap: true,
-  /**
-   * Allow the plugin to trap focus to the dropdown pane if opened with keyboard commands.
-   * @option
-   * @type {boolean}
-   * @default false
-   */
-  trapFocus: false,
-  /**
-   * Allow the plugin to set focus to the first focusable element within the pane, regardless of method of opening.
-   * @option
-   * @type {boolean}
-   * @default false
-   */
-  autoFocus: false,
-  /**
-   * Allows a click on the body to close the dropdown.
-   * @option
-   * @type {boolean}
-   * @default false
-   */
-  closeOnClick: false,
-  /**
-   * If true the default action of the toggle (e.g. follow a link with href) gets executed on click. If hover option is also true the default action gets prevented on first click for mobile / touch devices and executed on second click.
-   * @option
-   * @type {boolean}
-   * @default true
-   */
-  forceFollow: true
-};
 class DropdownMenu extends Plugin {
   /**
    * Creates a new instance of DropdownMenu.
@@ -8594,329 +8071,6 @@ DropdownMenu.defaults = {
    * @default true
    */
   forceFollow: true
-};
-class Accordion extends Plugin {
-  /**
-   * Creates a new instance of an accordion.
-   * @class
-   * @name Accordion
-   * @fires Accordion#init
-   * @param {jQuery} element - jQuery object to make into an accordion.
-   * @param {Object} options - a plain object with settings to override the default options.
-   */
-  _setup(element, options) {
-    this.$element = element;
-    this.options = $.extend({}, Accordion.defaults, this.$element.data(), options);
-    this.className = "Accordion";
-    this._init();
-    Keyboard.register("Accordion", {
-      "ENTER": "toggle",
-      "SPACE": "toggle",
-      "ARROW_DOWN": "next",
-      "ARROW_UP": "previous",
-      "HOME": "first",
-      "END": "last"
-    });
-  }
-  /**
-   * Initializes the accordion by animating the preset active pane(s).
-   * @private
-   */
-  _init() {
-    this._isInitializing = true;
-    this.$tabs = this.$element.children("[data-accordion-item]");
-    this.$tabs.each(function(idx, el) {
-      var $el = $(el), $content = $el.children("[data-tab-content]"), id = $content[0].id || GetYoDigits(6, "accordion"), linkId = el.id ? `${el.id}-label` : `${id}-label`;
-      $el.find("a:first").attr({
-        "aria-controls": id,
-        "id": linkId,
-        "aria-expanded": false
-      });
-      $content.attr({ "role": "region", "aria-labelledby": linkId, "aria-hidden": true, "id": id });
-    });
-    var $initActive = this.$element.find(".is-active").children("[data-tab-content]");
-    if ($initActive.length) {
-      this._initialAnchor = $initActive.prev("a").attr("href");
-      this._openSingleTab($initActive);
-    }
-    this._checkDeepLink = () => {
-      var anchor = window.location.hash;
-      if (!anchor.length) {
-        if (this._isInitializing) return;
-        if (this._initialAnchor) anchor = this._initialAnchor;
-      }
-      var $anchor = anchor && $(anchor);
-      var $link = anchor && this.$element.find(`[href$="${anchor}"]`);
-      var isOwnAnchor = !!($anchor.length && $link.length);
-      if (isOwnAnchor) {
-        if ($anchor && $link && $link.length) {
-          if (!$link.parent("[data-accordion-item]").hasClass("is-active")) {
-            this._openSingleTab($anchor);
-          }
-        } else {
-          this._closeAllTabs();
-        }
-        if (this.options.deepLinkSmudge) {
-          onLoad($(window), () => {
-            var offset = this.$element.offset();
-            $("html, body").animate({ scrollTop: offset.top - this.options.deepLinkSmudgeOffset }, this.options.deepLinkSmudgeDelay);
-          });
-        }
-        this.$element.trigger("deeplink.zf.accordion", [$link, $anchor]);
-      }
-    };
-    if (this.options.deepLink) {
-      this._checkDeepLink();
-    }
-    this._events();
-    this._isInitializing = false;
-  }
-  /**
-   * Adds event handlers for items within the accordion.
-   * @private
-   */
-  _events() {
-    var _this = this;
-    this.$tabs.each(function() {
-      var $elem = $(this);
-      var $tabContent = $elem.children("[data-tab-content]");
-      if ($tabContent.length) {
-        $elem.children("a").off("click.zf.accordion keydown.zf.accordion").on("click.zf.accordion", function(e) {
-          e.preventDefault();
-          _this.toggle($tabContent);
-        }).on("keydown.zf.accordion", function(e) {
-          Keyboard.handleKey(e, "Accordion", {
-            toggle: function() {
-              _this.toggle($tabContent);
-            },
-            next: function() {
-              var $a = $elem.next().find("a").focus();
-              if (!_this.options.multiExpand) {
-                $a.trigger("click.zf.accordion");
-              }
-            },
-            previous: function() {
-              var $a = $elem.prev().find("a").focus();
-              if (!_this.options.multiExpand) {
-                $a.trigger("click.zf.accordion");
-              }
-            },
-            first: function() {
-              var $a = _this.$tabs.first().find(".accordion-title").focus();
-              if (!_this.options.multiExpand) {
-                $a.trigger("click.zf.accordion");
-              }
-            },
-            last: function() {
-              var $a = _this.$tabs.last().find(".accordion-title").focus();
-              if (!_this.options.multiExpand) {
-                $a.trigger("click.zf.accordion");
-              }
-            },
-            handled: function() {
-              e.preventDefault();
-            }
-          });
-        });
-      }
-    });
-    if (this.options.deepLink) {
-      $(window).on("hashchange", this._checkDeepLink);
-    }
-  }
-  /**
-   * Toggles the selected content pane's open/close state.
-   * @param {jQuery} $target - jQuery object of the pane to toggle (`.accordion-content`).
-   * @function
-   */
-  toggle($target) {
-    if ($target.closest("[data-accordion]").is("[disabled]")) {
-      console.info("Cannot toggle an accordion that is disabled.");
-      return;
-    }
-    if ($target.parent().hasClass("is-active")) {
-      this.up($target);
-    } else {
-      this.down($target);
-    }
-    if (this.options.deepLink) {
-      var anchor = $target.prev("a").attr("href");
-      if (this.options.updateHistory) {
-        history.pushState({}, "", anchor);
-      } else {
-        history.replaceState({}, "", anchor);
-      }
-    }
-  }
-  /**
-   * Opens the accordion tab defined by `$target`.
-   * @param {jQuery} $target - Accordion pane to open (`.accordion-content`).
-   * @fires Accordion#down
-   * @function
-   */
-  down($target) {
-    if ($target.closest("[data-accordion]").is("[disabled]")) {
-      console.info("Cannot call down on an accordion that is disabled.");
-      return;
-    }
-    if (this.options.multiExpand)
-      this._openTab($target);
-    else
-      this._openSingleTab($target);
-  }
-  /**
-   * Closes the tab defined by `$target`.
-   * It may be ignored if the Accordion options don't allow it.
-   *
-   * @param {jQuery} $target - Accordion tab to close (`.accordion-content`).
-   * @fires Accordion#up
-   * @function
-   */
-  up($target) {
-    if (this.$element.is("[disabled]")) {
-      console.info("Cannot call up on an accordion that is disabled.");
-      return;
-    }
-    const $targetItem = $target.parent();
-    if (!$targetItem.hasClass("is-active")) return;
-    const $othersItems = $targetItem.siblings();
-    if (!this.options.allowAllClosed && !$othersItems.hasClass("is-active")) return;
-    this._closeTab($target);
-  }
-  /**
-   * Make the tab defined by `$target` the only opened tab, closing all others tabs.
-   * @param {jQuery} $target - Accordion tab to open (`.accordion-content`).
-   * @function
-   * @private
-   */
-  _openSingleTab($target) {
-    const $activeContents = this.$element.children(".is-active").children("[data-tab-content]");
-    if ($activeContents.length) {
-      this._closeTab($activeContents.not($target));
-    }
-    this._openTab($target);
-  }
-  /**
-   * Opens the tab defined by `$target`.
-   * @param {jQuery} $target - Accordion tab to open (`.accordion-content`).
-   * @fires Accordion#down
-   * @function
-   * @private
-   */
-  _openTab($target) {
-    const $targetItem = $target.parent();
-    const targetContentId = $target.attr("aria-labelledby");
-    $target.attr("aria-hidden", false);
-    $targetItem.addClass("is-active");
-    $(`#${targetContentId}`).attr({
-      "aria-expanded": true
-    });
-    $target.finish().slideDown(this.options.slideSpeed, () => {
-      this.$element.trigger("down.zf.accordion", [$target]);
-    });
-  }
-  /**
-   * Closes the tab defined by `$target`.
-   * @param {jQuery} $target - Accordion tab to close (`.accordion-content`).
-   * @fires Accordion#up
-   * @function
-   * @private
-   */
-  _closeTab($target) {
-    const $targetItem = $target.parent();
-    const targetContentId = $target.attr("aria-labelledby");
-    $target.attr("aria-hidden", true);
-    $targetItem.removeClass("is-active");
-    $(`#${targetContentId}`).attr({
-      "aria-expanded": false
-    });
-    $target.finish().slideUp(this.options.slideSpeed, () => {
-      this.$element.trigger("up.zf.accordion", [$target]);
-    });
-  }
-  /**
-   * Closes all active tabs
-   * @fires Accordion#up
-   * @function
-   * @private
-   */
-  _closeAllTabs() {
-    var $activeTabs = this.$element.children(".is-active").children("[data-tab-content]");
-    if ($activeTabs.length) {
-      this._closeTab($activeTabs);
-    }
-  }
-  /**
-   * Destroys an instance of an accordion.
-   * @fires Accordion#destroyed
-   * @function
-   */
-  _destroy() {
-    this.$element.find("[data-tab-content]").stop(true).slideUp(0).css("display", "");
-    this.$element.find("a").off(".zf.accordion");
-    if (this.options.deepLink) {
-      $(window).off("hashchange", this._checkDeepLink);
-    }
-  }
-}
-Accordion.defaults = {
-  /**
-   * Amount of time to animate the opening of an accordion pane.
-   * @option
-   * @type {number}
-   * @default 250
-   */
-  slideSpeed: 250,
-  /**
-   * Allow the accordion to have multiple open panes.
-   * @option
-   * @type {boolean}
-   * @default false
-   */
-  multiExpand: false,
-  /**
-   * Allow the accordion to close all panes.
-   * @option
-   * @type {boolean}
-   * @default false
-   */
-  allowAllClosed: false,
-  /**
-   * Link the location hash to the open pane.
-   * Set the location hash when the opened pane changes, and open and scroll to the corresponding pane when the location changes.
-   * @option
-   * @type {boolean}
-   * @default false
-   */
-  deepLink: false,
-  /**
-   * If `deepLink` is enabled, adjust the deep link scroll to make sure the top of the accordion panel is visible
-   * @option
-   * @type {boolean}
-   * @default false
-   */
-  deepLinkSmudge: false,
-  /**
-   * If `deepLinkSmudge` is enabled, animation time (ms) for the deep link adjustment
-   * @option
-   * @type {number}
-   * @default 300
-   */
-  deepLinkSmudgeDelay: 300,
-  /**
-   * If `deepLinkSmudge` is enabled, the offset for scrollToTtop to prevent overlap by a sticky element at the top of the page
-   * @option
-   * @type {number}
-   * @default 0
-   */
-  deepLinkSmudgeOffset: 0,
-  /**
-   * If `deepLink` is enabled, update the browser history with the open accordion
-   * @option
-   * @type {boolean}
-   * @default false
-   */
-  updateHistory: false
 };
 class AccordionMenu extends Plugin {
   /**
@@ -9494,13 +8648,13 @@ class OffCanvas extends Plugin {
    * @fires OffCanvas#opened
    * @todo also trigger 'open' event?
    */
-  open(event, trigger) {
+  open(event, trigger2) {
     if (this.$element.hasClass("is-open") || this.isRevealed || this.isInCanvas) {
       return;
     }
     var _this = this;
-    if (trigger) {
-      this.$lastTrigger = trigger;
+    if (trigger2) {
+      this.$lastTrigger = trigger2;
     }
     if (this.options.forceTo === "top") {
       window.scrollTo(0, 0);
@@ -9603,11 +8757,11 @@ class OffCanvas extends Plugin {
    * @param {Object} event - Event object passed from listener.
    * @param {jQuery} trigger - element that triggered the off-canvas to open.
    */
-  toggle(event, trigger) {
+  toggle(event, trigger2) {
     if (this.$element.hasClass("is-open")) {
-      this.close(event, trigger);
+      this.close(event, trigger2);
     } else {
-      this.open(event, trigger);
+      this.open(event, trigger2);
     }
   }
   /**
@@ -9739,117 +8893,6 @@ OffCanvas.defaults = {
    */
   trapFocus: false
 };
-class SmoothScroll extends Plugin {
-  /**
-   * Creates a new instance of SmoothScroll.
-   * @class
-   * @name SmoothScroll
-   * @fires SmoothScroll#init
-   * @param {Object} element - jQuery object to add the trigger to.
-   * @param {Object} options - Overrides to the default plugin settings.
-   */
-  _setup(element, options) {
-    this.$element = element;
-    this.options = $.extend({}, SmoothScroll.defaults, this.$element.data(), options);
-    this.className = "SmoothScroll";
-    this._init();
-  }
-  /**
-   * Initialize the SmoothScroll plugin
-   * @private
-   */
-  _init() {
-    const id = this.$element[0].id || GetYoDigits(6, "smooth-scroll");
-    this.$element.attr({ id });
-    this._events();
-  }
-  /**
-   * Initializes events for SmoothScroll.
-   * @private
-   */
-  _events() {
-    this._linkClickListener = this._handleLinkClick.bind(this);
-    this.$element.on("click.zf.smoothScroll", this._linkClickListener);
-    this.$element.on("click.zf.smoothScroll", 'a[href^="#"]', this._linkClickListener);
-  }
-  /**
-   * Handle the given event to smoothly scroll to the anchor pointed by the event target.
-   * @param {*} e - event
-   * @function
-   * @private
-   */
-  _handleLinkClick(e) {
-    if (!$(e.currentTarget).is('a[href^="#"]')) return;
-    const arrival = e.currentTarget.getAttribute("href");
-    this._inTransition = true;
-    SmoothScroll.scrollToLoc(arrival, this.options, () => {
-      this._inTransition = false;
-    });
-    e.preventDefault();
-  }
-  /**
-   * Function to scroll to a given location on the page.
-   * @param {String} loc - A properly formatted jQuery id selector. Example: '#foo'
-   * @param {Object} options - The options to use.
-   * @param {Function} callback - The callback function.
-   * @static
-   * @function
-   */
-  static scrollToLoc(loc, options = SmoothScroll.defaults, callback) {
-    const $loc = $(loc);
-    if (!$loc.length) return false;
-    var scrollPos = Math.round($loc.offset().top - options.threshold / 2 - options.offset);
-    $("html, body").stop(true).animate(
-      { scrollTop: scrollPos },
-      options.animationDuration,
-      options.animationEasing,
-      () => {
-        if (typeof callback === "function") {
-          callback();
-        }
-      }
-    );
-  }
-  /**
-   * Destroys the SmoothScroll instance.
-   * @function
-   */
-  _destroy() {
-    this.$element.off("click.zf.smoothScroll", this._linkClickListener);
-    this.$element.off("click.zf.smoothScroll", 'a[href^="#"]', this._linkClickListener);
-  }
-}
-SmoothScroll.defaults = {
-  /**
-   * Amount of time, in ms, the animated scrolling should take between locations.
-   * @option
-   * @type {number}
-   * @default 500
-   */
-  animationDuration: 500,
-  /**
-   * Animation style to use when scrolling between locations. Can be `'swing'` or `'linear'`.
-   * @option
-   * @type {string}
-   * @default 'linear'
-   * @see {@link https://api.jquery.com/animate|Jquery animate}
-   */
-  animationEasing: "linear",
-  /**
-   * Number of pixels to use as a marker for location changes.
-   * @option
-   * @type {number}
-   * @default 50
-   */
-  threshold: 50,
-  /**
-   * Number of pixels to offset the scroll of the page on item click if using a sticky nav bar.
-   * @option
-   * @type {number}
-   * @default 0
-   */
-  offset: 0
-};
 Object.assign(Foundation, {
   rtl,
   GetYoDigits,
@@ -9872,9 +8915,9 @@ Touch.init($);
 Triggers.init($, Foundation);
 MediaQuery._init();
 const plugins = [
-  { plugin: Dropdown, name: "Dropdown" },
+  //{plugin: Dropdown, name: 'Dropdown'},
   { plugin: DropdownMenu, name: "DropdownMenu" },
-  { plugin: Accordion, name: "Accordion" },
+  //{plugin: Accordion, name: 'Accordion'},
   { plugin: AccordionMenu, name: "AccordionMenu" },
   //{ plugin: ResponsiveMenu, name: 'ResponsiveMenu' },
   //{ plugin: ResponsiveToggle, name: 'ResponsiveToggle' },
@@ -9912,6 +8955,12 @@ const off = (el, ev, handler, opts) => {
   }
   el.removeEventListener(ev, handler, opts);
 };
+const closest = (el, selector) => el ? el.closest(selector) : null;
+const trigger = (el, name, detail = {}) => {
+  if (!el) return;
+  const ev = new CustomEvent(name, { detail });
+  el.dispatchEvent(ev);
+};
 const listeners = /* @__PURE__ */ new Map();
 const Events = {
   on(event, cb) {
@@ -9938,7 +8987,7 @@ const Events = {
     });
   }
 };
-const SELECTOR = "[data-fx-scroll]";
+const SELECTOR$1 = "[data-fx-scroll]";
 const FxSmoothScroll = {
   activeAnimation: null,
   smoothScrollTo(targetY, {
@@ -9986,7 +9035,7 @@ const FxSmoothScroll = {
     this.activeAnimation = requestAnimationFrame(animate2);
   },
   initAll(root = document) {
-    $$(SELECTOR, root).forEach((a) => {
+    $$(SELECTOR$1, root).forEach((a) => {
       const handler = (e) => {
         const href = a.getAttribute("href");
         if (!href || !href.startsWith("#")) return;
@@ -10011,7 +9060,7 @@ const FxSmoothScroll = {
   destroyAll(root = document) {
     if (this.activeAnimation) cancelAnimationFrame(this.activeAnimation);
     this.activeAnimation = null;
-    $$(SELECTOR, root).forEach((a) => {
+    $$(SELECTOR$1, root).forEach((a) => {
       if (a.__fx_ss_handler) {
         a.removeEventListener("click", a.__fx_ss_handler);
       }
@@ -10019,7 +9068,7 @@ const FxSmoothScroll = {
   }
 };
 const WRAPPER = "[data-tabs]";
-const ACTIVE_CLASS = "is-active";
+const ACTIVE_CLASS$1 = "is-active";
 const FxTabs = {
   initAll(root = document) {
     $$(WRAPPER, root).forEach((tabList) => {
@@ -10035,16 +9084,16 @@ const FxTabs = {
         const panelId = btn.getAttribute("href");
         const panel = contentWrapper.querySelector(panelId);
         if (!panel) return;
-        const active = li.classList.contains(ACTIVE_CLASS);
+        const active = li.classList.contains(ACTIVE_CLASS$1);
         btn.setAttribute("role", "tab");
         btn.setAttribute("aria-controls", panelId.replace("#", ""));
         btn.setAttribute("aria-selected", active ? "true" : "false");
         panel.setAttribute("role", "tabpanel");
         panel.setAttribute("aria-hidden", active ? "false" : "true");
         if (!active) {
-          panel.classList.remove(ACTIVE_CLASS);
+          panel.classList.remove(ACTIVE_CLASS$1);
         } else {
-          panel.classList.add(ACTIVE_CLASS);
+          panel.classList.add(ACTIVE_CLASS$1);
         }
       });
       tabButtons.forEach((btn) => {
@@ -10055,25 +9104,25 @@ const FxTabs = {
         const handler = (e) => {
           e.preventDefault();
           const li = btn.parentElement;
-          const isActive = li.classList.contains(ACTIVE_CLASS);
+          const isActive = li.classList.contains(ACTIVE_CLASS$1);
           if (isActive && !collapseEnabled) return;
           if (collapseEnabled && isActive) {
-            li.classList.remove(ACTIVE_CLASS);
+            li.classList.remove(ACTIVE_CLASS$1);
             btn.setAttribute("aria-selected", "false");
-            panel.classList.remove(ACTIVE_CLASS);
+            panel.classList.remove(ACTIVE_CLASS$1);
             panel.setAttribute("aria-hidden", "true");
             Events.emit("tabs.change", { tab: btn, panel, wrapper: tabList });
             return;
           }
-          tabList.querySelectorAll(".tabs-title").forEach((t) => t.classList.remove(ACTIVE_CLASS));
+          tabList.querySelectorAll(".tabs-title").forEach((t) => t.classList.remove(ACTIVE_CLASS$1));
           tabPanels.forEach((p) => {
-            p.classList.remove(ACTIVE_CLASS);
+            p.classList.remove(ACTIVE_CLASS$1);
             p.setAttribute("aria-hidden", "true");
           });
           tabButtons.forEach((b) => b.setAttribute("aria-selected", "false"));
-          li.classList.add(ACTIVE_CLASS);
+          li.classList.add(ACTIVE_CLASS$1);
           btn.setAttribute("aria-selected", "true");
-          panel.classList.add(ACTIVE_CLASS);
+          panel.classList.add(ACTIVE_CLASS$1);
           panel.setAttribute("aria-hidden", "false");
           Events.emit("tabs.change", { tab: btn, panel, wrapper: tabList });
         };
@@ -10090,16 +9139,213 @@ const FxTabs = {
     });
   }
 };
+const DATA_OC = "data-fx-offcanvas";
+const DATA_OPEN = "data-fx-offcanvas-open";
+const DATA_CLOSE = "data-fx-offcanvas-close";
+const OVERLAY_CLASS = "fx-offcanvas-overlay";
+function createOverlay() {
+  let o = document.querySelector("." + OVERLAY_CLASS);
+  if (!o) {
+    o = document.createElement("div");
+    o.className = OVERLAY_CLASS + " fixed inset-0 bg-black bg-opacity-50 hidden";
+    document.body.appendChild(o);
+  }
+  return o;
+}
+const FxOffCanvas = {
+  initAll(root = document) {
+    const overlay = createOverlay();
+    $$("[" + DATA_OPEN + "]", root).forEach((btn) => {
+      const sel = btn.getAttribute(DATA_OPEN);
+      const target = sel ? document.querySelector(sel) : null;
+      if (!target) return;
+      const handler = (e) => {
+        e.preventDefault();
+        overlay.classList.remove("hidden");
+        target.classList.remove("-translate-x-full", "translate-x-full");
+        target.classList.add("translate-x-0");
+        document.documentElement.classList.add("fx-offcanvas-open");
+        Events.emit("offcanvas.open", { btn, el: target, overlay });
+        trigger(target, "fx.offcanvas.opened", { btn, el: target, overlay });
+      };
+      btn.__fx_oc_open = handler;
+      on(btn, "click", handler);
+    });
+    $$("[" + DATA_CLOSE + "]", root).forEach((btn) => {
+      const sel = btn.getAttribute(DATA_CLOSE);
+      const target = sel ? document.querySelector(sel) : closest(btn, "[" + DATA_OC + "]");
+      if (!target) return;
+      const handler = (e) => {
+        e.preventDefault();
+        target.classList.add("-translate-x-full");
+        target.classList.remove("translate-x-0");
+        const overlayEl = document.querySelector("." + OVERLAY_CLASS);
+        if (overlayEl) overlayEl.classList.add("hidden");
+        document.documentElement.classList.remove("fx-offcanvas-open");
+        Events.emit("offcanvas.close", { btn, el: target });
+        trigger(target, "fx.offcanvas.closed", { btn, el: target });
+      };
+      btn.__fx_oc_close = handler;
+      on(btn, "click", handler);
+    });
+    const overlayHandler = (e) => {
+      const overlayEl = e.target;
+      $$("[" + DATA_OC + "]").forEach((oc) => {
+        oc.classList.add("-translate-x-full");
+        oc.classList.remove("translate-x-0");
+      });
+      overlayEl.classList.add("hidden");
+      document.documentElement.classList.remove("fx-offcanvas-open");
+      Events.emit("offcanvas.close", { overlay: overlayEl });
+    };
+    overlay.__fx_handler = overlayHandler;
+    on(overlay, "click", overlayHandler);
+  },
+  destroyAll(root = document) {
+    $$("[" + DATA_OPEN + "]", root).forEach((btn) => {
+      if (btn.__fx_oc_open) off(btn, "click", btn.__fx_oc_open);
+    });
+    $$("[" + DATA_CLOSE + "]", root).forEach((btn) => {
+      if (btn.__fx_oc_close) off(btn, "click", btn.__fx_oc_close);
+    });
+    const overlay = document.querySelector("." + OVERLAY_CLASS);
+    if (overlay && overlay.__fx_handler) off(overlay, "click", overlay.__fx_handler);
+  }
+};
+const DATA_TOGGLE = "data-fx-dropdown-toggle";
+const DATA_DROPDOWN = "data-fx-dropdown";
+function closeAll(except = null) {
+  $$("[" + DATA_DROPDOWN + "]").forEach((el) => {
+    if (el === except) return;
+    el.classList.remove("is-open");
+    const btn = document.querySelector(`[${DATA_TOGGLE}="#${el.id}"]`);
+    if (btn) btn.classList.remove("hover");
+    trigger(el, "fx.dropdown.closed", { el });
+    Events.emit("dropdown.close", { el });
+  });
+}
+function focusInside(dropdown) {
+  if (dropdown.dataset.autoFocus !== "true") return;
+  const input = dropdown.querySelector("input, textarea, select, [contenteditable]");
+  if (input) input.focus();
+}
+const FxDropdown = {
+  initAll(root = document) {
+    $$("[" + DATA_TOGGLE + "]", root).forEach((btn) => {
+      const sel = btn.getAttribute(DATA_TOGGLE);
+      const target = sel ? sel.startsWith("#") ? document.querySelector(sel) : document.querySelector(sel) : closest(btn, "[" + DATA_DROPDOWN + "]");
+      if (!target) return;
+      const handler = (e) => {
+        e.preventDefault();
+        const visible = target.classList.contains("is-open");
+        if (!visible) {
+          closeAll(target);
+          target.classList.add("is-open");
+          btn.classList.add("hover");
+          focusInside(target);
+          Events.emit("dropdown.open", { btn, el: target });
+          trigger(target, "fx.dropdown.opened", { btn, el: target });
+        } else {
+          target.classList.remove("is-open");
+          btn.classList.remove("hover");
+          Events.emit("dropdown.close", { btn, el: target });
+          trigger(target, "fx.dropdown.closed", { btn, el: target });
+        }
+      };
+      btn.__fx_toggle_handler = handler;
+      on(btn, "click", handler);
+    });
+    const docHandler = (e) => {
+      const inside = e.target.closest("[" + DATA_DROPDOWN + "], [" + DATA_TOGGLE + "]");
+      if (!inside) closeAll();
+    };
+    document.__fx_dropdown_doc_handler = docHandler;
+    on(document, "click", docHandler);
+  },
+  destroyAll(root = document) {
+    $$("[" + DATA_TOGGLE + "]", root).forEach((btn) => {
+      if (btn.__fx_toggle_handler) off(btn, "click", btn.__fx_toggle_handler);
+    });
+    if (document.__fx_dropdown_doc_handler) off(document, "click", document.__fx_dropdown_doc_handler);
+  }
+};
+const SELECTOR = "[data-fx-accordion]";
+const ITEM = "[data-fx-accordion-item]";
+const CONTENT = "[data-fx-accordion-content]";
+const ACTIVE_CLASS = "is-active";
+const FxAccordion = {
+  initAll(root = document) {
+    $$(SELECTOR, root).forEach((wrapper) => {
+      const allowAllClosed = wrapper.dataset.allowAllClosed === "true";
+      const multiExpand = wrapper.dataset.multiExpand === "true";
+      wrapper.querySelectorAll(ITEM).forEach((item) => {
+        const btn = item.querySelector("a.accordion-title");
+        const panel = item.querySelector(CONTENT);
+        if (!btn || !panel) return;
+        const handler = (e) => {
+          e.preventDefault();
+          const isOpen = item.classList.contains(ACTIVE_CLASS);
+          if (isOpen) {
+            if (!allowAllClosed) {
+              const openedCount = wrapper.querySelectorAll(`.${ACTIVE_CLASS}`).length;
+              if (openedCount <= 1) return;
+            }
+            item.classList.remove(ACTIVE_CLASS);
+            Events.emit("accordion.close", { item, panel });
+            return;
+          }
+          if (!multiExpand) {
+            wrapper.querySelectorAll(ITEM).forEach((other) => {
+              if (other !== item) {
+                other.classList.remove(ACTIVE_CLASS);
+              }
+            });
+          }
+          item.classList.add(ACTIVE_CLASS);
+          Events.emit("accordion.open", { item, panel });
+        };
+        btn.__fx_acc_handler = handler;
+        on(btn, "click", handler);
+      });
+    });
+  },
+  destroyAll(root = document) {
+    $$(SELECTOR, root).forEach((wrapper) => {
+      wrapper.querySelectorAll(ITEM).forEach((item) => {
+        const btn = item.querySelector("a.accordion-title");
+        if (btn && btn.__fx_acc_handler) off(btn, "click", btn.__fx_acc_handler);
+      });
+    });
+  }
+};
+const modules = {
+  smoothScroll: FxSmoothScroll,
+  tabs: FxTabs,
+  offCanvas: FxOffCanvas,
+  dropdown: FxDropdown,
+  accordion: FxAccordion
+};
+const invoke = (m, fn, root) => m?.[fn]?.(root);
+const buildMap = (fn) => Object.fromEntries(
+  Object.entries(modules).map(([k, m]) => [
+    k,
+    (root = document) => invoke(m, fn, root)
+  ])
+);
 const FX = {
-  init(opts = {}) {
-    const root = opts.root || document;
-    FxSmoothScroll.initAll(root);
-    FxTabs.initAll(root);
+  async init({ root = document } = {}) {
+    Object.values(modules).forEach((m) => invoke(m, "initAll", root));
   },
-  destroy() {
-    FxSmoothScroll.destroyAll();
-    FxTabs.destroyAll();
-  },
+  destroy: buildMap("destroyAll"),
+  reinit: Object.fromEntries(
+    Object.entries(modules).map(([k, m]) => [
+      k,
+      (root = document) => {
+        invoke(m, "destroyAll", root);
+        invoke(m, "initAll", root);
+      }
+    ])
+  ),
   on: Events.on,
   off: Events.off,
   emit: Events.emit
@@ -10117,4 +9363,4 @@ export {
   FX as F,
   nanoid as n
 };
-//# sourceMappingURL=vendor.vSkBiAF0.js.map
+//# sourceMappingURL=vendor.Dgl7ETwd.js.map

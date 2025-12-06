@@ -159,7 +159,7 @@ function _masthead_header(): void {
                 </div>
             <?php endif ?>
 
-            <?= Helper::doShortcode( 'dropdown_search' ) ?>
+            <?= Helper::doShortcode( 'dropdown_search', [ 'align' => 'right' ] ) ?>
 
             <button class="dark-mode" type="button" aria-label="Dark mode">
                 <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><!-- // empty --></svg>

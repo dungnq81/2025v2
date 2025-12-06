@@ -93,7 +93,7 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                             <p class="text-[15px] leading-[1.8]">
                                 Nếu doanh nghiệp của bạn không xuất hiện ở những vị trí đầu tiên, bạn đã bỏ lỡ hàng trăm, thậm chí hàng ngàn khách hàng tiềm năng mỗi ngày. Dịch vụ SEO từ khóa Google của HD Agency sẽ giúp website của bạn lên top bền vững, thu hút đúng đối tượng khách hàng và gia tăng doanh thu. Với chiến lược tối ưu chuẩn SEO, nội dung chất lượng và hệ thống liên kết hiệu quả, chúng tôi cam kết biến website thành công cụ kinh doanh mạnh mẽ nhất cho doanh nghiệp.
                             </p>
-                            <ul class="list-disc m-8 flex flex-col flex-nowrap gap-4 p-fs-clamp-[15,17]">
+                            <ul class="list-disc m-8 flex flex-col flex-nowrap gap-4 p-fs-clamp-[15,16]">
                                 <li class="dark:text-white font-medium">SEO từ khóa lên top bền vững, không lo tụt hạng</li>
                                 <li class="dark:text-white font-medium">Thu hút đúng đối tượng khách hàng tiềm năng</li>
                                 <li class="dark:text-white font-medium">Gia tăng doanh thu và lợi nhuận cho doanh nghiệp</li>
@@ -114,8 +114,8 @@ $id = substr( md5( $acf_fc_layout . '-' . $id ), 0, 10 );
                                     <a class="uppercase font-bold text-[14px] hover:text-(--text-color-1) dark:hover:text-white" href="#" title="Website theo yêu cầu">GÓI SEO PRO</a>
                                 </li>
                             </ul>
-                        </p>
-                        <div class="hidden sm:block thumb absolute aspect-1/1 rounded-[50%] c-light-button p-30 z-[-1] right-0 lg:right-[4vw] bottom-3 opacity-[0.9]">
+                        </div>
+                        <div class="hidden sm:block thumb absolute aspect-1/1 rounded-[50%] c-light-button p-30 z-[-1] right-0 bottom-0 opacity-[0.9]">
                             <img class="block object-contain max-w-50" src="https://webhd.vn/wp-content/uploads/2023/11/Group-7284.png" alt="">
                         </div>
                     </div>

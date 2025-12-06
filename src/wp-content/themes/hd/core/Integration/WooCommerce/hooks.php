@@ -109,19 +109,19 @@ function wc_acf_custom_meta(): void {
 		return;
 	}
 	?>
-    <ul class="accordion" data-accordion data-allow-all-closed="true">
+    <ul class="accordion" data-fx-accordion data-allow-all-closed="true">
 		<?php if ( ! empty( $ingredients ) ) : ?>
-        <li class="accordion-item" data-accordion-item>
+        <li class="accordion-item" data-fx-accordion-item>
             <a href="#" class="accordion-title"><?php echo __( 'Thành phần', TEXT_DOMAIN ); ?></a>
-            <div class="accordion-content" data-tab-content>
+            <div class="accordion-content" data-fx-accordion-content>
                 <?= $ingredients ?>
             </div>
         </li>
 		<?php endif; ?>
 		<?php if ( ! empty( $how_to_use ) ) : ?>
-        <li class="accordion-item" data-accordion-item>
+        <li class="accordion-item" data-fx-accordion-item>
             <a href="#" class="accordion-title"><?php echo __( 'Hướng dẫn sử dụng', TEXT_DOMAIN ); ?></a>
-            <div class="accordion-content" data-tab-content>
+            <div class="accordion-content" data-fx-accordion-content>
                 <?= $how_to_use ?>
             </div>
         </li>

@@ -242,8 +242,7 @@ if ( have_posts() ) {
                 </ul>
                 <a href="#" class="mt-6 inline-flex w-full items-center justify-center rounded-xl bg-(--text-color-1) px-4 py-2.5 font-semibold text-white">Chọn gói này</a>
             </div>
-            <div class="relative rounded-3xl bg-(--bg-color) p-6 ring-2 ring-(--text-color-1) shadow-2xl md:-translate-y-4 hover:md:-translate-y-5 c-hover">
-                <span class="absolute -top-4 left-1/2 -translate-x-1/2 inline-flex items-center rounded-full bg-(--text-color-1) px-4 py-2 text-xs font-semibold text-white shadow-lg">Phổ biến</span>
+            <div class="relative rounded-3xl bg-(--bg-color) p-6 ring-1 ring-gray-300 hover:ring-(--text-color-1) shadow-2xl c-hover">
                 <p class="font-semibold text-1 uppercase">PLUS</p>
                 <div class="mt-3 flex items-baseline gap-2">
                     <span class="h3 font-extrabold">8.900.000</span>
@@ -294,7 +293,8 @@ if ( have_posts() ) {
                 </ul>
                 <a href="#" class="mt-6 inline-flex w-full items-center justify-center rounded-xl bg-(--text-color-1) px-4 py-2.5 font-semibold text-white">Chọn gói này</a>
             </div>
-            <div class="relative rounded-3xl bg-(--bg-color) p-6 ring-1 ring-gray-300 shadow-2xl hover:ring-(--text-color-1) c-hover">
+            <div class="relative rounded-3xl bg-(--bg-color) p-6 ring-2 ring-(--text-color-1) shadow-2xl md:-translate-y-4 hover:md:-translate-y-5 c-hover">
+                <span class="absolute -top-4 left-1/2 -translate-x-1/2 inline-flex items-center rounded-full bg-(--text-color-1) px-4 py-2 text-xs font-semibold text-white shadow-lg">Phổ biến</span>
                 <p class="font-semibold text-1 uppercase">Pro</p>
                 <div class="mt-3 flex items-baseline gap-2">
                     <span class="h3 font-extrabold">13.900.000</span>
@@ -556,7 +556,7 @@ if ( ! empty( $faqs ) ) :
             Đặt câu hỏi của bạn
             <svg class="w-5 h-5" aria-hidden="true"><use href="#icon-arrow-right-outline"></use></svg>
         </a>
-        <ul class="accordion accordion-faq mx-auto pt-10" data-accordion data-multi-expand="true" data-allow-all-closed="true">
+        <ul class="accordion accordion-faq mx-auto pt-10" data-fx-accordion data-multi-expand="true" data-allow-all-closed="true">
             <?php foreach ( $faqs as $faq ) :
                 $question = trim( $faq['question'] ?? '' );
                 $answer   = trim( $faq['answer'] ?? '' );
@@ -564,13 +564,13 @@ if ( ! empty( $faqs ) ) :
                     continue;
                 }
             ?>
-            <li class="accordion-item py-4 px-6 my-3 rounded-md" data-accordion-item>
+            <li class="accordion-item py-4 px-6 my-3 rounded-md" data-fx-accordion-item>
                 <a href="#" class="accordion-title relative p-fs-clamp-[16,18] flex font-bold pr-8" aria-label="<?= esc_attr( $question ) ?>">
                     <?= esc_html( $question ) ?>
                     <svg class="w-6 h-6 minus absolute" aria-hidden="true"><use href="#icon-circle-minus-outline"></use></svg>
                     <svg class="w-6 h-6 plus absolute" aria-hidden="true"><use href="#icon-circle-plus-outline"></use></svg>
                 </a>
-                <div class="accordion-content text-base pt-5" data-tab-content>
+                <div class="accordion-content text-base" data-fx-accordion-content>
                     <?= wp_kses_post( $answer ) ?>
                 </div>
             </li>

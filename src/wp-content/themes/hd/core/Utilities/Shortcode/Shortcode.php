@@ -171,6 +171,7 @@ final class Shortcode extends AbstractShortcode {
                 'title' => '',
                 'class' => '',
                 'id'    => Helper::escAttr( $id ),
+                'align' => '', // left, center, right
             ],
             $atts,
             'dropdown_search'
@@ -180,34 +181,29 @@ final class Shortcode extends AbstractShortcode {
         $title_for         = __( 'Tìm kiếm cho', TEXT_DOMAIN );
         $placeholder_title = Helper::escAttr( __( 'Tìm kiếm...', TEXT_DOMAIN ) );
         $class             = $atts['class'] ? ' ' . Helper::escAttr( $atts['class'] ) : '';
+        $align             = $atts['align'] ? ' alignment-' . Helper::escAttr( $atts['align'] ) : '';
         $id                = $atts['id'] ? Helper::escAttr( $atts['id'] ) : Helper::escAttr( $id );
 
         ob_start();
 
         ?>
-        <a class="dropdown-trigger" title="<?= Helper::escAttr( $title ) ?>" href="javascript:;" data-toggle="dropdown-<?= $id ?>">
-            <svg class="w-6 h-6 svg-search" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21l-3.5-3.5M17 10a7 7 0 1 1-14 0a7 7 0 0 1 14 0Z"/>
-            </svg>
-            <svg class="w-6 h-6 svg-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L17.94 6M18 18L6.06 6"/>
-            </svg>
+        <a class="dropdown-trigger" title="<?= Helper::escAttr( $title ) ?>" href="javascript:;" data-fx-dropdown-toggle="#dropdown-<?= $id ?>">
+            <svg class="w-6 h-6 svg-search" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21l-3.5-3.5M17 10a7 7 0 1 1-14 0a7 7 0 0 1 14 0Z"/></svg>
+            <svg class="w-6 h-6 svg-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L17.94 6M18 18L6.06 6"/></svg>
             <span><?= $title ?></span>
         </a>
-        <div role="search" class="dropdown-pane" id="dropdown-<?= $id ?>" data-dropdown data-auto-focus="true">
+        <div role="search" class="dropdown-pane<?= $align ?>" id="dropdown-<?= $id ?>" data-fx-dropdown data-auto-focus="true">
             <form action="<?= Helper::home() ?>" class="frm-search" method="get" accept-charset="UTF-8">
                 <div class="frm-container">
                     <label for="<?= $id ?>" class="sr-only"><?= $title_for ?></label>
                     <input id="<?= $id ?>" required pattern="^(.*\S+.*)$" type="search" name="s" value="<?= get_search_query() ?>" placeholder="<?= $placeholder_title ?>">
                     <button class="btn-s" type="submit" aria-label="Search">
-                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21l-3.5-3.5M17 10a7 7 0 1 1-14 0a7 7 0 0 1 14 0Z"/>
-                        </svg>
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m21 21l-3.5-3.5M17 10a7 7 0 1 1-14 0a7 7 0 0 1 14 0Z"/></svg>
                         <span><?= $title ?></span>
                     </button>
                 </div>
                 <?php
-                Helper::blockTemplate( 'parts/blocks/search-hint', [], true );
+                Helper::blockTemplate( 'parts/blocks/search-hint' );
                 echo Helper::isWoocommerceActive() ? '<input type="hidden" name="post_type" value="product">' : '';
                 ?>
             </form>
